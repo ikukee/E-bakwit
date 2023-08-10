@@ -1,0 +1,39 @@
+<%= render 'navbar' %>
+<div id="gen-table" class="rounded p-3 dropdown m-5 vh-75">
+  <fieldset>
+    <div id="pop-title" class="btn-group">
+      <legend>
+        <button id="disaster-name" class="rounded fs-1 poppins dropdown-toggle border-0 fw-bold px-5" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Typhoon Juan
+        </button>
+        <ul class="dropdown-menu">
+        <li>Typhoon B</li>
+        <li>Typhoon C</li>
+        <li>Typhoon D</li>
+        <li>Typhoon E</li>
+        <li>Typhoon F</li>
+        <li>Typhoon G</li>
+        <li>Typhoon H</li>
+        <li>Typhoon I</li>
+        <li>Typhoon J</li>
+        </ul>
+      </legend>
+    </div>
+  </fieldset>
+  <div id="card-div" class="text-center oswald row p-5">
+    <div id="evac-count" class="gen-card">
+      <h1 class="">18</h1>
+      <h3 class=""><i class="fa-solid fa-people-roof"></i> Active Evacuation Centers</h3>
+    </div>
+    <div id="fam-count" class="gen-card">
+      <h1 class="">89</h1>
+      <h3><i class="fa-solid fa-people-group"></i> Sheltered Families</h3>
+    </div>
+    <div id="indi-count" class="gen-card">
+      <h1 class="">337</h1>
+      <h3><i class="fa-solid fa-person"></i> Sheltered Individuals</h3>
+    </div>
+  </div>
+  <%= link_to "See in Detailed View", detailed_view_path, id: "detailed-view", class: "poppins p-3 position-absolute top-100 start-50 translate-middle btn btn-primary border-0" %>
+
+</div>
