@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <style>
+            
+            *{
+                    padding: 0;
+                    margin: 0;
+                outline:0px dashed rgb(255, 0, 0);
+            }
+            body{
+                
+            }
+            #login-container{
+                background-color: black;
+                color: white;
+                border-radius: 15px;
+            }
+            span{
+                font-size: 12px;
+            }
+            nav ul li{
+                display: inline-block;
+            }
+
+            nav{
+                background-color: black;
+                color: white;
+            }
+            .col-md-6{
+                box-shadow: 2px 2px 2px 2px grey;
+            }
+        </style>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+    <body style="background-color:#B8D8D9;">
+        <%= render 'navbar' %>
+            <div class="row p-1 m-1 " >
+                <div class="col-md-6" style="background-color: white;">
+                    <h3>EVACUATION CENTER INFO</h3>
+                    <label>NAME</label><p></p>
+                    <label>ADDRESS</label><p></p>
+                    <label>CAMP MANAGER</label><p></p>
+                </div>
+                <div class="col-md-6" style="background-color: white;">
+                    <h3>EVACUATION CENTER FACILITIES</h3>
+                    <span>
+                        LATRINES
+                    </span>
+                    <p></p>
+                    <button class="btn btn-primary">UPDATE</button>
+                    <p></p>
+                </div>
+            </div>
+            <div class="row p-1 m-1">
+                <div class="col-md-6 " style="background-color: white;">
+                    <h3>GENERAL OVERVIEW OF EVACUEES</h3>
+                    <div class="row">
+                        <div class="col-md-4" style="border-right:1px solid black " align="CENTER" >
+                            <h3>MALE</h3>
+                            <label>20</label>
+                        </div>
+                        <div class="col-md-4" align="CENTER">
+                            <h3>FEMALE</h3>
+                            <label>20</label></div>
+                        <div class="col-md-4" align="CENTER" style="border-left:1px solid black "><h3>TOTAL</h3>
+                            <label>40</label></div>
+                    </div><p></p>
+                    <button class="btn btn-primary">VIEW MORE DETAILS</button>
+                    <p></p>
+                </div>
+                <div class="col-md-6 "style="background-color: white;">
+                    <h3>RELIEF GOODS</h3>
+                    <div class="row">
+                        <div class="col-md-4" style="border-right:1px solid black " align="CENTER">
+                            <h3>FOOD</h3>
+                            <label>20</label>
+                        </div>
+                        <div class="col-md-4" align="CENTER">
+                            <h3>NON-FOOD</h3>
+                            <label>20</label></div>
+                       
+                    </div><p></p>
+                    <button class="btn btn-primary">VIEW MORE DETAILS</button>
+                    <p></p>
+                </div>
+            </div>
+            
+    </body>
+</html>

@@ -4,4 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root to:"main#index"
   get "/detailed_view", to: "main#detailed_view"
+  get "/login", to: "main#login"
+  get "/dashboard", to: "main#volunteer-dash"
+  get "/update", to: "main#updateFacilities"
 end
