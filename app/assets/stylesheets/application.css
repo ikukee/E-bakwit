@@ -47,36 +47,32 @@ body {
 }
 
 #gen-table {
-    background: rgba(0,0,0,0.8);
     height: 70%;
     color: #000000;
-}
-
-#disaster-name {
-    box-shadow: 1px 1px 0.2em #000000;
+    border: 0.2em solid #000000;
+    background-image: linear-gradient(#b8dbd9, rgba(0,0,0,0), rgba(0,0,0,0.8));
 }
 
 #pop-title{
     position: absolute;
     top: -2.2em;
     left: 1em;
-    padding: 5px;
+    padding: 0.5em;
 }
 
 #pop-title button{
-    background-color: #586F7C;
-    color: #fff;
+    background-color: #b8dbd9;
+    color: #000000;
 
 }
 
 #pop-title fieldset{
-    border: 2px solid black;
     padding: 10px;
 }
 
 .gen-card{
     box-sizing: border-box;
-    border: 1px dashed #000000;
+    border: 0.15em dashed #555;
     background-image: linear-gradient(#f0f0f0, #b8dbd9);
     height: 37.5em;
     width: 30%;
@@ -119,4 +115,33 @@ body {
 #detailed-view:hover{
     background-color: #034d34;
     text-shadow: 0px 0px 0.01em #fff;
+}
+
+#evac-card {
+    background-image: linear-gradient(#f0f0f0, #b8dbd9);
+    box-shadow: 1px 1px 0.5em #586F7C;
+}
+
+#evac-card h1{
+    font-size: 7em;
+    font-weight: 900;
+}
+
+#evac-card h2{
+    font-size: 4em;
+    font-weight: 900;
+}
+
+#evac-card h6{
+    font-size: 1.2em;
+}
+
+#view-evac{
+    background-color: #586F7C;
+    box-shadow: 1px 1px 2px #586F7C;
+}
+
+#disaster-name-dv {
+    color: #20292e;
+    text-shadow: 1px 1px 0.05em #20292e;
 }
