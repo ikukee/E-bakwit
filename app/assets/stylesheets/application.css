@@ -6,12 +6,16 @@ body {
     background-attachment: fixed;
 }
 
+/* Google Fonts */
+
 .poppins {
     font-family: 'Poppins', sans-serif;
 }
 .oswald{
     font-family: 'Oswald', sans-serif;
 }
+
+/* Navbar */
 
 #ebak-nav {
     box-shadow: 1px 1px 0.2em #000000;
@@ -45,6 +49,8 @@ body {
     transition-duration: 2s;
     text-shadow: 0px 0px 10px #ffffff;
 }
+
+/*Landing Dashboard Page*/
 
 #gen-table {
     height: 70%;
@@ -95,6 +101,8 @@ body {
     position: absolute;
 }
 
+/*Detailed View Page*/
+
 #evac-count h1{
     font-size: 23em;
 }
@@ -109,12 +117,6 @@ body {
 
 #detailed-view{
     font-size: 1.2em;
-    background-color: #04724d;
-}
-
-#detailed-view:hover{
-    background-color: #034d34;
-    text-shadow: 0px 0px 0.01em #fff;
 }
 
 #evac-card {
@@ -144,4 +146,10 @@ body {
 #disaster-name-dv {
     color: #20292e;
     text-shadow: 1px 1px 0.05em #20292e;
+}
+
+#add-evac-center {
+    position: absolute;
+    top: 5.5em;
+    right: 3em;
 }
