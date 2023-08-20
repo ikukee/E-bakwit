@@ -1,6 +1,7 @@
 class MainController < ApplicationController
-    before_action :is_logged_in, except: %i[login logout register login_proceed register_proceed]
+    # before_action :is_logged_in, except: %i[login logout register login_proceed register_proceed]
     def index
+
     end
 
     def login
