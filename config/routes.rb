@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   get "/login", to: "main#login"
   get "/dashboard", to: "main#volunteer-dash"
   get "/update", to: "main#updateFacilities"
+  get "/logout",to:"main#logout"
+  post "/login/proceed",to:"main#login_proceed"
 end

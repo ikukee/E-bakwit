@@ -1,61 +1,64 @@
 <html>
-    <head>
-        <style>
-            * {
-                margin:0;
-                padding:0;  
-            }
-            *{
-                outline:0px dashed rgb(255, 0, 0);
-            }
-            #login-container{
-                background-color: black;
-                color: white;
-                border-radius: 15px;
-            }
-            span{
-                font-size: 12px;
-            }
-        </style>
+  <head>
+    <style>
+      * {
+          margin:0;
+          padding:0;
+      }
+      *{
+          outline:0px dashed rgb(255, 0, 0);
+      }
+      #login-container{
+          background-color: black;
+          color: white;
+          border-radius: 15px;
+      }
+      span{
+          font-size: 12px;
+      }
+    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-    <body style = "background: #b8dbd9;">
-        <%= render 'navbar' %>
-            <span>&nbsp;</span>
-            
-            <div class="mx-auto col-md-4 p-5" style="box-shadow: rgb(81, 81, 81) 0px 0px 12px 2px;" id="login-container">
-                <div class="row">
-                    <div class="col-md-12"><h1 align="center">LOGIN</h1></div>
-                    <div class="col">
-                        
-                        <form>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                                          </svg></span>
-                                    </div>
-                                    <input type="text" class="form-control" id="inputEmail"  placeholder="USERNAME"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
-                                            <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-                                          </svg></span>
-                                    </div>
-                                <input type="password" class="form-control" id="inputPass"  placeholder="PASSWORD"/>
-                            </div>
-                            <span>&nbsp;</span>
-                            <div class="form-group">
-                                <a href="/dashboard" class="btn btn-success float-right w-100 font-weight-bold">LOGIN<a>
-                            </div>
-                        </form>
-                    </div><span>&nbsp;</span>
-                    <div class="col-md-12"><span align="center">Dont have an account?</span><br><span align="center">Contact Office Admin to create your account</span></div>
-                </div>
+  </head>
+  <body style = "background: #b8dbd9;">
+    <%= render 'navbar' %>
+    <span>&nbsp;</span>
+    <div class="mx-auto col-md-4 p-5" style="box-shadow: rgb(81, 81, 81) 0px 0px 12px 2px;" id="login-container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 align="center">LOGIN</h1>
+        </div>
+        <%= form_with url:"/login/proceed", method: :post do |f| %>
+          <div class="col">
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                  </svg></span>
+              </div>
+              <%= f.email_field :email, class:"form-control ", placeholder: "Email"%>
             </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
+                    <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                  </svg></span>
+              </div>
+              <%= f.password_field :password, class:"form-control ", placeholder: "Password"%>
+            </div>
+            <div id= "login_errorArea"></div>
+            <span>&nbsp;</span>
+            <div class="form-group">
+              <%= f.submit "LOGIN", class:"form-control btn btn-success float-right w-100 font-weight-bold"%>
+            </div>
+          </div>
+          <span>&nbsp;</span>
+          <div class="col-md-12"><span align="center">Dont have an account?</span><br>
+            <span align="center">Contact Office Admin to create your account</span></div>
+        </div>
+      <% end %>
     </body>
-</html>
+  </html>
