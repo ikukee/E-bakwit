@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   get "/evac_center_form", to: "main#evac_center_form"
   get "/login", to: "main#login"
   get "/dashboard", to: "main#volunteer-dash"
+  get "/register", to: "main#register"
   get "/update", to: "main#updateFacilities"
   get "/logout",to:"main#logout"
+
   post "/login/proceed",to:"main#login_proceed"
+
 end
