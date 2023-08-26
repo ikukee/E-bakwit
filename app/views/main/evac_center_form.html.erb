@@ -1,2 +1,126 @@
 <%= render "navbar" %>
 
+<fieldset id="new-evac-form" class="rounded m-5 p-5 border-opacity-75">
+  <h1 class="oswald fw-bold mb-3">New Evacuation Center</h1>
+  <%= form_with(model: @evacuation_center, local: true, class: "row g-3") do |form| %>
+    <div class="col-md-6">
+      <%= form.label :name, class: "form-label poppins" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :barangay, class: "form-label poppins" %>
+      <%= form.select :barangay, options_for_select(["Abella", "Bagumbayan Norte", "Bagumbayan Sur", "Balatas", "Calauag", "Cararayan", "Carolina", "Concepcion Grande", "Concepcion Pequeña", "Dayangdang", "Del Rosario", "Dinaga", "Igualdad Interior", "Lerma", "Liboton", "Mabolo", "Pacol", "Panicuason", "Peñafrancia", "Sabang", "San Felipe", "San Francisco"]), {}, class: "form-control" %>
+    </div>
+
+    <div class="col-md-6">
+      <!-- <%= form.label :camp_manager, class: "form-label poppins capitalize" %> -->
+      <p class="form-label poppins capitalize">Camp Manager</p>
+      <%= form.text_field :camp_manager, class: "form-control" %>
+    </div>
+
+    <div class="col-md-3">
+      <p class="form-label poppins capitalize">Capacity</p>
+      <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+    <div class="col-md-3">
+      <p class="form-label poppins capitalize">No. of Rooms</p>
+      <%= form.number_field :compost_pit, class: "form-control" %>
+    </div>
+
+    <h4 class="oswald fw-bold mb-5">Evacuation Center Facilities</h4>
+
+    <div class="row">
+    <h4 class="oswald">Latrines</h4>
+    </div>
+    <div class="row ">
+      <div class="col-md-3">
+        <p class="form-label poppins capitalize">Compost Pit</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-3">
+        <p class="form-label poppins capitalize">Sealed</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-1">
+        
+      </div>
+      <div class="col-md-1">
+        <p class="form-label poppins capitalize">Child-Friendly Spaces</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-1">
+        <p class="form-label poppins capitalize">Women-Friendly Spaces</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-1">
+        <p class="form-label poppins capitalize">Couples Room</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-1">
+        <p class="form-label poppins capitalize">Prayer Rooms</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      
+      
+    </div>
+    <div class="row">
+      <h5 class="oswald">Portalets</h5>
+      <div class="col-md-2">
+        <p class="form-label poppins capitalize">Male</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-2">
+        <p class="form-label poppins capitalize">Female</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-2">
+        <p class="form-label poppins capitalize">Common</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-1">
+        
+      </div>
+      <div class="col-md-1">
+        <p class="form-label poppins capitalize">Community Kitchen</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-1">
+        <p class="form-label poppins capitalize">Wash Facilities/ Water Source</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-1">
+        <p class="form-label poppins capitalize">Ramps for PWDs</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-1">
+        <p class="form-label poppins capitalize">Help Desk/ Info Boards</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+    </div>
+    
+    <div class="row">
+      <h5 class="oswald">Bathing Cubicles</h5>
+      <div class="col-md-2">
+        <p class="form-label poppins capitalize">Male</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-2">
+        <p class="form-label poppins capitalize">Female</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+      <div class="col-md-2">
+        <p class="form-label poppins capitalize">Common</p>
+        <%= form.number_field :compost_pit, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="d-flex justify-content-end">
+        <%= form.submit "Create Evacuation Center", class: "btn btn-primary" %>
+      </div>
+    </div>
+    
+
+  <% end %>
+</fieldset>
