@@ -1,0 +1,2 @@
+class EvacCenter < ApplicationRecord
+end

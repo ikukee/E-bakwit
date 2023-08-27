@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Evac centers</h1>
+
+<div id="evac_centers">
+  <% @evac_centers.each do |evac_center| %>
+    <%= render evac_center %>
+    <p>
+      <%= link_to "Show this evac center", evac_center %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New evac center", new_evac_center_path %>

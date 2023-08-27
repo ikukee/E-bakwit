@@ -1,0 +1,2 @@
+class AssignedYearlyEss < ApplicationRecord
+end

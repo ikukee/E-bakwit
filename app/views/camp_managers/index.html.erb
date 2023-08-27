@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Camp managers</h1>
+
+<div id="camp_managers">
+  <% @camp_managers.each do |camp_manager| %>
+    <%= render camp_manager %>
+    <p>
+      <%= link_to "Show this camp manager", camp_manager %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New camp manager", new_camp_manager_path %>

@@ -1,0 +1,2 @@
+class CampManager < ApplicationRecord
+end

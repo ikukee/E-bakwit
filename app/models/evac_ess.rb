@@ -1,0 +1,2 @@
+class EvacEss < ApplicationRecord
+end

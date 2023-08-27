@@ -1,0 +1,2 @@
+class AssignedYearlyVol < ApplicationRecord
+end

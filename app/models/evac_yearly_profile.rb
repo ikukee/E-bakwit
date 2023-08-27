@@ -1,0 +1,2 @@
+class EvacYearlyProfile < ApplicationRecord
+end

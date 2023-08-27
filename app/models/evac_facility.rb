@@ -1,0 +1,2 @@
+class EvacFacility < ApplicationRecord
+end
