@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get "/requestcreate", to: "main#reqCreate"
   get "/logout",to:"main#logout"
   get "/requests",to:"main#volunteer_requests"
-
+  get "/distribution", to: "main#reliefdist "
   get "/families", to: "main#detailed_evacuees"
   delete "/evac_centers/:id/destroy",to:"evac_centers#destroy"
 
