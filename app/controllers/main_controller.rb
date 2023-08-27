@@ -18,6 +18,10 @@ class MainController < ApplicationController
         
     end
 
+    def evac_essentials_form
+        
+    end
+
     def evac_facilities_form
         
     end
