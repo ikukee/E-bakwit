@@ -166,3 +166,22 @@ body {
 .form-control{
     box-shadow: 1px 1px 0.2em #20292e;
 }
+
+// login
+#login-container{
+    background-color: black;
+    color: white;
+    border-radius: 15px;
+}
+span{
+    font-size: 12px;
+}
+
+// evacuee logging part
+
+#logging-style-form{
+    background-image: linear-gradient(#f0f0f0, #b8dbd9);
+    box-shadow: 1px 1px .5em #586F7C;
+    border-radius: 2px;
+    //outline: 2px dashed black;
+}

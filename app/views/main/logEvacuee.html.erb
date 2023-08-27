@@ -1,5 +1,55 @@
+<head>
+<style>
+    *{
+
+        outline: 0px dashed red;
+    }
+</style>
+
+</head>
 <body>
 <%= render "navbar" %>
 
+<div class="row p-2">
+    <div class="col"></div>
+    <div class="col-md-8" >
+        <div class="row p-1">
+        
+        <div class="col p-2" id="logging-style-form">
+            <p>EVACUEE LOGGING</p>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-prepend">
+                        <p>Family Name: </p>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Dela Cruz">
+
+                   
+                </div>
+            </div><br>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-prepend">
+                        <p>Address:</p>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Chicken St. ">
+                </div>
+            </div><br>
+            <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="is_4ps">
+            <label class="form-check-label" for="is_4ps">
+                Are you a 4Ps beneficiary?
+            </label>
+            <br><br>
+                <button class="btn btn-secondary text-light rounded-bottom p-2 w-100 text-decoration-none text-center">DONE</button>
+            </div>
+        </div>
+        <div class="col">
+        AKO
+        </div>
+        </div> 
+    </div>
+    <div class="col"></div>
+</div>
 
 </body>
