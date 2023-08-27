@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get "/register", to: "main#register"
   get "/log", to: "main#logEvacuee"
   get "/update", to: "main#updateFacilities"
+  get "/requestcreate", to: "main#reqCreate"
   get "/logout",to:"main#logout"
 
   post "/login/proceed",to:"main#login_proceed"
