@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root to:"main#index"
   get "/detailed_view", to: "main#detailed_view"
   get "/evac_center_form", to: "main#evac_center_form"
+  get "/evac_facilities_form", to: "main#evac_facilities_form"
   get "/login", to: "main#login"
   get "/dashboard", to: "main#volunteer-dash"
   get "/register", to: "main#register"

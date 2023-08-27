@@ -160,9 +160,13 @@ body {
 #new-evac-form{
     border: 0.2em dashed #586F7C;
     background-image: linear-gradient(#f0f0f0, #b8dbd9);
-    height: 80vh;
 }
 
 .form-control{
     box-shadow: 1px 1px 0.2em #20292e;
+}
+
+.fssmall {
+    font-size: 0.7em;
+    text-align: center;
 }
