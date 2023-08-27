@@ -1,3 +1,4 @@
+
 <%= form_with(model: evac_center,local: true, class:"row g-3")  do |form|%>
   <% invalid_name = evac_center.errors.include?(:name) %>
   <% invalid_barangay = evac_center.errors.include?(:barangay) %>
@@ -49,7 +50,7 @@
   </div>
   <div class="col-12">
     <div class="d-flex justify-content-end">
-      <%= form.submit "Create Evacuation Center", class: "btn btn-primary" %>
+      <%= form.submit "Submit", class: "btn btn-primary" %>
     </div>
   </div>
   
