@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get "/login", to: "main#login"
   get "/dashboard", to: "main#volunteer-dash"
   get "/register", to: "main#register"
+  get "/log", to: "main#logEvacuee"
   get "/update", to: "main#updateFacilities"
   get "/logout",to:"main#logout"
 
