@@ -25,7 +25,12 @@ class MainController < ApplicationController
                 if user.authenticate(params[:password])
                     session[:user_id] = user.id
                     session[:user_type] = user.user_type
-                    format.html{redirect_to "/dashboard"}
+                    if user.user_type == "ADMIN"
+                        format.html{redirect_to "/detailed_view"}
+                    else
+                        format.html{redirect_to "/dashboard"}
+                    end
+                    
                 else
                     format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>INCORRECT PASSWORD!</li></ul>")}
                 end
