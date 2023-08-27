@@ -1,6 +1,6 @@
-<%= render "navbar" %>
+<%= render "/main/navbar" %>
 
-<fieldset id="new-evac-form" class="rounded m-5 p-5 border-opacity-75 position-relative">
+<fieldset id="evac-form" class="rounded m-5 p-5 border-opacity-75 position-relative">
   <%= form_with(model: @evacuation_center, local: true, class: "row g-3") do |form| %>
   <h1 class="oswald fw-bold mb-3">New Evacuation Center</h1>
   

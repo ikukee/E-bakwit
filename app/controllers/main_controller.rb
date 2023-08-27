@@ -34,7 +34,7 @@ class MainController < ApplicationController
                     session[:user_id] = user.id
                     session[:user_type] = user.user_type
                     if user.user_type == "ADMIN"
-                        format.html{redirect_to "/detailed_view"}
+                        format.html{redirect_to "/evac_centers"}
                     else
                         format.html{redirect_to "/dashboard"}
                     end

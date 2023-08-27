@@ -1,0 +1,27 @@
+<div id="evac-card" class="card h-100 oswald">
+  <h3 class="m-3 text-center oswald fw-bold"><%= evac_center.name %></h3>
+  <div class="card-body">
+    <div class="row border-3 border-dark border-bottom mx-4">
+      <div class="col align-self-end">
+        <h6><%= evac_center.barangay%></h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-end">
+        <% if evac_center.isInside == true %>
+          <h6 class="mt-3">Official Evacuation Center: <strong>YES</strong></h6>
+        <% else %>
+          <h6 class="mt-3">Official Evacuation Center: <strong>NO</strong> </h6>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <%= link_to "/evac_centers/#{evac_center.id}", class: "btn btn-info form-control" do %>
+    View <i class="fa-solid fa-eye"></i>
+  <% end %>
+  <% if session[:user_type] == "ADMIN"%>
+    <%= link_to "/evac_centers/#{evac_center.id}/destroy", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+      Delete <i class="fa fa-trash" aria-hidden="true"></i>
+    <% end %>
+  <% end %>
+</div>

@@ -1,32 +1,40 @@
-<%= form_with(model: evac_center) do |form| %>
-  <% if evac_center.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(evac_center.errors.count, "error") %> prohibited this evac_center from being saved:</h2>
-
-      <ul>
-        <% evac_center.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<%= form_with url:"/evac_centers", method: :post, model: evac_center, local: true, class: "row g-3" do |form| %>
+  <% invalid_name = evac_center.errors.include?(:name) %>
+  <% invalid_barangay = evac_center.errors.include?(:barangay) %>
+  <div class="col-md-6">
+    <%= form.label :name, class: "form-label poppins" %>
+    <div class="form-group">
+      <%= form.text_field :name, class:"form-control #{'is-invalid' if invalid_name}", placeholder: "Name"%>
+      <% if invalid_name %>
+        <div class="invalid-feedback d-block">
+          <% evac_center.errors[:name].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
   </div>
-
-  <div>
-    <%= form.label :isInside, style: "display: block" %>
+  <div class="col-md-6">
+    <%= form.label :barangay, class: "form-label poppins" %>
+    <div class="form-group">
+      <%= form.select :barangay, options_for_select(["Abella", "Bagumbayan Norte", "Bagumbayan Sur", "Balatas", "Calauag", "Cararayan", "Carolina", "Concepcion Grande", "Concepcion Pequeña", "Dayangdang", "Del Rosario", "Dinaga", "Igualdad Interior", "Lerma", "Liboton", "Mabolo", "Pacol", "Panicuason", "Peñafrancia", "Sabang", "San Felipe", "San Francisco"]), {:prompt => "Select Barangay"}, class: "form-control #{'is-invalid' if invalid_barangay}" %>
+      <% if invalid_barangay %>
+        <div class="invalid-feedback d-block">
+          <% evac_center.errors[:barangay].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <!-- <%= form.label :camp_manager, class: "form-label poppins capitalize" %> -->
+    <p class="form-label poppins capitalize">Is Inside? (Check if Yes, leave blank if No)</p>
     <%= form.check_box :isInside %>
   </div>
-
-  <div>
-    <%= form.label :barangay, style: "display: block" %>
-    <%= form.text_field :barangay %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="col-12">
+    <div class="d-flex justify-content-end">
+      <%= form.submit "Create Evacuation Center", class: "btn btn-primary" %>
+    </div>
   </div>
 <% end %>
