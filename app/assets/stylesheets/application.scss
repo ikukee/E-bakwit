@@ -1,6 +1,6 @@
 @import "bootstrap";
 @import "font-awesome";
-
+@import url("logging.css");
 body {
     background:  #b8dbd9;
     height: 100%;
@@ -152,7 +152,7 @@ body {
 }
 
 #add-evac-center {
-    position: absolute;
+    
     top: 5.5em;
     right: 3em;
 }
@@ -176,14 +176,6 @@ span{
     font-size: 12px;
 }
 
-// evacuee logging part
-
-#logging-style-form{
-    background-image: linear-gradient(#f0f0f0, #b8dbd9);
-    box-shadow: 1px 1px .5em #586F7C;
-    border-radius: 2px;
-    //outline: 2px dashed black;
-}
 
 .fssmall {
     font-size: 0.7em;
