@@ -1,10 +1,8 @@
 <p style="color: green"><%= notice %></p>
-
 <%= render @camp_manager %>
-
 <div>
   <%= link_to "Edit this camp manager", edit_camp_manager_path(@camp_manager) %> |
   <%= link_to "Back to camp managers", camp_managers_path %>
-
+  <%= link_to  "Delete", @camp_manager, class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
   <%= button_to "Destroy this camp manager", @camp_manager, method: :delete %>
 </div>

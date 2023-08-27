@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get "/update", to: "main#updateFacilities"
   get "/logout",to:"main#logout"
 
+  delete "/evac_centers/:id/destroy",to:"evac_centers#destroy"
+
   post "/login/proceed",to:"main#login_proceed"
 
 end

@@ -22,7 +22,7 @@ class EvacCentersController < ApplicationController
   # POST /evac_centers or /evac_centers.json
   def create
     @evac_center = EvacCenter.new(evac_center_params)
-
+    
     respond_to do |format|
       if @evac_center.save
         format.html { redirect_to evac_center_url(@evac_center), notice: "Evac center was successfully created." }
@@ -32,6 +32,9 @@ class EvacCentersController < ApplicationController
         format.json { render json: @evac_center.errors, status: :unprocessable_entity }
       end
     end
+
+   
+   
   end
 
   # PATCH/PUT /evac_centers/1 or /evac_centers/1.json
