@@ -95,5 +95,19 @@
     </div>
     <div class="col"></div>
 </div>
-
+<div class="row p-2">
+    <div class="col"></div>
+    <div class="col-md-8" >
+        <div class="row p-1">
+        <%= form_with(model: @evac_profile, local: true, class: "row g-3") do |form| %>
+            <div class="col p-3 m-1" id="logging-style-form">
+                <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >FAMILY MEMBERS</h2>
+                
+                <br>
+            </div>
+        </div> 
+        <%end%>
+    </div>
+    <div class="col"></div>
+</div>
 </body>

@@ -1,11 +1,11 @@
 <%= render 'navbar' %>
+<p></p>
 <style>
     *{
 
         outline: 0px dashed red;
     }
 </style>
-<p></p>
 <div class="row">
     <div class="col">
 
@@ -105,7 +105,7 @@
                         <h1 class="oswald fw" >EVACUEES OVERVIEW</h1>
                     </div>
                     <div class="col">
-                         <%= link_to "Update", evac_facilities_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+                         <%= link_to "LOG", "/log", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
                     </div>
                 </div>
                 <div class="row">
@@ -149,7 +149,7 @@
                     </div>
                 </div>
                  <p>&nbsp;</p>
-                <a class="btn btn-primary w-100 oswald fw-bold">VEIW MORE DETAILS</a>
+                <a class="btn btn-primary w-100 oswald fw-bold" href="/families">VEIW FAMILIES</a>
             </div>
             <div class="col">
                 <div class="row">
@@ -160,7 +160,7 @@
                          <%= link_to "Update", evac_facilities_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
                     </div>
                 </div>
-                <p>&nbsp;</p>
+               
                 <div class="row">
                     <div class="col">
 
@@ -168,20 +168,20 @@
                     <div class="col-md-9">
                         <div class="row">
                             <div class="col">
-                                <p class="h2 oswald fw" align="center">FOOD: </p>
+                                <p class="h4 oswald fw" align="center">FOOD: </p>
                                 
                             </div>
                             <div class="col">
-                                <p class="h2 oswald fw" align="center">NON-FOOD </p>
+                                <p class="h4 oswald fw" align="center">NON-FOOD </p>
                             </div>
                         </div>
                         
                         <div class="row" style="border-top: 2px solid black;">
                             <div class="col">
-                                <p class="h2 oswald fw" align="center"> 2</p>
+                                <p class="h4 oswald fw" align="center"> 2</p>
                             </div>
                             <div class="col">
-                                <p class="h2 oswald fw" align="center">2</p>
+                                <p class="h4 oswald fw" align="center">2</p>
                             </div>
                         </div>
                     </div>
