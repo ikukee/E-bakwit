@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg">
   <div class="container px-lg-5">
-    <a class="navbar-brand" href = "#" ><i class="fa-solid fa-person-shelter mx-2"></i>Naga E-Bakwit</a>
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <i class="fa-solid fa-person-shelter mx-2"></i>Naga E-Bakwit
+    <% end %>
     <% if session[:user_id] != nil %>
       <a class="navbar-brand" href = "#" >Hi <%= User.find(session[:user_id]).fname %>!</a>
     <% end %>
