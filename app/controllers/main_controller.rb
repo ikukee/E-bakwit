@@ -18,6 +18,10 @@ class MainController < ApplicationController
         
     end
 
+    def evac_facilities_form
+        
+    end
+
     def login_proceed
         user = User.find_by(email: params[:email])
         respond_to do |format|

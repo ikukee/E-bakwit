@@ -1,0 +1,111 @@
+<%= render "navbar" %>  
+
+<fieldset id="new-evac-form" class="rounded m-5 p-5 border-opacity-75">
+<%= form_with(model: @evac_profile, local: true, class: "row g-3") do |form| %>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <h4 class="oswald fw-bold">Sta. Cruz Evacuation Center</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <h4 class="oswald">Latrines</h4>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <p class="form-label poppins">Compost Pit</p>
+            <%= form.number_field :compost_pit, class: "form-control" %>
+        </div>
+        <div class="col-md-3">
+            <p class="form-label poppins">Sealed</p>
+            <%= form.number_field :compost_pit, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            <p class="form-label poppins">Capacity</p>
+            <%= form.number_field :compost_pit, class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label poppins">No. of Rooms</p>
+            <%= form.number_field :compost_pit, class: "form-control" %>
+        </div>
+    </div>
+    <div class="row">
+        <h5 class="oswald">Portalets</h5>
+        <div class="col-md-2">
+            <p class="form-label poppins">Male</p>
+            <%= form.number_field :compost_pit, class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label poppins">Female</p>
+            <%= form.number_field :compost_pit, class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label poppins">Common</p>
+            <%= form.number_field :compost_pit, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+            
+        </div>
+        <div class="col-md-1">
+            <%= form.number_field :compost_pit, class: "form-control" %>
+            <p class="form-label poppins fssmall">Child-Friendly Spaces</p>
+        </div>
+        <div class="col-md-1">
+            <%= form.number_field :compost_pit, class: "form-control" %>
+            <p class="form-label poppins fssmall">Women-Friendly Spaces</p>
+        </div>
+        <div class="col-md-1">
+            <%= form.number_field :compost_pit, class: "form-control" %>
+            <p class="form-label poppins fssmall">Couples Room</p>
+        </div>
+        <div class="col-md-1">
+            <%= form.number_field :compost_pit, class: "form-control" %>
+            <p class="form-label poppins fssmall">Prayer Rooms</p>
+        </div>
+    </div>
+        
+    <div class="row">
+        <h5 class="oswald">Bathing Cubicles</h5>
+        <div class="col-md-2">
+            <p class="form-label poppins">Male</p>
+            <%= form.number_field :compost_pit, class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label poppins">Female</p>
+            <%= form.number_field :compost_pit, class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+            <p class="form-label poppins">Common</p>
+            <%= form.number_field :compost_pit, class: "form-control" %>
+        </div>
+        <div class="col-md-1">
+            
+        </div>
+        <div class="col-md-1">
+            <%= form.number_field :compost_pit, class: "form-control" %>
+            <p class="form-label poppins fssmall">Community Kitchen</p>
+        </div>
+        <div class="col-md-1">
+            <%= form.number_field :compost_pit, class: "form-control" %>
+            <p class="form-label poppins fssmall">Wash Facilities/ Water Source</p>
+        </div>
+        <div class="col-md-1">
+            <%= form.number_field :compost_pit, class: "form-control" %>
+            <p class="form-label poppins fssmall">Ramps for PWDs</p>
+        </div>
+        <div class="col-md-1">
+            <%= form.number_field :compost_pit, class: "form-control" %>
+            <p class="form-label poppins fssmall">Help Desk/ Info Boards</p>
+        </div>
+    </div>
+
+    <div class="col-12">
+      <div class="d-flex justify-content-end">
+        <%= form.submit "Create Evacuation Center", class: "btn btn-primary" %>
+      </div>
+    </div>
+<% end %>
+</fieldset>
