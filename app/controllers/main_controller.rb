@@ -44,6 +44,10 @@ class MainController < ApplicationController
         end
     end
 
+    def logEvacuee
+        
+    end
+
 
     def register_proceed
         @user = User.new

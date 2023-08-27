@@ -14,9 +14,9 @@
     <div class="col"></div>
     <div class="col-md-8" >
         <div class="row p-1">
-        
-            <div class="col p-2 m-1" id="logging-style-form">
-                <h2 class="m-3 oswald fw-bold">EVACUEE LOGGING</h2>
+        <%= form_with(model: @evac_profile, local: true, class: "row g-3") do |form| %>
+            <div class="col p-3 m-1" id="logging-style-form">
+                <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >FAMILY LOGGING</h2>
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-prepend w-25">
@@ -36,18 +36,25 @@
                         <input type="text" class="form-control" placeholder="Chicken St. ">
                     </div>
                 </div><br>
-                <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="is_4ps">
-                <label class="form-check-label" for="is_4ps">
-                    Are you a 4Ps beneficiary?
-                </label>
+                <div class="row">
+                    <div class=col-md-3>
+                    </div>
+                    <div class="col">
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" value="" id="is_4ps">
+                            <label class="form-check-label w-100 " for="is_4ps">
+                                Are you a 4Ps beneficiary?
+                            </label>        
+                        </div>
+                        
+                    </div>
                 </div>
-                <br><br>
+                <br>
                     <button class="btn btn-secondary text-light rounded-bottom p-2 w-100 text-decoration-none text-center">DONE</button>
                 
             </div>
-            <div class="col p-2 m-1" style="background: white; box-shadow: 1px 1px .5em #586F7C">
-                <h2 class="m-3 oswald fw-bold">EVACUEE LOGGING</h2>
+            <div class="col p-3 m-1" style="background: white; box-shadow: 1px 1px .5em #586F7C">
+                <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;">MEMBER LOGGING</h2>
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-prepend w-25">
@@ -66,13 +73,25 @@
                         
                         <input type="text" class="form-control" placeholder="Chicken St. ">
                     </div>
+                
+                    <div class="col-md-6">
+                    
+                    </div>
                 </div><br>
-            
+                <div class="form-group">
+                    <div class="input-group">
+                    <div class="input-prepend w-25 text-center">
+                    <%= form.label :Sex, class: "h5 oswald fw"    %>
+                    
+                    </div>
+                    <%= form.select :Sex, options_for_select(["Male", "Female"]), {}, class: "form-control" %>
+                </div></div>
                 <br>
-                <button class="btn btn-success w-100">DONE</button>
+                <button class="btn btn-success text-light rounded-bottom p-2 w-100 text-decoration-none text-center">DONE</button>
                 
             </div>
         </div> 
+        <%end%>
     </div>
     <div class="col"></div>
 </div>
