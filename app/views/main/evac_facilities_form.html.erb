@@ -1,6 +1,8 @@
 <%= render "navbar" %>  
 
-<fieldset id="new-evac-form" class="rounded m-5 p-5 border-opacity-75 position-relative">
+<fieldset id="evac-form" class="rounded m-5 p-5 border-opacity-75 position-relative">
+<%= link_to "Facilities", evac_facilities_form_path, id: "faci-tab",  style: "z-index: 1",class: "is-active poppins py-3 px-4 position-absolute rounded-top" %>
+<%= link_to "Essentials", evac_essentials_form_path, id: "esse-tab" , class: "poppins p-3 btn btn-secondary position-absolute" %>
 
 <%= form_with(model: @evac_profile, local: true, class: "row g-3") do |form| %>
     <div class="row mb-3">
@@ -13,16 +15,12 @@
         <h4 class="oswald">Add Essentials</h4>
     </div>
     <div class="row mb-3">
-        <div class="col-md-7">
-            <p class="form-label poppins">Item</p>
+        <div class="col-md-8">
+            <p class="form-label poppins">Facility Type</p>
             <%= form.select :barangay, options_for_select(["Compost Pit", "Sealed", "Portalets - Male", "Portalets - Female", "Portalets - Common", "Bathing Cubicles - Male", "Bathing Cubicles - Female", "Bathing Cubicles - Common"  ], prompt: "Select an item"), {}, class: "form-control" %>
         </div>
-        <div class="col-md-2">
-            <p class="form-label poppins">Unit</p>
-            <%= form.number_field :compost_pit, class: "form-control" %>
-        </div>
-        <div class="col-md-2">
-            <p class="form-label poppins">Quantity</p>
+        <div class="col-md-3">
+            <p class="form-label poppins">Count</p>
             <%= form.number_field :compost_pit, class: "form-control" %>
         </div>
         <div class="col-md-1 position-relative">
@@ -40,15 +38,15 @@
             <h4 class="oswald">Confirmation</h4>
             <thead>
                 <tr>
-                <th class="col-md-6">Item</th>
-                <th class="col-md-2">Qty</th>
+                <th class="col-md-6">Facility Type</th>
+                <th class="col-md-2">Count</th>
                 <th class="col-md-4"></th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
                 <tr class="">
                     <td>Pillows</td>
-                    <td>28 pcs</td>
+                    <td>28</td>
                     <td class="position-relative">
                     <div class="position-absolute end-0 pe-4">
                         <%= link_to evac_facilities_form_path, class: "btn btn-outline-success btn-sm" do %>
@@ -62,7 +60,7 @@
                 </tr>
                 <tr>
                     <td>Spoon & Fork</td>
-                    <td>50 pairs</td>
+                    <td>50</td>
                     <td class="position-relative">
                     <div class="position-absolute end-0 pe-4">
                         <%= link_to evac_facilities_form_path, class: "btn btn-outline-success btn-sm" do %>
@@ -76,7 +74,7 @@
                 </tr>
                 <tr>
                     <td>Spoon & Fork</td>
-                    <td>50 pairs</td>
+                    <td>50</td>
                     <td class="position-relative">
                     <div class="position-absolute end-0 pe-4">
                         <%= link_to evac_facilities_form_path, class: "btn btn-outline-success btn-sm" do %>
@@ -90,7 +88,7 @@
                 </tr>
                 <tr>
                     <td>Spoon & Fork</td>
-                    <td>50 pairs</td>
+                    <td>50</td>
                     <td class="position-relative">
                     <div class="position-absolute end-0 pe-4">
                         <%= link_to evac_facilities_form_path, class: "btn btn-outline-success btn-sm" do %>
