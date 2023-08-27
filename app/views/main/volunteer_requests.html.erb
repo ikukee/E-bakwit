@@ -1,11 +1,193 @@
-<body style = "background: #b8dbd9;">
-  <%= render "navbar" %>
-  <span>&nbsp;</span>
-  <div class="mx-auto col-md-4 p-5" style="box-shadow: rgb(81, 81, 81) 0px 0px 12px 2px;" id="login-container">
+
+
+<%= render "navbar" %>
+
+<div id="evac-form" class="row  m-3 p-3 rounded">
+  <div id="req-table" class="col-md-6">
+      <h1 class="oswald fw-bold p-3">Volunteer Requests</h1>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="col-md-1">Date Requested</th>
+            <th class="col-md-3">Name</th>
+            <th class="col-md-1">Status</th>
+            <th class="col-md-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="col-md-1">08/27/2023</td>
+          <td class="col-md-3">Dela Cruz, Juan</td>
+          <td class="col-md-1 text-warning">Pending</td>
+          <td class="col-md-1 position-relative">
+            <%= link_to evac_facilities_form_path, class: "btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>  View
+            <% end %>    
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-1">08/27/2023</td>
+          <td class="col-md-3">Dela Cruz, Juan</td>
+          <td class="col-md-1 text-warning">Pending</td>
+          <td class="col-md-1 position-relative">
+            <%= link_to evac_facilities_form_path, class: "btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>  View
+            <% end %>    
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-1">08/27/2023</td>
+          <td class="col-md-3">Dela Cruz, Juan</td>
+          <td class="col-md-1 text-warning">Pending</td>
+          <td class="col-md-1 position-relative">
+            <%= link_to evac_facilities_form_path, class: "btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>  View
+            <% end %>    
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-1">08/27/2023</td>
+          <td class="col-md-3">Dela Cruz, Juan</td>
+          <td class="col-md-1 text-warning">Pending</td>
+          <td class="col-md-1 position-relative">
+            <%= link_to evac_facilities_form_path, class: "btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>  View
+            <% end %>    
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-1">08/27/2023</td>
+          <td class="col-md-3">Dela Cruz, Juan</td>
+          <td class="col-md-1 text-warning">Pending</td>
+          <td class="col-md-1 position-relative">
+            <%= link_to evac_facilities_form_path, class: "btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>  View
+            <% end %>    
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-1">08/27/2023</td>
+          <td class="col-md-3">Dela Cruz, Juan</td>
+          <td class="col-md-1 text-warning">Pending</td>
+          <td class="col-md-1 position-relative">
+            <%= link_to evac_facilities_form_path, class: "btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>  View
+            <% end %>    
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-1">08/27/2023</td>
+          <td class="col-md-3">Dela Cruz, Juan</td>
+          <td class="col-md-1 text-warning">Pending</td>
+          <td class="col-md-1 position-relative">
+            <%= link_to evac_facilities_form_path, class: "btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>  View
+            <% end %>    
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-1">08/27/2023</td>
+          <td class="col-md-3">Dela Cruz, Juan</td>
+          <td class="col-md-1 text-success">Approved</td>
+          <td class="col-md-1 position-relative">
+            <%= link_to evac_facilities_form_path, class: "btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>  View
+            <% end %>    
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-1">08/27/2023</td>
+          <td class="col-md-3">Dela Cruz, Juan</td>
+          <td class="col-md-1 text-success">Approved</td>
+          <td class="col-md-1 position-relative">
+            <%= link_to evac_facilities_form_path, class: "btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>  View
+            <% end %>    
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-1">08/27/2023</td>
+          <td class="col-md-3">Dela Cruz, Juan</td>
+          <td class="col-md-1 text-success">Approved</td>
+          <td class="col-md-1 position-relative">
+            <%= link_to evac_facilities_form_path, class: "btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>  View
+            <% end %>    
+          </td>
+        </tr>
+        <tr>
+          <td class="col-md-1">08/27/2023</td>
+          <td class="col-md-3">Dela Cruz, Juan</td>
+          <td class="col-md-1 text-danger">Rejected</td>
+          <td class="col-md-1 position-relative">
+            <%= link_to evac_facilities_form_path, class: "btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+              <i class="fa-solid fa-magnifying-glass"></i>  View
+            <% end %>    
+          </td>
+        </tr>
+        </tbody>
+      </table>
+  </div>
+  <div id="evac-form" class="col-md-6 border-1 bg-secondary poppins">
     <div class="row">
-      <div class="col-md-12">
-        <h1 align="center">VOLUNTEER REQUESTS</h1>
+      <div class="col-md-6">
+            <!-- picture ning valid id -->
+      </div>
+      <div class="col-md-6">
+            <!-- picture ning selfie -->
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-6 text-end">
+        Last Name
+      </div>
+      <div class="col-md-6 fw-bold">
+        Dela Cruz
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 text-end">
+        First Name
+      </div>
+      <div class="col-md-6 fw-bold">
+        Juan
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 text-end">
+        Birthdate
+      </div>
+      <div class="col-md-6 fw-bold">
+        04/18/2001
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 text-end">
+        Email
+      </div>
+      <div class="col-md-6 fw-bold">
+        juandelacruze@email.com
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 text-end">
+        Contact no.
+      </div>
+      <div class="col-md-6 fw-bold">
+        091234567890
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 text-end">
+        First Name
+      </div>
+      <div class="col-md-6 fw-bold">
+        Juan
+      </div>
+    </div>
+    <div class="row">
+
+    </div>
   </div>
-</body>
+</div>

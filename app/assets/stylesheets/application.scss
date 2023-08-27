@@ -200,3 +200,8 @@ span{
     border-right: 0.2em dashed #586F7C;
     color: #000;
 }
+
+#req-table {
+    max-height: 40em;
+    overflow-y: auto;
+}
