@@ -68,6 +68,6 @@ class EvacCentersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def evac_center_params
-      params.require(:evac_center).permit(:name, :isInside, :barangay)
+      params.require(:evac_center).permit(:name, :isInside, :barangay, :capacity)
     end
 end

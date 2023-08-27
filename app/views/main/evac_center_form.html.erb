@@ -1,34 +1,24 @@
 <%= render "/main/navbar" %>
-
 <fieldset id="new-evac-form" class="rounded m-5 p-5 border-opacity-75">
-
   <%= form_with(model: @evacuation_center, local: true, class: "row g-3") do |form| %>
-  <h1 class="oswald fw-bold mb-3">New Evacuation Center</h1>
-  
+    <h1 class="oswald fw-bold mb-3">New Evacuation Center</h1>
     <div class="col-md-6">
       <%= form.label :name, class: "form-label poppins" %>
       <%= form.text_field :name, class: "form-control" %>
     </div>
-
     <div class="col-md-6">
       <%= form.label :barangay, class: "form-label poppins" %>
       <%= form.select :barangay, options_for_select(["Abella", "Bagumbayan Norte", "Bagumbayan Sur", "Balatas", "Calauag", "Cararayan", "Carolina", "Concepcion Grande", "Concepcion Pequeña", "Dayangdang", "Del Rosario", "Dinaga", "Igualdad Interior", "Lerma", "Liboton", "Mabolo", "Pacol", "Panicuason", "Peñafrancia", "Sabang", "San Felipe", "San Francisco"]), {}, class: "form-control" %>
     </div>
-
     <div class="col-md-6">
       <!-- <%= form.label :camp_manager, class: "form-label poppins capitalize" %> -->
       <p class="form-label poppins capitalize">Camp Manager</p>
       <%= form.text_field :camp_manager, class: "form-control" %>
     </div>
-
-    
-
     <div class="col-12">
       <div class="d-flex justify-content-end">
         <%= form.submit "Create Evacuation Center", class: "btn btn-primary" %>
       </div>
     </div>
-    
-
   <% end %>
 </fieldset>

@@ -72,5 +72,38 @@ class MainController < ApplicationController
         end
     end
 
+    def send_request_proceed
+        @request = Request.new
+     
+        @request.fname = params[:request][:fname]
+        @request.lname = params[:request][:lname]
+        @request.bdate = params[:request][:bdate]
+        @request.email = params[:request][:email]
+        @request.cnum = params[:request][:cnum]
+        @request.address = params[:request][:address]
+        @request.images.attach(params[:request][:valid_id])
+        @request.images.attach(params[:request][:selfie])
+        @request.status = "PENDING"
+       
+      
+        respond_to do |format|
+            if @request.valid?
+                if params[:request][:valid_id] == nil || params[:request][:selfie] == nil
+                    format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea","Both IDs are required.")}
+                else
+                    @request.save
+                end
+                
+            else
+                format.turbo_stream{render turbo_stream: turbo_stream.update("request_form",partial:"reqCreate_form",locals:{request:@request})}
+            end
+        end
+
+    end
+
+    def volunteer_requests
+
+    end
+
 
 end

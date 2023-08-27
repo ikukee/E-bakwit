@@ -1,94 +1,245 @@
-<html>
-  <head>
-    <style>
-      *{
-              padding: 0;
-              margin: 0;
-          outline:0px dashed rgb(255, 0, 0);
-      }
-      body{
+<%= render 'main/navbar' %>
+<style>
+  *{
 
-      }
-      #login-container{
-          background-color: black;
-          color: white;
-          border-radius: 15px;
-      }
-      span{
-          font-size: 12px;
-      }
-      nav ul li{
-          display: inline-block;
-      }
-
-      nav{
-          background-color: black;
-          color: white;
-      }
-      .col-md-6{
-          box-shadow: 2px 2px 2px 2px grey;
-      }
-    </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body style="background-color:#B8D8D9;">
-    <%= render 'main/navbar' %>
-    <div class="row p-1 m-1 " >
-      <div class="col-md-6" style="background-color: white;">
-        <h3>EVACUATION CENTER INFO</h3>
-        <label>NAME</label>
-        <p></p>
-        <label>ADDRESS</label>
-        <p></p>
-        <label>CAMP MANAGER</label>
-        <p></p>
+      outline: 0px dashed red;
+  }
+</style>
+<p></p>
+<div class="row">
+  <div class="col">
+  </div>
+  <div class="col-md-9">
+    <div class="row">
+      <div class="col p-3 m-1" style="background-image: linear-gradient(#f0f0f0, #b8dbd9); box-shadow: 1px 1px .5em #586F7C; border-radius: 2px; ">
+        <div class="row">
+          <div class="col-md-9">
+            <h1 class="oswald fw" style="border-bottom: 2px solid black">EVACUATION PROFILE</h1>
+          </div>
+          <div class="col">
+            <a  href = "/evac_centers/<%=@evac_center.id%>/edit" class="btn btn-outline-danger w-100 oswald fw-bold">UPDATE</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <p class="h4 oswald fw" align="right">Name: </p>
+          </div>
+          <div class="col">
+            <p class="h2 oswald fw" ><%= @evac_center.name %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <p class="h4 oswald fw" align="right">Address: </p>
+          </div>
+          <div class="col">
+            <p class="h2 oswald fw"><%= @evac_center.barangay %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <p class="h4 oswald fw" align="right">Camp Manager: </p>
+          </div>
+          <div class="col">
+            <p class="h2 oswald fw">John Doe</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <p class="h4 oswald fw" align="right">Official Evacuation Center: </p>
+          </div>
+          <% if @evac_center.isInside == true %>
+            <div class="col">
+              <p class="h2 oswald fw">YES</p>
+            </div>
+          <% else %>
+            <div class="col">
+              <p class="h2 oswald fw">NO</p>
+            </div>
+          <% end%>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <p class="h4 oswald fw" align="right">Capacity: </p>
+          </div>
+          <div class="col">
+            <p class="h2 oswald fw"><%= @evac_center.capacity %></p>
+          </div>
+        </div>
       </div>
-      <div class="col-md-6" style="background-color: white;">
-        <h3>EVACUATION CENTER FACILITIES</h3>
-        <span>
-          LATRINES
-        </span>
-        <p></p>
-        <button class="btn btn-primary">UPDATE</button>
-        <%= link_to "Update", evac_facilities_form_path, class: "btn btn-primary" %>
-        <p></p>
+      <div class="col p-3 m-1" style="background: white; box-shadow: 1px 1px .5em #586F7C; border-radius: 2px">
+        <div class="row">
+          <div class="col-md-9">
+            <h1 class="oswald fw" style="border-bottom: 2px solid black">YEARLY PROFILE</h1>
+          </div>
+          <div class="col">
+            <%= link_to "Update", evac_facilities_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <p class="h4 oswald fw h-100" align="right">LATRINES: </p>
+          </div>
+          <div class="col">
+            <p class="h2 oswald fw">0</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <p class="h4 oswald fw" align="right">CHILD-SPACES: </p>
+          </div>
+          <div class="col">
+            <p class="h2 oswald fw">2</p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row p-1 m-1">
-      <div class="col-md-6 " style="background-color: white;">
-        <h3>GENERAL OVERVIEW OF EVACUEES</h3>
+    <div class="row">
+      <div class="col p-3 m-1" style="background: white; box-shadow: 1px 1px .5em #586F7C; border-radius: 2px">
         <div class="row">
-          <div class="col-md-4" style="border-right:1px solid black " align="CENTER" >
-            <h3>MALE</h3>
-            <label>20</label>
+          <div class="col-md-12">
+            <h1 class="oswald fw" style="border-bottom: 2px solid black">VOLUNTEERS</h1>
           </div>
-          <div class="col-md-4" align="CENTER">
-            <h3>FEMALE</h3>
-            <label>20</label></div>
-          <div class="col-md-4" align="CENTER" style="border-left:1px solid black ">
-            <h3>TOTAL</h3>
-            <label>40</label></div>
         </div>
-        <p></p>
-        <button class="btn btn-primary">VIEW MORE DETAILS</button>
-        <p></p>
-      </div>
-      <div class="col-md-6 "style="background-color: white;">
-        <h3>RELIEF GOODS</h3>
-        <div class="row">
-          <div class="col-md-4" style="border-right:1px solid black " align="CENTER">
-            <h3>FOOD</h3>
-            <label>20</label>
-          </div>
-          <div class="col-md-4" align="CENTER">
-            <h3>NON-FOOD</h3>
-            <label>20</label></div>
-        </div>
-        <p></p>
-        <button class="btn btn-primary">VIEW MORE DETAILS</button>
-        <p></p>
+        <table class="table table-striped table-hover border rounded">
+          <thead>
+            <tr>
+              <th >First Name</th>
+              <th >Last Name</th>
+              <th >Contact Number</th>
+              <th >Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr class="">
+              <td>James Mathew</td>
+              <td>Juntado</td>
+              <td>09380261902</td>
+              <td class="position-relative">
+                <div class = "row">
+                  <div class = "col-md-6">
+                    <%= link_to evac_facilities_form_path, class: "btn btn-outline-success btn-sm", style: "float: right;" do %>
+                      Confirm
+                    <% end %>
+                  </div>
+                  <div class = "col-md-6">
+                    <%= link_to evac_facilities_form_path, class: "btn btn-outline-danger btn-sm" do %>
+                      <i class="fa-solid fa-x px-2"></i>
+                    <% end %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-  
-  </body>
-</html>
+    <div class="row p-2" style="background-image: linear-gradient(#f0f0f0, #b8dbd9); border-top: 2px solid black; border-radius: 2px;">
+      <legend >
+        <button id="disaster-name-dv"  class="rounded fs-1 poppins dropdown-toggle border-0 fw-bold mt-2 mx-2 bg-transparent" data-bs-toggle="dropdown" aria-expanded="false">
+          Typhoon Juan
+        </button>
+        <ul class="dropdown-menu">
+          <li>Typhoon B</li>
+          <li>Typhoon C</li>
+          <li>Typhoon D</li>
+          <li>Typhoon E</li>
+          <li>Typhoon F</li>
+          <li>Typhoon G</li>
+          <li>Typhoon H</li>
+          <li>Typhoon I</li>
+          <li>Typhoon J</li>
+        </ul>
+      </legend>
+      <div class="col">
+        <div class="row">
+          <div class="col-md-9">
+            <h1 class="oswald fw" >EVACUEES OVERVIEW</h1>
+          </div>
+          <div class="col">
+            <%= link_to "Update", evac_facilities_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" style="border-right: 2px solid black;">
+            <div class="row">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">MALE: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw">0</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">FEMALES: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw">2</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">TOTAL: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw">2</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">FAMILIES: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw">2</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p>&nbsp;</p>
+        <a class="btn btn-primary w-100 oswald fw-bold">VEIW MORE DETAILS</a>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col-md-9">
+            <h1 class="oswald fw" style="border-bottom: 2px solid black">RELIEF GOODS OVERVIEW</h1>
+          </div>
+          <div class="col">
+            <%= link_to "Update", evac_facilities_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+          </div>
+        </div>
+        <p>&nbsp;</p>
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col">
+                <p class="h2 oswald fw" align="center">FOOD: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw" align="center">NON-FOOD </p>
+              </div>
+            </div>
+            <div class="row" style="border-top: 2px solid black;">
+              <div class="col">
+                <p class="h2 oswald fw" align="center"> 2</p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw" align="center">2</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+          </div>
+        </div>
+        <p>&nbsp;</p>
+        <a class="btn btn-primary w-100 oswald fw-bold">VEIW MORE DETAILS</a>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+  </div>
+</div>

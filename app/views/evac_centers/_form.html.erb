@@ -1,6 +1,7 @@
-<%= form_with url:"/evac_centers", method: :post, model: evac_center, local: true, class: "row g-3" do |form| %>
+<%= form_with(model: evac_center,local: true, class:"row g-3")  do |form|%>
   <% invalid_name = evac_center.errors.include?(:name) %>
   <% invalid_barangay = evac_center.errors.include?(:barangay) %>
+  <% invalid_capacity = evac_center.errors.include?(:capacity) %>
   <div class="col-md-6">
     <%= form.label :name, class: "form-label poppins" %>
     <div class="form-group">
@@ -21,6 +22,20 @@
       <% if invalid_barangay %>
         <div class="invalid-feedback d-block">
           <% evac_center.errors[:barangay].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <!-- <%= form.label :camp_manager, class: "form-label poppins capitalize" %> -->
+    <%= form.label :capacity, class: "form-label poppins" %>
+    <div class="form-group">
+      <%= form.number_field :capacity, class:"form-control #{'is-invalid' if invalid_capacity}", placeholder: "Capacity"%>
+      <% if invalid_capacity %>
+        <div class="invalid-feedback d-block">
+          <% evac_center.errors[:capacity].each do |error_message| %>
             <%= error_message %>.
           <% end %>
         </div>
