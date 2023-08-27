@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  volunteer_id: 1
+  evac_profile_id: 1
+
+two:
+  volunteer_id: 1
+  evac_profile_id: 1

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @evac_center %>
+
+<div>
+  <%= link_to "Edit this evac center", edit_evac_center_path(@evac_center) %> |
+  <%= link_to "Back to evac centers", evac_centers_path %>
+
+  <%= button_to "Destroy this evac center", @evac_center, method: :delete %>
+</div>
