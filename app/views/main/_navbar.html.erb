@@ -3,14 +3,18 @@
     <%= link_to root_path, class: "navbar-brand" do %>
       <i class="fa-solid fa-person-shelter mx-2"></i>Naga E-Bakwit
     <% end %>
+    <% if session[:user_id] != nil %>
+      <a class="navbar-brand" href = "#" style = "float:right;" >Hi <%= User.find(session[:user_id]).fname %>!</a>
+    <% end %>
     <!-- Example single danger button -->
+    <% if session[:user_type] == "ADMIN"%>
       <div class="btn-group">
         <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
           Admin Controls
         </button>
         <ul class="dropdown-menu poppins">
           <p class="text-center">Lists</p>
-          <li><%= link_to "Evacuation Centers", root_path, class: "dropdown-item" %></li>
+          <li><%= link_to "Evacuation Centers", "/evac_centers", class: "dropdown-item" %></li>
           <li><%= link_to "Disasters", root_path, class: "dropdown-item" %></li>
           <li><%= link_to "Households", root_path, class: "dropdown-item" %></li>
           <li><%= link_to "Relief Goods", root_path, class: "dropdown-item" %></li>
@@ -22,11 +26,8 @@
           <li><%= link_to "Log Households", root_path, class: "dropdown-item" %></li>
           <li><%= link_to "Log Relief Goods", root_path, class: "dropdown-item" %></li>
           <li><%= link_to "Create Volunteers", root_path, class: "dropdown-item" %></li>
-          
         </ul>
       </div>
-    <% if session[:user_id] != nil %>
-      <a class="navbar-brand" href = "#" >Hi <%= User.find(session[:user_id]).fname %>!</a>
     <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">

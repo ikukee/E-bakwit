@@ -1,7 +1,7 @@
 class MainController < ApplicationController
    #before_action :is_logged_in, except: %i[login logout register login_proceed register_proceed index]
     def index
-
+        @evac_centers = EvacCenter.all
     end
 
     def login
@@ -83,23 +83,24 @@ class MainController < ApplicationController
     def send_request_proceed
         @request = Request.new
      
-        @request.fname = params[:request][:fname]
-        @request.lname = params[:request][:lname]
+        @request.fname = params[:request][:fname].upcase
+        @request.lname = params[:request][:lname].upcase
         @request.bdate = params[:request][:bdate]
         @request.email = params[:request][:email]
         @request.cnum = params[:request][:cnum]
-        @request.address = params[:request][:address]
+        @request.request_date = Date.today()
+        @request.address = params[:request][:address].upcase
         @request.images.attach(params[:request][:valid_id])
         @request.images.attach(params[:request][:selfie])
         @request.status = "PENDING"
-       
-      
+        
         respond_to do |format|
             if @request.valid?
                 if params[:request][:valid_id] == nil || params[:request][:selfie] == nil
                     format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea","Both IDs are required.")}
                 else
                     @request.save
+                    format.html{redirect_to "/login"}
                 end
                 
             else

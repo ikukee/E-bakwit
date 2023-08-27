@@ -1,11 +1,4 @@
-<%= render 'navbar' %>
 <p></p>
-<style>
-    *{
-
-        outline: 0px dashed red;
-    }
-</style>
 <div class="row">
     <div class="col">
 
@@ -18,7 +11,7 @@
                         <h1 class="oswald fw" style="border-bottom: 2px solid black">EVACUATION PROFILE</h1>
                     </div>
                     <div class="col">
-                        <a  class="btn btn-outline-danger w-100 oswald fw-bold">UPDATE</a>
+                        <a href="/evac_center_form" class="btn btn-outline-danger w-100 oswald fw-bold">UPDATE</a>
                     </div>
                 </div>
                 <div class="row">
@@ -157,7 +150,7 @@
                         <h1 class="oswald fw" style="border-bottom: 2px solid black">RELIEF GOODS OVERVIEW</h1>
                     </div>
                     <div class="col">
-                         <%= link_to "Update", evac_facilities_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+                         <%= link_to "Update", "log_relief_form", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
                     </div>
                 </div>
                
