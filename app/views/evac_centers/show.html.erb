@@ -41,7 +41,15 @@
             <p class="h4 oswald fw" align="right">Camp Manager: </p>
           </div>
           <div class="col">
-            <p class="h2 oswald fw">John Doe</p>
+            <div class="row">
+              <div class="col">
+                <p class="h2 oswald fw">John Doe</p>
+              </div>
+              <div class="col">
+              
+                <%= link_to "Edit Manager", new_camp_manager_path, class:"btn btn-outline-primary"  %>
+              </div>
+              </div>
           </div>
         </div>
         <div class="row">
@@ -97,11 +105,38 @@
     <div class="row">
       <div class="col p-3 m-1" style="background: white; box-shadow: 1px 1px .5em #586F7C; border-radius: 2px">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-11">
             <h1 class="oswald fw" style="border-bottom: 2px solid black">VOLUNTEERS</h1>
+          </div>
+          <div class="col-md-1">
+            <a class="btn btn-secondary" >Add</a>
           </div>
         </div>
         <table class="table table-striped table-hover border rounded">
+
+          <div class="row">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-prepend w-25">
+                            <p align="center" class="h5 oswald fw">Volunteer Name: </p>
+                        </div>
+                       <button id="disaster-name-dv"  class="form-control" data-bs-toggle="dropdown" aria-expanded="false">
+                        Volunteer A
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li>Volunteer B</li>
+                              </ul>
+                            </legend>
+
+                    
+                    </div>
+                   
+                </div><br>
+                 <a class="btn btn-success">Submit</a><p>
+            </div>
+          </div>
           <thead>
             <tr>
               <th >First Name</th>
