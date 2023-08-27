@@ -26,6 +26,10 @@ class MainController < ApplicationController
         
     end
 
+    def log_relief_form
+        
+    end
+
     def login_proceed
         user = User.find_by(email: params[:email])
         respond_to do |format|
