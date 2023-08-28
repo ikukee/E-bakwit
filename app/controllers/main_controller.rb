@@ -52,7 +52,7 @@ class MainController < ApplicationController
         end
     end
 
-    def logEvacuee
+    def log_evacuee
         
     end
 

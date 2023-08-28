@@ -1,13 +1,5 @@
-
-<div class="row p-2">
-    <div class="col-2"><a href="/evac/${}">Back</a></div>
-    <div class="col">
-        <p class="h1 oswald fw-bold" align="left">
-            Evacuation center name
-        </p>
-    </div>
-        
-</div>
+<!-- header -->
+<%= render 'header_back'%>
 <div class="row p-2">
     <div class="col"></div>
     <div class="col-md-8" >
@@ -100,8 +92,60 @@
         <%= form_with(model: @evac_profile, local: true, class: "row g-3") do |form| %>
             <div class="col p-3 m-1" id="logging-style-form">
                 <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >FAMILY MEMBERS</h2>
-                
-                <br>
+                                                
+                <table class="table table-striped table-hover border rounded">
+                                <thead>
+                                    <tr>
+                                    <th class="col">Name</th>
+                                    <th class="col">Age</th>
+                                    <th class="col">Sex</th>
+                                    <th class="col">Demographics</th>
+                                    <th class="col-md-2">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                    <tr >
+                                        <td><b>PANIS, Romeo II M. </b></td>
+                                        <td>22</td>
+                                        <td>Male</td>
+                                        <td>Adult</td>
+                                        <td class="position-relative">
+                                            <div class="row">
+                                            <div class="col">
+                                                <%= link_to "/log", class: "btn btn-dark btn-sm" do %>
+                                                    <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>&nbsp;Edit
+                                                <% end %>
+                                            </div>
+                                            <div class="col">
+                                                <%= link_to "/log", class: "btn btn-danger btn-sm" do %>
+                                                    <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>&nbsp;Delete
+                                                <% end %>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                    <tr >
+                                        <td>Sandy </td>
+                                        <td>17</td>
+                                        <td>Female</td>
+                                        <td>Teenager</td>
+                                        <td class="position-relative">
+                                            <div class="row">
+                                            <div class="col">
+                                                <%= link_to "/log", class: "btn btn-dark btn-sm" do %>
+                                                    <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>&nbsp;Edit
+                                                <% end %>
+                                            </div>
+                                            <div class="col">
+                                                <%= link_to "/log", class: "btn btn-danger btn-sm" do %>
+                                                    <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>&nbsp;Delete
+                                                <% end %>
+                                            </div>
+                                        </div>
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
             </div>
         </div> 
         <%end%>

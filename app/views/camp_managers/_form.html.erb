@@ -10,33 +10,39 @@
       </ul>
     </div>
   <% end %>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col">
+      <div>
+        <%= form.label :fname, style: "display: block" %>
+        <%= form.text_field :fname, class: "form-control" %>
+      </div>
 
-  <div>
-    <%= form.label :fname, style: "display: block" %>
-    <%= form.text_field :fname %>
-  </div>
+      <div>
+        <%= form.label :lname, style: "display: block" %>
+        <%= form.text_field :lname, class: "form-control"  %>
+      </div>
 
-  <div>
-    <%= form.label :lname, style: "display: block" %>
-    <%= form.text_field :lname %>
-  </div>
+      <div>
+        <%= form.label :cnum, style: "display: block" %>
+        <%= form.text_field :cnum, class: "form-control"  %>
+      </div>
 
-  <div>
-    <%= form.label :cnum, style: "display: block" %>
-    <%= form.text_field :cnum %>
-  </div>
+      <div>
+        <%= form.label :address, style: "display: block" %>
+        <%= form.text_field :address, class: "form-control"  %>
+      </div>
 
-  <div>
-    <%= form.label :address, style: "display: block" %>
-    <%= form.text_field :address %>
+      <div>
+        <%= form.label :status, style: "display: block" %>
+        <%= form.text_field :status, class: "form-control"  %>
+      </div>
+      <p></p>
+      <div>
+        <%= form.submit class: "btn btn-success w-100"  %>
+      </div>
+    </div>
+    <div class="col"></div>
   </div>
-
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
+  
 <% end %>
