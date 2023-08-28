@@ -13,41 +13,40 @@
                  <%= form_with(model: @evac_profile, local: true, class: "row g-3") do |form| %>
                     
                             <table class="table table-striped table-hover border rounded">
-                            
-                            <thead>
-                                <tr>
-                                <th class="col-md-6">Household</th>
-                                <th class="col-md-2"># of Member</th>
-                                <th class="col-md-4"></th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr >
-                                    <td>PANIS, Romeo II M. <b>Household<b></td>
-                                    <td>7</td>
-                                    <td class="position-relative">
-                                    <div class="position-absolute end-0 pe-4">
-                                        <%= link_to "/log", class: "btn btn-outline-success btn-sm" do %>
-                                            <i class="fa-regular fa-folder-open" style="color: #6bd600;"></i>&nbsp; View
-                                        <% end %>
-                                        
-                                    </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Spoon & Fork</td>
-                                    <td>50 pairs</td>
-                                    <td class="position-relative">
-                                    <div class="position-absolute end-0 pe-4">
-                                        <%= link_to "/log", class: "btn btn-outline-success btn-sm" do %>
-                                            <i class="fa-regular fa-folder-open" style="color: #6bd600;"></i>&nbsp; View
-                                        <% end %>
-                                        
-                                    </div>
-                                    </td>
-                                </tr>
-                                
-                            </tbody>
+                                <thead>
+                                    <tr>
+                                    <th class="col-md-6">Household</th>
+                                    <th class="col-md-2"># of Member</th>
+                                    <th class="col-md-4"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                    <tr >
+                                        <td>PANIS, Romeo II M. <b>Household<b></td>
+                                        <td>7</td>
+                                        <td class="position-relative">
+                                        <div class="position-absolute end-0 pe-4">
+                                            <%= link_to "/log", class: "btn btn-outline-success btn-sm" do %>
+                                                <i class="fa-regular fa-folder-open" style="color: #6bd600;"></i>&nbsp; View
+                                            <% end %>
+                                            
+                                        </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Spoon & Fork</td>
+                                        <td>50 pairs</td>
+                                        <td class="position-relative">
+                                        <div class="position-absolute end-0 pe-4">
+                                            <%= link_to "/log", class: "btn btn-outline-success btn-sm" do %>
+                                                <i class="fa-regular fa-folder-open" style="color: #6bd600;"></i>&nbsp; View
+                                            <% end %>
+                                            
+                                        </div>
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
                             </table>
                         
                     
