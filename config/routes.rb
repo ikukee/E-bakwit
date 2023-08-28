@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   get "/evac_facilities_form", to: "main#evac_facilities_form"
   get "/log_relief_form", to: "main#log_relief_form"
   get "/login", to: "main#login"
-  get "/dashboard", to: "main#volunteer-dash"
   get "/register", to: "main#register"
   get "/log", to: "main#log_evacuee"
   get "/update", to: "main#updateFacilities"

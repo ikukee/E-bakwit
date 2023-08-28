@@ -105,18 +105,23 @@
                                 </thead>
                                 <tbody class="table-group-divider">
                                     <tr >
-                                        <td>PANIS, Romeo II M. </td>
+                                        <td><b>PANIS, Romeo II M. </b></td>
                                         <td>22</td>
                                         <td>Male</td>
                                         <td>Adult</td>
                                         <td class="position-relative">
-                                        <div class="position-absolute end-0 pe-4">
-                                            <%= link_to "/log", class: "btn btn-outline-success btn-sm" do %>
-                                                <i class="fa-regular fa-folder-open" style="color: #6bd600;"></i>&nbsp; View
-                                            <% end %>
-                                            
+                                            <div class="row">
+                                            <div class="col">
+                                                <%= link_to "/log", class: "btn btn-dark btn-sm" do %>
+                                                    <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>&nbsp;Edit
+                                                <% end %>
+                                            </div>
+                                            <div class="col">
+                                                <%= link_to "/log", class: "btn btn-danger btn-sm" do %>
+                                                    <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>&nbsp;Delete
+                                                <% end %>
+                                            </div>
                                         </div>
-                                        </td>
                                     </tr>
                                     <tr >
                                         <td>Sandy </td>
@@ -124,11 +129,17 @@
                                         <td>Female</td>
                                         <td>Teenager</td>
                                         <td class="position-relative">
-                                        <div class="position-absolute end-0 pe-4">
-                                            <%= link_to "/log", class: "btn btn-outline-success btn-sm" do %>
-                                                <i class="fa-regular fa-folder-open" style="color: #6bd600;"></i>&nbsp; View
-                                            <% end %>
-                                            
+                                            <div class="row">
+                                            <div class="col">
+                                                <%= link_to "/log", class: "btn btn-dark btn-sm" do %>
+                                                    <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>&nbsp;Edit
+                                                <% end %>
+                                            </div>
+                                            <div class="col">
+                                                <%= link_to "/log", class: "btn btn-danger btn-sm" do %>
+                                                    <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>&nbsp;Delete
+                                                <% end %>
+                                            </div>
                                         </div>
                                         </td>
                                     </tr>
