@@ -1,8 +1,6 @@
 
 
-<%= render "navbar" %>
-
-<div id="evac-form" class="row  m-3 p-3 rounded">
+<div id="evac-form" class="row position-relative my-auto mx-3 p-3 rounded">
   <div id="req-table" class="col-md-6">
       <h1 class="oswald fw-bold p-3">Volunteer Requests</h1>
       <table class="table table-striped">
@@ -129,12 +127,12 @@
       </table>
   </div>
   <div id="evac-form" class="col-md-6 border-1 bg-secondary poppins">
-    <div class="row">
-      <div class="col-md-6">
-            <!-- picture ning valid id -->
+    <div class="row center">
+      <div class="col center">
+        <%= image_tag "sample_id.png", id: "volunteer-id" %>
       </div>
-      <div class="col-md-6">
-            <!-- picture ning selfie -->
+      <div class="col">
+        <%= image_tag "sample_selfie.png", id: "volunteer-selfie" %>
       </div>
     </div>
 
@@ -186,8 +184,17 @@
         Juan
       </div>
     </div>
-    <div class="row">
-
+    <div class="row position-absolute bottom-0">
+      <div class="col position-relative">
+        <%= link_to evac_facilities_form_path, class: "btn btn-success btn-lg mb-1 me-2 position-absolute end-0" do %>
+          <i class="fa-solid fa-magnifying-glass"></i>  Approve
+        <% end %> 
+      </div>
+      <div class="col">
+        <%= link_to evac_facilities_form_path, class: "btn btn-danger btn-lg mb-1 me-2" do %>
+          <i class="fa-solid fa-magnifying-glass"></i>  Reject
+        <% end %>  
+      </div>
     </div>
   </div>
 </div>
