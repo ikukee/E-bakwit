@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :camp_managers
   resources :evac_centers
+  resources :base_records
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
@@ -18,7 +19,7 @@ Rails.application.routes.draw do
   get "/requestcreate", to: "main#reqCreate"
   get "/logout",to:"main#logout"
   get "/requests",to:"main#volunteer_requests"
-  get "/distribution", to: "main#reliefdist "
+  get "/distribution", to: "main#reliefdist"
   get "/families", to: "main#evac_families"
   delete "/evac_centers/:id/destroy",to:"evac_centers#destroy"
 
