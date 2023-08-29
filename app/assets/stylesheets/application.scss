@@ -215,3 +215,21 @@ span{
     max-height: 20em;
     max-width: 29em;
 }
+
+#view-request {
+    background-image: linear-gradient(#f0f0f0, #b8dbd9);
+    height: 95%;
+}
+
+#view-request #approve{
+    width: 7em;
+}
+
+#back-button{
+    color: #20292e;
+}
+
+#back-button:hover {
+    color: #20292e;
+    text-shadow: 1px 1px 0.1em #fff;
+}
