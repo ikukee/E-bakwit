@@ -1,4 +1,5 @@
 <body style = "background: #b8dbd9;">
+<%= render "default_back" %>
   <span>&nbsp;</span>
   <div class="mx-auto col-md-4 p-5" style="box-shadow: rgb(81, 81, 81) 0px 0px 12px 2px;" id="login-container">
     <div class="row">
@@ -7,7 +8,6 @@
         <div id = "request_form">
           <%= render partial: "reqCreate_form", locals: {request: Request.new} %>
         </div>
-        <%= link_to 'Back', :back %>
       </div>
     </div>
   </div>
