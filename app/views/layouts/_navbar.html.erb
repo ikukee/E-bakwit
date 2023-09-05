@@ -18,10 +18,10 @@
           <li><%= link_to "Disasters", root_path, class: "dropdown-item" %></li>
           <li><%= link_to "Households", root_path, class: "dropdown-item" %></li>
           <li><%= link_to "Relief Goods", root_path, class: "dropdown-item" %></li>
-          <li><%= link_to "Volunteers", root_path, class: "dropdown-item" %></li>
+          <li><%= link_to "Volunteers", "/volunteers", class: "dropdown-item" %></li>
           <li><hr class="dropdown-divider"></li>
           <p class="text-center">Controls</p>
-          <li><%= link_to "New Evacuation Centers", root_path, class: "dropdown-item" %></li>
+          <li><%= link_to "New Evacuation Centers", "/evac_centers/new", class: "dropdown-item" %></li>
           <li><%= link_to "New Disasters", root_path, class: "dropdown-item" %></li>
           <li><%= link_to "Log Households", root_path, class: "dropdown-item" %></li>
           <li><%= link_to "Log Relief Goods", root_path, class: "dropdown-item" %></li>
@@ -34,11 +34,17 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <% if session[:user_type] =="ADMIN"%>
           <li class="nav-item "><a class="nav-link" aria-current="page" href="/evac_centers"><i class="fa-solid fa-house"></i> Home</a></li>
+        <% elsif session[:user_id] !=nil %>
+          <% if User.find(session[:user_id]).currently_assigned != nil && session[:user_id] != nil%>
+            <li class="nav-item "><a class="nav-link" aria-current="page" href="/evac_centers/<%= User.find(session[:user_id]).currently_assigned%>"><i class="fa-solid fa-house"></i> Home</a></li>
+          <% else %>
+            <li class="nav-item "><a class="nav-link" aria-current="page" href="/dashboard"><i class="fa-solid fa-house"></i> Home</a></li>
+          <% end %>
         <% else %>
           <li class="nav-item "><a class="nav-link" aria-current="page" href="/dashboard"><i class="fa-solid fa-house"></i> Home</a></li>
         <% end %>
-        <li class="nav-item"><a class="nav-link" href="/account_details"><i class="fa-solid fa-user"></i> Your Account</a></li>
-        <li class="nav-item"><a class="nav-link" href="/subscription"><i class="fa-solid fa-crown"></i> Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="fa-solid fa-user"></i> Your Account</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="fa-solid fa-crown"></i> Contact</a></li>
         <% if session[:user_id] == nil%>
           <li class="nav-item"><a class="nav-link" href="/login"><i class="fa-regular fa-address-card"></i> Login</a></li>
         <% end %>

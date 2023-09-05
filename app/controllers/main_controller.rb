@@ -34,18 +34,37 @@ class MainController < ApplicationController
         user = User.find_by(email: params[:email])
         respond_to do |format|
             if user.present?
-                if user.authenticate(params[:password])
-                    session[:user_id] = user.id
-                    session[:user_type] = user.user_type
-                    if user.user_type == "ADMIN"
-                        format.html{redirect_to "/evac_centers"}
+                if user.status == "PENDING"
+                    if user.password_digest == params[:password]
+                        session[:user_id] = user.id
+                        session[:user_type] = user.user_type
+                        if user.user_type == "ADMIN"
+                            format.html{redirect_to "/evac_centers"}
+                        else
+                            format.html{redirect_to "/new_user/#{user.id}"}
+                        end
                     else
-                        format.html{redirect_to "/dashboard"}
+                        format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>INCORRECT PASSWORD!</li></ul>")}
                     end
-                    
                 else
-                    format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>INCORRECT PASSWORD!</li></ul>")}
+                    if user.authenticate(params[:password])
+                        session[:user_id] = user.id
+                        session[:user_type] = user.user_type
+                        if user.user_type == "ADMIN"
+                            format.html{redirect_to "/evac_centers"}
+                        else
+                            if user.currently_assigned != nil
+                                format.html{redirect_to "/evac_centers/#{user.currently_assigned}"}
+                            else
+                                format.html{redirect_to "/dashboard"}
+                            end
+                        end
+                        
+                    else
+                        format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>INCORRECT PASSWORD!</li></ul>")}
+                    end
                 end
+             
             else
                 format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>ACCOUNT NOT FOUND!</li></ul>")}
             end
@@ -54,30 +73,6 @@ class MainController < ApplicationController
 
     def log_evacuee
         
-    end
-
-
-    def register_proceed
-        @user = User.new
-        @user.username = params[:user][:register_username]
-        puts @user.username
-        @user.password_digest = params[:user][:password_digest]
-        @user.status = "UNSUBSCRIBED"
-        respond_to do |format|
-            if @user.valid?
-                if @user.password_digest == params[:user][:confirm_password]
-                    @user.password_digest = BCrypt::Password.create(@user.password_digest)
-                    @user.save
-                    session[:user_id] = @user.id
-                    session[:user_status] = @user.status
-                    format.html{redirect_to "/account_details/subscribe"}
-                else
-                    format.turbo_stream{render turbo_stream: turbo_stream.update("registration_area", partial: "registration_form", locals:{user: @user, notice: "Password did not match!"})}
-                end
-            else
-                format.turbo_stream{render turbo_stream: turbo_stream.update("registration_area", partial: "registration_form", locals:{user: @user, notice: ""})}
-            end
-        end
     end
 
     def send_request_proceed
@@ -109,10 +104,5 @@ class MainController < ApplicationController
         end
 
     end
-
-    def volunteer_requests
-
-    end
-
 
 end

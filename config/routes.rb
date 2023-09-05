@@ -17,12 +17,26 @@ Rails.application.routes.draw do
   get "/update", to: "main#updateFacilities"
   get "/requestcreate", to: "main#reqCreate"
   get "/logout",to:"main#logout"
-  get "/requests",to:"main#volunteer_requests"
+  get "/requests",to:"volunteer#volunteer_requests"
   get "/distribution", to: "main#reliefdist"
   get "/families", to: "main#evac_families"
-  delete "/evac_centers/:id/destroy",to:"evac_centers#destroy"
+  get "/dashboard",to:"main#index"
+  get "/new_user/:id",to:"volunteer#first_login"
+  get "/volunteers",to:"volunteer#index"
+  
 
   post "/login/proceed",to:"main#login_proceed"
   post "/send_request",to:"main#send_request_proceed"
+  post "/requests/:id",to:"volunteer#display_request"
+  post "/volunteer/:id",to:"volunteer#display_volunteer"
+  post "/approve_request/:id",to:"volunteer#approve_request"
+  post "/reject_request/:id",to:"volunteer#reject_request"
+  post "/change_password",to:"volunteer#change_password"
+  post "/add_volunteer",to:"evac_centers#add_volunteer"
 
+  post "/evac_centers/:id/display_year_profile",to:"evac_centers#display_yearly_profile"
+  post "/volunteers/search",to:"volunteer#search_volunteers"
+  post "/evac_centers/search",to:"evac_centers#search"
+  delete "/remove_volunteer/:id",to:"evac_centers#remove_volunteer"
+  delete "/evac_centers/:id/destroy",to:"evac_centers#destroy"
 end

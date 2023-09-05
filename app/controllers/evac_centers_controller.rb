@@ -3,13 +3,69 @@ class EvacCentersController < ApplicationController
 
   # GET /evac_centers or /evac_centers.json
   def index
-    @evac_centers = EvacCenter.all
+    @evac_centers = EvacCenter.all.order(name: :asc)
   end
 
   # GET /evac_centers/1 or /evac_centers/1.json
   def show
+    @evacYearlyProfile = EvacYearlyProfile.all.where(evac_id: params[:id]).last
+    
   end
 
+  def search
+    search_type = "name"
+    @evac_centers = EvacCenter.where("#{search_type} LIKE ? ", "#{params[:search_value]}%").order(name: :asc)
+    respond_to do |format|
+      if @evac_centers.length > 0
+          format.turbo_stream{render turbo_stream: turbo_stream.update("evac_centers",partial: "evac_search_results", locals:{evac_centers:@evac_centers })}
+      elsif @evac_centers.length <= 0
+          format.turbo_stream{render turbo_stream: turbo_stream.update("evac_centers","<h2 style = 'text-align:center'>No Record/s found.</h2>")}
+      end
+    end
+
+  end
+
+  def display_yearly_profile
+    @evac_center = EvacCenter.find(params[:id])
+    @evacYearlyProfile = EvacYearlyProfile.find(params[:eid])
+    @assignedYearlyVol = AssignedYearlyVol.all.where(evac_profile_id: @evacYearlyProfile.id)
+    respond_to do |format|
+      format.turbo_stream{render turbo_stream: turbo_stream.update("display_year_profile", partial:"display_year_profile",locals:{evac_center: @evac_center ,evac_yearly_profile: @evacYearlyProfile, assigned_yearly_vol: @assignedYearlyVol})}
+    end
+
+  end
+
+  def add_volunteer
+    assignedYearlyVol = AssignedYearlyVol.new
+    assignedYearlyVol.volunteer_id = params[:user_id]
+    assignedYearlyVol.evac_profile_id = params[:evac_profile_id]
+    evac_yearly_profile = EvacYearlyProfile.find(params[:evac_profile_id])
+    evac_center = EvacCenter.find(evac_yearly_profile.evac_id)
+    user = User.find(params[:user_id])
+    user.assigned = true
+    user.currently_assigned = evac_center.id
+    respond_to do |format|
+      user.save
+      assignedYearlyVol.save
+      assignedYearlyVol= AssignedYearlyVol.all.where(evac_profile_id: evac_yearly_profile.id)
+      format.turbo_stream{render turbo_stream: turbo_stream.update("display_year_profile", partial:"display_year_profile",locals:{evac_center: evac_center ,evac_yearly_profile: evac_yearly_profile, assigned_yearly_vol: assignedYearlyVol})}
+    end
+  end
+
+  def remove_volunteer
+    assignedYearlyVol = AssignedYearlyVol.find(params[:id])
+    evac_yearly_profile = EvacYearlyProfile.find(assignedYearlyVol.evac_profile_id)
+    evac_center = EvacCenter.find(evac_yearly_profile.evac_id)
+    user = User.find(assignedYearlyVol.volunteer_id)
+    user.assigned = false
+    user.currently_assigned = nil
+    respond_to do |format|
+      assignedYearlyVol.destroy
+      user.save
+      assignedYearlyVol = AssignedYearlyVol.all.where(evac_profile_id: evac_yearly_profile.id)
+      format.turbo_stream{render turbo_stream: turbo_stream.update("display_year_profile", partial:"display_year_profile",locals:{evac_center: evac_center ,evac_yearly_profile: evac_yearly_profile, assigned_yearly_vol: assignedYearlyVol})}
+    end
+  end
   # GET /evac_centers/new
   def new
     @evac_center = EvacCenter.new
@@ -25,6 +81,10 @@ class EvacCentersController < ApplicationController
     
     respond_to do |format|
       if @evac_center.save
+        @evacYearlyProfile = EvacYearlyProfile.new
+        @evacYearlyProfile.evac_id = @evac_center.id
+        @evacYearlyProfile.year = Date.today().year
+        @evacYearlyProfile.save
         format.html { redirect_to evac_center_url(@evac_center), notice: "Evac center was successfully created." }
         format.json { render :show, status: :created, location: @evac_center }
       else
@@ -52,7 +112,21 @@ class EvacCentersController < ApplicationController
 
   # DELETE /evac_centers/1 or /evac_centers/1.json
   def destroy
+    @evacYearlyProfile = EvacYearlyProfile.all.where(evac_id: @evac_center.id)
+    @evacYearlyProfile.each do |ec|
+      @assignedYearlyVol = AssignedYearlyVol.all.where(evac_profile_id: ec.id)
+      @assignedYearlyEss = AssignedYearlyEss.all.where(evac_profile_id: ec.id)
+      @assignedYearlyVol.each do |av|
+        av.destroy
+      end
+      @assignedYearlyEss.each do |ae|
+        ae.destroy
+      end
+      ec.destroy
+    end
     @evac_center.destroy
+   
+   
 
     respond_to do |format|
       format.html { redirect_to evac_centers_url, notice: "Evac center was successfully destroyed." }

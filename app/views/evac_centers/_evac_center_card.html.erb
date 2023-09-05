@@ -16,6 +16,7 @@
       </div>
     </div>
   </div>
+  <% evac_yearly_profile = EvacYearlyProfile.all.where(evac_id: evac_center.id)%>
   <%= link_to "/evac_centers/#{evac_center.id}", class: "btn btn-info form-control" do %>
     View <i class="fa-solid fa-eye"></i>
   <% end %>

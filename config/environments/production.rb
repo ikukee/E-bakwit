@@ -1,6 +1,20 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+
+  config.action_mailer.deliver_method = :smtp
+  host = "jmjuntado@gbox.adnu.edu.ph"
+  config.action_mailer.default_url_options = {host: host}
+
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :user_name => "jmjuntado@gbox.adnu.edu.ph"
+    :password => "@Mitsuki1208!?"
+    :authentication => "plain"
+    :enable_starttls_auto => true
+  }
+  config.require_master_key = true
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.

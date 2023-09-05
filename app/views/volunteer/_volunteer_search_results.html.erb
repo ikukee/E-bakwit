@@ -1,0 +1,34 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="col-md-3">Name</th>
+      <th class="col-md-1">Is Assigned</th>
+      <th class="col-md-1">Status</th>
+      <th class="col-md-1">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.each do |user| %>
+      <tr>
+        <td class="col-md-3"><%= user.full_name %></td>
+        <% if user.assigned == true%>
+          <td>YES</td>
+        <% else %>
+          <td>NO</td>
+        <% end %>
+        <% if user.status == "ACTIVE"%>
+          <td style = "color:green;"><strong><%= user.status%></strong></td>
+        <% else%>
+          <td style = "color:yellow;"><strong><%= user.status%></strong></td>
+        <% end %>
+        <td class="col-md-1 position-relative">
+          <%= form_with url: "/volunteer/#{user.id}", method: :post do |form| %>
+            <%= form.button nil, class: "form-control btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+              View <i class="fa-solid fa fa-eye"></i>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,7 @@
+<div class="row row-cols-1 row-cols-md-4 g-4 px-5 m-0">
+  <% evac_centers.each do |evac_center| %>
+    <div class="col">
+      <%= render partial: "evac_center_card", locals:{evac_center: evac_center} %>
+    </div>
+  <% end %>
+</div>

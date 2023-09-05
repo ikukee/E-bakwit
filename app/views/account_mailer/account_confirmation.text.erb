@@ -1,0 +1,12 @@
+Hi <%= @user.fname%>!
+
+Congratulations your volunteer request application has been approved!
+===============================================
+
+ To open your account access the link provided below and input the your registered email and the temporary password provided
+      --------------------------
+Link: <a href = "/login">E-Bakwit</a>
+Email: <%= @user.email%>
+Temporary Password: <%= @user.password_digest %>
+
+Message:

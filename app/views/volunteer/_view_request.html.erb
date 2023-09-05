@@ -1,0 +1,108 @@
+<style>
+  .img-circular{
+      width: 200px;
+      height: 200px;
+      background-size: cover;
+      display: block;
+      border-radius: 100px;
+      -webkit-border-radius: 100px;
+      -moz-border-radius: 100px;
+     }
+</style>
+<div class="row">
+  <div class="col-md-4 text-end">
+    Request Date:
+  </div>
+  <div class="col-md-8 fw-bold">
+    <%= request.request_date%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 text-end">
+    First Name:
+  </div>
+  <div class="col-md-8 fw-bold">
+    <%= request.fname%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 text-end">
+    Last Name:
+  </div>
+  <div class="col-md-8 fw-bold">
+    <%= request.lname%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 text-end">
+    Birthdate:
+  </div>
+  <div class="col-md-8 fw-bold">
+    <%= request.bdate%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 text-end">
+    Address:
+  </div>
+  <div class="col-md-8 fw-bold">
+    <%= request.address%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 text-end">
+    Email:
+  </div>
+  <div class="col-md-8 fw-bold">
+    <%= request.email%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 text-end">
+    Contact number:
+  </div>
+  <div class="col-md-8 fw-bold">
+    <%= request.cnum%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 text-end">
+    Status:
+  </div>
+  <div class="col-md-8 fw-bold">
+    <%= request.status%>
+  </div>
+</div>
+<br>
+<h4 style = "text-align:center;"><strong>Supporting Documents</strong></h4>
+<div class="row mb-3">
+  <div class="my-auto text-center w-100">
+    <% if request.images.attached? %>
+      <% request.images.each do |img| %>
+        <% if img.representable? %>
+          <%= image_tag img.representation(resize_to_limit: [300,300])%>
+        <% end %>
+        <br>
+        <br>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<% if request.status == "PENDING" %>
+  <div class="row oswald">
+    <div class="col position-relative">
+      <div class="position-absolute mt-4 end-0">
+        <%= form_with url:"/approve_request/#{request.id}", method: :post do |form| %>
+          <%= form.button nil, class: "btn btn-success mb-1" do %>
+            <i class="fa-solid fa-user-check"></i> Approve
+          <% end %>
+        <% end %>
+        <%= form_with url:"/reject_request/#{request.id}", method: :post do |form| %>
+          <%= form.button nil, class: "btn btn-danger mb-1" do %>
+            <i class="fa-solid fa-xmark"></i> Reject
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

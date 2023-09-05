@@ -1,0 +1,293 @@
+<div class="row">
+  <div class="col">
+  </div>
+  <div class="col-md-9">
+    <div class="row">
+      <div class="col p-3 m-1" style="background-image: linear-gradient(#f0f0f0, #b8dbd9); box-shadow: 1px 1px .5em #586F7C; border-radius: 2px; ">
+        <div class="row">
+          <div class="col-md-9">
+            <h1 class="oswald fw" style="border-bottom: 2px solid black">EVACUATION PROFILE</h1>
+          </div>
+          <% if session[:user_type] == "ADMIN"%>
+            <div class="col">
+              <a  href = "/evac_centers/<%=evac_center.id%>/edit" class="btn btn-outline-danger w-100 oswald fw-bold">UPDATE</a>
+            </div>
+          <% end %>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <p class="h4 oswald fw" align="right">Name: </p>
+          </div>
+          <div class="col">
+            <p class="h2 oswald fw" ><%= evac_center.name %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <p class="h4 oswald fw" align="right">Address: </p>
+          </div>
+          <div class="col">
+            <p class="h2 oswald fw"><%= evac_center.barangay %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <p class="h4 oswald fw" align="right">Camp Manager: </p>
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <p class="h2 oswald fw">John Doe</p>
+              </div>
+              <div class="col">
+                <%= link_to "Edit Manager", new_camp_manager_path, class:"btn btn-outline-primary"  %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <p class="h4 oswald fw" align="right">Official Evacuation Center: </p>
+          </div>
+          <% if evac_center.isInside == true %>
+            <div class="col">
+              <p class="h2 oswald fw">YES</p>
+            </div>
+          <% else %>
+            <div class="col">
+              <p class="h2 oswald fw">NO</p>
+            </div>
+          <% end%>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <p class="h4 oswald fw" align="right">Capacity: </p>
+          </div>
+          <div class="col">
+            <p class="h2 oswald fw"><%= evac_center.capacity %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col p-3 m-1" style="background: white; box-shadow: 1px 1px .5em #586F7C; border-radius: 2px">
+        <div class="row">
+          <div class="col-md-9">
+            <h1 class="oswald fw" style="border-bottom: 2px solid black"><%= evac_yearly_profile.year%> PROFILE</h1>
+          </div>
+          <% if session[:user_type] == "ADMIN"%>
+            <div class="col">
+              <%= link_to "Update", evac_facilities_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+            </div>
+          <% else %>
+            <% if User.find(session[:user_id]).currently_assigned != nil%>
+              <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
+                <div class="col">
+                  <%= link_to "Update", evac_facilities_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <p class="h4 oswald fw h-100" align="right">LATRINES: </p>
+          </div>
+          <div class="col">
+            <p class="h2 oswald fw">0</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <p class="h4 oswald fw" align="right">CHILD-SPACES: </p>
+          </div>
+          <div class="col">
+            <p class="h2 oswald fw">2</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col p-3 m-1" style="background: white; box-shadow: 1px 1px .5em #586F7C; border-radius: 2px">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="oswald fw" style="border-bottom: 2px solid black">VOLUNTEERS</h1>
+          </div>
+        </div>
+        <% if session[:user_type] == "ADMIN"%>
+          <label class="oswald fw">Volunteer Name: </label>
+          <%= form_with url:"/add_volunteer", method: :post do |form|%>
+            <div class="row">
+              <div class="col-md-8">
+                <%= form.hidden_field :evac_profile_id, :value => evac_yearly_profile.id %>
+                <%= form.collection_select :user_id , User.all.where(assigned: false).where(status: "ACTIVE").order(:lname), :id, :full_name,{:prompt => "Select Volunteer"},{class:"form-control",style:"float:right;"} %>
+              </div>
+              <div class = "col-md-4">
+                <%= form.button nil, class:"form-control btn btn-success" do %>
+                  Add volunteer <i class="fa-solid fa-plus"></i>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+        <br>
+        <div id = "display_volunteers">
+          <table class="table table-striped table-hover border rounded">
+            <thead>
+              <tr>
+                <th >First Name</th>
+                <th >Last Name</th>
+                <th >Contact Number</th>
+                <% if session[:user_type] == "ADMIN"%>
+                  <th >Actions</th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              <% assigned_yearly_vol.each do |av| %>
+                <% user = User.find(av.volunteer_id) %>
+                <tr class="">
+                  <td><%= user.fname%></td>
+                  <td><%= user.lname%></td>
+                  <td><%= user.cnum%></td>
+                  <% if session[:user_type] == "ADMIN"%>
+                    <td class="position-relative">
+                      <%= link_to "/remove_volunteer/#{av.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+                        Remove <i class="fa fa-trash" aria-hidden="true"></i>
+                      <% end %>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row p-2" style="background-image: linear-gradient(#f0f0f0, #b8dbd9); border-top: 2px solid black; border-radius: 2px;">
+      <legend >
+        <button id="disaster-name-dv"  class="rounded fs-1 poppins dropdown-toggle border-0 fw-bold mt-2 mx-2 bg-transparent" data-bs-toggle="dropdown" aria-expanded="false">
+          Typhoon Juan
+        </button>
+        <ul class="dropdown-menu">
+          <li>Typhoon B</li>
+          <li>Typhoon C</li>
+          <li>Typhoon D</li>
+          <li>Typhoon E</li>
+          <li>Typhoon F</li>
+          <li>Typhoon G</li>
+          <li>Typhoon H</li>
+          <li>Typhoon I</li>
+          <li>Typhoon J</li>
+        </ul>
+      </legend>
+      <div class="col">
+        <div class="row">
+          <div class="col-md-9">
+            <h1 class="oswald fw" >EVACUEES OVERVIEW</h1>
+          </div>
+          <% if session[:user_type] == "ADMIN"%>
+            <div class="col">
+              <%= link_to "Log Evacuee", "/log", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+            </div>
+          <% else %>
+            <% if User.find(session[:user_id]).currently_assigned != nil%>
+              <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
+                <div class="col">
+                  <%= link_to "Log Evacuee", "/log", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="row">
+          <div class="col" style="border-right: 2px solid black;">
+            <div class="row">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">MALE: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw">0</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">FEMALES: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw">2</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">TOTAL: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw">2</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">FAMILIES: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw">2</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p>&nbsp;</p>
+        <a href="/families" class="btn btn-primary w-100 oswald fw-bold">View Families</a>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col-md-9">
+            <h1 class="oswald fw" style="border-bottom: 2px solid black">RELIEF GOODS OVERVIEW</h1>
+          </div>
+          <% if session[:user_type] == "ADMIN"%>
+            <div class="col">
+              <%= link_to "Update", log_relief_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+            </div>
+          <% else %>
+            <% if User.find(session[:user_id]).currently_assigned != nil%>
+              <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
+                <div class="col">
+                  <%= link_to "Update", log_relief_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+        <p>&nbsp;</p>
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col">
+                <p class="h2 oswald fw" align="center">FOOD: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw" align="center">NON-FOOD </p>
+              </div>
+            </div>
+            <div class="row" style="border-top: 2px solid black;">
+              <div class="col">
+                <p class="h2 oswald fw" align="center"> 2</p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw" align="center">2</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+          </div>
+        </div>
+        <p>&nbsp;</p>
+        <a href="" class="btn btn-primary w-100 oswald fw-bold">VEIW RELIEF</a>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+  </div>
+</div>
