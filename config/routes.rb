@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   get "/dashboard",to:"main#index"
   get "/new_user/:id",to:"volunteer#first_login"
   get "/volunteers",to:"volunteer#index"
+  get "/disasters", to: "disasters#index"
+  get "/disasters/new", to: "disasters#new"
+
   
 
   post "/login/proceed",to:"main#login_proceed"
