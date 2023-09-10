@@ -23,6 +23,14 @@ Rails.application.routes.draw do
   get "/dashboard",to:"main#index"
   get "/new_user/:id",to:"volunteer#first_login"
   get "/volunteers",to:"volunteer#index"
+
+  # base tables
+  get "/base", to: "base_records#index"
+  get "/base/disaster_form", to: "base_records#disaster_form"
+  get "/base/relief_form", to:"base_records#relief_form"
+  get "/base/family_form", to:"base_records#family_form"
+
+  
   
 
   post "/login/proceed",to:"main#login_proceed"
