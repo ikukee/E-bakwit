@@ -17,6 +17,9 @@ body {
 .oswald{
     font-family: 'Oswald', sans-serif;
 }
+.montserrat{
+    font-family: 'Montserrat', sans-serif;
+}
 
 /* Navbar */
 
@@ -122,7 +125,7 @@ body {
     font-size: 1.2em;
 }
 
-#evac-card {
+#evac-card{
     background-image: linear-gradient(#f0f0f0, #b8dbd9);
     box-shadow: 1px 1px 0.5em #586F7C;
 }
@@ -232,4 +235,37 @@ span{
 #back-button:hover {
     color: #20292e;
     text-shadow: 1px 1px 0.1em #fff;
+}
+
+// disaster
+
+#disaster-card {
+    background-image: linear-gradient(#f0f0f0, #b8dbd9);
+    box-shadow: 1px 1px 0.5em #586F7C;
+
+}
+
+#disaster-card .card-header{
+    background: #20292e;
+    color: #f0f0f0;
+    box-shadow: 0 0.3em 0.4em -0.2em #555;
+}
+
+#disaster-desc {
+    color: #4f6977;
+    border: 0.1em dashed #9bb0bb;
+}
+
+#add-disaster-button {
+    right: 3em;
+    top: 4em;
+}
+
+#disaster-show{
+    border: 0.2em solid #20292e;
+}
+
+#disaster-details{
+    border: 0.15em dashed #20292e;
+    background-image: linear-gradient(#f0f0f0, #b8dbd9);
 }
