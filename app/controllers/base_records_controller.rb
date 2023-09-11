@@ -1,11 +1,15 @@
 class BaseRecordsController < ApplicationController
-    def index
-       
-    end
-    def new
-        @base_records = BaseRecord.new
+ 
+    def relief_good
 
     end
-    def family_form
+
+    def new_relief
+       @relief_good = ReliefGood.new
     end
+
+    def create_relief
+
+    end
+
 end

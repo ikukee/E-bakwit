@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  houseNum: 1
+  streetNum: 1
+  barangay: MyString
+  is_4ps: false
+
+two:
+  name: MyString
+  houseNum: 1
+  streetNum: 1
+  barangay: MyString
+  is_4ps: false

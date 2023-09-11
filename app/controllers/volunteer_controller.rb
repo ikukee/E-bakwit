@@ -114,11 +114,11 @@ class VolunteerController < ApplicationController
         end
     end
 
-
+    def download
+        request = Request.find(params[:id])
+        img = request.images.find_by(blob_id: params[:img_id])
+        extension = img.filename.to_s.split(".")
+        send_data img.download, filename: "Attachment #{params[:counter]}.#{extension[1]}", type: img.content_type
+    end
     
-
-
-
-
-
 end

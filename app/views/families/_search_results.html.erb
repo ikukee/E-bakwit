@@ -1,0 +1,50 @@
+<table class="table table-striped table-hover border rounded">
+  <thead>
+    <tr>
+      <th class="col">FAMILY NAME</th>
+      <th class="col">NO# Members</th>
+      <th class="col">BARANGAY</th>
+      <th class="col">4PS</th>
+      <th class="col">CURRENTLY EVACUATED</th>
+      <th class="col-md-2">Actions</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <% families.each do |family| %>
+      <tr>
+        <td><b><%= family.name %></b></td>
+        <td><%= FamilyMember.all.where(family_id: family.id).count %></td>
+        <td><%=family.barangay%></td>
+        <% if family.is_4ps == true %>
+          <td>YES</td>
+        <% else %>
+          <td>NO</td>
+        <% end %>
+        <% if family.is_evacuated == true %>
+          <td>YES</td>
+        <% else %>
+          <td>NO</td>
+        <% end %>
+        <td style = "width:40%;">
+          <div class = "row">
+            <div class = "col-md-4">
+              <%= link_to "/families/#{family.id}", class: "btn btn-info form-control" do %>
+                <i class="fa-solid fa-eye"></i> View
+              <% end %>
+            </div>
+            <div class = "col-md-4">
+              <%= link_to "/families/#{family.id}/edit", class: "btn btn-secondary form-control" do %>
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              <% end %>
+            </div>
+            <div class = "col-md-4">
+              <%= link_to "/families/#{family.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+                <i class="fa-solid fa-trash-can"></i> Delete
+              <% end %>
+            </div>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

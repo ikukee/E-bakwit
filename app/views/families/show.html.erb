@@ -1,0 +1,43 @@
+<div style="overflow-x:hidden; margin: 25px 25px 25px 25px;" class="text-xs-center" >
+  <div class="card" >
+    <div class="card-body" >
+      <div class="card-deck">
+        <div class="card shadow">
+          <div style = "margin: 25px 25px 25px 25px">
+            <div class = "row">
+              <div class = "col-md-8">
+                <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;"><%= @family.name %> FAMILY RECORD</h2>
+              </div>
+              <div class = "col-md-2" style = "margin-top:10px;">
+                <a href = "/families/<%= @family.id%>/edit"><button class = "btn btn-warning form-control"><i class="fas fa-edit"></i> Edit this Family</button></a>
+              </div>
+              <div class = "col-md-2" style = "margin-top:10px;">
+                <a href = "/families"><button class = "btn btn-primary form-control"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Families</button></a>
+              </div>
+            </div>
+            <div class = "row" style = "margin: 25px 25px 25px 25px">
+              <p><strong>Address: </strong>Zone <%= @family.zone %>, <%= @family.houseNum %> <%= @family.streetName %> ,<%= @family.barangay %>, NAGA CITY, CAMARINES SUR</p>
+              <% if @family.is_4ps == true%>
+                <p><strong>Is 4ps? </strong>YES</p>
+              <% else %>
+                <p><strong>Is 4ps? </strong>NO</p>
+              <% end %>
+              <% if @family.is_evacuated == true%>
+                <p><strong>Is currently evacuated? </strong>YES</p>
+              <% else %>
+                <p><strong>Is currently evacuated? </strong>NO</p>
+              <% end %>
+              <p><strong>Number of members: </strong><%= FamilyMember.all.where(family_id: @family.id).count %></p>
+            </div>
+            <div id= "member_form_area">
+              <%= render partial:"add_member", locals:{family:@family, family_member: FamilyMember.new}%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id ="show_member_area">
+  <%= render partial: "show_members", locals:{family_members: FamilyMember.all.where(family_id: @family.id).order(age: :desc)}%>
+</div>

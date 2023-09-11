@@ -1,0 +1,54 @@
+<div class="row p-2">
+  <div class="col"></div>
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-2">
+        <%= link_to ' Back', '/evac_centers', class: "fa fa-arrow-left btn btn-primary m-2" %>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+  </div>
+  <div class="col">  </div>
+</div>
+<style>
+  *{outline:0px dashed red;}
+</style>
+<div class="row p-2">
+  <div class="col"></div>
+  <div class="col-md-8" id="logging-style-form">
+    <div class = "row">
+      <div class = "col-md-8">
+        <h1 class="oswald fw">DISASTER</h1>
+      </div>
+      <div class = "col-md-4">
+        <a href = "/disasters/new" ><button style = "margin-top:5px;" class = "btn btn-primary form-control"><i class="fa-solid fa-plus"></i> Record new Disaster</button></a>
+      </div>
+    </div>
+    <%= form_with url: "/disasters/search", method: :post do |form| %>
+      <label for = "search_criteria"><strong>Search Criteria:</strong></label>
+      <div class="input-group mb-3">
+        <%= form.select :search_type, options_for_select(["NAME","TYPE","YEAR"]),{},{class:"form-control"}%>
+        <%= form.search_field :search_value , class: "form-control", placeholder: "Search a data here", oninput: "this.form.requestSubmit()" %>
+      </div>
+    <% end %>
+    <div id = "disasters">
+      <%= render partial: "search_results",locals:{disasters:@disasters}%>
+    </div>
+    <% if @disasters_count > 5 %>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-left">
+          <li class="page-item ">
+            <% if @page  > 0 %>
+              <%= link_to "Previous Page", "/disasters?page=#{@page-1}", class:"page-link"%>
+            <% end %>
+          </li>
+          <li class="page-item">
+            <%= link_to "Next Page","/disasters?page=#{@page + 1}", class:"page-link"%>
+          </li>
+        </ul>
+      </nav>
+    <% end %>
+  </div>
+  <div class="col"></div>
+</div>

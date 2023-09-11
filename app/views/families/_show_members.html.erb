@@ -1,0 +1,68 @@
+<div style="overflow-x:hidden; margin: 25px 25px 25px 25px;" class="text-xs-center" >
+  <div class="row p-2">
+    <div class="col-md-12" >
+      <div class="row p-1">
+        <div class="col p-3 m-1" id="logging-style-form">
+          <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >FAMILY MEMBERS</h2>
+          <table class="table table-striped table-hover border rounded">
+            <thead>
+              <tr>
+                <th class="col">First Name</th>
+                <th class="col">Last Name</th>
+                <th class="col">Age</th>
+                <th class="col">Sex</th>
+                <th class="col">Parent? </th>
+                <th class="col">Pregnant? </th>
+                <th class="col">PWD?</th>
+                <th class="col">Breastfeeding?</th>
+                <th class="col-md-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              <% family_members.each do |member| %>
+                <tr >
+                  <td><%= member.fname%></td>
+                  <td><%= member.lname%></td>
+                  <td><%= member.age%></td>
+                  <td><%= member.sex%></td>
+                  <% if member.is_parent == true %>
+                    <td>YES</td>
+                  <% else %>
+                    <td>NO</td>
+                  <% end %>
+                  <% if member.is_pregnant == true %>
+                    <td>YES</td>
+                  <% else %>
+                    <td>NO</td>
+                  <% end %>
+                  <% if member.is_pwd == true %>
+                    <td>YES</td>
+                  <% else %>
+                    <td>NO</td>
+                  <% end %>
+                  <% if member.is_breastfeeding == true %>
+                    <td>YES</td>
+                  <% else %>
+                    <td>NO</td>
+                  <% end %>
+                  <td class="position-relative">
+                    <div class ="row">
+                      <div class = "col-md-6">
+                        <%= link_to "/log", class: "btn btn-dark btn-sm" do %>
+                          <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>&nbsp;Edit
+                        <% end %>
+                      </div>
+                      <div class = "col-md-6">
+                        <%= link_to "/family_member/#{member.id}/destroy", class:"btn btn-danger btn-sm", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+                          Delete <i class="fa fa-trash" aria-hidden="true"></i>
+                        <% end %>
+                      </div>
+                    </div>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>

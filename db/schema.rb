@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_05_082006) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_11_065458) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -65,6 +65,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_05_082006) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "disasters", force: :cascade do |t|
+    t.string "name"
+    t.string "disaster_type"
+    t.date "year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "evac_centers", force: :cascade do |t|
     t.string "name"
     t.boolean "isInside"
@@ -92,6 +100,42 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_05_082006) do
     t.integer "evac_id"
     t.integer "manager_id"
     t.date "year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "families", force: :cascade do |t|
+    t.string "name"
+    t.integer "houseNum"
+    t.integer "streetNum"
+    t.string "barangay"
+    t.boolean "is_4ps"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "zone"
+    t.string "streetName"
+    t.boolean "is_evacuated"
+  end
+
+  create_table "family_members", force: :cascade do |t|
+    t.integer "family_id"
+    t.string "fname"
+    t.string "lname"
+    t.integer "age"
+    t.boolean "is_pregnant"
+    t.boolean "is_parent"
+    t.boolean "is_pwd"
+    t.boolean "is_breastfeeding"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "sex"
+  end
+
+  create_table "relief_goods", force: :cascade do |t|
+    t.string "name"
+    t.boolean "is_food"
+    t.string "unit"
+    t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -78,11 +78,10 @@
 <div class="row mb-3">
   <div class="my-auto text-center w-100">
     <% if request.images.attached? %>
+      <% counter = 1 %>
       <% request.images.each do |img| %>
-        <% if img.representable? %>
-          <%= image_tag img.representation(resize_to_limit: [300,300])%>
-        <% end %>
-        <br>
+        <a href = "/download/<%= request.id%>/<%= img.id %>/<%= counter %>"> Attachment <%= counter%></a>
+        <% counter = counter +1%>
         <br>
       <% end %>
     <% end %>

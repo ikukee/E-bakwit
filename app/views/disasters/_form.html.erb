@@ -1,0 +1,48 @@
+<%= form_with(model: disaster, local: true, class: "row g-3") do |form| %>
+  <div class="row p-2">
+    <div class="col"></div>
+    <div class="col-md-8" >
+      <div class="row p-1">
+        <% invalid_name = disaster.errors.include?(:name) %>
+        <% invalid_type = disaster.errors.include?(:disaster_type) %>
+        <div class="col p-3 m-1" id="logging-style-form">
+          <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >DISASTER INFORMATION</h2>
+          <div class="form-group">
+            <%= form.label :name, class: "h5 oswald fw text-uppercase" do %>
+              Disaster Name: 
+            <% end %>
+            <%= form.text_field :name, class:"form-control #{'is-invalid' if invalid_name}", placeholder: "Disaster Name"%>
+            <% if invalid_name %>
+              <div class="invalid-feedback d-block">
+                <% disaster.errors[:name].each do |error_message| %>
+                  <%= error_message %>.
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <br>
+          <div class="form-group">
+            <%= form.label :type, class: "h5 oswald fw text-uppercase" do %>
+              Disaster Type: 
+            <% end %>
+            <% if disaster.disaster_type == nil %>
+              <%= form.select :disaster_type, options_for_select(["Man-made", "Natural"]), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_type}"} %>
+            <% else %>
+              <%= form.select :disaster_type, options_for_select(["Man-made", "Natural"],:selected => disaster.disaster_type.to_s ), {}, {class: "form-control #{'is-invalid' if invalid_type}"} %>
+            <%  end %>
+            <% if invalid_type %>
+              <div class="invalid-feedback d-block">
+                <% disaster.errors[:disaster_type].each do |error_message| %>
+                  <%= error_message %>.
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <br>
+          <%= form.submit "Done", class:"btn btn-success text-light rounded-bottom p-2 w-100 text-decoration-none text-center"%>
+        </div>
+      </div>
+    </div>
+    <div class="col"></div>
+  </div>
+<% end %>

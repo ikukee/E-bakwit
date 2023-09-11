@@ -1,0 +1,117 @@
+<%= form_with(url: "/families/#{family.id}/add_member", method: :post, model: family_member ,local: true, class: "row g-3") do |form| %>
+  <% invalid_fname = family_member.errors.include?(:fname) %>
+  <% invalid_lname = family_member.errors.include?(:lname) %>
+  <% invalid_age = family_member.errors.include?(:age) %>
+  <% invalid_sex = family_member.errors.include?(:sex) %>
+  <div class = "row">
+    <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;">FAMILY MEMBER LOGGING</h2>
+    <div class ="row">
+      <div class = "col-md-3">
+        <div class="form-group">
+          <%= form.label :fname, class: "h5 oswald fw text-uppercase" do %>
+            First Name: 
+          <% end %>
+          <%= form.text_field :fname, class:"form-control #{'is-invalid' if invalid_fname}", placeholder: "First Name"%>
+          <% if invalid_fname %>
+            <div class="invalid-feedback d-block">
+              <% family_member.errors[:fname].each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class = "col-md-3">
+        <div class="form-group">
+          <%= form.label :lname, class: "h5 oswald fw text-uppercase" do %>
+            Last Name: 
+          <% end %>
+          <%= form.text_field :lname, class:"form-control #{'is-invalid' if invalid_lname}", placeholder: "Last Name", :value => family.name %>
+          <% if invalid_lname %>
+            <div class="invalid-feedback d-block">
+              <% family_member.errors[:lname].each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class = "col-md-3">
+        <div class="form-group">
+          <%= form.label :age, class: "h5 oswald fw text-uppercase" do %>
+            Age: 
+          <% end %>
+          <%= form.number_field :age, class:"form-control #{'is-invalid' if invalid_age}", placeholder: "Age"%>
+          <% if invalid_age %>
+            <div class="invalid-feedback d-block">
+              <% family_member.errors[:age].each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class = "col-md-3">
+        <div class="form-group">
+          <%= form.label :sex, class: "h5 oswald fw text-uppercase" do %>
+            Sex: 
+          <% end %>
+          <% if family_member.sex == nil %>
+            <%= form.select :sex, options_for_select(["Male", "Female"]), {:prompt => "Select Sex"}, class: "form-control #{'is-invalid' if invalid_sex}" %>
+          <% else %>
+            <%= form.select :sex, options_for_select(["Male", "Female"], :selected => family_member.sex.to_s), {}, class: "form-control #{'is-invalid' if invalid_sex}" %>
+          <% end %>
+          <% if invalid_sex %>
+            <div class="invalid-feedback d-block">
+              <% family_member.errors[:sex].each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class = "row">
+      <div class = "col-md-3">
+        <br>
+        <div class="input-group mb-3">
+          <label class = "h5 oswald fw text-uppercase" >
+            Is Pregnant?  
+          </label>
+          <%= form.check_box :is_pregnant %>
+        </div>
+      </div>
+      <div class = "col-md-3">
+        <br>
+        <div class="input-group mb-3">
+          <label class = "h5 oswald fw text-uppercase" >
+            Is Parent?
+          </label>
+          <%= form.check_box :is_parent %>
+        </div>
+      </div>
+      <div class = "col-md-3">
+        <br>
+        <div class="input-group mb-3">
+          <label class = "h5 oswald fw text-uppercase" >
+            Is PWD?
+          </label>
+          <%= form.check_box :is_pwd%>
+        </div>
+      </div>
+      <div class = "col-md-3">
+        <br>
+        <div class="input-group mb-3">
+          <label class = "h5 oswald fw text-uppercase" >
+            Breastfeeding? 
+          </label>
+          <%= form.check_box :is_breastfeeding %>
+        </div>
+      </div>
+    </div>
+    <div style = "text-align:center; width:100%;">
+      <br>
+      <%= form.submit "ADD MEMBER", class: "btn btn-success"%>
+    </div>
+  </div>
+<% end %>

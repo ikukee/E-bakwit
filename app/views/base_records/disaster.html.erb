@@ -1,0 +1,58 @@
+<%= render '/layouts/default_back' %>
+<style>
+  *{outline:0px dashed red;}
+</style>
+<div class="row p-2">
+  <div class="col"></div>
+  <div class="col-md-8" id="logging-style-form">
+    <div class = "row">
+      <div class = "col-md-8">
+        <h1 class="oswald fw">DISASTER</h1>
+      </div>
+      <div class = "col-md-4">
+        <a href = "/new/disaster_form" ><button style = "margin-top:5px;" class = "btn btn-primary form-control"><i class="fa-solid fa-plus"></i> Record new Disaster</button></a>
+      </div>
+    </div>
+    <table class="table table-striped table-hover border rounded">
+      <thead>
+        <tr>
+          <th class="col">Name</th>
+          <th class="col">Type</th>
+          <th class="col">Year</th>
+          <th class="col-md-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <% @disasters.each do |disaster|%>
+          <tr>
+            <td><b><%= disaster.name%></b></td>
+            <td><%= disaster.disaster_type %></td>
+            <td><%= disaster.year%></td>
+            <td class="position-relative">
+              <%= link_to "/disasters/#{disaster.id}/edit", class: "btn btn-dark form-control" do %>
+                <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>&nbsp;Edit
+              <% end %>
+              <%= link_to "/disasters/#{disaster.id}/destroy", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+                Delete <i class="fa fa-trash" aria-hidden="true"></i>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% if @disasters_count > 10 %>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-left">
+            <li class="page-item ">
+              <% if @page  > 0 %>
+                <%= link_to "Previous Page", "/disasters?page=#{@page-1}", class:"page-link"%>
+              <% end %>
+            </li>
+            <li class="page-item">
+              <%= link_to "Next Page","/disasters?page=#{@page + 1}", class:"page-link"%>
+            </li>
+          </ul>
+        </nav>
+      <% end %>
+    </div>
+    <div class="col"></div>
+  </div>

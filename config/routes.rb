@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :families
+  resources :disasters
   resources :camp_managers
   resources :evac_centers
   resources :base_records
@@ -23,15 +25,15 @@ Rails.application.routes.draw do
   get "/dashboard",to:"main#index"
   get "/new_user/:id",to:"volunteer#first_login"
   get "/volunteers",to:"volunteer#index"
+  get "/download/:id/:img_id/:counter",to:"volunteer#download"
 
   # base tables
-  get "/base", to: "base_records#index"
-  get "/base/disaster_form", to: "base_records#disaster_form"
-  get "/base/relief_form", to:"base_records#relief_form"
-  get "/base/family_form", to:"base_records#family_form"
+  post "/disasters/search",to:"disasters#search"
+  get "/relief_goods", to: "base_records#relief_good"
+  get "/new/relief_form", to:"base_records#new_relief"
 
   
-  
+
 
   post "/login/proceed",to:"main#login_proceed"
   post "/send_request",to:"main#send_request_proceed"
@@ -41,10 +43,14 @@ Rails.application.routes.draw do
   post "/reject_request/:id",to:"volunteer#reject_request"
   post "/change_password",to:"volunteer#change_password"
   post "/add_volunteer",to:"evac_centers#add_volunteer"
-
   post "/evac_centers/:id/display_year_profile",to:"evac_centers#display_yearly_profile"
   post "/volunteers/search",to:"volunteer#search_volunteers"
   post "/evac_centers/search",to:"evac_centers#search"
+  post "/families/:id/add_member",to:"families#add_member"
+
+
   delete "/remove_volunteer/:id",to:"evac_centers#remove_volunteer"
   delete "/evac_centers/:id/destroy",to:"evac_centers#destroy"
+  delete "/family_member/:id/destroy",to:"families#destroy_member"
+
 end
