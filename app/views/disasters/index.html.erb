@@ -1,0 +1,14 @@
+<%= render "main/back_button" %>
+
+<%= link_to disasters_new_path, id: "add-disaster-button", class: "position-absolute btn btn-lg btn-warning poppins" do %>
+    <i class="fa-solid fa-folder-plus"></i> Add New Disaster
+<% end %>
+
+<div class="row row-cols-1 row-cols-md-4 mt-3 g-4 px-5 m-0">
+    <%= render "disaster_card" %>
+    <%= render "disaster_card" %>
+    <%= render "disaster_card" %>
+    <%= render "disaster_card" %>
+    <%= render "disaster_card" %>
+    <%= render "disaster_card" %>
+</div>

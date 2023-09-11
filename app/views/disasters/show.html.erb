@@ -1,0 +1,50 @@
+
+<div id="disaster-show" class="rounded py-4 px-3 dropdown m-3 mt-4">
+    <fieldset>
+        <div id="pop-title" class="btn-group">
+        <legend>
+            <button id="disaster-name" class="rounded fs-1 poppins dropdown-toggle border-0 fw-bold px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                
+                Typhoon Juan
+            </button>
+            <ul class="dropdown-menu">
+                <li>Typhoon B</li>
+                <li>Typhoon C</li>
+                <li>Typhoon D</li>
+                <li>Typhoon E</li>
+                <li>Typhoon F</li>
+                <li>Typhoon G</li>
+                <li>Typhoon H</li>
+                <li>Typhoon I</li>
+                <li>Typhoon J</li>
+            </ul>
+        </legend>
+    </fieldset>
+    <div id="disaster-details" class="row m-3 p-2 montserrat rounded fw-bold">
+        <div class="row">
+            <div class="col-md-2 my-2">
+                <p>Disaster Type: Typhoon</p>
+                <p>Date Occured: 09/01/2023</p>
+            </div>
+            <div class="col-md-10 mt-2">
+                Description:
+                <p class="fw-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-11">
+            </div>
+            <div class="col-md-1 text-end">
+                <%= link_to disasters_new_path, id: "add-disaster-button", class: "link poppins text-decoration-none" do %>
+                    <i class="fa-solid fa-folder-plus"></i> Update
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div class="p-3">
+        <h3>Evacuation Centers</h3>
+        <!-- render evac center cards here -->
+    </div>
+</div>
+ 
+  
