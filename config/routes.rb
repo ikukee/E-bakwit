@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   # base tables
   post "/disasters/search",to:"disasters#search"
   get "/relief_goods", to: "base_records#relief_good"
-  get "/new/relief_form", to:"base_records#new_relief"
+  get "/new/relief_form", to:"base_records#relief_form"
 
   
 
