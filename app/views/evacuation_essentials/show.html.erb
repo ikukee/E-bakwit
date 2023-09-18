@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @evacuation_essential %>
+
+<div>
+  <%= link_to "Edit this evacuation essential", edit_evacuation_essential_path(@evacuation_essential) %> |
+  <%= link_to "Back to evacuation essentials", evacuation_essentials_path %>
+
+  <%= button_to "Destroy this evacuation essential", @evacuation_essential, method: :delete %>
+</div>

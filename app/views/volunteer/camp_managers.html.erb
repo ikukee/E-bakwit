@@ -2,23 +2,23 @@
 <div id="evac-form" class="row position-relative my-auto mx-3 p-3 rounded">
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a href = "/volunteers" style = "text-decoration:none"><button class = "nav-link active">Volunteers</button></a>
+      <a href = "/volunteers" style = "text-decoration:none"><button class = "nav-link ">Volunteers</button></a>
     </li>
     <li class="nav-item">
-      <a href = "/camp_managers" style = "text-decoration:none"><button class = "nav-link ">Camp Managers</button></a>
+      <a href = "/camp_managers" style = "text-decoration:none"><button class = "nav-link active">Camp Managers</button></a>
     </li>
     <li class="nav-item">
       <a href = "/requests" style = "text-decoration:none"><button class = "nav-link ">Volunteer Requests</button></a>
     </li>
   </ul>
   <div id="req-table " class="col-md-6">
-    <h1 class="oswald fw-bold p-3">List of Volunteers</h1>
+    <h1 class="oswald fw-bold p-3">List of Camp Managers</h1>
     <%= form_with url: "/users/search", method: :post do |form| %>
       <label for = "search_criteria"><strong>Search Criteria:</strong></label>
       <div class="input-group mb-3">
-        <%= form.hidden_field :user_type, :value => "VOLUNTEER"%>
+        <%= form.hidden_field :user_type, :value => "CAMP MANAGER"%>
         <%= form.select :search_type, options_for_select(["LAST NAME","IS ASSIGNED","STATUS"]),{},{class:"form-control"}%>
-        <%= form.search_field :search_value , class: "form-control", placeholder: "Search a Volunteer", oninput: "this.form.requestSubmit()" %>
+        <%= form.search_field :search_value , class: "form-control", placeholder: "Search a Camp Manager", oninput: "this.form.requestSubmit()" %>
       </div>
     <% end %>
     <div id = "users">
@@ -29,11 +29,11 @@
         <ul class="pagination justify-content-left">
           <li class="page-item ">
             <% if @page  > 0 %>
-              <%= link_to "Previous Page", "/volunteers?page=#{@page-1}", class:"page-link"%>
+              <%= link_to "Previous Page", "/camp_managers?page=#{@page-1}", class:"page-link"%>
             <% end %>
           </li>
           <li class="page-item">
-            <%= link_to "Next Page","/volunteers?page=#{@page + 1}", class:"page-link"%>
+            <%= link_to "Next Page","/camp_managers?page=#{@page + 1}", class:"page-link"%>
           </li>
         </ul>
       </nav>

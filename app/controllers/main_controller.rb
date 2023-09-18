@@ -88,7 +88,6 @@ class MainController < ApplicationController
         @request.images.attach(params[:request][:valid_id])
         @request.images.attach(params[:request][:selfie])
         @request.status = "PENDING"
-        
         respond_to do |format|
             if @request.valid?
                 if params[:request][:valid_id] == nil || params[:request][:selfie] == nil
@@ -97,12 +96,66 @@ class MainController < ApplicationController
                     @request.save
                     format.html{redirect_to "/login"}
                 end
+            else
+                format.turbo_stream{render turbo_stream: turbo_stream.update("request_form",partial:"reqCreate_form",locals:{request:@request})}
+            end
+        end
+
+    end
+
+  
+    def new_camp_manager
+
+    end
+
+    def create_campmanager
+        @request = Request.new
+     
+        @request.fname = params[:request][:fname].upcase
+        @request.lname = params[:request][:lname].upcase
+        @request.bdate = params[:request][:bdate]
+        @request.email = params[:request][:email]
+        @request.cnum = params[:request][:cnum]
+        @request.request_date = Date.today()
+        @request.address = params[:request][:address].upcase
+        @request.images.attach(params[:request][:valid_id])
+        @request.images.attach(params[:request][:selfie])
+        @request.status = "PENDING"
+        respond_to do |format|
+            if @request.valid?
+                if params[:request][:valid_id] == nil || params[:request][:selfie] == nil
+                    format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea","Both IDs are required.")}
+                else
+                    @request.save
+                    num1 = rand(10..99).to_s
+                    num2 = rand(10..99).to_s
+                    @user = User.new
+                    @user.assigned = false
+                    @user.user_type = "CAMP MANAGER"
+                    @user.status = "PENDING"
+                    @user.fname = @request.fname
+                    @user.lname = @request.lname
+                    @user.email = @request.email
+                    @user.cnum = @request.cnum
+                    @user.bdate = @request.bdate
+                    @user.address = @request.address
+                    @user.password_digest = "@Vr"+ num1 + num2 + @request.bdate.year.to_s    
+                    @user.full_name = @request.lname.to_s + ", "+ @request.fname.to_s
+                    if @user.valid?
+                        @user.save
+                        @request.status = "APPROVED"
+                        @request.save
+                        AccountMailer.with(user: @user).account_confirmation.deliver_now
+                        format.html{redirect_to "/camp_managers"}
+                    end
+                end
                 
             else
                 format.turbo_stream{render turbo_stream: turbo_stream.update("request_form",partial:"reqCreate_form",locals:{request:@request})}
             end
         end
 
+        
     end
 
 end

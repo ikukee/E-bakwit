@@ -66,6 +66,36 @@ class EvacCentersController < ApplicationController
       format.turbo_stream{render turbo_stream: turbo_stream.update("display_year_profile", partial:"display_year_profile",locals:{evac_center: evac_center ,evac_yearly_profile: evac_yearly_profile, assigned_yearly_vol: assignedYearlyVol})}
     end
   end
+
+  def add_campmanager
+    evac_yearly_profile = EvacYearlyProfile.find(params[:evac_profile_id])
+    evac_center = EvacCenter.find(evac_yearly_profile.evac_id)
+    evac_yearly_profile.manager_id = params[:user_id]
+    user = User.find(params[:user_id])
+    user.assigned = true
+    user.currently_assigned = evac_center.id
+    respond_to do |format|
+      user.save
+      evac_yearly_profile.save
+      assignedYearlyVol= AssignedYearlyVol.all.where(evac_profile_id: evac_yearly_profile.id)
+      format.turbo_stream{render turbo_stream: turbo_stream.update("display_year_profile", partial:"display_year_profile",locals:{evac_center: evac_center ,evac_yearly_profile: evac_yearly_profile, assigned_yearly_vol: assignedYearlyVol})}
+    end
+  end
+
+  def remove_campmanager
+    evac_yearly_profile = EvacYearlyProfile.find(params[:id])
+    evac_center = EvacCenter.find(evac_yearly_profile.evac_id)
+    user = User.find(evac_yearly_profile.manager_id)
+    evac_yearly_profile.manager_id = nil
+    user.assigned = false
+    user.currently_assigned = nil
+    respond_to do |format|
+      evac_yearly_profile.save
+      user.save
+      assignedYearlyVol = AssignedYearlyVol.all.where(evac_profile_id: evac_yearly_profile.id)
+      format.turbo_stream{render turbo_stream: turbo_stream.update("display_year_profile", partial:"display_year_profile",locals:{evac_center: evac_center ,evac_yearly_profile: evac_yearly_profile, assigned_yearly_vol: assignedYearlyVol})}
+    end
+  end
   # GET /evac_centers/new
   def new
     @evac_center = EvacCenter.new

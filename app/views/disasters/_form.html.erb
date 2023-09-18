@@ -28,7 +28,7 @@
             <% if disaster.disaster_type == nil %>
               <%= form.select :disaster_type, options_for_select(["Man-made", "Natural"]), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_type}"} %>
             <% else %>
-              <%= form.select :disaster_type, options_for_select(["Man-made", "Natural"],:selected => disaster.disaster_type.to_s ), {}, {class: "form-control #{'is-invalid' if invalid_type}"} %>
+              <%= form.select :disaster_type, options_for_select(["Man-made", "Natural"],:selected => disaster.disaster_type.to_s ), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_type}"} %>
             <%  end %>
             <% if invalid_type %>
               <div class="invalid-feedback d-block">

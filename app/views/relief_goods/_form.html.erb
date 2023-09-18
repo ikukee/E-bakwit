@@ -1,0 +1,64 @@
+<%= form_with(model: relief_good) do |form| %>
+  <% invalid_name = relief_good.errors.include?(:name) %>
+  <% invalid_unit = relief_good.errors.include?(:unit) %>
+  <% invalid_price = relief_good.errors.include?(:price) %>
+  <div class="col p-3 m-1" id="logging-style-form">
+    <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >RELIEF INFORMATION</h2>
+    <div class="form-group">
+      <%= form.label :name, class: "h5 oswald fw text-uppercase" do %>
+        Name: 
+      <% end %>
+      <%= form.text_field :name, class:"form-control #{'is-invalid' if invalid_name}", placeholder: "Product Name"%>
+      <% if invalid_name %>
+        <div class="invalid-feedback d-block">
+          <% relief_good.errors[:name].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <br>
+    <div class="form-group">
+      <%= form.label :unit, class: "h5 oswald fw text-uppercase" do %>
+        Unit of Measurement: 
+      <% end %>
+      <% if relief_good.unit == nil %>
+        <%= form.select :unit, options_for_select(["Kilograms", "Pieces", "Meter"]), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_unit}"} %>
+      <% else %>
+        <%= form.select :unit, options_for_select(["Kilograms", "Pieces", "Meter"],:selected => relief_good.unit.to_s ), {}, {class: "form-control #{'is-invalid' if invalid_unit}"} %>
+      <%  end %>
+      <% if invalid_unit %>
+        <div class="invalid-feedback d-block">
+          <% relief_good.errors[:unit].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <br>
+    <div class="form-group">
+      <%= form.label :price, class: "h5 oswald fw text-uppercase" do %>
+        Cost Per Unit: 
+      <% end %>
+      <%= form.number_field :price, class:"form-control #{'is-invalid' if invalid_price}", placeholder: "Price Per Unit"%>
+      <% if invalid_price %>
+        <div class="invalid-feedback d-block">
+          <% relief_good.errors[:price].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <br>
+    <div class="input-group mb-3">
+      <label class = "h5 oswald fw text-uppercase" >
+        Is this a Food? (Check if yes, Leave it blank if no)
+      </label>
+      <%= form.check_box :is_food %>
+    </div>
+    <br>
+    <br>
+    <button class="btn btn-success text-light rounded-bottom p-2 w-100 text-decoration-none text-center">DONE</button>
+  </div>
+</div>
+<% end %>

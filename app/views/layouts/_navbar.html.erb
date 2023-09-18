@@ -15,6 +15,7 @@
         <ul class="dropdown-menu poppins">
           <p class="text-center">Lists</p>
           <li><%= link_to "Evacuation Centers", "/evac_centers", class: "dropdown-item" %></li>
+          <li><%= link_to "Evacuation Essentials", "/evacuation_essentials", class: "dropdown-item" %></li>
           <li><%= link_to "Disasters", "/disasters", class: "dropdown-item" %></li>
           <li><%= link_to "Households", "/families", class: "dropdown-item" %></li>
           <li><%= link_to "Relief Goods", "/relief_goods", class: "dropdown-item" %></li>
@@ -22,10 +23,10 @@
           <li><hr class="dropdown-divider"></li>
           <p class="text-center">Controls</p>
           <li><%= link_to "New Evacuation Centers", "/evac_centers/new", class: "dropdown-item" %></li>
-          <li><%= link_to "New Disasters", "/disaster/new", class: "dropdown-item" %></li>
+          <li><%= link_to "New Disasters", "/disasters/new", class: "dropdown-item" %></li>
           <li><%= link_to "Add Family", "/families/new", class: "dropdown-item" %></li>
-          <li><%= link_to "Add Relief Good", "/new/relief_form", class: "dropdown-item" %></li>
-          <li><%= link_to "Create Volunteers", root_path, class: "dropdown-item" %></li>
+          <li><%= link_to "Add Relief Good", "/relief_goods/new", class: "dropdown-item" %></li>
+          <li><%= link_to "Register Camp Manager", "/camp_manager/new", class: "dropdown-item" %></li>
         </ul>
       </div>
     <% end %>

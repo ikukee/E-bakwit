@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
+  resources :evacuation_essentials
+  resources :relief_goods
   resources :families
   resources :disasters
-  resources :camp_managers
   resources :evac_centers
   resources :base_records
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -20,34 +21,40 @@ Rails.application.routes.draw do
   get "/requestcreate", to: "main#reqCreate"
   get "/logout",to:"main#logout"
   get "/requests",to:"volunteer#volunteer_requests"
-  get "/distribution", to: "main#reliefdist"
   get "/families", to: "main#evac_families"
   get "/dashboard",to:"main#index"
   get "/new_user/:id",to:"volunteer#first_login"
   get "/volunteers",to:"volunteer#index"
   get "/download/:id/:img_id/:counter",to:"volunteer#download"
+  get "/camp_manager/new",to:"main#new_camp_manager"
+  get "/camp_managers",to:"volunteer#camp_managers"
 
   # base tables
   post "/disasters/search",to:"disasters#search"
-  get "/relief_goods", to: "base_records#relief_good"
-  get "/new/relief_form", to:"base_records#relief_form"
+  post "/families/search",to:"families#search"
+  post "/relief_goods/search",to:"relief_goods#search"
+  post "/evacuation_essentials/search",to:"evacuation_essentials#search"
 
   
 
 
   post "/login/proceed",to:"main#login_proceed"
   post "/send_request",to:"main#send_request_proceed"
+  post "/register/camp_manager", to: "main#create_campmanager"
   post "/requests/:id",to:"volunteer#display_request"
   post "/volunteer/:id",to:"volunteer#display_volunteer"
   post "/approve_request/:id",to:"volunteer#approve_request"
   post "/reject_request/:id",to:"volunteer#reject_request"
   post "/change_password",to:"volunteer#change_password"
   post "/add_volunteer",to:"evac_centers#add_volunteer"
+  post "/add_campmanager",to:"evac_centers#add_campmanager"
   post "/evac_centers/:id/display_year_profile",to:"evac_centers#display_yearly_profile"
-  post "/volunteers/search",to:"volunteer#search_volunteers"
+  post "/users/search",to:"volunteer#search"
   post "/evac_centers/search",to:"evac_centers#search"
-  post "/families/:id/add_member",to:"families#add_member"
-
+  post "/families/add_member",to:"families#add_member"
+  post "/edit/member/:id" , to:"families#edit_member"
+  post "/families/edit_member", to:"families#update_member"
+  post  "/remove_campmanager/:id",to:"evac_centers#remove_campmanager"
 
   delete "/remove_volunteer/:id",to:"evac_centers#remove_volunteer"
   delete "/evac_centers/:id/destroy",to:"evac_centers#destroy"

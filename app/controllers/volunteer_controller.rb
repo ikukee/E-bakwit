@@ -1,5 +1,15 @@
 class VolunteerController < ApplicationController
 
+    def camp_managers
+        @users = User.all.where(user_type: "CAMP MANAGER")
+        @page = params.fetch(:page, 0).to_i
+        if  @page < 0 
+            @page = 0
+        end
+        @users_count = @users.length
+        @users_count_per_page = 10
+        @users = User.offset(@page * @users_count_per_page).limit(@users_count_per_page).where(user_type: "CAMP MANAGER")
+    end 
 
     def index
         @users = User.all.where(user_type: "VOLUNTEER")
@@ -12,7 +22,8 @@ class VolunteerController < ApplicationController
         @users = User.offset(@page * @users_count_per_page).limit(@users_count_per_page).where(user_type: "VOLUNTEER")
     end
 
-    def search_volunteers
+    def search
+        user_type = params[:user_type].to_s
         search_type = params[:search_type].to_s
         if params[:search_type] == "LAST NAME"
             search_type = "lname"
@@ -21,19 +32,16 @@ class VolunteerController < ApplicationController
         else 
             search_type = "status"
         end
-        @users = User.where("#{search_type} LIKE ? ", "#{params[:search_value]}%").where(user_type: "VOLUNTEER").order(lname: :asc)
+        @users = User.where("#{search_type} LIKE ? ", "#{params[:search_value]}%").where(user_type: user_type).order(lname: :asc)
         respond_to do |format|
           if @users.length > 0
-              format.turbo_stream{render turbo_stream: turbo_stream.update("volunteers",partial: "volunteer_search_results", locals:{users:@users })}
+              format.turbo_stream{render turbo_stream: turbo_stream.update("users",partial: "search_results", locals:{users:@users })}
           elsif @users.length <= 0
-              format.turbo_stream{render turbo_stream: turbo_stream.update("volunteers","No Record/s Found")}
+              format.turbo_stream{render turbo_stream: turbo_stream.update("users","No Record/s Found")}
           end
         end
 
     end
-
-
-
 
     def volunteer_requests
         @requests = Request.all
@@ -81,7 +89,7 @@ class VolunteerController < ApplicationController
         @user.bdate = request.bdate
         @user.address = request.address
         @user.password_digest = "@Vr"+ num1 + num2 + request.bdate.year.to_s    
-    
+        @user.full_name = request.lname.to_s + ", "+ request.fname.to_s
         if @user.valid?
             @user.save
             request.status = "APPROVED"

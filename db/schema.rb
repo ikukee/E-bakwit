@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_11_065458) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_18_072156) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -55,16 +55,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_065458) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "camp_managers", force: :cascade do |t|
-    t.string "fname"
-    t.string "lname"
-    t.string "cnum"
-    t.string "address"
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "disasters", force: :cascade do |t|
     t.string "name"
     t.string "disaster_type"
@@ -82,24 +72,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_065458) do
     t.integer "capacity"
   end
 
-  create_table "evac_esses", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "evac_facilities", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "evac_yearly_profiles", force: :cascade do |t|
     t.integer "evac_id"
     t.integer "manager_id"
     t.date "year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "evacuation_essentials", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "ess_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

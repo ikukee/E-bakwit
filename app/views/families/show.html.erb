@@ -29,15 +29,32 @@
               <% end %>
               <p><strong>Number of members: </strong><%= FamilyMember.all.where(family_id: @family.id).count %></p>
             </div>
-            <div id= "member_form_area">
-              <%= render partial:"add_member", locals:{family:@family, family_member: FamilyMember.new}%>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div id ="show_member_area">
-  <%= render partial: "show_members", locals:{family_members: FamilyMember.all.where(family_id: @family.id).order(age: :desc)}%>
+<div style="overflow-x:hidden; margin: 25px 25px 25px 25px;" class="text-xs-center" >
+  <div class="row p-2">
+    <div class="col-md-12">
+      <div class="card" >
+        <div class="card-body" >
+          <div class="card-deck">
+            <div class="card shadow">
+              <div style = "margin: 25px 25px 25px 25px">
+                <div id= "member_form_area">
+                  <%= render partial:"add_member", locals:{family:@family, family_member: FamilyMember.new}%>
+                </div>
+                
+                <div id ="show_member_area">
+                  <%= render partial: "show_members", locals:{family_members: FamilyMember.all.where(family_id: @family.id).order(age: :desc)}%>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

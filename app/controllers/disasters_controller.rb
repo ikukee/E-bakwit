@@ -9,7 +9,7 @@ class DisastersController < ApplicationController
         @page = 0
     end
     @disasters_count = @disasters.length
-    @disasters_count_per_page = 10
+    @disasters_count_per_page = 5
     @disasters = Disaster.offset(@page * @disasters_count_per_page).limit(@disasters_count_per_page).order(:name)
   end
 
@@ -64,8 +64,9 @@ class DisastersController < ApplicationController
 
   # PATCH/PUT /disasters/1 or /disasters/1.json
   def update
-    @disaster.name = @disaster.name.upcase
+  
     respond_to do |format|
+      params[:disaster][:name]  = params[:disaster][:name].upcase
       if @disaster.update(disaster_params)
         format.html { redirect_to "/disasters", notice: "Disaster was successfully updated." }
         format.json { render :show, status: :ok, location: @disaster }
