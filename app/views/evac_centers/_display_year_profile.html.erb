@@ -60,13 +60,13 @@
           </div>
           <% if session[:user_type] == "ADMIN"%>
             <div class="col">
-              <%= link_to "Update", evac_facilities_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+              <%= link_to "Update", "/evac_facilities_form/#{evac_center.id}/#{evac_yearly_profile.id}", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
             </div>
           <% else %>
             <% if User.find(session[:user_id]).currently_assigned != nil%>
               <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
                 <div class="col">
-                  <%= link_to "Update", evac_facilities_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+                  <%= link_to "Update", "/evac_facilities_form/#{evac_center.id}/#{evac_yearly_profile.id}", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
                 </div>
               <% end %>
             <% end %>
@@ -74,18 +74,18 @@
         </div>
         <div class="row">
           <div class="col-md-5">
-            <p class="h4 oswald fw h-100" align="right">LATRINES: </p>
+            <p class="h4 oswald fw h-100" align="right">FACILITIES: </p>
           </div>
           <div class="col">
-            <p class="h2 oswald fw">0</p>
+            <p class="h2 oswald fw"><%= countFacilities(evac_yearly_profile)%></p>
           </div>
         </div>
         <div class="row">
           <div class="col-md-5">
-            <p class="h4 oswald fw" align="right">CHILD-SPACES: </p>
+            <p class="h4 oswald fw" align="right">ESSENTIAL ITEMS: </p>
           </div>
           <div class="col">
-            <p class="h2 oswald fw">2</p>
+            <p class="h2 oswald fw"><%= countItems(evac_yearly_profile)%></p>
           </div>
         </div>
       </div>
@@ -99,13 +99,14 @@
             </div>
           </div>
           <% if session[:user_type] == "ADMIN" %>
-            <% if evac_yearly_profile.manager_id == nil%>
+            <% if evac_yearly_profile.manager_id == nil %>
               <label class="oswald fw">Camp Manager Name: </label>
               <%= form_with url:"/add_campmanager", method: :post do |form|%>
                 <div class="row">
                   <div class="col-md-8">
                     <%= form.hidden_field :evac_profile_id, :value => evac_yearly_profile.id %>
-                    <%= form.collection_select :user_id , User.all.where(assigned: false).where(status: "ACTIVE").where(user_type: "CAMP MANAGER").order(:lname), :id, :full_name,{:prompt => "Select Camp Manager"},{class:"form-control",style:"float:right;"} %>
+                    <%= form.collection_select :user_id , User.all.where(status: "ACTIVE").where(user_type: "CAMP MANAGER").order(:lname), :id, :full_name,{:prompt => "Select Camp Manager"},{class:"form-control",style:"float:right;"} %>
+                    <p id = "camp_errmsg" style = "color:red;"></p>
                   </div>
                   <div class = "col-md-4">
                     <%= form.button nil, class:"form-control btn btn-success" do %>
@@ -159,13 +160,14 @@
           </div>
         </div>
         <% if session[:user_type] == "ADMIN"%>
-          <% if User.all.where(assigned: false).where(status: "ACTIVE").where(user_type: "VOLUNTEER").count > 0 %>
+          <% if User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").count > 0 %>
             <label class="oswald fw">Volunteer Name: </label>
             <%= form_with url:"/add_volunteer", method: :post do |form|%>
               <div class="row">
                 <div class="col-md-8">
                   <%= form.hidden_field :evac_profile_id, :value => evac_yearly_profile.id %>
-                  <%= form.collection_select :user_id , User.all.where(assigned: false).where(status: "ACTIVE").where(user_type: "VOLUNTEER").order(:lname), :id, :full_name,{:prompt => "Select Volunteer"},{class:"form-control",style:"float:right;"} %>
+                  <%= form.collection_select :volunteer_id , User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").order(:lname), :id, :full_name,{:prompt => "Select Volunteer"},{class:"form-control",style:"float:right;"} %>
+                  <p id = "errmsg" style = "color:red;"></p>
                 </div>
                 <div class = "col-md-4">
                   <%= form.button nil, class:"form-control btn btn-success" do %>

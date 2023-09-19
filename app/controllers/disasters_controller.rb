@@ -49,7 +49,6 @@ class DisastersController < ApplicationController
   # POST /disasters or /disasters.json
   def create
     @disaster = Disaster.new(disaster_params)
-    @disaster.year = Date.today().year()
     @disaster.name = @disaster.name.upcase
     respond_to do |format|
       if @disaster.save

@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   root to:"main#index"
   get "/detailed_view", to: "main#detailed_view"
   get "/evac_center_form", to: "main#evac_center_form"
-  get "/evac_essentials_form", to: "main#evac_essentials_form"
-  get "/evac_facilities_form", to: "main#evac_facilities_form"
+  get "/evac_essentials_form/:evac_id/:profile_id", to: "evac_centers#evac_essentials_form"
+  get "/evac_facilities_form/:evac_id/:profile_id", to: "evac_centers#evac_facilities_form"
   get "/log_relief_form", to: "main#log_relief_form"
   get "/login", to: "main#login"
   get "/register", to: "main#register"
@@ -34,10 +34,10 @@ Rails.application.routes.draw do
   post "/families/search",to:"families#search"
   post "/relief_goods/search",to:"relief_goods#search"
   post "/evacuation_essentials/search",to:"evacuation_essentials#search"
+  post "/add_facility",to:"evac_centers#add_facility"
+  post "/add_item",to:"evac_centers#add_item"
 
   
-
-
   post "/login/proceed",to:"main#login_proceed"
   post "/send_request",to:"main#send_request_proceed"
   post "/register/camp_manager", to: "main#create_campmanager"
@@ -59,5 +59,6 @@ Rails.application.routes.draw do
   delete "/remove_volunteer/:id",to:"evac_centers#remove_volunteer"
   delete "/evac_centers/:id/destroy",to:"evac_centers#destroy"
   delete "/family_member/:id/destroy",to:"families#destroy_member"
+  delete "/assigned_essential/:id",to:"evac_centers#destroy_essential"
 
 end

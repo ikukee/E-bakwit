@@ -21,7 +21,7 @@
     View <i class="fa-solid fa-eye"></i>
   <% end %>
   <% if session[:user_type] == "ADMIN"%>
-    <%= link_to "/evac_centers/#{evac_center.id}/destroy", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+    <%= link_to "/evac_centers/#{evac_center.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
       Delete <i class="fa fa-trash" aria-hidden="true"></i>
     <% end %>
   <% end %>

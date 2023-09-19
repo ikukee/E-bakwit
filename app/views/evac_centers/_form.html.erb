@@ -1,4 +1,3 @@
-
 <%= form_with(model: evac_center,local: true, class:"row g-3")  do |form|%>
   <% invalid_name = evac_center.errors.include?(:name) %>
   <% invalid_barangay = evac_center.errors.include?(:barangay) %>
@@ -53,5 +52,4 @@
       <%= form.submit "Submit", class: "btn btn-primary" %>
     </div>
   </div>
-  
 <% end %>

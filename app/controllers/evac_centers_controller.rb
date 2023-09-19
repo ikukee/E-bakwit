@@ -37,18 +37,22 @@ class EvacCentersController < ApplicationController
 
   def add_volunteer
     assignedYearlyVol = AssignedYearlyVol.new
-    assignedYearlyVol.volunteer_id = params[:user_id]
+    assignedYearlyVol.volunteer_id = params[:volunteer_id]
     assignedYearlyVol.evac_profile_id = params[:evac_profile_id]
     evac_yearly_profile = EvacYearlyProfile.find(params[:evac_profile_id])
     evac_center = EvacCenter.find(evac_yearly_profile.evac_id)
-    user = User.find(params[:user_id])
+    user = User.find(params[:volunteer_id])
     user.assigned = true
     user.currently_assigned = evac_center.id
     respond_to do |format|
-      user.save
-      assignedYearlyVol.save
-      assignedYearlyVol= AssignedYearlyVol.all.where(evac_profile_id: evac_yearly_profile.id)
-      format.turbo_stream{render turbo_stream: turbo_stream.update("display_year_profile", partial:"display_year_profile",locals:{evac_center: evac_center ,evac_yearly_profile: evac_yearly_profile, assigned_yearly_vol: assignedYearlyVol})}
+      if assignedYearlyVol.valid?
+        user.save
+        assignedYearlyVol.save
+        assignedYearlyVol= AssignedYearlyVol.all.where(evac_profile_id: evac_yearly_profile.id)
+        format.turbo_stream{render turbo_stream: turbo_stream.update("display_year_profile", partial:"display_year_profile",locals:{evac_center: evac_center ,evac_yearly_profile: evac_yearly_profile, assigned_yearly_vol: assignedYearlyVol})}
+      else
+      end
+        format.turbo_stream{render turbo_stream: turbo_stream.update("errmsg","Volunteer has already been assigned this year.")}
     end
   end
 
@@ -75,10 +79,15 @@ class EvacCentersController < ApplicationController
     user.assigned = true
     user.currently_assigned = evac_center.id
     respond_to do |format|
-      user.save
-      evac_yearly_profile.save
-      assignedYearlyVol= AssignedYearlyVol.all.where(evac_profile_id: evac_yearly_profile.id)
-      format.turbo_stream{render turbo_stream: turbo_stream.update("display_year_profile", partial:"display_year_profile",locals:{evac_center: evac_center ,evac_yearly_profile: evac_yearly_profile, assigned_yearly_vol: assignedYearlyVol})}
+      if evac_yearly_profile.valid?
+        user.save
+        evac_yearly_profile.save
+        assignedYearlyVol= AssignedYearlyVol.all.where(evac_profile_id: evac_yearly_profile.id)
+        format.turbo_stream{render turbo_stream: turbo_stream.update("display_year_profile", partial:"display_year_profile",locals:{evac_center: evac_center ,evac_yearly_profile: evac_yearly_profile, assigned_yearly_vol: assignedYearlyVol})}
+      else
+        format.turbo_stream{render turbo_stream: turbo_stream.update("camp_errmsg", "Camp Manager has already been assigned this year.")}
+      end
+       
     end
   end
 
@@ -156,12 +165,87 @@ class EvacCentersController < ApplicationController
     end
     @evac_center.destroy
    
-   
-
     respond_to do |format|
       format.html { redirect_to evac_centers_url, notice: "Evac center was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def evac_facilities_form
+    @evac_center = EvacCenter.find(params[:evac_id])
+    @evac_yearly_profile =EvacYearlyProfile.find(params[:profile_id])
+    @assigned_yearly_esses = AssignedYearlyEss.all.where(evac_profile_id: params[:profile_id])
+    @new_yearly_ess = AssignedYearlyEss.new
+    @page = params.fetch(:page, 0).to_i
+    if  @page < 0 
+        @page = 0
+    end
+    @assigned_yearly_esses_count = @assigned_yearly_esses.length
+    @assigned_yearly_esses_count_per_page = 10
+    @assigned_yearly_esses = AssignedYearlyEss.offset(@page * @assigned_yearly_esses_count_per_page).limit(@assigned_yearly_esses_count_per_page).all.where(evac_profile_id: params[:profile_id])
+
+  end
+
+  def add_facility
+    @evac_center = EvacCenter.find(params[:assigned_yearly_ess][:evac_id])
+    @evac_yearly_profile =EvacYearlyProfile.find(params[:assigned_yearly_ess][:profile_id])
+    @assigned_yearly_ess = AssignedYearlyEss.new
+    @assigned_yearly_ess.ess_id = params[:assigned_yearly_ess][:ess_id]
+    @assigned_yearly_ess.evac_profile_id = params[:assigned_yearly_ess][:profile_id]
+    @assigned_yearly_ess.quantity = params[:assigned_yearly_ess][:quantity]
+    @assigned_yearly_ess.status = params[:assigned_yearly_ess][:status]
+   
+    respond_to do |format|
+      if @assigned_yearly_ess.valid?
+        @assigned_yearly_ess.save
+        format.js{render inline: "location.reload();"}
+      else
+        format.turbo_stream{render turbo_stream: turbo_stream.update("form_area",partial: "evac_facilities_form",locals:{evac_center: @evac_center, evac_yearly_profile: @evac_yearly_profile, assigned_yearly_ess: @assigned_yearly_ess})}
+      end
+    end
+  end
+
+  def evac_essentials_form
+    @evac_center = EvacCenter.find(params[:evac_id])
+    @evac_yearly_profile =EvacYearlyProfile.find(params[:profile_id])
+    @assigned_yearly_esses = AssignedYearlyEss.all.where(evac_profile_id: params[:profile_id])
+    @new_yearly_ess = AssignedYearlyEss.new
+    @page = params.fetch(:page, 0).to_i
+    if  @page < 0 
+        @page = 0
+    end
+    @assigned_yearly_esses_count = @assigned_yearly_esses.length
+    @assigned_yearly_esses_count_per_page = 10
+    @assigned_yearly_esses = AssignedYearlyEss.offset(@page * @assigned_yearly_esses_count_per_page).limit(@assigned_yearly_esses_count_per_page).all.where(evac_profile_id: params[:profile_id])
+  end
+
+  def add_item
+    @evac_center = EvacCenter.find(params[:assigned_yearly_ess][:evac_id])
+    @evac_yearly_profile =EvacYearlyProfile.find(params[:assigned_yearly_ess][:profile_id])
+    @assigned_yearly_ess = AssignedYearlyEss.new
+    @assigned_yearly_ess.ess_id = params[:assigned_yearly_ess][:ess_id]
+    @assigned_yearly_ess.evac_profile_id = params[:assigned_yearly_ess][:profile_id]
+    @assigned_yearly_ess.quantity = params[:assigned_yearly_ess][:quantity]
+    @assigned_yearly_ess.status = params[:assigned_yearly_ess][:status]
+    respond_to do |format|
+      if @assigned_yearly_ess.valid?
+         @assigned_yearly_ess.save
+         format.js{render inline: "location.reload();"}
+      else
+        format.turbo_stream{render turbo_stream: turbo_stream.update("form_area",partial: "evac_essentials_form",locals:{evac_center: @evac_center, evac_yearly_profile: @evac_yearly_profile, assigned_yearly_ess: @assigned_yearly_ess})}
+      end
+    end
+  end
+
+  def destroy_essential
+    assigned_yearly_ess = AssignedYearlyEss.find(params[:id])
+    evac_yearly_profile = EvacYearlyProfile.find(assigned_yearly_ess.evac_profile_id)
+    evac_center = EvacCenter.find(evac_yearly_profile.evac_id)
+    evacuation_essential = EvacuationEssential.find(assigned_yearly_ess.ess_id)
+    assigned_yearly_ess.destroy
+      respond_to do |format|
+        format.js{render inline: "location.reload();"}
+      end
   end
 
   private

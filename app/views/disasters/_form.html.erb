@@ -5,6 +5,7 @@
       <div class="row p-1">
         <% invalid_name = disaster.errors.include?(:name) %>
         <% invalid_type = disaster.errors.include?(:disaster_type) %>
+        <% invalid_year= disaster.errors.include?(:year) %>
         <div class="col p-3 m-1" id="logging-style-form">
           <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >DISASTER INFORMATION</h2>
           <div class="form-group">
@@ -33,6 +34,20 @@
             <% if invalid_type %>
               <div class="invalid-feedback d-block">
                 <% disaster.errors[:disaster_type].each do |error_message| %>
+                  <%= error_message %>.
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <br>
+          <div class="form-group">
+            <%= form.label :year, class: "h5 oswald fw text-uppercase" do %>
+              Date of Occurence: 
+            <% end %>
+            <%= form.date_field :year, class:"form-control #{'is-invalid' if invalid_year}", placeholder: "Date of Occurence", :value => Date.today() %>
+            <% if invalid_year %>
+              <div class="invalid-feedback d-block">
+                <% disaster.errors[:year].each do |error_message| %>
                   <%= error_message %>.
                 <% end %>
               </div>

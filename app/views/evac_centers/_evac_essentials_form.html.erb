@@ -1,0 +1,53 @@
+  <%= form_with url:"/add_item", model: assigned_yearly_ess, method: :post do |form| %>
+  <% invalid_essential= assigned_yearly_ess.errors.include?(:ess_id) %>
+  <% invalid_quantity= assigned_yearly_ess.errors.include?(:quantity) %>
+  <% invalid_status = assigned_yearly_ess.errors.include?(:status) %>
+  <%= form.hidden_field :evac_id, :value => evac_center.id %>
+  <%= form.hidden_field :profile_id, :value => evac_yearly_profile.id%>
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-group">
+        <p class="form-label poppins">Item</p>
+        <%= form.collection_select :ess_id , EvacuationEssential.all.where(ess_type: "ESSENTIAL").order(:name), :id, :name,{:prompt => "Select Item"},{class:"form-control #{'is-invalid' if invalid_essential}",style:"float:right;"} %>
+        <% if invalid_essential %>
+          <div class="invalid-feedback d-block">
+            <% assigned_yearly_ess.errors[:ess_id].each do |error_message| %>
+              <%= error_message %>.
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <p class="form-label poppins">Quantity</p>
+        <%= form.number_field :quantity, class: "form-control #{'is-invalid' if invalid_quantity}" %>
+        <% if invalid_quantity %>
+          <div class="invalid-feedback d-block">
+            <% assigned_yearly_ess.errors[:quantity].each do |error_message| %>
+              <%= error_message %>.
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <p class="form-label poppins">Status</p>
+        <%= form.select :status, options_for_select(["BEST","GOOD","BAD"]),{:prompt => "Select Status"},{class:"form-control #{'is-invalid' if invalid_status}"}%>
+        <% if invalid_status %>
+          <div class="invalid-feedback d-block">
+            <% assigned_yearly_ess.errors[:status].each do |error_message| %>
+              <%= error_message %>.
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-1 position-relative">
+      <%= form.button nil, class: "btn btn-primary position-absolute bottom-0 px-3" do %>
+        <i class="fa-solid fa-plus"></i> Add
+      <% end %>
+    </div>
+  </div>
+<% end %>
