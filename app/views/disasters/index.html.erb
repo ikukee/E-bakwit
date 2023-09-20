@@ -1,20 +1,8 @@
-<div class="row p-2">
-  <div class="col"></div>
-  <div class="col-md-8">
-    <div class="row">
-      <div class="col-2">
-        <%= link_to ' Back', '/evac_centers', class: "fa fa-arrow-left btn btn-primary m-2" %>
-      </div>
-      <div class="col">
-      </div>
-    </div>
-  </div>
-  <div class="col">  </div>
-</div>
-<style>
-  *{outline:0px dashed red;}
-</style>
-<div class="row p-2">
+<%= link_to '/evac_centers', class: 'ms-5 mt-3 mb-2 btn btn-outline-dark oswald fs-4 text-decoration-none' do %>
+  <i class="fa-solid fa-left-long"></i> Back
+<% end %>
+
+<div class="row p-2 m-0">
   <div class="col"></div>
   <div class="col-md-8" id="logging-style-form">
     <div class = "row">

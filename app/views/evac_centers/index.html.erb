@@ -1,34 +1,27 @@
-<div class="row">
-  <div class="col-md-4">
-    <fieldset>
-      <legend>
-        <button id="disaster-name-dv" class="rounded fs-1 poppins dropdown-toggle border-0 fw-bold mt-4 mx-5 bg-transparent" data-bs-toggle="dropdown" aria-expanded="false">
-          Typhoon Juan
-        </button>
-        <ul class="dropdown-menu">
-          <li>Typhoon B</li>
-          <li>Typhoon C</li>
-          <li>Typhoon D</li>
-          <li>Typhoon E</li>
-          <li>Typhoon F</li>
-          <li>Typhoon G</li>
-          <li>Typhoon H</li>
-          <li>Typhoon I</li>
-          <li>Typhoon J</li>
-        </ul>
-      </legend>
-    </fieldset>
+<div class="row m-0 pt-3">
+  <div class="col-md-6 ps-5 position-relative">
+    <h3 class="fs-1 oswald fw-bold position-absolute bottom-0">Evacuation Centers</h3>
   </div>
-  <% if session[:user_type] == "ADMIN"%>
+  
+  
     <div class="col-md-4">
-      <br>
-      <%= form_with url: "/evac_centers/search", method: :post do |form| %>
-        <label for = "search_criteria"><strong>Search for Evacuation Center:</strong></label>
-        <%= form.search_field :search_value , class: "form-control", placeholder: "Search an Evacuation Center", oninput: "this.form.requestSubmit()" %>
+        <%= form_with url: "/evac_centers/search", method: :post do |form| %>
+          <label for = "search_criteria"><strong>Search for Evacuation Center:</strong></label>
+          <%= form.search_field :search_value , class: "form-control", placeholder: "Search an Evacuation Center", oninput: "this.form.requestSubmit()" %>
+        <% end %>
+    </div>
+
+  <% if session[:user_type] == "ADMIN"%>
+    <div class="col-md-2 pt-4 position-relative">
+      <%= link_to '/evac_centers/new', class: 'btn btn-dark position-absolute oswald end-0 me-5' do %>
+        Add New Evacuation Center <i class="fa-solid fa-folder-plus"></i>
       <% end %>
     </div>
-  </div>
-<% end %>
+  <% end %>
+  
+</div>
+
+
 <div id = "evac_centers">
   <%= render partial: "evac_search_results", locals:{evac_centers:@evac_centers}%>
 </div>

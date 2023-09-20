@@ -1,6 +1,11 @@
 @import "bootstrap";
 @import "font-awesome";
 @import url("logging.css");
+
+/*{
+    outline: 1px dashed red;
+}*/
+
 body {
     background:  #b8dbd9;
     height: 100%;
@@ -33,7 +38,7 @@ body {
 }
 
 .navbar-nav{
-    padding-right: 4em;
+    padding-right: 0em;
 }
 
 .navbar a.navbar-brand, .navbar .nav-link {
@@ -58,68 +63,58 @@ body {
 
 /*Landing Dashboard Page*/
 
-#gen-table {
-    height: 70%;
-    color: #000000;
+#landing{
+    background: #000;
+    color: white;
+    background-image: linear-gradient(#000,#000,#b8dbd9);
+}
+
+#landing h1{
+    font-size: 12em;
+    letter-spacing: -0.03em;
+}
+
+#landing p{
+    font-size: 2em;
+    color: rgba(255,255,255,0.7)
+}
+
+#recent{
     border: 0.2em solid #000000;
-    background-image: linear-gradient(#b8dbd9, rgba(0,0,0,0), rgba(0,0,0,0.8));
+}
+
+#recent:hover{
+    background: rgba(0,0,0,0.5);
+    transition-duration: 0.1s;
+    box-shadow: 1px 1px 5px #fff;
+}
+
+.count-card{
+    border: 0.15em dashed #555;
+    background-image: linear-gradient(#f0f0f0, #b8dbd9);
+    color:#000;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.count-card h1{
+    align-self: center;
+    font-weight: bold;
+    text-shadow: 1px 1px 0.01em#000000;
+    font-size: 11em;
 }
 
 #pop-title{
-    position: absolute;
-    top: -2.2em;
-    left: 1em;
-    padding: 0.5em;
+    top: 1em;
 }
 
 #pop-title button{
     background-color: #b8dbd9;
     color: #000000;
-
 }
 
-#pop-title fieldset{
-    padding: 10px;
-}
+/*Evac Centers View Page*/
 
-.gen-card{
-    box-sizing: border-box;
-    border: 0.15em dashed #555;
-    background-image: linear-gradient(#f0f0f0, #b8dbd9);
-    height: 37.5em;
-    width: 30%;
-    min-width: 30em;
-    margin: auto;
-    padding: 0;
-    display: flex;
-}
-
-.gen-card h1{
-    align-self: center;
-    font-weight: bold;
-    width: 100%;
-    text-shadow: 1px 1px 0.01em#000000;
-}
-
-.gen-card h3{
-    align-self: flex-end;
-    width: 28.2%;
-    position: absolute;
-}
-
-/*Detailed View Page*/
-
-#evac-count h1{
-    font-size: 23em;
-}
-
-#fam-count h1{
-    font-size: 18em;
-}
-
-#indi-count h1{
-    font-size: 15em;
-}
 
 #detailed-view{
     font-size: 1.2em;
@@ -130,18 +125,12 @@ body {
     box-shadow: 1px 1px 0.5em #586F7C;
 }
 
-#evac-card h1{
-    font-size: 7em;
-    font-weight: 900;
+#evac-card .card-header{
+    background: rgba(0,0,0,0.1);
 }
 
-#evac-card h2{
-    font-size: 4em;
-    font-weight: 900;
-}
-
-#evac-card h6{
-    font-size: 1.2em;
+#evac-card .btn{
+    width: 8em;
 }
 
 #view-evac{
@@ -155,7 +144,6 @@ body {
 }
 
 #add-evac-center {
-    
     top: 5.5em;
     right: 3em;
 }
