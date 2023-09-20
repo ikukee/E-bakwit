@@ -1,10 +1,10 @@
-<nav class="navbar navbar-expand-lg">
-  <div class="container px-lg-5">
-    <%= link_to root_path, class: "navbar-brand" do %>
-      <i class="fa-solid fa-person-shelter mx-2"></i>Naga E-Bakwit
+<nav id="ebak-nav" class="poppins row navbar navbar-expand-lg m-0">
+  <div class="container px-lg-5 ">
+    <%= link_to root_path, class: "navbar-brand oswald fs-3 fw-bold", id: "nav-home-title" do %>
+      <i class="fa-solid fa-person-shelter mx-2"></i>NAGA <span class="fs-3 navbar-brand oswald" style="color:#2e9cdb;">E-BAKWIT</span>
     <% end %>
     <% if session[:user_id] != nil %>
-      <a class="navbar-brand" href = "#" style = "float:right;" >Hi <%= User.find(session[:user_id]).fname %>!</a>
+      <a class="navbar-brand col-md-auto" href = "#" style = "float:right;" >Hi <%= User.find(session[:user_id]).fname %>!</a>
     <% end %>
     <!-- Example single danger button -->
     <% if session[:user_type] == "ADMIN"%>

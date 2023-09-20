@@ -38,7 +38,7 @@ body {
 }
 
 .navbar-nav{
-    padding-right: 4em;
+    padding-right: 0em;
 }
 
 .navbar a.navbar-brand, .navbar .nav-link {
@@ -113,7 +113,7 @@ body {
     color: #000000;
 }
 
-/*Detailed View Page*/
+/*Evac Centers View Page*/
 
 
 #detailed-view{
@@ -125,18 +125,12 @@ body {
     box-shadow: 1px 1px 0.5em #586F7C;
 }
 
-#evac-card h1{
-    font-size: 7em;
-    font-weight: 900;
+#evac-card .card-header{
+    background: rgba(0,0,0,0.1);
 }
 
-#evac-card h2{
-    font-size: 4em;
-    font-weight: 900;
-}
-
-#evac-card h6{
-    font-size: 1.2em;
+#evac-card .btn{
+    width: 8em;
 }
 
 #view-evac{
@@ -150,7 +144,6 @@ body {
 }
 
 #add-evac-center {
-    
     top: 5.5em;
     right: 3em;
 }

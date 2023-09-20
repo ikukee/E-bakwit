@@ -1,16 +1,8 @@
-<div class="row p-2">
-  <div class="col"></div>
-  <div class="col-md-8">
-    <div class="row">
-      <div class="col-2">
-        <%= link_to ' Back', '/disasters', class: "fa fa-arrow-left btn btn-primary m-2" %>
-      </div>
-      <div class="col">
-      </div>
-    </div>
-  </div>
-  <div class="col">  </div>
-</div>
+
+<%= link_to '/disasters', class: 'ms-5 mt-3 mb-2 btn btn-outline-dark oswald fs-4 text-decoration-none' do %>
+  <i class="fa-solid fa-left-long"></i> Back
+<% end %>
+
 <div id = "form_area">
   <%= render partial:"form", locals:{disaster:@disaster}%>
 </div>

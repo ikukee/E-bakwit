@@ -1,14 +1,17 @@
-<%= render "/layouts/default_back" %>
-<div id="evac-form" class="row position-relative my-auto mx-3 p-3 rounded">
+<%= link_to '/evac_centers', class: 'ms-5 mt-3 mb-2 btn btn-outline-dark oswald fs-4 text-decoration-none' do %>
+  <i class="fa-solid fa-left-long"></i> Back
+<% end %>
+
+<div id="evac-form" class="row position-relative my-auto mx-5 p-3 rounded">
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a href = "/volunteers" style = "text-decoration:none"><button class = "nav-link ">Volunteers</button></a>
+      <a href = "/volunteers" class="text-decoration-none poppins"><button class = "nav-link text-dark">Volunteers</button></a>
     </li>
     <li class="nav-item">
-      <a href = "/camp_managers" style = "text-decoration:none"><button class = "nav-link active">Camp Managers</button></a>
+      <a href = "/camp_managers" class="text-decoration-none poppins fw-bold"><button class = "nav-link active">Camp Managers</button></a>
     </li>
     <li class="nav-item">
-      <a href = "/requests" style = "text-decoration:none"><button class = "nav-link ">Volunteer Requests</button></a>
+      <a href = "/requests" class="text-decoration-none poppins"><button class = "nav-link text-dark">Volunteer Requests</button></a>
     </li>
   </ul>
   <div id="req-table " class="col-md-6">
