@@ -1,6 +1,11 @@
 @import "bootstrap";
 @import "font-awesome";
 @import url("logging.css");
+
+/*{
+    outline: 1px dashed red;
+}*/
+
 body {
     background:  #b8dbd9;
     height: 100%;
@@ -58,10 +63,6 @@ body {
 
 /*Landing Dashboard Page*/
 
-/*{
-    outline: 1px dashed red;
-}*/
-
 #landing{
     background: #000;
     color: white;
@@ -69,7 +70,7 @@ body {
 }
 
 #landing h1{
-    font-size: 14em;
+    font-size: 12em;
     letter-spacing: -0.03em;
 }
 
@@ -100,7 +101,7 @@ body {
     align-self: center;
     font-weight: bold;
     text-shadow: 1px 1px 0.01em#000000;
-    font-size: 15em;
+    font-size: 11em;
 }
 
 #pop-title{
