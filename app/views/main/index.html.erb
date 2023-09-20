@@ -1,7 +1,26 @@
 
-<div id="gen-table" class="rounded p-3 dropdown m-5 vh-75">
-  <fieldset>
-    <div id="pop-title" class="btn-group">
+<div id="landing" class="vh-100 oswald">
+  <div class="row m-0">
+    <div class="col-md-auto ps-5">
+      <h1 class="">NAGA</h1>
+    </div>
+    <div class="col-md-auto" >
+      <h1 class="" style="color:#2e9cdb;">E-BAKWIT <i class="fa-solid fa-people-roofpb-"></i></h1>
+    </div>
+    <div class="col text-end" >
+      <%= link_to disasters_path, id: "detailed-view", class: "btn btn-outline-light fs-2 oswald mt-5 me-5" do %>
+      BROWSE RECORDS <i class="fa-solid fa-angles-right"></i>
+      <% end %>
+    </div>
+  </div>
+  <div class="row m-0">
+    <p class="p-5">An efficient and convenient evacuee logging and relief distribution assistance web-based system for the local government of Naga’s City Social Welfare and Development Office (CSWDO), a digital tool that handles disaster evacuation endeavors in Naga City, Philippines.<p>
+  </div>
+</div>
+
+<div class="vh-100 p-5 position-relative " >
+<%= link_to evac_centers_path, id: "detailed-view", class: "text-decoration-none" do %>
+  <div id="pop-title" class="position-absolute btn-group">
       <legend>
         <button id="disaster-name" class="rounded fs-1 poppins dropdown-toggle border-0 fw-bold px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           Typhoon Juan
@@ -19,22 +38,27 @@
         </ul>
       </legend>
     </div>
-  </fieldset>
-  <div id="card-div" class="text-center oswald row p-5">
-    <div id="evac-count" class="gen-card">
-      <h1 class=""><%= @evac_centers.count %></h1>
-      <h3 class=""><i class="fa-solid fa-people-roof"></i> Active Evacuation Centers</h3>
+  <div id="recent" class="row rounded p-2 text-center oswald">
+    <div class="col-md-4 p-5">
+      <div id="evac-count" class="p-3 count-card">
+        <h1 class="my-5">67</h1>
+        <h3><i class="fa-solid fa-people-roof"></i> Active Evacuation Centers</h3>
+      </div>
     </div>
-    <div id="fam-count" class="gen-card">
-      <h1 class="">89</h1>
-      <h3><i class="fa-solid fa-people-group"></i> Sheltered Families</h3>
+    <div class="col-md-4 p-5">
+      <div id="fam-count" class="p-3 count-card">
+        <h1 class="my-5">89</h1>
+        <h3><i class="fa-solid fa-people-group"></i> Sheltered Families</h3>
+      </div>
     </div>
-    <div id="indi-count" class="gen-card">
-      <h1 class="">337</h1>
-      <h3><i class="fa-solid fa-person"></i> Sheltered Individuals</h3>
+    <div class="col-md-4 p-5">
+      <div id="indivac-count" class="p-3 count-card">
+        <h1 class="my-5">337</h1>
+        <h3><i class="fa-solid fa-person"></i> Sheltered Individuals</h3>
+      </div>
     </div>
   </div>
-  <%= link_to "See in Detailed View", evac_centers_path, id: "detailed-view", class: "poppins p-3 position-absolute top-100 start-50 translate-middle btn btn-success border-0" %>
-
+<% end %>
 </div>
+
 <%= render '/layouts/footer' %>
