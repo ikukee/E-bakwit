@@ -1,72 +1,68 @@
-<div class="row">
-  <div class="col-md-4 text-end">
-    First Name:
+
+<div class="oswald row justify-content-center">
+  <div class="col-md-auto pe-0">
+    <h2 class="fw-bold m-0"><%= user.lname%>,</h2>
+    <p class="m-0 text-center mb-3">LAST NAME</p>
   </div>
-  <div class="col-md-8 fw-bold">
-    <%= user.fname%>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-4 text-end">
-    Last Name:
-  </div>
-  <div class="col-md-8 fw-bold">
-    <%= user.lname%>
+  <div class="col-md-auto">
+    <h2 class="fw-bold m-0"><%= user.fname%></h2>
+    <p class="m-0 text-center mb-3">FIRST NAME</p>
   </div>
 </div>
+
 <div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     Birthdate:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <%= user.bdate%>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     Address:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <%= user.address%>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     Email:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <%= user.email%>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     Contact number:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <%= user.cnum%>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     Status:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <%= user.status%>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     User Type:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <%= user.user_type%>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     Is Assigned:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <% if user.assigned == true %>
       YES
     <% else %>
@@ -75,10 +71,10 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     Assigned to:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <% if user.currently_assigned != nil %>
       <a href = "/evac_centers/<%=user.currently_assigned%>"><%= EvacCenter.find(user.currently_assigned).name %><a>
         <% else %>

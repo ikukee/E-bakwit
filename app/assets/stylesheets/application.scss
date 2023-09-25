@@ -14,6 +14,14 @@ body {
     background-attachment: fixed;
 }
 
+.default-background1{
+    background-image: linear-gradient(#b8dbd9, #f0f0f0 );
+}
+
+.default-background2{
+    background-image: linear-gradient(to right,#b8dbd9, #f0f0f0 );
+}
+
 /* Google Fonts */
 
 .poppins {
