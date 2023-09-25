@@ -1,107 +1,87 @@
-<style>
-  .img-circular{
-      width: 200px;
-      height: 200px;
-      background-size: cover;
-      display: block;
-      border-radius: 100px;
-      -webkit-border-radius: 100px;
-      -moz-border-radius: 100px;
-     }
-</style>
-<div class="row">
-  <div class="col-md-4 text-end">
-    Request Date:
+
+<div class="row oswald row justify-content-center mb-3">
+    Date Requested: <%= request.request_date%>
+</div>
+<div class="oswald row justify-content-center">
+  <div class="col-md-auto pe-0">
+    <h2 class="fw-bold m-0"><%= request.lname%>,</h2>
+    <p class="m-0 text-center mb-3">LAST NAME</p>
   </div>
-  <div class="col-md-8 fw-bold">
-    <%= request.request_date%>
+  <div class="col-md-auto">
+    <h2 class="fw-bold m-0"><%= request.fname%></h2>
+    <p class="m-0 text-center mb-3">FIRST NAME</p>
   </div>
 </div>
+
 <div class="row">
-  <div class="col-md-4 text-end">
-    First Name:
-  </div>
-  <div class="col-md-8 fw-bold">
-    <%= request.fname%>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-4 text-end">
-    Last Name:
-  </div>
-  <div class="col-md-8 fw-bold">
-    <%= request.lname%>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     Birthdate:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <%= request.bdate%>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     Address:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <%= request.address%>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     Email:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <%= request.email%>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     Contact number:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <%= request.cnum%>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4 text-end">
+  <div class="col-md-6 text-end">
     Status:
   </div>
-  <div class="col-md-8 fw-bold">
+  <div class="col-md-6 fw-bold">
     <%= request.status%>
   </div>
 </div>
-<br>
-<h4 style = "text-align:center;"><strong>Supporting Documents</strong></h4>
-<div class="row mb-3">
-  <div class="my-auto text-center w-100">
+
+<h4 class="fw-bold mx-5 mt-4 pt-2 border-top border-secondary oswald" style = "text-align:center;">Supporting Documents</h4>
+<div class="row mb-3 justify-content-center">
     <% if request.images.attached? %>
       <% counter = 1 %>
       <% request.images.each do |img| %>
-        <a href = "/download/<%= request.id%>/<%= img.id %>/<%= counter %>"> Attachment <%= counter%></a>
-        <% counter = counter +1%>
-        <br>
+        <div class="col-md-auto">
+          <a href = "/download/<%= request.id%>/<%= img.id %>/<%= counter %>"> Attachment <%= counter%></a>
+          <% counter = counter +1%>
+        </div>
       <% end %>
     <% end %>
-  </div>
 </div>
 <% if request.status == "PENDING" %>
   <div class="row oswald">
-    <div class="col position-relative">
-      <div class="position-absolute mt-4 end-0">
+    <div class="row justify-content-end">
+      <div class="col-md-auto pe-0">
         <%= form_with url:"/approve_request/#{request.id}", method: :post do |form| %>
           <%= form.button nil, class: "btn btn-success mb-1" do %>
             <i class="fa-solid fa-user-check"></i> Approve
           <% end %>
         <% end %>
+      </div>
+      <div class="col-md-auto">
         <%= form_with url:"/reject_request/#{request.id}", method: :post do |form| %>
           <%= form.button nil, class: "btn btn-danger mb-1" do %>
             <i class="fa-solid fa-xmark"></i> Reject
           <% end %>
         <% end %>
       </div>
-    </div>
   </div>
 <% end %>

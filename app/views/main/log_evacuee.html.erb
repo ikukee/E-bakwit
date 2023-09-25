@@ -1,8 +1,17 @@
-<!-- header -->
-<%= render '/layouts/header_back'%>
+<%= link_to :back, class: 'ms-5 mt-3 mb-2 btn btn-outline-dark oswald fs-4 text-decoration-none' do %>
+  <i class="fa-solid fa-left-long"></i> Back
+<% end %>
+
+
+
 <div class="row p-2">
   <div class="col"></div>
   <div class="col-md-8" >
+    <div class="row m-0">
+      <p class="h1 oswald fw-bold ps-0" style="border-bottom: 2px solid black;">
+        Evacuation center name
+      </p>
+    </div>
     <div class="row p-1">
       <%= form_with(model: @evac_profile, local: true, class: "row g-3") do |form| %>
         <div class="col p-3 m-1" id="logging-style-form">
