@@ -1,3 +1,4 @@
+<div class="container-fluid">
 <%= link_to "/evac_centers", class: 'ms-5 mt-3 mb-2 btn btn-outline-dark oswald fs-4 text-decoration-none' do %>
   <i class="fa-solid fa-left-long"></i> Back
 <% end %>
@@ -16,4 +17,5 @@
 </div>
 <div id = "display_year_profile">
   <%= render partial: "display_year_profile", locals:{evac_center: @evac_center, evac_yearly_profile:@evacYearlyProfile, assigned_yearly_vol: AssignedYearlyVol.all.where(evac_profile_id: @evacYearlyProfile.id)}%>
+</div>
 </div>

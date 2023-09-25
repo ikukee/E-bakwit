@@ -1,7 +1,98 @@
-<head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body style = "background: #b8dbd9;">
+
+<div id = "login-container" class="container-fluid" >
+<div class ="row m-0" >
+    <div class="col-md-auto ps-5">
+      <h1 class="oswald" style="border-bottom: 5px solid white; color:white;">NAGA</h1>
+    </div>
+    <div class="col-md-auto" >
+      <h1 class="oswald" style="color:#2e9cdb; border-bottom:5px solid #2e9cdb;">LOGIN</h1>
+    </div>
+    <div class="col ml-4 p-5" style="" >    
+      <div class="container w-75" >
+        <%= form_with url:"/login/proceed", method: :post do |f| %>
+            <span>&nbsp;</span>
+            
+            <div class="form-group">    
+              <div class="input-group mb-3">          
+                <label class='input-group-text'><i class="fa-solid fa-user fa-lg" style="color: #000;"></i></label>
+                <%= f.email_field :email, class:"form-control ", placeholder: "Email"%>
+              </div>
+              
+            </div>
+            
+            <span>&nbsp;</span>
+            <div class="form-group">
+              <div class="input-group mb-3">
+                <div class="input-group-text">
+                  <i class="fa-solid fa-key fa-lg" style="color: #000000;"></i>
+                </div>
+                <%= f.password_field :password, class:"form-control ", placeholder: "Password"%>
+              </div>
+              <div id= "login_errorArea"></div>
+              <span>&nbsp;</span>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col">
+                    
+                  </div>
+                  <div class="col">
+                    <%= f.submit "LOGIN", class:"btn btn-outline-primary w-100 oswald fw"%>
+                  </div>
+                  <div class="col">
+                    
+                  </div>
+                </div>
+              
+              </div>
+            </div>
+            <span>&nbsp;</span>
+          <% end %>
+      </div>
+    </div><!-- te-->
+
+    
+</div> 
+<div class="row" >
+&nbsp;
+</div>
+<div class="row" >
+&nbsp;
+</div>
+<div class="row" >
+&nbsp;
+</div>
+<div class="row" >
+&nbsp;
+</div>
+<div class="row" >
+&nbsp;
+</div>
+<div class="row" >
+&nbsp;
+</div>
+<div class="row" >
+&nbsp;
+</div>
+<div class="row" >
+&nbsp;
+</div>
+<div class="row" >
+&nbsp;
+</div>
+<div class="row" >
+&nbsp;
+</div>
+<div class="row" >
+&nbsp;
+</div>
+<div class="row" >
+&nbsp;
+</div>
+
+</div>
+<%= render 'layouts/footer'%>
+
+<!-- <body style = "">
   <span>&nbsp;</span>
   <div class="mx-auto col-md-4 p-5" style="box-shadow: rgb(81, 81, 81) 0px 0px 12px 2px;" id="login-container">
     <div class="row">

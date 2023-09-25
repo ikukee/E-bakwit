@@ -2,9 +2,9 @@
 @import "font-awesome";
 @import url("logging.css");
 
-/*{
-    outline: 1px dashed red;
-}*/
+*{
+    outline: 0px dashed red;
+}
 
 body {
     background:  #b8dbd9;
@@ -160,12 +160,23 @@ body {
 
 // login
 #login-container{
-    background-color: black;
-    color: white;
-    border-radius: 15px;
+    background: linear-gradient(black, black,#b8dbd9);
 }
-span{
-    font-size: 12px;
+
+#login-container h1{
+    font-size: 10em;
+    letter-spacing: -0.04em;
+    color:white;
+}
+
+#login-container p{
+    font-size: 1.5em;
+    color:white;
+}
+
+#login-container span{
+    font-size: 1em;
+    color:white;
 }
 
 .fssmall {
@@ -257,3 +268,7 @@ span{
     border: 0.15em dashed #20292e;
     background-image: linear-gradient(#f0f0f0, #b8dbd9);
 }
+
+
+// ** testy
+
