@@ -271,4 +271,25 @@ body {
 
 
 // ** testy
+#hover-req{
+    font-size: .8em; outline: 2px solid white; color:white
+}
+#hover-req:hover{
+    color:black;
+    background-color: white;
+}
 
+.transpar{
+    box-shadow: none;
+    background-color: white;
+    border:none;
+    
+}
+.form-control{
+    font-size: 20px;
+}
+.form-control:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
