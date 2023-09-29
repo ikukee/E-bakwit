@@ -164,6 +164,7 @@ body {
 
 .form-control{
     box-shadow: 1px 1px 0.2em #20292e;
+    
 }
 
 // login
@@ -289,7 +290,7 @@ body {
 
 .transpar{
     box-shadow: none;
-    background-color: white;
+    background-color: #b8dbd9;
     border:none;
     
 }
@@ -300,4 +301,15 @@ body {
     border-color: inherit;
     -webkit-box-shadow: none;
     box-shadow: none;
+    border-bottom: 2px solid black;
+    font-size: 25px;
   }
+.inn-shadow{
+
+    box-shadow: inset 0 0 10px black;
+}
+.form-underline{
+    background: none;
+    border-bottom: 2px solid black;
+    border-radius: 0;
+}
