@@ -37,9 +37,9 @@
             <% elsif request.status == "REJECTED" %>
               <td style = "color:red;"><strong><%= request.status%></strong></td>
             <% end %>
-            <td class="col-md-1 position-relative">
+            <td class="col-md-1">
               <%= form_with url: "/requests/#{request.id}", method: :post do |form| %>
-                <%= form.button nil, class: "form-control btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+                <%= form.button nil, class: "btn btn-secondary btn-sm px-3" do %>
                   View <i class="fa-solid fa fa-eye"></i>
                 <% end %>
               <% end %>

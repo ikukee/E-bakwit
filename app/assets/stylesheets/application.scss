@@ -22,6 +22,10 @@ body {
     background-image: linear-gradient(to right,#b8dbd9, #f0f0f0 );
 }
 
+.default-background3{
+    background-image: linear-gradient(to right, #f0f0f0, #b8dbd9 );
+}
+
 /* Google Fonts */
 
 .poppins {
@@ -55,6 +59,28 @@ body {
 
 .navbar .nav-item.active .nav-link {
     color: #FFFFFF;
+}
+
+#adminTab .vbtn{
+    background: #305683;
+    border: none;
+    font-size: 1em;
+}
+
+#adminTab .cbtn{
+    background: #4894c0;
+    border: none;
+    font-size: 0.8em;
+}
+
+#adminTab .vbtn:hover{
+    background: #3b689e;
+    border: none;
+}
+
+#adminTab .cbtn:hover{
+    background: #305683;
+    border: none;
 }
 
 #login-button{
