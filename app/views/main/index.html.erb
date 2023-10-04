@@ -8,7 +8,7 @@
       <h1 class="" style="color:#2e9cdb;">E-BAKWIT <i class="fa-solid fa-people-roofpb-"></i></h1>
     </div>
     <div class="col text-end" >
-      <%= link_to disasters_path, id: "detailed-view", class: "btn btn-outline-light fs-2 oswald mt-5 me-5" do %>
+      <%= link_to evac_centers_path, id: "detailed-view", class: "btn btn-outline-light fs-2 oswald mt-5 me-5" do %>
       BROWSE RECORDS <i class="fa-solid fa-angles-right"></i>
       <% end %>
     </div>
@@ -18,47 +18,59 @@
   </div>
 </div>
 
-<div class="vh-100 p-5 position-relative " >
-<%= link_to evac_centers_path, id: "detailed-view", class: "text-decoration-none" do %>
-  <div id="pop-title" class="position-absolute btn-group">
-      <legend>
-        <button id="disaster-name" class="rounded fs-1 poppins dropdown-toggle border-0 fw-bold px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Typhoon Juan
-        </button>
-        <ul class="dropdown-menu">
-        <li>Typhoon B</li>
-        <li>Typhoon C</li>
-        <li>Typhoon D</li>
-        <li>Typhoon E</li>
-        <li>Typhoon F</li>
-        <li>Typhoon G</li>
-        <li>Typhoon H</li>
-        <li>Typhoon I</li>
-        <li>Typhoon J</li>
-        </ul>
-      </legend>
+<div id="about-section" class="vh-100 oswald d-flex">
+  <div class="row m-0">
+    <div class="col-sm-12 col-md-6 border-end border-black p-5 default-background3 flex-fill">
+      <h1 class="fw-bold fs-1">About CSWDO</h1>
+      <p class="fs-5 m-3">In Naga City, the evacuation-related matters are handled by the City Social Welfare and Development Office (CSWDO). As displayed on CSWDO’s webpage, the office is responsible for disaster relief assistance for the victims of man-made and natural disasters alike; this assistance comes in the form of providing counseling services and relief goods.</p>
+      <p class="fs-5 m-3">CSWDO mandates the "Upliftment of the living condition and improve the quality of life of the poorest sector to enable them to become self-reliant and contribute to national development."</p>
+      <p class="fs-5 m-3">They have a vision of seeing "Naga as an inclusive city where everyone can participate in and benefit from the opportunities it offers."</p>
+      <p class="fs-5 m-3">And their mission is the "Implementation of programs, projects, and services that will alleviate poverty and empower disadvantaged individuals, families, and communities to improve their quality of life."</p>
     </div>
-  <div id="recent" class="row rounded p-2 text-center oswald">
-    <div class="col-md-4 p-5">
-      <div id="evac-count" class="p-3 count-card">
-        <h1 class="my-5">67</h1>
-        <h3><i class="fa-solid fa-people-roof"></i> Active Evacuation Centers</h3>
-      </div>
-    </div>
-    <div class="col-md-4 p-5">
-      <div id="fam-count" class="p-3 count-card">
-        <h1 class="my-5">89</h1>
-        <h3><i class="fa-solid fa-people-group"></i> Sheltered Families</h3>
-      </div>
-    </div>
-    <div class="col-md-4 p-5">
-      <div id="indivac-count" class="p-3 count-card">
-        <h1 class="my-5">337</h1>
-        <h3><i class="fa-solid fa-person"></i> Sheltered Individuals</h3>
-      </div>
+    <div class="col-sm-12 col-md-6 border-end border-black p-5 default-background2 flex-fill">
+      <h1 class="fw-bold fs-1">About Naga E-bakwit</h1>
+      <p class="fs-5 m-3">Naga E-bakwit is a web-based system that aims to serve as a tool that would lessen the CSWDO’s workload by automating data processes such as demographic segregation and relief allocation. Through the implemented system, CSWDO and their volunteers are expected  to consume less time and effort in accomplishing a  DROMIC report, but most importantly, it would enable them to efficiently monitor the status of the evacuation centers in relation to the sheltered families that are temporarily in their care. </p>
+
+      <p class="fs-5 m-3">The main purpose of this project is mainly to provide an efficient and convenient evacuee logging and relief distribution assistance web-based system for the local government of Naga’s City Social Welfare and Development Office to assist them in disaster evacuation endeavors.</p>
     </div>
   </div>
-<% end %>
+</div>
+
+<div id="contact-section" class="vh-100 montserrat default-background1 p-5">
+  <div class="row m-0">
+    <h1 class="fw-bold fs-1 oswald mb-4">Contact</h1>
+    <div class="row ms-5">
+      <p class="fs-4 oswald">If you have any concerns that you want to relay to CSWDO, you may reach out to them through the different contact information below.<p>
+    </div>
+    <div class="row ms-5">
+      <div class="col-auto fw-bold">
+        Address:
+      </div>
+      <div class="col-auto">
+        City Social Welfare Development Office G/F Social Development Center, Naga City Hall Complex, Juan Q. Miranda Ave., Concepcion Pequeña, Naga City
+      </div>
+    </div>
+    <div class="row ms-5">
+      <div class="col-auto fw-bold">
+        Telephone:
+      </div>
+      <div class="col-auto">
+        <div class="col-auto">
+          +63-54-871-2050+[local number] for <b>PLDT</b>
+        </div>
+        <div class="col-auto">
+          +63-54-205-2980+[local number] for <b>GLOBE</b> (Local: 3040)
+        </div>
+        <div class="col-auto">
+          (Local: 3040)
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5 ms-5">
+      <p class="fs-4 oswald">Or you may also want to visit their official webpage by clicking this <a href="https://www2.naga.gov.ph/office-service/city-social-welfare-development-office/" target="_blank">link</a>.<p>
+    </div>
+  </div>
+</div>
 
 </div>
 

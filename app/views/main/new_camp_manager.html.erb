@@ -1,5 +1,7 @@
+<%= link_to :back, class: 'ms-5 mt-3 mb-2 btn btn-outline-dark oswald fs-4 text-decoration-none' do %>
+  <i class="fa-solid fa-left-long"></i> Back
+<% end %>
 <div class="container">
-  <%= render "/layouts/default_back" %>
   <h1 align="center">NEW CAMP MANAGER</h1>
   <div id = "request_form">
     <%= render partial: "campmanager_form", locals: {request: Request.new} %>

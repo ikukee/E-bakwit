@@ -23,9 +23,9 @@
         <% else%>
           <td style = "color:yellow;"><strong><%= user.status%></strong></td>
         <% end %>
-        <td class="col-md-1 position-relative">
+        <td class="col-md-1 justify-content-end">
           <%= form_with url: "/volunteer/#{user.id}", method: :post do |form| %>
-            <%= form.button nil, class: "form-control btn btn-secondary btn-sm position-absolute px-3 bottom-0 end-0 mb-1 me-2" do %>
+            <%= form.button nil, class: "btn btn-secondary btn-sm" do %>
               View <i class="fa-solid fa fa-eye"></i>
             <% end %>
           <% end %>
