@@ -40,7 +40,7 @@ class MainController < ApplicationController
                         format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>INCORRECT PASSWORD!</li></ul>")}
                     end
                 else
-                    #if user.authenticate(params[:password])
+                    if user.authenticate(params[:password])
                         session[:user_id] = user.id
                         session[:user_type] = user.user_type
                         if user.user_type == "ADMIN"
@@ -53,9 +53,9 @@ class MainController < ApplicationController
                             end
                         end
                         
-                    #else
-                    #    format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>INCORRECT PASSWORD!</li></ul>")}
-                    #end
+                    else
+                        format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>INCORRECT PASSWORD!</li></ul>")}
+                    end
                 end
              
             else
