@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "/update", to: "main#updateFacilities"
   get "/requestcreate", to: "main#reqCreate"
   get "/logout",to:"main#logout"
+  get "/account", to:"main#account"
   get "/requests",to:"volunteer#volunteer_requests"
   get "/families", to: "main#evac_families"
   get "/dashboard",to:"main#index"
