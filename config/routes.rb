@@ -38,7 +38,9 @@ Rails.application.routes.draw do
   post "/add_facility",to:"evac_centers#add_facility"
   post "/add_item",to:"evac_centers#add_item"
 
-  
+  ## LOGGING
+  post "/log/search",to:"log_family#search"
+
   post "/login/proceed",to:"main#login_proceed"
   post "/send_request",to:"main#send_request_proceed"
   post "/register/camp_manager", to: "main#create_campmanager"
