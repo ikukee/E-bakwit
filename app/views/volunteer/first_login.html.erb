@@ -1,13 +1,12 @@
-<br>
-<body style = "background: #b8dbd9;">
-  <div class="mx-auto col-md-4 p-5" style="box-shadow: rgb(81, 81, 81) 0px 0px 12px 2px;" id="login-container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1 align="center">Change your password</h1>
-        <div id = "change_password">
-          <%= render partial:"first_login_form", locals:{user:@user}%>
-        </div>
+<br><br>
+
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <h1 align="center">Change your password</h1>
+      <div id = "change_password">
+        <%= render partial:"first_login_form", locals:{user:@user}%>
       </div>
-    </div>
   </div>
-</body>
+  <div class="col-md-3"></div>
+</div>

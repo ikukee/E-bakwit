@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "/update", to: "main#updateFacilities"
   get "/requestcreate", to: "main#reqCreate"
   get "/logout",to:"main#logout"
+  get "/account", to:"main#account"
   get "/requests",to:"volunteer#volunteer_requests"
   get "/families", to: "main#evac_families"
   get "/dashboard",to:"main#index"
@@ -37,7 +38,9 @@ Rails.application.routes.draw do
   post "/add_facility",to:"evac_centers#add_facility"
   post "/add_item",to:"evac_centers#add_item"
 
-  
+  ## LOGGING
+  post "/log/search",to:"log_family#search"
+
   post "/login/proceed",to:"main#login_proceed"
   post "/send_request",to:"main#send_request_proceed"
   post "/register/camp_manager", to: "main#create_campmanager"

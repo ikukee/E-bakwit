@@ -20,7 +20,7 @@ class MainController < ApplicationController
 
 
     def log_relief_form
-        
+        #@families = Family.all
     end
 
     def login_proceed
