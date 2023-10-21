@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get "/log_relief_form", to: "main#log_relief_form"
   get "/login", to: "main#login"
   get "/register", to: "main#register"
-  get "/log", to: "main#log_evacuee"
+  #get "/log", to: "main#log_evacuee"
   get "/update", to: "main#updateFacilities"
   get "/requestcreate", to: "main#reqCreate"
   get "/logout",to:"main#logout"
@@ -39,7 +39,9 @@ Rails.application.routes.draw do
   post "/add_item",to:"evac_centers#add_item"
 
   ## LOGGING
-  post "/log/search",to:"log_family#search"
+  get "evac_centers/:id/log/", to: "log_family#logging"
+  post "log/search",to:"log_family#search"
+
 
   post "/login/proceed",to:"main#login_proceed"
   post "/send_request",to:"main#send_request_proceed"

@@ -236,13 +236,13 @@
           </div>
           <% if session[:user_type] == "ADMIN"%>
             <div class="col">
-              <%= link_to "Log Evacuee", "/log", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+              <%= link_to "Log Evacuee", "#{evac_center.id}/log", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
             </div>
           <% else %>
             <% if User.find(session[:user_id]).currently_assigned != nil%>
               <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
                 <div class="col">
-                  <%= link_to "Log Evacuee", "/log", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+                  <%= link_to "Log Evacuee", "#{evac_center.id}/log", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
                 </div>
               <% end %>
             <% end %>
