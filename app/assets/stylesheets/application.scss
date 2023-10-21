@@ -160,7 +160,8 @@ body {
 
 #evac-card{
     background-image: linear-gradient(#f0f0f0, #b8dbd9);
-    box-shadow: 1px 1px 0.5em #586F7C;
+    
+    //box-shadow: 1px 1px 0.5em #586F7C;
 }
 
 #evac-card .card-header{
@@ -190,6 +191,11 @@ body {
     top: 3em;
     border: 0.2em dashed #586F7C;
     background-image: linear-gradient(#f0f0f0, #b8dbd9);
+}
+
+#view-del .link:hover{
+    transition-duration: 0.2s;
+    opacity: 90%;
 }
 
 .form-control{

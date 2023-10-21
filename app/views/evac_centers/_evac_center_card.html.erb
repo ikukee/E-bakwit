@@ -1,4 +1,4 @@
-<div id="evac-card" class="card h-100 oswald">
+<div id="evac-card" class="card h-100 oswald rounded-0">
   <div class="card-header">
     <h3 class="m-3 oswald fw-bold text-center"><%= evac_center.name %></i></h3>
   </div>
@@ -26,19 +26,18 @@
   </div>
 
   <% evac_yearly_profile = EvacYearlyProfile.all.where(evac_id: evac_center.id)%>
-  <div class="row justify-content-center my-2">
-    <div class="col-auto pe-1">
-      <%= link_to "/evac_centers/#{evac_center.id}", class: "btn btn-info" do %>
+  <div id="view-del" class="row text-center m-0">
+
+      <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #233b43", class: "col-9 link text-decoration-none text-light py-2 m-0" do %>
         View <i class="fa-solid fa-eye"></i>
       <% end %>
-    </div>
+
     <% if session[:user_type] == "ADMIN"%>
-    <div class="col-auto ps-1">
-      <%= link_to "/evac_centers/#{evac_center.id}", class:"btn btn-dark", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+      <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #3e6a79", class:"col-3 link text-decoration-none text-light py-2 ", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
         Delete <i class="fa fa-trash" aria-hidden="true"></i>
       <% end %>
-    </div>
     <% end %>
+
   </div>
 
 </div>
