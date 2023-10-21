@@ -54,10 +54,14 @@
         </div>
         <div class="col p-3 m-1" style="background: white; box-shadow: 1px 1px .5em #586F7C">
           <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;">MEMBER LOGGING</h2>
-          <div id="member-list">
             
-          </div>
-          <button class="btn btn-success text-light rounded-bottom p-2 w-100 text-decoration-none text-center">DONE</button>
+              <%= form_with url: "/log/evacuate/#{@evac_center.id}", method: :post do |form| %>
+              <div id="member-list">
+                
+              </div> 
+              <%=form.submit%>
+              <%end%>
+            
         </div>
       </div>
     

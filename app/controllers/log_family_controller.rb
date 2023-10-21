@@ -33,6 +33,26 @@ class LogFamilyController < ApplicationController
     end
     def logging
         @evac_center = EvacCenter.find(params[:id])
+        evacuee = Evacuee.new
     end
+
+    def evacuate ## post
+        evac_center = EvacCenter.find(params[:evac_id])
+        
+        evacuee = Evacuee.new
+        evacuee.family_id = 1
+        evacuee.disaster_id = 1
+        evacuee.date_in = Time.now
+        evacuee.date_out = nil
+        evacuee.evac_id = evac_center.id
+        respond_to do |format|
+            if evacuee.save
+                puts 'save'
+            else
+                puts 'error'
+            end
+        end
+    end
+    
 end
 

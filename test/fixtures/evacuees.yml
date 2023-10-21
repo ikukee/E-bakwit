@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  disaster_id: 1
+  family_id: 1
+  date_in: 2023-10-21 19:13:00
+  date_out: 2023-10-21 19:13:00
+  evac_id: 1
+
+two:
+  disaster_id: 1
+  family_id: 1
+  date_in: 2023-10-21 19:13:00
+  date_out: 2023-10-21 19:13:00
+  evac_id: 1

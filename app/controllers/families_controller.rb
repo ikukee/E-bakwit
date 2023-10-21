@@ -101,7 +101,6 @@ class FamiliesController < ApplicationController
         format.turbo_stream{render turbo_stream: turbo_stream.update("member_form_area",partial: "add_member", locals:{family: family, family_member: family_member })}
       end
     end
-
   end
 
   def edit_member
@@ -163,6 +162,6 @@ class FamiliesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def family_params
-      params.require(:family).permit(:name, :houseNum, :barangay, :is_4ps, :zone, :streetName, :is_evacuated)
+      params.require(:family).permit(:disaster_id, :family_id, :date_in, :date_out, :evac_id)
     end
 end
