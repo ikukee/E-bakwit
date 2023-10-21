@@ -26,6 +26,10 @@ body {
     background-image: linear-gradient(to right, #f0f0f0, #b8dbd9 );
 }
 
+.default-background4{
+    background-image: linear-gradient(#b8dbd9, #f0f0f0 );
+}
+
 /* Google Fonts */
 
 .poppins {
@@ -156,7 +160,8 @@ body {
 
 #evac-card{
     background-image: linear-gradient(#f0f0f0, #b8dbd9);
-    box-shadow: 1px 1px 0.5em #586F7C;
+    
+    //box-shadow: 1px 1px 0.5em #586F7C;
 }
 
 #evac-card .card-header{
@@ -186,6 +191,11 @@ body {
     top: 3em;
     border: 0.2em dashed #586F7C;
     background-image: linear-gradient(#f0f0f0, #b8dbd9);
+}
+
+#view-del .link:hover{
+    transition-duration: 0.2s;
+    opacity: 90%;
 }
 
 .form-control{

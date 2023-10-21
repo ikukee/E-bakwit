@@ -229,7 +229,7 @@
           <li>Typhoon J</li>
         </ul>
       </legend>
-      <div class="col">
+      <div class="col-md-6 col-sm-12">
         <div class="row">
           <div class="col-md-9">
             <h1 class="oswald fw" >EVACUEES OVERVIEW</h1>
@@ -286,10 +286,75 @@
             </div>
           </div>
         </div>
+
+        <%= javascript_include_tag 'age_distribution.js' %>
+        <div class="row m-0 mt-4" id="age_distribution"></div>
+
+        <div class="row m-0 oswald">
+          <table class="table table-light">
+            <thead class="table-secondary">
+                <th>Age Range</th>
+                <th>No. of MALEs</th>
+                <th>No. of FEMALEs</th>
+                <th>Total</th>
+            </thead>
+            <tbody>
+                <tr>
+                  <th>Infant</th>
+                  <td style="color:#005ec9;">2</td>
+                  <td style="color:#cf4696;">1</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <th>Toddlers</th>
+                  <td style="color:#005ec9;">2</td>
+                  <td style="color:#cf4696;">1</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <th>Preschoolers</th>
+                  <td style="color:#005ec9;">2</td>
+                  <td style="color:#cf4696;">1</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <th>Schoolage</th>
+                  <td style="color:#005ec9;">2</td>
+                  <td style="color:#cf4696;">1</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <th>Teenage</th>
+                  <td style="color:#005ec9;">2</td>
+                  <td style="color:#cf4696;">1</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <th>Adult</th>
+                  <td style="color:#005ec9;">2</td>
+                  <td style="color:#cf4696;">1</td>
+                  <td>3</td>
+                </tr>
+                <tr>
+                  <th>Senior Citizens</th>
+                  <td style="color:#005ec9;">2</td>
+                  <td style="color:#cf4696;">1</td>
+                  <td>3</td>
+                </tr>
+                <tr class="table-secondary fw-bold">
+                  <th>TOTAL</th>
+                  <td style="color:#005ec9;">2</td>
+                  <td style="color:#cf4696;">1</td>
+                  <td>3</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+
         <p>&nbsp;</p>
-        <a href="/families" class="btn btn-primary w-100 oswald fw-bold">View Families</a>
+        <a href="/families" class="btn btn-secondary w-100 oswald fw-bold">View Families</a>
       </div>
-      <div class="col">
+      <div class="col-md-6 col-sm-12">
         <div class="row">
           <div class="col-md-9">
             <h1 class="oswald fw" style="border-bottom: 2px solid black">RELIEF GOODS OVERVIEW</h1>
@@ -334,7 +399,7 @@
           </div>
         </div>
         <p>&nbsp;</p>
-        <a href="" class="btn btn-primary w-100 oswald fw-bold">VEIW RELIEF</a>
+        <a href="" class="btn btn-secondary w-100 oswald fw-bold">VEIW RELIEF</a>
       </div>
     </div>
   </div>
