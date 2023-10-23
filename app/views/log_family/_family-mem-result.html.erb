@@ -1,9 +1,20 @@
 <div class="container-fluid">
   <div class="row">
-    <% families.each do |x| %>
-      <div class="col-md-12 p-1 mb-3" style="background: silver;font-size:18px; box-shadow: 3px 3px 2px 2px black; outline:3px dashed black">
-           <%= render partial: "selection-mem", locals:{x: x} %>
-      </div>
-    <% end%>
+      <%=form_with url: "log/#{@families.id}", method: :post do |form| %>
+      <div class="form-check" >
+        <% families.each do |x| %>
+          <div class="col-md-12 p-1 mb-3" style="background: silver;font-size:18px; box-shadow: 3px 3px 2px 2px black; outline:3px dashed black">
+                <%if x.evacuee_id == nil || x.evacuee_id <= 0%>
+                  <%= form.check_box :mem, { multiple: true }, x.id, nil %>
+                  <%= form.label :mem, "#{x.fname} #{x.lname}" %>
+                <%else%>
+                  <%= form.check_box :mem, :disabled => true , checked: true%>
+                  <%= form.label :mem, "#{x.fname} #{x.lname}" %>
+                <%end%> 
+          </div>
+        <% end %>
+        </div>
+        <%= form.submit "TEST"%>
+      <%end%>
   </div>
 </div>

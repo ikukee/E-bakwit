@@ -37,22 +37,50 @@ class LogFamilyController < ApplicationController
     end
 
     def evacuate ## post
-        evac_center = EvacCenter.find(params[:evac_id])
-        
-        evacuee = Evacuee.new
-        evacuee.family_id = 1
-        evacuee.disaster_id = 1
-        evacuee.date_in = Time.now
-        evacuee.date_out = nil
-        evacuee.evac_id = evac_center.id
-        respond_to do |format|
-            if evacuee.save
-                puts 'save'
-            else
-                puts 'error'
+        evac_center = EvacCenter.find(params[:evac_id])  
+       
+        if(Evacuee.find_by(family_id: params[:family_id]) == nil)
+            evacuee = Evacuee.new 
+            evacuee.family_id = params[:family_id]
+            evacuee.disaster_id = 1
+            evacuee.date_in = Time.now
+            evacuee.date_out = nil
+            evacuee.evac_id = evac_center.id
+            
+            
+            respond_to do |format|
+                
+                if evacuee.save 
+                    arr = params[:mem];
+                    if arr != nil
+                        for i in 0..arr.length do
+                            family_mem = FamilyMember.find(arr[i])
+                            family_mem.update_column(:evacuee_id, evacuee.id )
+                            puts "=======#{family_mem.lname}"
+                        end 
+                    else
+                        puts 'nil'
+                    end 
+                    puts 'save' 
+                else
+                    puts 'error'
+                end
             end
+        else
+            arr = params[:mem];
+            existingEvacuee = Evacuee.find_by(family_id: params[:family_id])
+            if arr != nil
+                for i in 0..arr.length do
+                    family_mem = FamilyMember.find(arr[i])
+                    family_mem.update_column(:evacuee_id, existingEvacuee.id )
+                    puts "=======#{family_mem.lname}"
+                end 
+            else
+                puts 'nil'
+            end 
         end
+
     end
-    
+
 end
 
