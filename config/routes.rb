@@ -39,7 +39,10 @@ Rails.application.routes.draw do
   post "/add_item",to:"evac_centers#add_item"
 
   ## LOGGING
+  
   get "evac_centers/:id/log/", to: "log_family#logging"
+  get "evac_centers/:evac_id/evacuated", to: "log_family#evacuatedView"
+  post "evac_centers/:evac_id/out/:evacuee_id", to: "log_family#evacueeOut"
   post "log/search",to:"log_family#search"
   post "evac_centers/:evac_id/log/:family_id", to: "log_family#evacuate"
 

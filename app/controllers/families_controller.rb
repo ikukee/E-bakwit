@@ -162,6 +162,7 @@ class FamiliesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def family_params
-      params.require(:family).permit(:disaster_id, :family_id, :date_in, :date_out, :evac_id)
+      params.require(:family).permit(:name, :houseNum, :barangay, :is_4ps, :zone, :streetName, :is_evacuated)
+
     end
 end
