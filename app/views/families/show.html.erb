@@ -1,3 +1,7 @@
+<%= link_to '/families', class: 'ms-5 mt-3 mb-2 btn btn-outline-dark oswald fs-4 text-decoration-none' do %>
+  <i class="fa-solid fa-left-long"></i> Back
+<% end %>
+
 
 <div style="overflow-x:hidden; margin: 25px 25px 25px 25px;" class="text-xs-center" >
   <div class="card" >
@@ -10,10 +14,10 @@
                 <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;"><%= @family.name %> FAMILY RECORD</h2>
               </div>
               <div class = "col-md-2" style = "margin-top:10px;">
-                <a href = "/families/<%= @family.id%>/edit"><button class = "btn btn-warning form-control"><i class="fas fa-edit"></i> Edit this Family</button></a>
+                
               </div>
               <div class = "col-md-2" style = "margin-top:10px;">
-                <a href = "/families"><button class = "btn btn-primary form-control"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to Families</button></a>
+                <a href = "/families/<%= @family.id%>/edit"><button class = "btn btn-warning form-control"><i class="fas fa-edit"></i> Edit this Family</button></a>
               </div>
             </div>
             <div class = "row" style = "margin: 25px 25px 25px 25px">

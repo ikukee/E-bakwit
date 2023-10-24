@@ -1,12 +1,12 @@
 
-<div id = "login-container" class="container-fluid" >
+
+<div id = "login-container" class="container-fluid m-0 p-0 vh-75">
 <div class ="row m-0" >
-  
     <div class="col-md-auto ps-5">
       <h1 class="oswald" style="border-bottom: 5px solid white; color:white;">NAGA</h1>
       <div class="col" >
-      <p>Dont have an account? </p>
-    </div>
+        <p>Dont have an account? </p>
+      </div>
     </div>
     <div class="col-md-auto" >
       <h1 class="oswald" style="color:#2e9cdb; border-bottom:5px solid #2e9cdb;">LOGIN</h1>
@@ -53,91 +53,7 @@
             <span>&nbsp;</span>
           <% end %>
       </div>
-    </div><!-- te-->
-
-    
-</div> 
-<div class="row" >&nbsp;
 </div>
-<div class="row" >
-&nbsp;
+<div class="position-absolute m-0 w-100 bottom-0 p-0">
+  <%= render 'layouts/footer'%>
 </div>
-<div class="row" >
-&nbsp;
-</div>
-<div class="row" >
-&nbsp;
-</div>
-<div class="row" >
-&nbsp;
-</div>
-<div class="row" >
-&nbsp;
-</div>
-<div class="row" >
-&nbsp;
-</div>
-<div class="row" >
-&nbsp;
-</div>
-<div class="row" >
-&nbsp;
-</div>
-<div class="row" >
-&nbsp;
-</div>
-<div class="row" >
-&nbsp;
-</div>
-<div class="row" >
-&nbsp;
-</div>
-
-</div>
-<%= render 'layouts/footer'%>
-
-<!-- <body style = "">
-  <span>&nbsp;</span>
-  <div class="mx-auto col-md-4 p-5" style="box-shadow: rgb(81, 81, 81) 0px 0px 12px 2px;" id="login-container">
-    <div class="row">
-      <div class="col-md-12">
-        <h1 align="center">LOGIN</h1>
-      </div>
-      <%= form_with url:"/login/proceed", method: :post do |f| %>
-        <div class="col">
-        </div>
-        <div class="form-group">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                </svg></span>
-            </div>
-            <%= f.email_field :email, class:"form-control ", placeholder: "Email"%>
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
-                  <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-                </svg></span>
-            </div>
-            <%= f.password_field :password, class:"form-control ", placeholder: "Password"%>
-          </div>
-          <div id= "login_errorArea"></div>
-          <span>&nbsp;</span>
-          <div class="form-group">
-            <%= f.submit "LOGIN", class:"form-control btn btn-success float-right w-100 font-weight-bold"%>
-          </div>
-        </div>
-        <span>&nbsp;</span>
-        <div class="col-md-12"><span align="center">Dont have an account?</span><br>
-          <span align="center">Contact Office Admin to create your account or submit a <a href="/requestcreate">Request</a> </span></div>
-        <p>
-          <div class="col-md-12 p-2" style="border-top: 1px solid white;">
-          </div>
-        </div>
-      <% end %>
-      <%= render '/layouts/footer' %>
-    </body>
