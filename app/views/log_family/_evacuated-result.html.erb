@@ -1,0 +1,17 @@
+<div class="container-fluid">
+  <div class="row">
+        
+            <div class="col-md-12 p-1 mb-3" style="background: silver;font-size:18px; box-shadow: 3px 3px 2px 2px black; outline:3px dashed black">
+             <% @evacuee_list.each do |fam| %>     
+                  <% FamilyMember.all.where(evacuee_id: fam.id).each do |mem| %>
+                      <h1><%= mem.fname%> <%= mem.lname%></h1>
+                        <%= form_with url: "out/#{mem.id}", method: :post do |form| %>
+                      <%=form.submit "BOUNCE" %>
+                      <%end%>
+                  <%end%>
+                   <% end %>
+            </div>
+         
+        </div>
+  </div>
+</div>

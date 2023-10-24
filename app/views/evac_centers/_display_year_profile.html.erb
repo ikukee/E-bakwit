@@ -271,7 +271,7 @@
                 <p class="h4 oswald fw" align="right">TOTAL: </p>
               </div>
               <div class="col">
-                <p class="h2 oswald fw">2</p>
+                <p class="h2 oswald fw"><%= countIndivEvacuated(evac_center.id)%></p>
               </div>
             </div>
           </div>
@@ -281,7 +281,7 @@
                 <p class="h4 oswald fw" align="right">FAMILIES: </p>
               </div>
               <div class="col">
-                <p class="h2 oswald fw">2</p>
+                <p class="h2 oswald fw"><%= countEvacuated(evac_center.id) %></p>
               </div>
             </div>
           </div>
@@ -352,7 +352,7 @@
         </div>
 
         <p>&nbsp;</p>
-        <a href="/families" class="btn btn-secondary w-100 oswald fw-bold">View Families</a>
+        <a href="<%=@evac_center.id%>/evacuated" class="btn btn-secondary w-100 oswald fw-bold">View Families</a>
       </div>
       <div class="col-md-6 col-sm-12">
         <div class="row">
