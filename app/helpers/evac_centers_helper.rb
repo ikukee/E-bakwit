@@ -58,9 +58,7 @@ module EvacCentersHelper
         evac_evacuee.each do |evac|
             evac_fam.each do |fam|
                 if (FamilyMember.all.where("family_id = ? AND evacuee_id = ? ", fam.id,  evac.id).length > 0)
-                    if(evac.evac_id == evac_center)
-                        countFamily = countFamily + 1
-                    end
+                    countFamily = countFamily + 1
                 end
             end
         end
