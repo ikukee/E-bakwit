@@ -54,9 +54,9 @@
               Delete <i class="fa fa-trash" aria-hidden="true"></i>
             <% end %>
           <% else %>
-            <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #3e6a79", class:"link text-decoration-none text-light py-2 ", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-              Delete <i class="fa fa-trash" aria-hidden="true"></i>
-            <% end %>
+          <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #233b43", class: "col link text-decoration-none text-light py-2 m-0" do %>
+          View <i class="fa-solid fa-eye"></i>
+        <% end %>
           <%end%>
           
         <%end%>
