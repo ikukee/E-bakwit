@@ -66,5 +66,21 @@ module EvacCentersHelper
         end
         return countFamily
     end
-
+    def countGenderEvacuated(evac_disaster_profile, sexVal)
+        evacuatedIndiv = 0
+        if(evac_match_evacuee = Evacuee.find_by(evac_id: evac_disaster_profile) != nil)
+            evac_match_evacuee = Evacuee.all.where(evac_id: evac_disaster_profile)
+            evac_match_evacuee.each do |mat|
+                evac_indiv = FamilyMember.all.where(evacuee_id: mat.id) 
+                evac_indiv.each do |fam|
+                #  if Evacuee.all.where(evac_id: evac_disaster_profile)
+                    puts "oooooooooooooooooooooooooooooooooooooooooo#{fam.sex}"
+                    if(fam.sex == sexVal )
+                        evacuatedIndiv=evacuatedIndiv+1
+                    end
+                end
+            end
+        end
+        return evacuatedIndiv
+    end
 end
