@@ -27,13 +27,14 @@ class LogFamilyController < ApplicationController
                 @result = Family.find(@families.id).family_members
                 format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{families:@result})}  
             else
-                format.turbo_stream{render turbo_stream: turbo_stream.update("member-list","<h2>Not Found</h2>")} 
+                format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "create-fam-btn" )} 
             end
         end
     end
     def logging
         @evac_center = EvacCenter.find(params[:id])
         evacuee = Evacuee.new
+        family = Family.new
     end
 
     def evacuate ## post
