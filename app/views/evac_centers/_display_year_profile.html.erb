@@ -213,6 +213,10 @@
       </div>
     </div>
     <div class="row p-2" style="background-image: linear-gradient(#f0f0f0, #b8dbd9); border-top: 2px solid black; border-radius: 2px;">
+      <%= form_with url: "/", method: :post do |form| %>
+        <%= form.collection_select :id , Disaster.all.order(:name), :id, :name,{:prompt => "SELECT DISASTER"},{class:"btn rounded fs-1 poppins dropdown-toggle border-0 fw-bold mt-2 mx-2 bg-transparent", id:"disaster-name-dv"}%>
+      <%end%>
+      <!--
       <legend >
         <button id="disaster-name-dv"  class="rounded fs-1 poppins dropdown-toggle border-0 fw-bold mt-2 mx-2 bg-transparent" data-bs-toggle="dropdown" aria-expanded="false">
           Typhoon Juan
@@ -228,7 +232,7 @@
           <li>Typhoon I</li>
           <li>Typhoon J</li>
         </ul>
-      </legend>
+      </legend>-->
       <div class="col-md-6 col-sm-12">
         <div class="row">
           <div class="col-md-9">
