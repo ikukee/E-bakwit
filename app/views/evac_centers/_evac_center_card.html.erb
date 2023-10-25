@@ -31,11 +31,11 @@
 
       <% evac_yearly_profile = EvacYearlyProfile.all.where(evac_id: evac_center.id)%>
       <div id="view-del" class="row text-center m-0">
-
+        <% if session[:user_type] != nil %>
           <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #233b43", class: "col-9 link text-decoration-none text-light py-2 m-0" do %>
             View <i class="fa-solid fa-eye"></i>
           <% end %>
-
+        <%end%>
         <% if session[:user_type] == "ADMIN"%>
           <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #3e6a79", class:"col-3 link text-decoration-none text-light py-2 ", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
             Delete <i class="fa fa-trash" aria-hidden="true"></i>
