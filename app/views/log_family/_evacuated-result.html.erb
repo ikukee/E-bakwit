@@ -50,7 +50,26 @@
           <% end %>
 
           <td style="width: 10%" class="pt-1 text-end">
-                <button class="btn btn-dark" style="font-size: 0.9em;"><i class="fa-solid fa-pen-to-square"></i> UPDATE</button>
+                <button class="btn btn-dark" style="font-size: 0.9em;" data-bs-toggle="modal" data-bs-target="#evacueeUpdateModal"><i class="fa-solid fa-pen-to-square"></i> UPDATE</button>
+
+                <!-- update evacuee -->
+                <div class="modal fade" id="evacueeUpdateModal" tabindex="-1" aria-labelledby="evacueeUpdateModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="evacueeUpdateModalLabel">Update Evacuee</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        ..adasdsad
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
           </td>
           <td style="width: 10%;" class="pt-1 ps-2">
                 <%= form_with url: "out/#{mem.id}", method: :post do |form| %>
