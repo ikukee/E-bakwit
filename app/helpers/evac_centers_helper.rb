@@ -52,17 +52,15 @@ module EvacCentersHelper
     end
     
     def countGenFamily(evac_center)
-        countFamily = 0
-        evac_evacuee = Evacuee.all.where(evac_id: evac_center) #id
-        evac_fam = Family.all.where(is_evacuated: true) #id
-        evac_evacuee.each do |evac|
-            evac_fam.each do |fam|
-                if (FamilyMember.all.where("family_id = ? AND evacuee_id = ? ", fam.id,  evac.id).length > 0)
-                    countFamily = countFamily + 1
-                end
+       
+        countFam = 0
+        evacuee = Evacuee.all.where("evac_id = ?", evac_center)
+        evacuee.each do |x| 
+            if x.date_out.blank? 
+                countFam = countFam + 1
             end
-        end
-        return countFamily
+        end   
+        return countFam
     end
     def countGenderEvacuated(evac_disaster_profile, sexVal)
         evacuatedIndiv = 0
