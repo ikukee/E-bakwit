@@ -19,13 +19,19 @@ class LogFamilyController < ApplicationController
         #        format.turbo_stream{render turbo_stream: turbo_stream.update("member-list","<h2>Not Found</h2>")}  
         #    end
         #end
-        
         @families = Family.find_by("LOWER(name)= ?", params[:id].downcase)
+        
+
         respond_to do |format|
                
             if @families.present? && @families.id > 0
+                @evacuee= Evacuee.where("family_id = ? AND evac_id = ?", @families.id, params[:evac_id])
+                if @evacuee.present?
                 @result = Family.find(@families.id).family_members
                 format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{families:@result})}  
+                else
+                    format.turbo_stream{render turbo_stream: turbo_stream.update("member-list","<h1> This Family is already logged! </h1>")}
+                end
             else
                 format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "create-fam-btn" )} 
             end
@@ -39,7 +45,9 @@ class LogFamilyController < ApplicationController
 
     def evacuate ## post
         evac_center = EvacCenter.find(params[:evac_id])  
-       
+        #1 if does not exist and same evac id (Evacuee.where("family_id != ? AND evac_id = ?", params[:family_id], params[:evac_id]))
+            #2 if evacuee exists and still evacuatedEvacuee.where("family_id = ? AND date_out = ?", params[:family_id], nil)
+            #3 if evacuee exists from another evac centerEvacuee.where("family_id = ? AND evac_id != ?", params[:family_id], params[:evac_id]
         if(Evacuee.find_by(family_id: params[:family_id]) == nil)
             evacuee = Evacuee.new 
             evacuee.family_id = params[:family_id]
@@ -108,10 +116,11 @@ class LogFamilyController < ApplicationController
     def evacueeOut
         evacuee = FamilyMember.find(params[:evacuee_id])
         family = Family.find(evacuee.family_id)
-
+        evacueeModel = Evacuee.find_by(family_id: family.id)
         evacuee.update_column("evacuee_id", 0)
         if(FamilyMember.all.where("family_id = ? AND evacuee_id > ?", family.id,  0).length == 0)
             family.update_attribute(:is_evacuated, false)
+            evacueeModel.update_column(:date_out, Time.now)
         end
         redirect_to "/evac_center/#{params[:evac_id]}"
     end
