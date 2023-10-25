@@ -1,43 +1,46 @@
 <div id="evac-card" class="card h-100 oswald rounded-0">
-  <div class="card-header">
-    <h3 class="m-3 oswald fw-bold text-center"><%= evac_center.name %></i></h3>
-  </div>
-  <div class="card-body">
-    <div class="row border-3">
-      <div class="col-6 p-0">
-        <h5 class="text-end">Barangay</h6>
+      <div class="card-header">
+        <h3 class="m-3 oswald fw-bold text-center"><%= evac_center.name %></i></h3>
       </div>
-      <div class="col-6">
-        <h5 class="fw-bold"><%= evac_center.barangay%></h5>
+      <div class="card-body">
+        <div class="row border-3">
+          <div class="col-6 p-0">
+            <h5 class="text-end">Barangay</h6>
+          </div>
+          <div class="col-6">
+            <h5 class="fw-bold"><%= evac_center.barangay%></h5>
+          </div>
+        </div>
+        <div class="row p-0">
+          <div class="col-6 p-0">
+            <h6 class="mt-3 text-end">Official Evacuation Center:</h6>
+          </div>
+          <div class="col">
+            <% if evac_center.isInside == true %>
+              <h6 class="mt-3 fw-bold">YES</h6>
+            <% else %>
+              <h6 class="mt-3 fw-bold">NO</h6>
+            <% end %>
+          </div>
+          <div class="col">
+            <h6>PERSON: <%= countIndivEvacuated(evac_center.id)%></h6>
+            <h6>FAMILIES: <%= countGenFamily(evac_center.id) %></h6>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="row p-0">
-      <div class="col-6 p-0">
-        <h6 class="mt-3 text-end">Official Evacuation Center:</h6>
-      </div>
-      <div class="col">
-        <% if evac_center.isInside == true %>
-          <h6 class="mt-3 fw-bold">YES</h6>
-        <% else %>
-          <h6 class="mt-3 fw-bold">NO</h6>
+
+      <% evac_yearly_profile = EvacYearlyProfile.all.where(evac_id: evac_center.id)%>
+      <div id="view-del" class="row text-center m-0">
+
+          <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #233b43", class: "col-9 link text-decoration-none text-light py-2 m-0" do %>
+            View <i class="fa-solid fa-eye"></i>
+          <% end %>
+
+        <% if session[:user_type] == "ADMIN"%>
+          <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #3e6a79", class:"col-3 link text-decoration-none text-light py-2 ", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+            Delete <i class="fa fa-trash" aria-hidden="true"></i>
+          <% end %>
         <% end %>
+
       </div>
-    </div>
-  </div>
-
-  <% evac_yearly_profile = EvacYearlyProfile.all.where(evac_id: evac_center.id)%>
-  <div id="view-del" class="row text-center m-0">
-
-      <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #233b43", class: "col-9 link text-decoration-none text-light py-2 m-0" do %>
-        View <i class="fa-solid fa-eye"></i>
-      <% end %>
-
-    <% if session[:user_type] == "ADMIN"%>
-      <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #3e6a79", class:"col-3 link text-decoration-none text-light py-2 ", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-        Delete <i class="fa fa-trash" aria-hidden="true"></i>
-      <% end %>
-    <% end %>
-
-  </div>
-
 </div>
