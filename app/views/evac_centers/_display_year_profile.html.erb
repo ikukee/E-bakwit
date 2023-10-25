@@ -290,8 +290,8 @@
             </div>
           </div>
         </div>
-          <% if User.find(session[:user_id]).currently_assigned != nil || session[:user_type] == "ADMIN"%>
-              <% if User.find(session[:user_id]).currently_assigned == evac_center.id || session[:user_type] = "ADMIN" %>
+          <% if User.find(session[:user_id]).currently_assigned != nil %>
+              <% if User.find(session[:user_id]).currently_assigned == evac_center.id || session[:user_type] == "ADMIN" %>
                 <a href="<%=evac_center.id%>/evacuated" class="btn btn-dark w-100 oswald fw-bold mt-4" style="background: #004d80;">View Evacuees</a>
               <% end %>
             <% end %>
