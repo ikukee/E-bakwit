@@ -13,7 +13,7 @@
       <th class="text-dark p-2">remove</th>
     </thead>
     <% @evacuee_list.each do |fam| %>
-      <% FamilyMember.all.where(evacuee_id: fam.id).each do |mem| %>
+      <% FamilyMember.all.where("evacuee_id = ?", fam.id ).each do |mem| %>
         <tr>
           <td class="p-2"><%= mem.lname %> </td>
           <td class="p-2"><%= mem.fname %> </td>

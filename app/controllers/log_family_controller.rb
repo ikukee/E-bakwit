@@ -36,53 +36,38 @@ class LogFamilyController < ApplicationController
         evacuee = Evacuee.new
         family = Family.new
     end
+# if evacuee not exist
+# elseif evacuee exist but not in the same evacuation center and have left
+# elseif evacuee exist but not in the same evacuation center and have not left
+# elseif evacuee exist on the same evacuation center and have left
+    
 
-    def evacuate ## post
+    # evacuee model id = 2, family_id = 1  <<< RECORD
+    # family id = 1,is_evacuated true
+    def evacuatedView 
+        @evacuee_list = Evacuee.all.where(evac_id: params[:evac_id])
+        
+    end
+    def evacuate
+
         evac_center = EvacCenter.find(params[:evac_id])      
-        if(Evacuee.find_by(family_id: params[:family_id]) == nil )
-            evacuee = Evacuee.new 
-            evacuee.family_id = params[:family_id]
-            evacuee.disaster_id = 1
-            evacuee.date_in = Time.now
-            evacuee.date_out = nil
-            evacuee.evac_id = evac_center.id
-            
-            
-            respond_to do |format|
-                
-                if evacuee.save 
-                    arr = params[:mem];
-                    if arr != nil
-                        for i in 0..arr.length-1 do
-                           
-                            family_mem = FamilyMember.find(arr[i])
-                            family_mem.update_column(:evacuee_id, evacuee.id )
-                        end
-                        
-                        myFam = Family.find(params[:family_id])
-                        if(myFam.is_evacuated != true )
-                            
-                            myFam.update_attribute(:is_evacuated, true)
-                        end
-                        flash[:notice] = "SUCCESSFULLY LOGGED!"
-                        redirect_to "/evac_centers/#{params[:evac_id]}/log", notice: "SUCCESS!"
-                    else
-                        puts 'nil'
-                    end 
-                    puts 'save' 
-                else
-                    puts 'error'
+        #family_id << PARAMS
+        evacuees = Evacuee.all.where(family_id: params[:family_id])
+        key = false
+            evacuees.each do |evacuee|
+                if(evacuee.evac_id == params[:evac_id].to_i)
+                    key = true
+                    break
                 end
             end
-        
-        elsif(Evacuee.where("evac_id != ? AND family_id = ?", params[:evac_id], params[:family_id]))
+        puts key 
+        if(evacuees.length() < 1 || !key)
             evacuee = Evacuee.new 
             evacuee.family_id = params[:family_id]
             evacuee.disaster_id = 1
             evacuee.date_in = Time.now
             evacuee.date_out = nil
             evacuee.evac_id = evac_center.id
-            
             
             respond_to do |format|
                 
@@ -111,35 +96,76 @@ class LogFamilyController < ApplicationController
                 end
             end
         else
-            arr = params[:mem];
-            existingEvacuee = Evacuee.find_by(family_id: params[:family_id])
-            if arr != nil
-                for i in 0..arr.length-1 do
-       
-                    family_mem = FamilyMember.find(arr[i])
-                    family_mem.update_column(:evacuee_id, existingEvacuee.id )
-
-                end 
-                
-                myFam = Family.find(params[:family_id])
-                if(myFam.is_evacuated != true )
+            if(key)
+                evacuee = Evacuee.find_by(evac_id: params[:evac_id])
+                # same evac
+                if(evacuee.date_out == nil)
+                    # family left
+                    # update
+                    arr = params[:mem];
                    
-                    myFam.update_attribute(:is_evacuated, true)
-                end
-                flash[:notice] = "SUCCESSFULLY LOGGED!"
-                redirect_to "/evac_centers/#{params[:evac_id]}/log"
+                    if arr != nil
+                        for i in 0..arr.length-1 do
+            
+                            family_mem = FamilyMember.find(arr[i])
+                            family_mem.update_column(:evacuee_id, evacuee.id )
 
-            else
-                puts 'nil'
-            end 
+                        end 
+                        
+                        myFam = Family.find(params[:family_id])
+                        if(myFam.is_evacuated != true )
+                        
+                            myFam.update_attribute(:is_evacuated, true)
+                        end
+                        flash[:notice] = "SUCCESSFULLY LOGGED!"
+                        redirect_to "/evac_centers/#{params[:evac_id]}/log"
+
+                    else
+                        puts 'nil'
+                    end 
+                elsif(evacuee.date_out != nil)
+                    # family here
+                    # new
+                    evacuee = Evacuee.new
+                    evacuee.family_id = params[:family_id]
+                    evacuee.disaster_id = 1
+                    evacuee.date_in = Time.now
+                    evacuee.date_out = nil
+                    evacuee.evac_id = evac_center.id
+                    
+                    puts 'if 1'
+                    respond_to do |format|
+                        
+                        if evacuee.save 
+                            arr = params[:mem];
+                            if arr != nil
+                                for i in 0..arr.length-1 do
+                                
+                                    family_mem = FamilyMember.find(arr[i])
+                                    family_mem.update_column(:evacuee_id, evacuee.id )
+                                end
+                                
+                                myFam = Family.find(params[:family_id])
+                                if(myFam.is_evacuated != true )
+                                    
+                                    myFam.update_attribute(:is_evacuated, true)
+                                end
+                                flash[:notice] = "SUCCESSFULLY LOGGED!"
+                                redirect_to "/evac_centers/#{params[:evac_id]}/log", notice: "SUCCESS!"
+                            else
+                                puts 'nil'
+                            end 
+                            puts 'save' 
+                        else
+                            puts 'error'
+                        end
+                    end
+                end
+            end
         end
     end
 
-    # evacuee model id = 2, family_id = 1  <<< RECORD
-    # family id = 1,is_evacuated true
-    def evacuatedView 
-        @evacuee_list = Evacuee.all.where(evac_id: params[:evac_id])
-    end
+
     def evacueeOut  
         evacuee = FamilyMember.find(params[:evacuee_id])
         family = Family.find(evacuee.family_id)       
