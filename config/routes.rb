@@ -40,11 +40,14 @@ Rails.application.routes.draw do
 
   ## LOGGING
   
-  get "evac_centers/:id/log/", to: "log_family#logging"
-  get "evac_centers/:evac_id/evacuated", to: "log_family#evacuatedView"
-  post "evac_centers/:evac_id/out/:evacuee_id", to: "log_family#evacueeOut"
+  get "evac_centers/:id/log/:disaster_id", to: "log_family#logging"
+  get "evac_centers/:evac_id/:disaster_id/evacuated", to: "log_family#evacuatedView"
+  post "evac_centers/:evac_id/:disaster_id/out/:member_id", to: "log_family#evacueeOut"
+  post "evac_centers/:evac_id/:disaster_id/release/:member_id", to: "log_family#evacueeReleased"
   post "log/search",to:"log_family#search"
-  post "evac_centers/:evac_id/log/:family_id", to: "log_family#evacuate"
+  post "/log/:member_id/:evac_id/:disaster_id", to: "log_family#evacuate"
+  post "/log/all/:family_id",to:"log_family#evacuate_all"
+  post "/view_disaster_evacuation",to: "evac_centers#view_disaster_evacuation"
 
   post "/login/proceed",to:"main#login_proceed"
   post "/send_request",to:"main#send_request_proceed"

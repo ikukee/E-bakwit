@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_23_055707) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_08_074037) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_055707) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -55,22 +55,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_055707) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "camp_managers", force: :cascade do |t|
-    t.string "fname"
-    t.string "lname"
-    t.string "cnum"
-    t.string "address"
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "disasters", force: :cascade do |t|
     t.string "name"
     t.string "disaster_type"
     t.date "year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date_of_occurence"
   end
 
   create_table "evac_centers", force: :cascade do |t|
@@ -82,18 +73,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_055707) do
     t.integer "capacity"
   end
 
-  create_table "evac_esses", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
+  create_table "evac_members", force: :cascade do |t|
+    t.integer "evacuee_id"
+    t.integer "member_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "evac_facilities", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "status"
   end
 
   create_table "evac_yearly_profiles", force: :cascade do |t|

@@ -35,26 +35,23 @@ module EvacCentersHelper
     # match evacuee.evacuee_id = family_member.evacuee_id
     # match evacuee.evac_id = evac_id 
 
-    def countIndivEvacuated(evac_disaster_profile )
+    def countIndivEvacuated(evac_center,disaster)
         evacuatedIndiv = 0
-        if(evac_match_evacuee = Evacuee.find_by(evac_id: evac_disaster_profile) != nil)
-            evac_match_evacuee = Evacuee.all.where(evac_id: evac_disaster_profile)
-            evac_match_evacuee.each do |mat|
-                evac_indiv = FamilyMember.all.where(evacuee_id: mat.id) 
-                evac_indiv.each do |fam|
-                #  if Evacuee.all.where(evac_id: evac_disaster_profile)
-                        evacuatedIndiv=evacuatedIndiv+1
-                    #end
-                end
+        evacuees = Evacuee.all.where(disaster_id: disaster.id).where(evac_id: evac_center)
+        if evacuees.length > 0
+            evacuees.each do |evacuee|
+                evacuee_members = EvacMember.all.where(evacuee_id: evacuee.id)
+                evacuatedIndiv = evacuatedIndiv + evacuee_members.length
             end
         end
+        
         return evacuatedIndiv
     end
     
-    def countGenFamily(evac_center)
-       
+    def countGenFamily(evac_center, disaster)
+        
         countFam = 0
-        evacuee = Evacuee.all.where("evac_id = ?", evac_center)
+        evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster.id)
         evacuee.each do |x| 
             if x.date_out.blank? 
                 countFam = countFam + 1
@@ -62,17 +59,17 @@ module EvacCentersHelper
         end   
         return countFam
     end
-    def countGenderEvacuated(evac_disaster_profile, sexVal)
+
+    def countGenderEvacuated(evac_center,disaster, sexVal)
         evacuatedIndiv = 0
-        if(evac_match_evacuee = Evacuee.find_by(evac_id: evac_disaster_profile) != nil)
-            evac_match_evacuee = Evacuee.all.where(evac_id: evac_disaster_profile)
-            evac_match_evacuee.each do |mat|
-                evac_indiv = FamilyMember.all.where(evacuee_id: mat.id) 
-                evac_indiv.each do |fam|
-                #  if Evacuee.all.where(evac_id: evac_disaster_profile)
-                    puts "oooooooooooooooooooooooooooooooooooooooooo#{fam.sex}"
-                    if(fam.sex == sexVal )
-                        evacuatedIndiv=evacuatedIndiv+1
+        evacuees = Evacuee.all.where(disaster_id: disaster.id).where(evac_id: evac_center)
+        if evacuees.length > 0
+            evacuees.each do |evacuee|
+                evacuee_members = EvacMember.all.where(evacuee_id: evacuee.id)
+                evacuee_members.each do |em|
+                    fam_mem = FamilyMember.find(em.member_id)
+                    if fam_mem.sex == sexVal
+                        evacuatedIndiv = evacuatedIndiv +1
                     end
                 end
             end

@@ -9,77 +9,75 @@
       <th class="text-center p-2">Pregnant</th>
       <th class="text-center p-2">Breastfeeding</th>
       <th class="text-center p-2">PWD</th>
-      <th class="text-dark p-2">update</th>
-      <th class="text-dark p-2">remove</th>
+      <th class="text-center p-2">STATUS</th>
+      <th class="text-center p-2">ACTION</th>
     </thead>
-    <% @evacuee_list.each do |fam| %>
-      <% FamilyMember.all.where("evacuee_id = ?", fam.id ).each do |mem| %>
+    <% @evacuee_list.each do |el| %>
+      <% EvacMember.all.where("evacuee_id = ?", el.id ).each do |em| %>
+        <% mem = FamilyMember.find(em.member_id) %>
         <tr>
-          <td class="p-2"><%= mem.lname %> </td>
+          <td class="p-2"><a href = "/families/<%= mem.family_id%>" ><%= mem.lname %></a> </td>
           <td class="p-2"><%= mem.fname %> </td>
           <td class="p-2"><%= mem.age %> </td>
-
           <% if mem.sex == "Male" %>
             <td class="oswald p-2" style="color: #1a8cff">M <i class="fa-solid fa-person"></i></td>
           <% else %>
             <td class="oswald p-2" style="color: #ff1aff">F <i class="fa-solid fa-person-dress"></i></td>
           <% end %>
-
           <% if mem.is_parent == true %>
-            <td class="fs-3 text-center p-2"><i class="fa-solid fa-p"></i></i></td>
+            <td class="fs-3 text-center p-2"><i class="fa-solid fa-p"></i></td>
           <% else %>
             <td class="p-2"></td>
           <% end %>
-
           <% if mem.is_pregnant == true %>
             <td class="fs-3 text-center p-2"><i class="fa-solid fa-person-pregnant"></i></td>
           <% else %>
             <td class="p-2"></td>
           <% end %>
-
           <% if mem.is_breastfeeding == true %>
             <td class="fs-3 text-center p-2"><i class="fa-solid fa-person-breastfeeding"></i></td>
           <% else %>
             <td class="p-2"></td>
           <% end %>
-
           <% if mem.is_pwd == true %>
-            <td class="fs-3 text-center p-2"><i class="fa-solid fa-wheelchair"></i></i></td>
+            <td class="fs-3 text-center p-2"><i class="fa-solid fa-wheelchair"></i></td>
           <% else %>
             <td class="p-2"></td>
           <% end %>
-
-          <td style="width: 10%" class="pt-1 text-end">
-                <button class="btn btn-dark" style="font-size: 0.9em;" data-bs-toggle="modal" data-bs-target="#evacueeUpdateModal"><i class="fa-solid fa-pen-to-square"></i> UPDATE</button>
-
-                <!-- update evacuee -->
-                <div class="modal fade" id="evacueeUpdateModal" tabindex="-1" aria-labelledby="evacueeUpdateModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="evacueeUpdateModalLabel">Update Evacuee</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        ..adasdsad
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-          </td>
-          <td style="width: 10%;" class="pt-1 ps-2">
+          <td class="p-2"><%= em.status %> </td>
+          <td style="width: 30%;" class="pt-1 ps-2">
+            <div class = "row">
+              <div class = "col-md-6" >
                 <%= form_with url: "out/#{mem.id}", method: :post do |form| %>
-                  <button type="submit" class="btn btn-danger" style="font-size: 0.9em;">REMOVE <i class="fa-solid fa-person-circle-minus"></i></i></button>
+                  <button type="submit" class="btn btn-danger" style="font-size: 0.9em; float:right;">REMOVE<i class="fa-solid fa-person-circle-minus"></i></button>
                 <% end %>
-
+              </div>
+              <div class = "col-md-6">
+                <%= form_with url: "released/#{mem.id}", method: :post do |form| %>
+                  <button type="submit" class="btn btn-success" style="font-size: 0.9em;">MARK AS RELEASED<i class="fa-solid fa-check"></i></button>
+                <% end %>
+              </div>
+            </div>
           </td>
         </tr>
       <% end %>
-      <tr class="table-secondary"><td colspan="12"></td></tr>
+      <tr class="table-secondary">
+        <td colspan="12"></td>
+      </tr>
     <% end %>
   </table>
+  <% if @evacuee_list_count > 1 %>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-left">
+        <li class="page-item ">
+          <% if @page  > 0 %>
+            <%= link_to "Previous Page", "/evac_centers/#{@evac_center.id}/#{@disaster.id}/evacuated?page=#{@page-1}", class:"page-link"%>
+          <% end %>
+        </li>
+        <li class="page-item">
+          <%= link_to "Next Page","/evac_centers/#{@evac_center.id}/#{@disaster.id}/evacuated?page=#{@page + 1}", class:"page-link"%>
+        </li>
+      </ul>
+    </nav>
+  <% end %>
 </div>
