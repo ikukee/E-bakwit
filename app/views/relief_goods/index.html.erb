@@ -1,44 +1,40 @@
 <div class="container-fluid">
-<%= link_to '/evac_centers', class: 'ms-5 mt-3 mb-2 btn btn-outline-dark oswald fs-4 text-decoration-none' do %>
-  <i class="fa-solid fa-left-long"></i> Back
-<% end %>
-
-<div class="row p-2">
-  <div class="col"></div>
-  <div class="col-md-8" id="logging-style-form">
-    <div class = "row">
-      <div class = "col-md-8">
-        <h1 class="oswald fw">RELIEF GOODS</h1>
+  <div class="row p-2">
+    <div class="col"></div>
+    <div class="col-md-8" id="logging-style-form">
+      <div class = "row">
+        <div class = "col-md-8">
+          <h1 class="oswald fw">RELIEF GOODS</h1>
+        </div>
+        <div class = "col-md-4">
+          <a href = "/relief_goods/new" ><button style = "margin-top:5px;" class = "btn btn-primary form-control"><i class="fa-solid fa-plus"></i> Add New Relief Good</button></a>
+        </div>
       </div>
-      <div class = "col-md-4">
-        <a href = "/relief_goods/new" ><button style = "margin-top:5px;" class = "btn btn-primary form-control"><i class="fa-solid fa-plus"></i> Add New Relief Good</button></a>
+      <%= form_with url: "/relief_goods/search", method: :post do |form| %>
+        <label for = "search_criteria"><strong>Search Criteria:</strong></label>
+        <div class="input-group mb-3">
+          <%= form.select :search_type, options_for_select(["NAME","UNIT"]),{},{class:"form-control"}%>
+          <%= form.search_field :search_value , class: "form-control", placeholder: "Search a data here", oninput: "this.form.requestSubmit()" %>
+        </div>
+      <% end %>
+      <div id = "relief_goods">
+        <%= render partial: "search_results",locals:{relief_goods: @relief_goods}%>
       </div>
+      <% if @relief_goods_count > 5 %>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-left">
+            <li class="page-item ">
+              <% if @page  > 0 %>
+                <%= link_to "Previous Page", "/relief_goods?page=#{@page-1}", class:"page-link"%>
+              <% end %>
+            </li>
+            <li class="page-item">
+              <%= link_to "Next Page","/relief_goods?page=#{@page + 1}", class:"page-link"%>
+            </li>
+          </ul>
+        </nav>
+      <% end %>
     </div>
-    <%= form_with url: "/relief_goods/search", method: :post do |form| %>
-      <label for = "search_criteria"><strong>Search Criteria:</strong></label>
-      <div class="input-group mb-3">
-        <%= form.select :search_type, options_for_select(["NAME","UNIT"]),{},{class:"form-control"}%>
-        <%= form.search_field :search_value , class: "form-control", placeholder: "Search a data here", oninput: "this.form.requestSubmit()" %>
-      </div>
-    <% end %>
-    <div id = "relief_goods">
-      <%= render partial: "search_results",locals:{relief_goods: @relief_goods}%>
-    </div>
-    <% if @relief_goods_count > 5 %>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-left">
-          <li class="page-item ">
-            <% if @page  > 0 %>
-              <%= link_to "Previous Page", "/relief_goods?page=#{@page-1}", class:"page-link"%>
-            <% end %>
-          </li>
-          <li class="page-item">
-            <%= link_to "Next Page","/relief_goods?page=#{@page + 1}", class:"page-link"%>
-          </li>
-        </ul>
-      </nav>
-    <% end %>
+    <div class="col"></div>
   </div>
-  <div class="col"></div>
-</div>
 </div>

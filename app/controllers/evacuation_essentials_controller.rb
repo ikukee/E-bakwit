@@ -1,5 +1,6 @@
 class EvacuationEssentialsController < ApplicationController
   before_action :set_evacuation_essential, only: %i[ show edit update destroy ]
+  before_action :add_index_breadcrumb, only: [:show, :new, :edit]
 
   def search
     search_type = params[:search_type]
@@ -19,6 +20,7 @@ class EvacuationEssentialsController < ApplicationController
   end
   # GET /evacuation_essentials or /evacuation_essentials.json
   def index
+    add_breadcrumb('Evacuation Essentials')
     @evacuation_essentials = EvacuationEssential.all
 
     @page = params.fetch(:page, 0).to_i
@@ -37,10 +39,12 @@ class EvacuationEssentialsController < ApplicationController
   # GET /evacuation_essentials/new
   def new
     @evacuation_essential = EvacuationEssential.new
+    add_breadcrumb('Add Essential')
   end
 
   # GET /evacuation_essentials/1/edit
   def edit
+    add_breadcrumb(@evacuation_essential.name.titleize)
   end
 
   # POST /evacuation_essentials or /evacuation_essentials.json
@@ -81,6 +85,10 @@ class EvacuationEssentialsController < ApplicationController
       format.html { redirect_to evacuation_essentials_url, notice: "Evacuation essential was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def add_index_breadcrumb
+    add_breadcrumb('Evacuation Essentials', evacuation_essentials_path)
   end
 
   private

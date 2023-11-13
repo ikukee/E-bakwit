@@ -26,9 +26,21 @@
   </head>
 
   <body>
-
     <%= render partial: "/layouts/navbar"%>
-
+      <% if !current_page?(login_path) &&  !current_page?(root_path) %>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+          <ol class="p-1 breadcrumb oswald fs-5">
+            <li class="breadcrumb-item"><a href="/" class="inactive">Home</a></li>
+            <% @breadcrumbs.each do |breadcrumb| %>
+              <% if breadcrumb[:path].nil? %>
+                <li class="breadcrumb-item text-decoration-none active fw-bold" aria-current="page"><%= breadcrumb[:label] %></li>
+              <% else %>
+                <li class="breadcrumb-item"><%= link_to breadcrumb[:label], breadcrumb[:path], class: "inactive" %></li>
+              <%end%>
+            <%end%>
+          </ol>
+        </nav>
+      <%end%>
     <%= yield %>
     
   </body>

@@ -1,8 +1,10 @@
 class DisastersController < ApplicationController
   before_action :set_disaster, only: %i[ show edit update destroy ]
+  before_action :add_index_breadcrumb, only: [:new, :edit]
 
   # GET /disasters or /disasters.json
   def index
+    add_breadcrumb('Disasters')
     @disasters = Disaster.all
     @page = params.fetch(:page, 0).to_i
     if  @page < 0 
@@ -40,10 +42,12 @@ class DisastersController < ApplicationController
   # GET /disasters/new
   def new
     @disaster = Disaster.new
+    add_breadcrumb('New Disaster')
   end
 
   # GET /disasters/1/edit
   def edit
+    add_breadcrumb(@disaster.name.titleize)
   end
 
   # POST /disasters or /disasters.json
@@ -84,6 +88,10 @@ class DisastersController < ApplicationController
       format.html { redirect_to disasters_url, notice: "Disaster was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def add_index_breadcrumb
+    add_breadcrumb('Disasters', disasters_path)
   end
 
   private

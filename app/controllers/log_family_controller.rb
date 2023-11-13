@@ -35,6 +35,10 @@ class LogFamilyController < ApplicationController
         @evac_center = EvacCenter.find(params[:id])
         evacuee = Evacuee.new
         family = Family.new
+
+        add_breadcrumb('Evacuation Centers', evac_centers_path)
+        add_breadcrumb(@evac_center.name, evac_center_path(@evac_center))
+        add_breadcrumb('Log Family')
     end
 
     def evacuate ## post
@@ -103,6 +107,10 @@ class LogFamilyController < ApplicationController
     # evacuee model id = 2, family_id = 1  <<< RECORD
     # family id = 1,is_evacuated true
     def evacuatedView 
+        evac_center = EvacCenter.find(params[:evac_id]) 
+        add_breadcrumb("Evacuation Centers", evac_centers_path)
+        add_breadcrumb(evac_center.name, "/evac_centers/#{params[:evac_id]}")
+        add_breadcrumb("View Evacuees")
         @evacuee_list = Evacuee.all.where(evac_id: params[:evac_id])
     end
     def evacueeOut
