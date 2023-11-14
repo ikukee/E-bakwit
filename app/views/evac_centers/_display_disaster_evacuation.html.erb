@@ -48,10 +48,18 @@
       <div class="col">
         <div class="row">
           <div class="col-md-5">
-            <p class="h4 oswald fw" align="right">FAMILIES: </p>
+            <p class="h4 oswald fw" align="right">FAMILIES CURRENTLY EVACUATED: </p>
           </div>
           <div class="col">
-            <p class="h2 oswald fw"><%= countGenFamily(evac_center.id,disaster) %></p>
+            <p class="h2 oswald fw"><%= countGenFamily(evac_center.id,disaster,true) %></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <p class="h4 oswald fw" align="right">OVERALL FAMILIES EVACUATED: </p>
+          </div>
+          <div class="col">
+            <p class="h2 oswald fw"><%= countGenFamily(evac_center.id,disaster,false) %></p>
           </div>
         </div>
       </div>
@@ -61,7 +69,13 @@
         <a href="<%=evac_center.id%>/<%=disaster.id%>/evacuated" class="btn btn-dark w-100 oswald fw-bold mt-4" style="background: #004d80;">View Evacuees</a>
       <% end %>
     <% end %>
-    <%= javascript_include_tag 'age_distribution.js' %>
+    <br>
+    <br>
+    <% capacityPercentage = getCapacityPercentage(countIndivEvacuated(evac_center.id,disaster),evac_center.capacity.to_i)%>
+    <h4>Capacity: </h4>
+    <div class="w3-border" style = "text-align:center;border:1px solid #ccc; border-radius:5px; overflow:hidden;">
+      <div class="w3-grey" style="background-color:#4CAF50; color:black; text-align:center; line-height: 30px; height:24px;width:<%=capacityPercentage%>%"><strong><%= capacityPercentage %>%</strong></div>
+    </div>
     <div class="row m-0 mt-4" id="age_distribution"></div>
     <div class="row m-0 oswald">
       <table class="table table-light">
@@ -74,51 +88,51 @@
         <tbody>
           <tr>
             <th>Infant</th>
-            <td style="color:#005ec9;">2</td>
-            <td style="color:#cf4696;">1</td>
-            <td>3</td>
+            <td style="color:#005ec9;"><%= getInfants(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getInfants(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getInfants(evac_center.id, disaster.id,"Male") + getInfants(evac_center.id, disaster.id,"Female") %></td>
           </tr>
           <tr>
             <th>Toddlers</th>
-            <td style="color:#005ec9;">2</td>
-            <td style="color:#cf4696;">1</td>
-            <td>3</td>
+            <td style="color:#005ec9;"><%= getToddlers(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getToddlers(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getToddlers(evac_center.id, disaster.id,"Male") + getToddlers(evac_center.id, disaster.id,"Female") %></td>
           </tr>
           <tr>
             <th>Preschoolers</th>
-            <td style="color:#005ec9;">2</td>
-            <td style="color:#cf4696;">1</td>
-            <td>3</td>
+            <td style="color:#005ec9;"><%= getPreschoolers(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getPreschoolers(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getPreschoolers(evac_center.id, disaster.id,"Male") + getPreschoolers(evac_center.id, disaster.id,"Female")%></td>
           </tr>
           <tr>
             <th>Schoolage</th>
-            <td style="color:#005ec9;">2</td>
-            <td style="color:#cf4696;">1</td>
-            <td>3</td>
+            <td style="color:#005ec9;"><%= getSchoolagers(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getSchoolagers(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getSchoolagers(evac_center.id, disaster.id,"Male") + getSchoolagers(evac_center.id, disaster.id,"Female")%></td>
           </tr>
           <tr>
             <th>Teenage</th>
-            <td style="color:#005ec9;">2</td>
-            <td style="color:#cf4696;">1</td>
-            <td>3</td>
+            <td style="color:#005ec9;"><%= getTeenagers(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getTeenagers(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getTeenagers(evac_center.id, disaster.id,"Male") + getTeenagers(evac_center.id, disaster.id,"Female")%></td>
           </tr>
           <tr>
             <th>Adult</th>
-            <td style="color:#005ec9;">2</td>
-            <td style="color:#cf4696;">1</td>
-            <td>3</td>
+            <td style="color:#005ec9;"><%= getAdults(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getAdults(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getAdults(evac_center.id, disaster.id,"Male") + getAdults(evac_center.id, disaster.id,"Female")%></td>
           </tr>
           <tr>
             <th>Senior Citizens</th>
-            <td style="color:#005ec9;">2</td>
-            <td style="color:#cf4696;">1</td>
-            <td>3</td>
+            <td style="color:#005ec9;"><%= getSeniors(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getSeniors(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getSeniors(evac_center.id, disaster.id,"Male") + getSeniors(evac_center.id, disaster.id,"Female")%></td>
           </tr>
           <tr class="table-secondary fw-bold">
             <th>TOTAL</th>
-            <td style="color:#005ec9;">2</td>
-            <td style="color:#cf4696;">1</td>
-            <td>3</td>
+            <td style="color:#005ec9;"><%=countGenderEvacuated(evac_center.id,disaster, "Male")%></td>
+            <td style="color:#cf4696;"><%=countGenderEvacuated(evac_center.id,disaster, "Female")%></td>
+            <td><%=countGenderEvacuated(evac_center.id,disaster, "Male") + countGenderEvacuated(evac_center.id,disaster, "Female")%></td>
           </tr>
         </tbody>
       </table>

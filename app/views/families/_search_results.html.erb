@@ -27,19 +27,14 @@
         <% end %>
         <td style = "width:40%;">
           <div class = "row">
-            <div class = "col-md-4">
+            <div class = "col-md-6">
               <%= link_to "/families/#{family.id}", class: "btn btn-info form-control" do %>
                 <i class="fa-solid fa-eye"></i> View
               <% end %>
             </div>
-            <div class = "col-md-4">
+            <div class = "col-md-6">
               <%= link_to "/families/#{family.id}/edit", class: "btn btn-secondary form-control" do %>
                 <i class="fa-solid fa-pen-to-square"></i> Edit
-              <% end %>
-            </div>
-            <div class = "col-md-4">
-              <%= link_to "/families/#{family.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-                <i class="fa-solid fa-trash-can"></i> Delete
               <% end %>
             </div>
           </div>

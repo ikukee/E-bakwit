@@ -8,7 +8,7 @@ class EvacCentersController < ApplicationController
 
   # GET /evac_centers/1 or /evac_centers/1.json
   def show
-    @evacYearlyProfile = EvacYearlyProfile.all.where(evac_id: params[:id]).last
+    @evacYearlyProfile = EvacYearlyProfile.all.where(evac_id: params[:id]).first
     
   end
 
@@ -248,9 +248,6 @@ class EvacCentersController < ApplicationController
 
   def destroy_essential
     assigned_yearly_ess = AssignedYearlyEss.find(params[:id])
-    evac_yearly_profile = EvacYearlyProfile.find(assigned_yearly_ess.evac_profile_id)
-    evac_center = EvacCenter.find(evac_yearly_profile.evac_id)
-    evacuation_essential = EvacuationEssential.find(assigned_yearly_ess.ess_id)
     assigned_yearly_ess.destroy
       respond_to do |format|
         format.js{render inline: "location.reload();"}

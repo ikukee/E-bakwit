@@ -87,6 +87,7 @@ class FamiliesController < ApplicationController
     family_member.family_id = family.id
     family_member.fname = params[:family_member][:fname].upcase
     family_member.lname = params[:family_member][:lname].upcase
+    family_member.full_name =  family_member.lname + ", " + family_member.fname
     family_member.age = params[:family_member][:age]
     family_member.sex = params[:family_member][:sex]
     family_member.is_pregnant = params[:family_member][:is_pregnant]
@@ -116,6 +117,7 @@ class FamiliesController < ApplicationController
     family_member.family_id = family.id
     family_member.fname = params[:family_member][:fname].upcase
     family_member.lname = params[:family_member][:lname].upcase
+    family_member.full_name =  family_member.lname + ", " + family_member.fname
     family_member.age = params[:family_member][:age]
     family_member.sex = params[:family_member][:sex]
     family_member.is_pregnant = params[:family_member][:is_pregnant]

@@ -30,7 +30,7 @@
         <h5>INDIVIDUALS: <%= countIndivEvacuated(evac_center.id,Disaster.where(year: Date.current.year).first)%> <i class="fa-solid fa-person"></i></h5>
       </div>
       <div class="col">
-        <h5>FAMILIES: <%= countGenFamily(evac_center.id,Disaster.where(year: Date.current.year).first) %> <i class="fa-solid fa-people-group"></i></h5>
+        <h5>FAMILIES: <%= countGenFamily(evac_center.id,Disaster.where(year: Date.current.year).first, false) %> <i class="fa-solid fa-people-group"></i></h5>
       </div>
     </div>
   <% else %>
