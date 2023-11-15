@@ -1,15 +1,17 @@
 class EvacCentersController < ApplicationController
   before_action :set_evac_center, only: %i[ show edit update destroy ]
+  before_action :add_index_breadcrumb, only: [:show, :new, :edit, :evac_essentials_form, :evac_facilities_form]
 
   # GET /evac_centers or /evac_centers.json
   def index
     @evac_centers = EvacCenter.all.order(name: :asc)
+    add_breadcrumb("Evacuation Centers")
   end
 
   # GET /evac_centers/1 or /evac_centers/1.json
   def show
     @evacYearlyProfile = EvacYearlyProfile.all.where(evac_id: params[:id]).first
-    
+    add_breadcrumb(@evac_center.name)
   end
 
   def search
@@ -117,10 +119,13 @@ class EvacCentersController < ApplicationController
   # GET /evac_centers/new
   def new
     @evac_center = EvacCenter.new
+    add_breadcrumb('New')
   end
 
   # GET /evac_centers/1/edit
   def edit
+    add_breadcrumb(@evac_center.name, evac_center_path(@evac_center))
+    add_breadcrumb('Edit')
   end
 
   # POST /evac_centers or /evac_centers.json
@@ -183,6 +188,8 @@ class EvacCentersController < ApplicationController
   def evac_facilities_form
     @evac_center = EvacCenter.find(params[:evac_id])
     @evac_yearly_profile =EvacYearlyProfile.find(params[:profile_id])
+    add_breadcrumb(@evac_center.name, evac_center_path(@evac_center))
+    add_breadcrumb('Facilities for Year ' + @evac_yearly_profile.year.to_s)
     @assigned_yearly_esses = AssignedYearlyEss.all.where(evac_profile_id: params[:profile_id])
     @new_yearly_ess = AssignedYearlyEss.new
     @page = params.fetch(:page, 0).to_i
@@ -217,6 +224,8 @@ class EvacCentersController < ApplicationController
   def evac_essentials_form
     @evac_center = EvacCenter.find(params[:evac_id])
     @evac_yearly_profile =EvacYearlyProfile.find(params[:profile_id])
+    add_breadcrumb(@evac_center.name, evac_center_path(@evac_center))
+    add_breadcrumb('Essentials for Year ' + @evac_yearly_profile.year.to_s)
     @assigned_yearly_esses = AssignedYearlyEss.all.where(evac_profile_id: params[:profile_id])
     @new_yearly_ess = AssignedYearlyEss.new
     @page = params.fetch(:page, 0).to_i
@@ -252,6 +261,10 @@ class EvacCentersController < ApplicationController
       respond_to do |format|
         format.js{render inline: "location.reload();"}
       end
+  end
+
+  def add_index_breadcrumb
+    add_breadcrumb('Evacuation Centers', evac_centers_path)
   end
 
   private
