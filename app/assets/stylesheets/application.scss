@@ -99,6 +99,17 @@ body {
     text-shadow: 0px 0px 10px #ffffff;
 }
 
+/*Breadcrumb*/
+.breadcrumb .inactive{
+    color: #305683;
+    text-decoration: none;
+}
+
+.breadcrumb .inactive:hover{
+    text-shadow: 1px 1px 0.1em #305683;
+    transition-duration: 0.2s;
+}
+
 /*Landing Dashboard Page*/
 
 #landing{

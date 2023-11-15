@@ -1,6 +1,7 @@
 class VolunteerController < ApplicationController
 
     def camp_managers
+        add_breadcrumb('Camp Managers')
         @users = User.all.where(user_type: "CAMP MANAGER")
         @page = params.fetch(:page, 0).to_i
         if  @page < 0 
@@ -12,6 +13,7 @@ class VolunteerController < ApplicationController
     end 
 
     def index
+        add_breadcrumb('Volunteers')
         @users = User.all.where(user_type: "VOLUNTEER")
         @page = params.fetch(:page, 0).to_i
         if  @page < 0 
@@ -44,6 +46,7 @@ class VolunteerController < ApplicationController
     end
 
     def volunteer_requests
+        add_breadcrumb('Volunteer Requests')
         @requests = Request.all
         @page = params.fetch(:page, 0).to_i
         if  @page < 0 

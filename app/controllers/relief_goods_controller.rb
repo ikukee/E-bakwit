@@ -19,6 +19,7 @@ class ReliefGoodsController < ApplicationController
   end
   # GET /relief_goods or /relief_goods.json
   def index
+    add_breadcrumb('Relief Goods')
     @relief_goods = ReliefGood.all
     @page = params.fetch(:page, 0).to_i
     if  @page < 0 
@@ -35,11 +36,15 @@ class ReliefGoodsController < ApplicationController
 
   # GET /relief_goods/new
   def new
+    add_breadcrumb('Relief Goods', relief_goods_path)
+    add_breadcrumb('Add Relief Goods')
     @relief_good = ReliefGood.new
   end
 
   # GET /relief_goods/1/edit
   def edit
+    add_breadcrumb('Relief Goods', relief_goods_path)
+    add_breadcrumb(@relief_good.name.titleize)
   end
 
   # POST /relief_goods or /relief_goods.json

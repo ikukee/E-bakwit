@@ -1,5 +1,6 @@
 class FamiliesController < ApplicationController
   before_action :set_family, only: %i[ show edit update destroy ]
+  before_action :add_index_breadcrumb, only: [:show, :new, :edit]
 
   def search
     search_type = params[:search_type]
@@ -19,6 +20,7 @@ class FamiliesController < ApplicationController
   end
   # GET /families or /families.json
   def index
+    add_breadcrumb('Families')
     @families = Family.all
     @page = params.fetch(:page, 0).to_i
     if  @page < 0 
@@ -31,15 +33,19 @@ class FamiliesController < ApplicationController
 
   # GET /families/1 or /families/1.json
   def show
+    add_breadcrumb(@family.name.titleize + ' Family')
   end
 
   # GET /families/new
   def new
+    add_breadcrumb('New Family')
     @family = Family.new
   end
 
   # GET /families/1/edit
   def edit
+    add_breadcrumb(@family.name.titleize + ' Family', family_path)
+    add_breadcrumb('Edit')
   end
 
   # POST /families or /families.json
@@ -154,6 +160,10 @@ class FamiliesController < ApplicationController
     id = family_member.family_id
     family_member.destroy
     redirect_to "/families/#{id}"
+  end
+
+  def add_index_breadcrumb
+    add_breadcrumb('Families', families_path)
   end
 
   private
