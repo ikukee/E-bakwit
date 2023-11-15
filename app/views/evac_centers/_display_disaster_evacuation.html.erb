@@ -65,11 +65,19 @@
             <% end %>
           <% end %>
         <% end %>
+
         <% if User.find(session[:user_id]).currently_assigned != nil|| session[:user_type] == "ADMIN" %>
           <% if User.find(session[:user_id]).currently_assigned == evac_center.id || session[:user_type] == "ADMIN" %>
             <a href="<%=evac_center.id%>/<%=disaster.id%>/evacuated" class="btn btn-info w-100 oswald fw-bold m-1" style="font-size: 22px">View Evacuees <i class="fa-solid fa-users-viewfinder fa-xl"></i></a>
           <% end %>
         <% end %>
+
+        <% if session[:user_type] == "ADMIN"%>
+          <div class="col">
+            <%= link_to "DOWNLOAD", "#{evac_center.id}/#{disaster.id}/generate.csv", class:"btn btn-success oswald fw w-100 m-1", style:"font-size: 22px"%>
+          </div>
+
+        <%end%>
       </div>
     </div>
   </div>
