@@ -1,0 +1,61 @@
+<%= CSV.generate_line([@disaster.name])%>
+<%= CSV.generate_line(["","BARANGAY", "", "","","NUMBER OF EVACUATION CENTERS"])%>
+<%= CSV.generate_line([
+    "NAGA CITY","NAME", "COUNT", "FAMILIES", "PERSONS", "4Ps FAMILIES"])%>
+<% @evac_centers.each do |evac_center|%>
+    <%= CSV.generate_line([
+        "",
+        evac_center.barangay,
+        "0", 
+        countGenFamily(evac_center.id, @disaster, false),
+        countIndivEvacuated(evac_center.id,@disaster), # persons
+        "0", # 4ps
+        "0",
+        "0",
+        evac_center.name,
+        "#{evac_center.barangay}, Naga City",
+        evac_center.barangay,
+        "0",
+        "0", # cumulative familes under displacement data
+        countGenFamily(evac_center.id, @disaster, false),
+        "0",# cumulative person under displacement data
+        countIndivEvacuated(evac_center.id,@disaster),
+        "0", # cumulative familes under served data
+
+        countGenFamily(evac_center.id, @disaster, false),
+        "0",# cumulative person under served data
+        countIndivEvacuated(evac_center.id,@disaster),
+        "0", # cumulative familes under total served data
+        countGenFamily(evac_center.id, @disaster, false),
+        "0",# cumulative person under total served data
+        countIndivEvacuated(evac_center.id,@disaster),
+        getInfants(evac_center.id,@disaster.id, "Male"),
+        getInfants(evac_center.id,@disaster.id, "Male"),
+        getInfants(evac_center.id,@disaster.id, "Female"),
+        getInfants(evac_center.id,@disaster.id, "Female"),
+        getToddlers(evac_center.id,@disaster.id, "Male"),
+        getToddlers(evac_center.id,@disaster.id, "Male"),
+        getToddlers(evac_center.id,@disaster.id, "Female"),
+        getToddlers(evac_center.id,@disaster.id, "Female"),
+        getPreschoolers(evac_center.id,@disaster.id, "Male"),
+        getPreschoolers(evac_center.id,@disaster.id, "Male"),
+        getPreschoolers(evac_center.id,@disaster.id, "Female"),
+        getPreschoolers(evac_center.id,@disaster.id, "Female"),
+        getSchoolagers(evac_center.id,@disaster.id, "Male"),
+        getSchoolagers(evac_center.id,@disaster.id, "Male"),
+        getSchoolagers(evac_center.id,@disaster.id, "Female"),
+        getSchoolagers(evac_center.id,@disaster.id, "Female"),
+        getTeenagers(evac_center.id,@disaster.id, "Male"),
+        getTeenagers(evac_center.id,@disaster.id, "Male"),
+        getTeenagers(evac_center.id,@disaster.id, "Female"),
+        getTeenagers(evac_center.id,@disaster.id, "Female"),
+        getAdults(evac_center.id,@disaster.id, "Male"),
+        getAdults(evac_center.id,@disaster.id, "Male"),
+        getAdults(evac_center.id,@disaster.id, "Female"),
+        getAdults(evac_center.id,@disaster.id, "Female"),
+        getSeniors(evac_center.id,@disaster.id, "Male"),
+        getSeniors(evac_center.id,@disaster.id, "Male"),
+        getSeniors(evac_center.id,@disaster.id, "Female"),
+        getSeniors(evac_center.id,@disaster.id, "Female"),
+        ])%>
+<%end%>
