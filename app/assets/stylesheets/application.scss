@@ -100,13 +100,17 @@ body {
 }
 
 /*Breadcrumb*/
+.a-crumb{
+    text-shadow: 1px 1px 1px #000;
+}
+
 .breadcrumb .inactive{
-    color: #305683;
+    color: #4894c0;
     text-decoration: none;
 }
 
 .breadcrumb .inactive:hover{
-    text-shadow: 1px 1px 0.1em #305683;
+    text-shadow: 1px 1px 0.1em #868686;
     transition-duration: 0.2s;
 }
 
