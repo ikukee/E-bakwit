@@ -21,15 +21,24 @@
         </thead>
         <tbody class="table-group-divider">
           <% @assigned_yearly_esses.each do |ae| %>
-            <% if EvacuationEssential.find(ae.ess_id).ess_type == "FACILITY"%>
+            <% if EvacuationEssential.find_by(id: ae.ess_id)%>
+              <% if EvacuationEssential.find(ae.ess_id).ess_type == "FACILITY"%>
+                <tr>
+                  <td><strong><%= EvacuationEssential.find(ae.ess_id).name %></strong></td>
+                  <td><%= ae.quantity %></td>
+                  <td><%= ae.status %></td>
+                  <td style = "width:30%;">
+                    <%= render partial: "/layouts/delete_button",locals:{link: "/assigned_essential/#{ae.id}"}%>
+                  </td>
+                </tr>
+              <% end %>
+            <% else %>
               <tr>
-                <td><strong><%= EvacuationEssential.find(ae.ess_id).name %></strong></td>
+                <td>NULL</td>
                 <td><%= ae.quantity %></td>
                 <td><%= ae.status %></td>
                 <td style = "width:30%;">
-                  <%= link_to "/assigned_essential/#{ae.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-                    Delete <i class="fa fa-trash" aria-hidden="true"></i>
-                  <% end %>
+                 <%= render partial: "/layouts/delete_button",locals:{link: "/assigned_essential/#{ae.id}"}%>
                 </td>
               </tr>
             <% end %>

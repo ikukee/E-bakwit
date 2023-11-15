@@ -18,7 +18,7 @@
               </div>
               <%= form.hidden_field :evac_center, :value => @evac_center.id%>
               <%= form.hidden_field :disaster_id, :value => @disaster.id%>
-              <%= form.collection_select :id , Family.all.order(:name), :id, :name,{:prompt => "Select Family"},{class:"form-control",style:"float:right;",oninput: "this.form.requestSubmit()"} %>
+              <%= form.collection_select :id , FamilyMember.all.order(:full_name), :id, :full_name,{:prompt => "Select Member"},{class:"form-control",style:"float:right;",oninput: "this.form.requestSubmit()"} %>
             </div>
           </div>
           <br>

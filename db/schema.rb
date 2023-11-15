@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_08_074037) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_14_061655) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -129,6 +129,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_08_074037) do
     t.integer "evac_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "family_name"
   end
 
   create_table "families", force: :cascade do |t|
@@ -157,15 +158,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_08_074037) do
     t.datetime "updated_at", null: false
     t.string "sex"
     t.integer "evacuee_id"
-  end
-
-  create_table "relief_goods", force: :cascade do |t|
-    t.string "name"
-    t.boolean "is_food"
-    t.string "unit"
-    t.decimal "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "full_name"
   end
 
   create_table "requests", force: :cascade do |t|

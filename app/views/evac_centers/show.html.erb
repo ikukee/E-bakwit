@@ -1,17 +1,5 @@
 <div class="container-fluid">
-  <div style="overflow-x:hidden; margin-left:30%;margin-right:30%;" class="text-xs-center">
-    <div class = "row">
-      <div class = "col-md-6" >
-        <p class="h4 oswald fw" style = "float:right;">Select Year Profile: </p>
-      </div>
-      <div class = "col-md-6">
-        <%= form_with url: "/evac_centers/#{@evac_center.id}/display_year_profile" do |form|%>
-          <%= form.collection_select :eid , EvacYearlyProfile.all.where(evac_id: @evac_center.id), :id, :year,{:prompt => "Select Year"},{class:"form-control",style:"float:right;", oninput: "this.form.requestSubmit()" } %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div id = "display_year_profile">
-    <%= render partial: "display_year_profile", locals:{evac_center: @evac_center, evac_yearly_profile:@evacYearlyProfile, assigned_yearly_vol: AssignedYearlyVol.all.where(evac_profile_id: @evacYearlyProfile.id)}%>
-  </div>
+<div id = "display_year_profile">
+  <%= render partial: "display_year_profile", locals:{evac_center: @evac_center, evac_yearly_profile:@evacYearlyProfile, assigned_yearly_vol: AssignedYearlyVol.all.where(evac_profile_id: @evacYearlyProfile.id)}%>
+</div>
 </div>

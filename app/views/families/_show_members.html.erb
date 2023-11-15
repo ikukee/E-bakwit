@@ -14,6 +14,7 @@
           <th class="col">Pregnant? </th>
           <th class="col">PWD?</th>
           <th class="col">Breastfeeding?</th>
+          <th class="col">Evacuated?</th>
           <th class="col-md-2">Actions</th>
         </tr>
       </thead>
@@ -44,21 +45,18 @@
             <% else %>
               <td>NO</td>
             <% end %>
-            <td class="position-relative">
-              <div class ="row">
-                <div class = "col-md-6">
-                  <%= form_with url: "/edit/member/#{member.id}", method: :post do |form|%>
-                    <%= form.button nil, class:"btn btn-dark btn-sm" do %>
-                      <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>Edit
-                    <% end %>
-                  <% end %>
-                </div>
-                <div class = "col-md-6">
-                  <%= link_to "/family_member/#{member.id}/destroy", class:"btn btn-danger btn-sm", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-                    Delete <i class="fa fa-trash" aria-hidden="true"></i>
-                  <% end %>
-                </div>
-              </div>
+            <% if member.evacuee_id != 0 %>
+              <% evacuee =Evacuee.find(member.evacuee_id)%>
+              <td><a href = "/evac_centers/<%=evacuee.evac_id%>/<%=evacuee.disaster_id%>/evacuated"><%= EvacCenter.find(evacuee.evac_id).name %></a></td>
+            <% else %>
+              <td>NO</td>
+            <% end %>
+            <td >
+              <%= form_with url: "/edit/member/#{member.id}", method: :post do |form|%>
+                <%= form.button nil, class:"btn btn-dark btn-sm" do %>
+                  <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>Edit
+                <% end %>
+              <% end %>
             </td>
           </tr>
         <% end %>

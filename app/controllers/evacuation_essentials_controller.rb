@@ -80,7 +80,7 @@ class EvacuationEssentialsController < ApplicationController
   # DELETE /evacuation_essentials/1 or /evacuation_essentials/1.json
   def destroy
     @evacuation_essential.destroy
-
+    
     respond_to do |format|
       format.html { redirect_to evacuation_essentials_url, notice: "Evacuation essential was successfully destroyed." }
       format.json { head :no_content }

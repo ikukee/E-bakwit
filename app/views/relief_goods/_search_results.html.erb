@@ -20,18 +20,9 @@
           <td>Non-Food</td>
         <% end %>
         <td class="position-relative" style = "width: 30%;">
-          <div class="row" >
-            <div class="col-md-6">
-              <%= link_to "/relief_goods/#{rg.id}/edit", class: "btn btn-dark form-control" do %>
-                <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>&nbsp;Edit
-              <% end %>
-            </div>
-            <div class = "col-md-6">
-              <%= link_to "/relief_goods/#{rg.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-                <i class="fa-solid fa-trash-can"></i> Delete
-              <% end %>
-            </div>
-          </div>
+          <%= link_to "/relief_goods/#{rg.id}/edit", class: "btn btn-dark form-control" do %>
+            <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>&nbsp;Edit
+          <% end %>
         </tr>
       <% end %>
     </tbody>

@@ -97,13 +97,17 @@ class VolunteerController < ApplicationController
             @user.save
             request.status = "APPROVED"
             request.save
-            AccountMailer.with(user: @user).account_confirmation.deliver_now
-            redirect_to "/evac_centers"
+            AccountMailer.with(user: @user).account_confirmation.deliver_later
+            redirect_to "/requests"
         end
     end
 
     def reject_request
-        
+        request = Request.find(params[:id])
+        message = params[:message]
+        request.update_attribute(:status, "REJECTED")
+        AccountMailer.with(user:request,message: message).reject_request.deliver_later
+        redirect_to "/requests"
     end
 
     def change_password
