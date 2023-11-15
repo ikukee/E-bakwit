@@ -137,15 +137,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_14_061655) do
     t.string "full_name"
   end
 
-  create_table "relief_goods", force: :cascade do |t|
-    t.string "name"
-    t.boolean "is_food"
-    t.string "unit"
-    t.decimal "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "requests", force: :cascade do |t|
     t.string "fname"
     t.string "lname"
