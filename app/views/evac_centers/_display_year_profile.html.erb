@@ -1,210 +1,220 @@
 <div class="row" style="background: rgb(89,147,188); background: linear-gradient(0deg, rgba(89,147,188,1) 1%, rgba(21,38,74,1) 100%); color:white;">
   <div class="col-md-12 p-4 ">
-    <div style="overflow-x:hidden; margin-left:30%;margin-right:30%;" class="text-xs-center">
-      <div class = "row">
-        <div class = "col-md-6" >
-          <p class="h4 oswald fw" style = "float:right;">Select Year Profile: </p>
-        </div>
-        <div class = "col-md-6">
-          <%= form_with url: "/evac_centers/#{@evac_center.id}/display_year_profile" do |form|%>
-            <%= form.collection_select :eid , EvacYearlyProfile.all.where(evac_id: @evac_center.id), :id, :year,{:prompt => "Select Year"},{class:"form-control",style:"float:right;", oninput: "this.form.requestSubmit()" } %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="row" name='title-tag'>
-      <p class="oswald fw-bold" style="font-size: 5.5em"><%= evac_center.name %> <% if evac_center.isInside == true %><i class="fa-regular fa-bookmark fa-xs"></i><% else %><% end%></p>
-    </div>
     <div class="row">
-      <div class="col"style="border-right: 2px solid white">
-        <div class="row">
-          <div class="col-md-auto">
-            <p class="h2 oswald fw" align="right">ADDRESS: </p>
-          </div>
-          <div class="col-md-auto">
-            <p class="h2 oswald fw"><%= evac_center.barangay %></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-auto">
-            <p class="h2 oswald fw">CAPACITY: </p>
-          </div>
-          <div class="col-md-auto">
-            <p class="h2 oswald fw"><%= evac_center.capacity %>  <i class="fa-solid fa-people-roof fa-lg"></i></p>
-          </div>
-        </div>
+      <div class="col">
         <div class="row" name="action-btn">
-          <div class="col-md-10">
-          </div>
-          <div class="col-md-2">
+          <div class="col-md-7">
             <% if session[:user_type] == "ADMIN"%>
               <div class="col">
-                <a href="/evac_centers/<%=evac_center.id%>/edit"class="btn btn-outline-warning w-100"><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
+                <a href="/evac_centers/<%=evac_center.id%>/edit"class="btn btn-outline-warning oswald fw-bold w-100"><i class="fa-solid fa-pen-to-square"></i> EDIT EVACUATION CENTER</a>
               </div>
             <% else %>
               <% if User.find(session[:user_id]).currently_assigned != nil%>
                 <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
                   <div class="col">
-                    <a href="/evac_centers/<%=evac_center.id%>/edit"class="btn btn-outline-warning w-100"><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
+                    <a href="/evac_centers/<%=evac_center.id%>/edit"class="btn btn-outline-warning oswald fw-bold w-100"><i class="fa-solid fa-pen-to-square"></i> EDIT EVACUATION CENTER</a>
                   </div>
                 <% end %>
               <% end %>
             <% end %>
           </div>
+          <div class="col-md-5">
+            
+          </div>
         </div>
       </div>
-      <div class="col" style="border-left: 2px solid white">
-        <div class="row">
-          <div class="col-md-5">
-            <p class="h2 oswald fw h-100" align="right">FACILITIES: </p>
+      <div class="col">
+        <div class = "row">
+          <div class = "col-md-6" >
+            <p class="h4 oswald fw" style = "float:right;">Select Year Profile: </p>
           </div>
-          <div class="col">
-            <p class="h2 oswald fw"><%= countFacilities(evac_yearly_profile)%> <i class="fa-solid fa-shower"></i><% if session[:user_type] == "ADMIN"%>
-                <a href="/evac_facilities_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-outline-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
-              <% else %>
-                <% if User.find(session[:user_id]).currently_assigned != nil%>
-                  <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
-                    <a href="/evac_facilities_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-outline-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
-                  <% end %>
-                <% end %>
-              <% end %></p>
+          <div class = "col-md-6">
+            <%= form_with url: "/evac_centers/#{@evac_center.id}/display_year_profile" do |form|%>
+              <%= form.collection_select :eid , EvacYearlyProfile.all.where(evac_id: @evac_center.id), :id, :year,{:prompt => "Select Year"},{class:"form-control",style:"float:right;", oninput: "this.form.requestSubmit()" } %>
+            <% end %>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-5">
-            <p class="h2 oswald fw" align="right">ESSENTIAL ITEMS: </p>
+      </div>
+      <div class="col"></div>
+    </div>
+    <div class="row mb-5">
+      <div class="row" name='title-tag'>
+        <p class="oswald fw-bold" style="font-size: 5.5em"><%= evac_center.name %> <% if evac_center.isInside == true %><i class="fa-regular fa-bookmark fa-xs"></i><% else %><% end%></p>
+      </div>
+      <div class="row">
+        <div class="col"style="border-right: 1px solid white">
+          <div class="row">
+            <div class="col-md-auto">
+              <p class="h2 oswald fw" align="right">ADDRESS: </p>
+            </div>
+            <div class="col-md-auto">
+              <p class="h2 oswald fw"><%= evac_center.barangay %></p>
+            </div>
           </div>
-          <div class="col">
-            <p class="h2 oswald fw"><%= countItems(evac_yearly_profile)%> <i class="fa-solid fa-box-archive"></i><% if session[:user_type] == "ADMIN"%>
-                <a href="/evac_essentials_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-outline-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
-              <% else %>
-                <% if User.find(session[:user_id]).currently_assigned != nil%>
-                  <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
-                    <a href="/evac_essentials_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-outline-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
+          <div class="row">
+            <div class="col-md-auto">
+              <p class="h2 oswald fw">CAPACITY: </p>
+            </div>
+            <div class="col-md-auto">
+              <p class="h2 oswald fw"><%= evac_center.capacity %>  <i class="fa-solid fa-people-roof fa-lg"></i></p>
+            </div>
+          </div>
+        </div>
+        <div class="col" style="border-left: 1px solid white">
+          <div class="row">
+            <div class="col-md-5">
+              <p class="h2 oswald fw h-100" align="right">FACILITIES: </p>
+            </div>
+            <div class="col">
+              <p class="h2 oswald fw"><%= countFacilities(evac_yearly_profile)%> <i class="fa-solid fa-shower"></i><% if session[:user_type] == "ADMIN"%>
+                  <a href="/evac_facilities_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-outline-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
+                <% else %>
+                  <% if User.find(session[:user_id]).currently_assigned != nil%>
+                    <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
+                      <a href="/evac_facilities_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-outline-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
+                    <% end %>
                   <% end %>
-                <% end %>
-              <% end %></p>
+                <% end %></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <p class="h2 oswald fw" align="right">ESSENTIAL ITEMS: </p>
+            </div>
+            <div class="col">
+              <p class="h2 oswald fw"><%= countItems(evac_yearly_profile)%> <i class="fa-solid fa-box-archive"></i><% if session[:user_type] == "ADMIN"%>
+                  <a href="/evac_essentials_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-outline-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
+                <% else %>
+                  <% if User.find(session[:user_id]).currently_assigned != nil%>
+                    <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
+                      <a href="/evac_essentials_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-outline-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
+                    <% end %>
+                  <% end %>
+                <% end %></p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col p-3 m-1" >
-        <div class="row">
-          <div class="col-md-12">
-            <h1 class="oswald fw">CAMP MANAGER</h1>
+    <div class="row" style="border-top: 4px solid white">
+      <div class="col">
+        <div class="col p-3 m-1" >
+          <div class="row">
+            <div class="col-md-12">
+              <h1 class="oswald fw">CAMP MANAGER</h1>
+            </div>
           </div>
-        </div>
-        <% if session[:user_type] == "ADMIN" %>
-          <% if evac_yearly_profile.manager_id == nil %>
-            <label class="oswald fw">Camp Manager Name: </label>
-            <%= form_with url:"/add_campmanager", method: :post do |form|%>
-              <div class="row">
-                <div class="col-md-8">
-                  <%= form.hidden_field :evac_profile_id, :value => evac_yearly_profile.id %>
-                  <%= form.collection_select :user_id , User.all.where(status: "ACTIVE").where(user_type: "CAMP MANAGER").order(:lname), :id, :full_name,{:prompt => "Select Camp Manager"},{class:"form-control",style:"float:right;"} %>
-                  <p id = "camp_errmsg" style = "color:red;"></p>
+          <% if session[:user_type] == "ADMIN" %>
+            <% if evac_yearly_profile.manager_id == nil %>
+              <label class="oswald fw">Camp Manager Name: </label>
+              <%= form_with url:"/add_campmanager", method: :post do |form|%>
+                <div class="row">
+                  <div class="col-md-8">
+                    <%= form.hidden_field :evac_profile_id, :value => evac_yearly_profile.id %>
+                    <%= form.collection_select :user_id , User.all.where(status: "ACTIVE").where(user_type: "CAMP MANAGER").order(:lname), :id, :full_name,{:prompt => "Select Camp Manager"},{class:"form-control",style:"float:right;"} %>
+                    <p id = "camp_errmsg" style = "color:red;"></p>
+                  </div>
+                  <div class = "col-md-4">
+                    <%= form.button nil, class:"form-control btn btn-info oswald fw-bold" do %>
+                      Add Camp Manager <i class="fa-solid fa-plus"></i>
+                    <% end %>
+                  </div>
                 </div>
-                <div class = "col-md-4">
-                  <%= form.button nil, class:"form-control btn btn-success" do %>
-                    Add Camp Manager <i class="fa-solid fa-plus"></i>
-                  <% end %>
-                </div>
-              </div>
+              <% end %>
             <% end %>
           <% end %>
-        <% end %>
-        <br>
-        <div id = "display_campmanager">
-          <table class="table table-striped table-hover border rounded">
-            <thead>
-              <tr>
-                <th >First Name</th>
-                <th >Last Name</th>
-                <th >Contact Number</th>
-                <% if session[:user_type] == "ADMIN"%>
-                  <th >Actions</th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody class="table-group-divider">
-              <% if evac_yearly_profile.manager_id != nil%>
-                <% user = User.find(evac_yearly_profile.manager_id) %>
-                <tr class="">
-                  <td><%= user.fname%></td>
-                  <td><%= user.lname%></td>
-                  <td><%= user.cnum%></td>
+          <br>
+          <div id = "display_campmanager">
+            <table class="table table-striped table-hover border rounded">
+              <thead>
+                <tr>
+                  <th >First Name</th>
+                  <th >Last Name</th>
+                  <th >Contact Number</th>
                   <% if session[:user_type] == "ADMIN"%>
-                    <td class="position-relative">
-                      <%= link_to "/remove_campmanager/#{evac_yearly_profile.id}", class:"btn btn-danger form-control", data: { turbo_method: :post, turbo_confirm: "Are you sure?" } do %>
-                        Remove <i class="fa fa-trash" aria-hidden="true"></i>
-                      <% end %>
-                    </td>
+                    <th >Actions</th>
                   <% end %>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody class="table-group-divider">
+                <% if evac_yearly_profile.manager_id != nil%>
+                  <% user = User.find(evac_yearly_profile.manager_id) %>
+                  <tr class="">
+                    <td><%= user.fname%></td>
+                    <td><%= user.lname%></td>
+                    <td><%= user.cnum%></td>
+                    <% if session[:user_type] == "ADMIN"%>
+                      <td class="position-relative">
+                        <%= link_to "/remove_campmanager/#{evac_yearly_profile.id}", class:"btn btn-danger form-control", data: { turbo_method: :post, turbo_confirm: "Are you sure?" } do %>
+                          Remove <i class="fa fa-trash" aria-hidden="true"></i>
+                        <% end %>
+                      </td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col p-3 m-1" >
-        <div class="row">
-          <div class="col-md-12">
-            <h1 class="oswald fw">VOLUNTEERS</h1>
+      <div class="col">
+        <div class="col p-3 m-1" >
+          <div class="row">
+            <div class="col-md-12">
+              <h1 class="oswald fw">VOLUNTEERS</h1>
+            </div>
           </div>
-        </div>
-        <% if session[:user_type] == "ADMIN"%>
-          <% if User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").count > 0 %>
-            <label class="oswald fw">Volunteer Name: </label>
-            <%= form_with url:"/add_volunteer", method: :post do |form|%>
-              <div class="row">
-                <div class="col-md-8">
-                  <%= form.hidden_field :evac_profile_id, :value => evac_yearly_profile.id %>
-                  <%= form.collection_select :volunteer_id , User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").order(:lname), :id, :full_name,{:prompt => "Select Volunteer"},{class:"form-control",style:"float:right;"} %>
-                  <p id = "errmsg" style = "color:red;"></p>
+          <% if session[:user_type] == "ADMIN"%>
+            <% if User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").count > 0 %>
+              <label class="oswald fw">Volunteer Name: </label>
+              <%= form_with url:"/add_volunteer", method: :post do |form|%>
+                <div class="row">
+                  <div class="col-md-8">
+                    <%= form.hidden_field :evac_profile_id, :value => evac_yearly_profile.id %>
+                    <%= form.collection_select :volunteer_id , User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").order(:lname), :id, :full_name,{:prompt => "Select Volunteer"},{class:"form-control",style:"float:right;"} %>
+                    <p id = "errmsg" style = "color:red;"></p>
+                  </div>
+                  <div class = "col-md-4">
+                    <%= form.button nil, class:"form-control btn btn-success" do %>
+                      Add volunteer <i class="fa-solid fa-plus"></i>
+                    <% end %>
+                  </div>
                 </div>
-                <div class = "col-md-4">
-                  <%= form.button nil, class:"form-control btn btn-success" do %>
-                    Add volunteer <i class="fa-solid fa-plus"></i>
-                  <% end %>
-                </div>
-              </div>
+              <% end %>
             <% end %>
           <% end %>
-        <% end %>
-        <br>
-        <div id = "display_volunteers">
-          <table class="table table-striped table-hover border rounded">
-            <thead>
-              <tr>
-                <th >First Name</th>
-                <th >Last Name</th>
-                <th >Contact Number</th>
-                <% if session[:user_type] == "ADMIN"%>
-                  <th >Actions</th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody class="table-group-divider">
-              <% assigned_yearly_vol.each do |av| %>
-                <% user = User.find(av.volunteer_id) %>
-                <tr class="">
-                  <td><%= user.fname%></td>
-                  <td><%= user.lname%></td>
-                  <td><%= user.cnum%></td>
+          <br>
+          <div id = "display_volunteers">
+            <table class="table table-striped table-hover border rounded">
+              <thead>
+                <tr>
+                  <th >First Name</th>
+                  <th >Last Name</th>
+                  <th >Contact Number</th>
                   <% if session[:user_type] == "ADMIN"%>
-                    <td class="position-relative">
-                      <%= link_to "/remove_volunteer/#{av.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-                        Remove <i class="fa fa-trash" aria-hidden="true"></i>
-                      <% end %>
-                    </td>
+                    <th >Actions</th>
                   <% end %>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody class="table-group-divider">
+                <% assigned_yearly_vol.each do |av| %>
+                  <% user = User.find(av.volunteer_id) %>
+                  <tr class="">
+                    <td><%= user.fname%></td>
+                    <td><%= user.lname%></td>
+                    <td><%= user.cnum%></td>
+                    <% if session[:user_type] == "ADMIN"%>
+                      <td class="position-relative">
+                        <%= link_to "/remove_volunteer/#{av.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+                          Remove <i class="fa fa-trash" aria-hidden="true"></i>
+                        <% end %>
+                      </td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
