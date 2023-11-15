@@ -126,20 +126,8 @@ class LogFamilyController < ApplicationController
         end
     end
 
-
-    # evacuee model id = 2, family_id = 1  <<< RECORD
-    # family id = 1,is_evacuated true
-    def evacuatedView 
-        evac_center = EvacCenter.find(params[:evac_id]) 
-        add_breadcrumb("Evacuation Centers", evac_centers_path)
-        add_breadcrumb(evac_center.name, "/evac_centers/#{params[:evac_id]}")
-        add_breadcrumb("View Evacuees")
-        @evacuee_list = Evacuee.all.where(evac_id: params[:evac_id])
-    end
-    def evacueeOut
-        evacuee = FamilyMember.find(params[:evacuee_id])
-        family = Family.find(evacuee.family_id)
-
+    def evacueeOut  
+        evacuee = FamilyMember.find(params[:member_id])
         evacuee.update_column("evacuee_id", 0)
         member = EvacMember.find_by(member_id: params[:member_id])
         member.destroy
