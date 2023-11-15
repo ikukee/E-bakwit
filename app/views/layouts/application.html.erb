@@ -29,11 +29,11 @@
     <%= render partial: "/layouts/navbar"%>
       <% if !current_page?(login_path) &&  !current_page?(root_path) && !current_page?(dashboard_path)%>
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-          <ol class="p-1 breadcrumb oswald fs-5">
+          <ol class="p-1 breadcrumb oswald position-absolute m-0" style="--bs-breadcrumb-divider: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'8\' height=\'8\'%3E%3Cpath d=\'M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z\' fill=\'white\'/%3E%3C/svg%3E');">
             <li class="breadcrumb-item"><a href="/" class="inactive">Home</a></li>
             <% @breadcrumbs.each do |breadcrumb| %>
               <% if breadcrumb[:path].nil? %>
-                <li class="breadcrumb-item text-decoration-none active fw-bold" aria-current="page"><%= breadcrumb[:label] %></li>
+                <li class="breadcrumb-item text-decoration-none active fw-bold text-white a-crumb" aria-current="page"><%= breadcrumb[:label] %></li>
               <% else %>
                 <li class="breadcrumb-item"><%= link_to breadcrumb[:label], breadcrumb[:path], class: "inactive" %></li>
               <%end%>
