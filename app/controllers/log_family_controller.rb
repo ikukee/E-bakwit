@@ -1,37 +1,15 @@
 class LogFamilyController < ApplicationController
     def search
-        #search_type = "name"
-        #@members = FamilyMember.all
-        #@family = Family.where("#{search_type} LIKE ? ", "#{params[:id]}%").order(:name)
+        @disaster = Disaster.find(params[:disaster_id])
+        @evac_center = EvacCenter.find(params[:evac_center])
         
-        
-       # @families = Family.find(params[:id])
-        #@families = Family.all
-        #puts "SEARCH : #{@members[1].lname}"
-        #puts "FAMILY :  #{params[:id]}"
-        #puts "FAMILY : #{@families.name}"
-       # families = Family.find_by("name LIKE ? ", "#{params[:id]}%")
-       # respond_to do |format|
-        #    if @family.length  > 0 && @families.present?
-        #        @result = Family.find(@families.id).family_members
-         #       format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{families:@result})}  
-        #    elsif @family.length <=0
-        #        format.turbo_stream{render turbo_stream: turbo_stream.update("member-list","<h2>Not Found</h2>")}  
-        #    end
-        #end
-        
-        @families = Family.find_by("LOWER(name)= ?", params[:id].downcase)
+        @family = Family.find(params[:id])
         respond_to do |format|
-               
-            if @families.present? && @families.id > 0
-                @result = Family.find(@families.id).family_members
-                format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{families:@result})}  
-            else
-                format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "create-fam-btn" )} 
-            end
+            format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{evac_center: @evac_center, families:@family.family_members, disaster:@disaster})}  
         end
     end
     def logging
+        @disaster = Disaster.find(params[:disaster_id])
         @evac_center = EvacCenter.find(params[:id])
         evacuee = Evacuee.new
         family = Family.new
@@ -40,67 +18,104 @@ class LogFamilyController < ApplicationController
         add_breadcrumb(@evac_center.name, evac_center_path(@evac_center))
         add_breadcrumb('Log Family')
     end
+# if evacuee not exist
+# elseif evacuee exist but not in the same evacuation center and have left
+# elseif evacuee exist but not in the same evacuation center and have not left
+# elseif evacuee exist on the same evacuation center and have left
+    
 
-    def evacuate ## post
-        evac_center = EvacCenter.find(params[:evac_id])  
-       
-        if(Evacuee.find_by(family_id: params[:family_id]) == nil)
-            evacuee = Evacuee.new 
-            evacuee.family_id = params[:family_id]
-            evacuee.disaster_id = 1
-            evacuee.date_in = Time.now
-            evacuee.date_out = nil
-            evacuee.evac_id = evac_center.id
-            
-            
-            respond_to do |format|
-                
-                if evacuee.save 
-                    arr = params[:mem];
-                    if arr != nil
-                        for i in 0..arr.length-1 do
-                           
-                            family_mem = FamilyMember.find(arr[i])
-                            family_mem.update_column(:evacuee_id, evacuee.id )
-                        end
-                        
-                        myFam = Family.find(params[:family_id])
-                        if(myFam.is_evacuated != true )
-                            
-                            myFam.update_attribute(:is_evacuated, true)
-                        end
-                        flash[:notice] = "SUCCESSFULLY LOGGED!"
-                        redirect_to "/evac_centers/#{params[:evac_id]}/log", notice: "SUCCESS!"
-                    else
-                        puts 'nil'
-                    end 
-                    puts 'save' 
-                else
-                    puts 'error'
+    # evacuee model id = 2, family_id = 1  <<< RECORD
+    # family id = 1,is_evacuated true
+    def evacuatedView 
+        @evacuee_list = Evacuee.all.where(evac_id: params[:evac_id]).where(disaster_id: params[:disaster_id])
+        @page = params.fetch(:page, 0).to_i
+        if  @page < 0 
+            @page = 0
+        end
+        @evac_center = EvacCenter.find(params[:evac_id])
+        @disaster = Disaster.find(params[:disaster_id])
+        @evacuee_list_count = @evacuee_list.length
+        @evacuee_list_per_page = 1
+        @evacuee_list = Evacuee.offset(@page * @evacuee_list_per_page).limit(@evacuee_list_per_page).order(:family_id).where(evac_id: params[:evac_id]).where(disaster_id: params[:disaster_id])     
+    end
+
+    def evacuate_all
+        family = Family.find(params[:family_id])
+        disaster = Disaster.find(params[:disaster_id])
+        evac_center = EvacCenter.find(params[:evac_id])
+        evacuees = Evacuee.all.where(family_id: family.id).where(disaster_id: disaster.id)
+        key = false
+        evacuee_data = Evacuee.new
+        evacuees.each do |evacuee|
+            if evacuee.evac_id == evac_center.id
+                key =true
+                evacuee_data =evacuee
+                break
+            end
+        end
+
+        if !key 
+            evacuee_data.family_id = family.id
+            evacuee_data.disaster_id = params[:disaster_id]
+            evacuee_data.date_in = Time.now
+            evacuee_data.date_out = nil
+            evacuee_data.evac_id = params[:evac_id]
+            evacuee_data.save
+        end
+
+        family_members = FamilyMember.all.where(family_id: family.id)
+        family_members.each do |member|
+           if member.evacuee_id == nil || member.evacuee_id == 0
+            member.update_attribute(:evacuee_id, evacuee_data.id)
+            evac_member = EvacMember.new
+            evac_member.evacuee_id = evacuee_data.id
+            evac_member.member_id = member.id
+            evac_member.status = "UNRELEASED"
+            evac_member.save
+           end
+        end
+        family.update_attribute(:is_evacuated, true)
+        respond_to do |format|
+            format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{evac_center: evac_center, families:family.family_members, disaster:disaster})}  
+        end
+
+      
+    end
+
+    def evacuate
+        disaster = Disaster.find(params[:disaster_id])
+        evac_center = EvacCenter.find(params[:evac_id])     
+        family_member = FamilyMember.find(params[:member_id])
+        family = Family.find(family_member.family_id)
+        evacuees = Evacuee.all.where(family_id: family.id)
+
+        respond_to do |format|
+            key = false  
+            evacuee_data = Evacuee.new
+            evacuees.each do |evacuee| #checks if the existing evacuee record related to the member is on the same evac center
+                if evacuee.evac_id == evac_center.id
+                    evacuee_data = evacuee
+                    key = true
+                    break
                 end
             end
-        else
-            arr = params[:mem];
-            existingEvacuee = Evacuee.find_by(family_id: params[:family_id])
-            if arr != nil
-                for i in 0..arr.length-1 do
-       
-                    family_mem = FamilyMember.find(arr[i])
-                    family_mem.update_column(:evacuee_id, existingEvacuee.id )
-
-                end 
                 
-                myFam = Family.find(params[:family_id])
-                if(myFam.is_evacuated != true )
-                   
-                    myFam.update_attribute(:is_evacuated, true)
-                end
-                flash[:notice] = "SUCCESSFULLY LOGGED!"
-                redirect_to "/evac_centers/#{params[:evac_id]}/log"
+            if !key
+                evacuee_data.family_id = family.id
+                evacuee_data.disaster_id = disaster.id
+                evacuee_data.date_in = Time.now
+                evacuee_data.date_out = nil
+                evacuee_data.evac_id = evac_center.id
+                evacuee_data.save
+            end
 
-            else
-                puts 'nil'
-            end 
+            evac_member = EvacMember.new
+            evac_member.evacuee_id = evacuee_data.id
+            evac_member.member_id = family_member.id
+            evac_member.status = "UNRELEASED"
+            evac_member.save
+            family_member.update_attribute(:evacuee_id, evacuee_data.id)
+            format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{evac_center: evac_center, families:family.family_members, disaster:disaster})}  
         end
     end
 
@@ -118,11 +133,35 @@ class LogFamilyController < ApplicationController
         family = Family.find(evacuee.family_id)
 
         evacuee.update_column("evacuee_id", 0)
-        if(FamilyMember.all.where("family_id = ? AND evacuee_id > ?", family.id,  0).length == 0)
-            family.update_attribute(:is_evacuated, false)
-        end
+        member = EvacMember.find_by(member_id: params[:member_id])
+        member.destroy
         redirect_to "/evac_center/#{params[:evac_id]}"
     end
+
+    def evacueeReleased  
+        family_member = FamilyMember.find(params[:member_id])
+        evacuee = Evacuee.find(family_member.evacuee_id)       
+        evac_center = EvacCenter.find(evacuee.evac_id)
+        evac_member = EvacMember.where(evacuee_id: evacuee.id).where(member_id: family_member.id)
+        evac_member.update_attribute(:status, "RELEASED")
+        family_member.update_attribute(:evacuee_id, 0)
+
+        key = false
+        evac_members = EvacMember.all.where(evacuee_id: evacuee.id)
+        evac_members.each do |em|
+            if em.status == "UNRELEASED"
+                key = true
+                break
+            end
+        end
+
+        if !key
+            evacuee.update_attribute(:date_out, Time.now)
+        end
+        
+        redirect_to "/evac_center/#{params[:evac_id]}"
+    end
+
 
 end
 

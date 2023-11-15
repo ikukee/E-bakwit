@@ -8,39 +8,31 @@
     </div>
     <p id="notice"> </p>
     <div class="row p-1">
-    
-        <div class="col p-3 m-1" id="logging-style-form">
-          <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >FAMILY LOGGING</h2>
-          <%= form_with url: "/log/search", method: :post do |form|%>
+      <div class="col p-3 m-1" id="logging-style-form">
+        <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >FAMILY LOGGING</h2>
+        <%= form_with url: "/log/search", method: :post do |form|%>
           <div class="form-group">
             <div class="input-group">
               <div class="input-prepend w-25">
                 <p align="center" class="h5 oswald fw">Family Name: </p>
               </div>
-              <%= form.search_field :id , class: "form-control", placeholder: "Search an Evacuation Center", oninput: "this.form.requestSubmit()" %>
+              <%= form.hidden_field :evac_center, :value => @evac_center.id%>
+              <%= form.hidden_field :disaster_id, :value => @disaster.id%>
+              <%= form.collection_select :id , Family.all.order(:name), :id, :name,{:prompt => "Select Family"},{class:"form-control",style:"float:right;",oninput: "this.form.requestSubmit()"} %>
             </div>
           </div>
           <br>
-          
-          <%end%>
-         
-        </div>
-        <div class="col p-3 m-1" style="background: white; box-shadow: 1px 1px .5em #586F7C">
-          <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;">MEMBER LOGGING</h2>
-            
-            
-                <div id="member-list">
-                  
-                </div> 
-                
-        </div>
-
+        <%end%>
       </div>
-
+      <div style="background: white; box-shadow: 1px 1px .5em #586F7C">
+        <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;">MEMBER LOGGING</h2>
+        <div id="member-list">
+        </div>
+      </div>
+    </div>
   </div>
   <div class="col"></div>
 </div>
-
 </div>
 <div class="">
 </div>

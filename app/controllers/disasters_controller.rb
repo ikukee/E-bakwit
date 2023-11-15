@@ -54,6 +54,7 @@ class DisastersController < ApplicationController
   def create
     @disaster = Disaster.new(disaster_params)
     @disaster.name = @disaster.name.upcase
+    @disaster.year = @disaster.date_of_occurence.year
     respond_to do |format|
       if @disaster.save
         format.html { redirect_to "/disasters", notice: "Disaster was successfully created." }
@@ -67,9 +68,9 @@ class DisastersController < ApplicationController
 
   # PATCH/PUT /disasters/1 or /disasters/1.json
   def update
-  
     respond_to do |format|
       params[:disaster][:name]  = params[:disaster][:name].upcase
+      @disaster.year = @disaster.date_of_occurence.year
       if @disaster.update(disaster_params)
         format.html { redirect_to "/disasters", notice: "Disaster was successfully updated." }
         format.json { render :show, status: :ok, location: @disaster }
@@ -102,6 +103,6 @@ class DisastersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def disaster_params
-      params.require(:disaster).permit(:name, :disaster_type, :year)
+      params.require(:disaster).permit(:name, :disaster_type, :year, :date_of_occurence)
     end
 end

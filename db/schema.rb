@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_23_055707) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_08_074037) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -71,6 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_055707) do
     t.date "year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date_of_occurence"
   end
 
   create_table "evac_centers", force: :cascade do |t|
@@ -94,6 +95,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_055707) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "evac_members", force: :cascade do |t|
+    t.integer "evacuee_id"
+    t.integer "member_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "status"
   end
 
   create_table "evac_yearly_profiles", force: :cascade do |t|

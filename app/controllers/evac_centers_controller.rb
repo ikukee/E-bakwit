@@ -37,6 +37,15 @@ class EvacCentersController < ApplicationController
 
   end
 
+  def view_disaster_evacuation
+    @evac_center = EvacCenter.find(params[:evac_center])
+    @disaster =Disaster.find(params[:disaster_id])
+    respond_to do |format|
+      format.turbo_stream{render turbo_stream: turbo_stream.update("display_disaster_evacuation", partial:"display_disaster_evacuation", locals:{evac_center: @evac_center, disaster:@disaster})}
+    end
+
+  end
+
   def add_volunteer
     assignedYearlyVol = AssignedYearlyVol.new
     assignedYearlyVol.volunteer_id = params[:volunteer_id]

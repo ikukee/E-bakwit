@@ -27,7 +27,7 @@
 
   <body>
     <%= render partial: "/layouts/navbar"%>
-      <% if !current_page?(login_path) &&  !current_page?(root_path) %>
+      <% if !current_page?(login_path) &&  !current_page?(root_path) && !current_page?(dashboard_path) %>
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
           <ol class="p-1 breadcrumb oswald fs-5">
             <li class="breadcrumb-item"><a href="/" class="inactive">Home</a></li>
