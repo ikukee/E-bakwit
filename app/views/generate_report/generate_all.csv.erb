@@ -1,13 +1,10 @@
 <%= CSV.generate_line([@disaster.name])%>
 <%= CSV.generate_line(["","BARANGAY", "", "","","NUMBER OF EVACUATION CENTERS"])%>
 <%= CSV.generate_line([
-    "NAGA CITY","NAME", "COUNT", "FAMILIES", "PERSONS", "4Ps FAMILIES"])%>
+    "NAGA CITY","NAME", "COUNT", "FAMILIES", "PERSONS", "4Ps FAMILIES","CUM", "NOW","NAME OF EVACUATION CENTER","ADDRESS","BRGY NAME", "BRGY COUNT"])%>
 <% @evac_centers.each do |evac_center|%>
     <%= CSV.generate_line([
-        "",
-        evac_center.barangay,
-        "0", 
-        countGenFamily(evac_center.id, @disaster, false),
+        "", evac_center.barangay, "0", countGenFamily(evac_center.id, @disaster, false),
         countIndivEvacuated(evac_center.id,@disaster), # persons
         "0", # 4ps
         "0",

@@ -1,11 +1,26 @@
 class GenerateReportController < ApplicationController
+    
     def generate 
         @evac_center = EvacCenter.find(params[:evac_center])
         @disaster = Disaster.find(params[:disaster_id])
-        
+        result = CSV.generate do |csv|
+            csv << ["DISASTER NAME", @disaster.name, "DISASTER TYPE",@disaster.disaster_type,"DATE OF OCCURENCE", @disaster.date_of_occurence]
+            csv << ["EVACUATION CENTER", @evac_center.name, "ADDRESS",@evac_center.barangay, "GENERATED AS OF", DateTime.now]
+            csv << ["Age Range", "No. Of MALEs", "No. Of FEMALEs", "TOTAL"]
+            csv << ["INFANT", helpers.getInfants(@evac_center.id, @disaster.id,"Male"),helpers.getInfants(@evac_center.id, @disaster.id,"Female"),helpers.getInfants(@evac_center.id, @disaster.id,"Male") + helpers.getInfants(@evac_center.id, @disaster.id,"Female")]
+            csv << ["TODDLER", helpers.getToddlers(@evac_center.id, @disaster.id,"Male"), helpers.getToddlers(@evac_center.id, @disaster.id,"Female"),helpers.getToddlers(@evac_center.id, @disaster.id,"Male") + helpers.getToddlers(@evac_center.id, @disaster.id,"Female")]
+            csv << ["PRESCHOOLERS",helpers.getPreschoolers(@evac_center.id, @disaster.id,"Male"),helpers.getPreschoolers(@evac_center.id, @disaster.id,"Female"),helpers.getPreschoolers(@evac_center.id, @disaster.id,"Male") + helpers.getPreschoolers(@evac_center.id, @disaster.id,"Female")]
+            csv << ["SCHOOLAGERS",helpers.getSchoolagers(@evac_center.id, @disaster.id,"Male"),helpers.getSchoolagers(@evac_center.id, @disaster.id,"Female"),helpers.getSchoolagers(@evac_center.id, @disaster.id,"Male") + helpers.getSchoolagers(@evac_center.id, @disaster.id,"Female")]
+            csv << ["TEENAGERS",helpers.getTeenagers(@evac_center.id, @disaster.id,"Male"),helpers.getTeenagers(@evac_center.id, @disaster.id,"Female"),helpers.getTeenagers(@evac_center.id, @disaster.id,"Male") + helpers.getTeenagers(@evac_center.id, @disaster.id,"Female")]
+            csv << ["ADULTS",helpers.getAdults(@evac_center.id, @disaster.id,"Male"),helpers.getAdults(@evac_center.id, @disaster.id,"Female"),helpers.getAdults(@evac_center.id, @disaster.id,"Male") + helpers.getAdults(@evac_center.id, @disaster.id,"Female")]
+            csv << ["SENIORS",helpers.getSeniors(@evac_center.id, @disaster.id,"Male"),helpers.getSeniors(@evac_center.id, @disaster.id,"Female"),helpers.getSeniors(@evac_center.id, @disaster.id,"Male") + helpers.getSeniors(@evac_center.id, @disaster.id,"Female")]
+            csv << ["TOTAL",helpers.countGenderEvacuated(@evac_center.id,@disaster, "Male"),helpers.countGenderEvacuated(@evac_center.id,@disaster, "Female"),helpers.countGenderEvacuated(@evac_center.id,@disaster, "Male") + helpers.countGenderEvacuated(@evac_center.id,@disaster, "Female")]
+            
+        end
         respond_to do |format|
             format.html
-            format.csv 
+            format.xls {send_data result, filename: "#{@disaster.name}-#{@disaster.date_of_occurence}-#{DateTime.now}.xls", type: 'text/xls; charset=utf-8' }
+            format.csv {send_data result, filename: "#{@disaster.name}-#{@disaster.date_of_occurence}-#{DateTime.now}.csv", type: 'text/csv; charset=utf-8' }
         end
     end
     def generate_all
@@ -48,7 +63,7 @@ class GenerateReportController < ApplicationController
         end
         respond_to do |format|
             format.html
-            format.csv
+            format.csv 
         end
 
     end

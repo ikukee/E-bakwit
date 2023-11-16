@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+    Mime::Type.register "application/xls", :xls
     before_action :set_breadcrumbs
     
 
