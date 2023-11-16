@@ -73,26 +73,51 @@ class GenerateReportController < ApplicationController
             csv << ["GENERATED AS OF", Time.current]
             csv << ["EVACUATION REPORT OF NAGA CITY"]
             csv << ["DISASTER NAME", @disaster.name, "DISASTER TYPE",@disaster.disaster_type,"DATE OF OCCURENCE", @disaster.date_of_occurence]
-            csv << ["BARANGAY", "EVACUATION CENTER"].concat(age_group)
+            csv << ["BARANGAY", "", "EVACUATION CENTER", ""].concat(age_group)
+            csv << ["GRAND TOTAL", barangay_group.length, "",EvacCenter.all.length, @infantM, @infatF, @toddlerM, @toddlerF,@preschoolersM,@preschoolersF,@schoolageM,@schoolageF,@teenageM,@teenageF,@adultM,@adultF,@seniorM,@seniorM]
             barangay_group.each do |brgy|
-                csv << [brgy, EvacCenter.where(barangay: brgy).length]
-                @evac_centers.each do |ev|
-                    if ev.barangay == brgy
-                        csv << ["", ev.name]
+                csv << [brgy, "","", limiterForBarangay(brgy),]
+                @evac_centers.each do |center|
+                    if center.barangay == brgy
+                        csv << ["", "", center.name, "1",
+                            helpers.getInfants(center.id, @disaster.id, "Male"),
+                            helpers.getInfants(center.id, @disaster.id, "Female"),
+                            helpers.getToddlers(center.id, @disaster.id, "Male"),
+                            helpers.getToddlers(center.id, @disaster.id, "Female"),
+                            helpers.getPreschoolers(center.id, @disaster.id, "Male"),
+                            helpers.getPreschoolers(center.id, @disaster.id, "Female"),
+                            helpers.getSchoolagers(center.id, @disaster.id, "Male"),
+                            helpers.getSchoolagers(center.id, @disaster.id, "Female"),
+                            helpers.getTeenagers(center.id, @disaster.id, "Male"),
+                            helpers.getTeenagers(center.id, @disaster.id, "Female"),
+                            helpers.getAdults(center.id, @disaster.id, "Male"),
+                            helpers.getAdults(center.id, @disaster.id, "Female"),
+                            helpers.getSeniors(center.id, @disaster.id, "Male"),                         
+                            helpers.getSeniors(center.id, @disaster.id, "Female"),
+                        ]
                     end
                 end
             end
         end
         respond_to do |format|
-            format.html
+            format.html {render result}
             format.xls {send_data result, filename: "#{@disaster.name}-#{@disaster.date_of_occurence}.xls", type: 'text/xls; charset=utf-8'}
             format.csv {send_data result, filename: "#{@disaster.name}-#{@disaster.date_of_occurence}.csv", type: 'text/csv; charset=utf-8'}
         end
     end
     private
 
+    def limiterForBarangay(brgy)
+        x = EvacCenter.where("BARANGAY = ?", brgy).all.length
+        if(x > 0)
+            return x 
+        else 
+            return "" 
+        end 
+    end
+
     def age_group 
-        titles = ["INFANT", "TODDLERS", "Preschoolers", "Schoolage","Teenage", "Adult", "Senior Citizens"]
+        titles = ["INFANT(MALE)", "INFANT(FEMALE)", "TODDLERS(MALE)","TODDLERS(FEMALE)", "PRESCHOOLER(MALE)", "PRESCHOOLER(FEMALE)", "SCHOOLAGE(MALE)", "SCHOOLAGE(FEMALE)","TEENAGE(MALE)","TEENAGE(FEMALE)", "ADULT(MALE)", "ADULT(FEMALE)", "SENIOR CITIZEN(MALE)", "SENIOR CITIZEN(FEMALE)"]
     end
     def barangay_group
         titles = [
