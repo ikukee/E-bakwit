@@ -11,12 +11,34 @@
       </div>
       <div class="col-6">
         <div class = "row">
-          <div class = "col-md-6" >
+          <div class = "col-md-4" >
             <p class="h4 oswald fw" style = "float:right;">Select Year Profile: </p>
           </div>
-          <div class = "col-md-6">
+          <div class = "col-md-4">
             <%= form_with url: "/evac_centers/#{evac_center.id}/display_year_profile" do |form|%>
               <%= form.collection_select :eid , EvacYearlyProfile.all.where(evac_id: evac_center.id), :id, :year,{:prompt => "Select Year"},{class:"form-control",style:"float:right;", oninput: "this.form.requestSubmit()" } %>
+            <% end %>
+          </div>
+          <div class = "col-md-4">
+            <% if evac_center.status == nil %>
+              <button  class="btn btn-primary form-control" data-bs-toggle= "modal" data-bs-target="#add_profile" type="button">Add profile <i class="fa fa-plus" aria-hidden="true"></i></button>
+              <div id="add_profile" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-md">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title text-dark">Adding a new Year Profile</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <%= form_with url: "/add_new_profile/#{evac_center.id}", method: :post do |form|%>
+                      <%= form.date_field :date, class:"form-control", :value => Date.today(), max: Date.today()%>
+                      <br>
+                      <div>
+                        <%= form.submit "Generate", class:"btn btn-success form-control"%>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
             <% end %>
           </div>
         </div>
@@ -35,12 +57,15 @@
           <% end %>
         <% end %>
       <% end %>
-      <div class="row position-absolute oswald" style="top:8.7em; font-size: 0.8em;">
+      <div class="row position-absolute oswald" style="top:10em; font-size: 0.8em;">
         <div class="col-auto pe-0">BARANGAY <%= evac_center.barangay.upcase %></div>
         <div class="col-auto ps-0 pe-0">, CAPACITY: <%= evac_center.capacity %></div>
         <% if evac_center.isInside == true %>
           <div class="col ps-0">, OFFICIAL EVACUATION CENTER<% else %></div>
         <% end%>
+      </div>
+      <div class = "row">
+        <h4>YEAR PROFILE: <%= evac_yearly_profile.year %></h4>
       </div>
     </div>
     <div class="row m-0 p-0 justify-content-end">
@@ -134,7 +159,11 @@
                           Remove <i class="fa fa-trash" aria-hidden="true"></i>
                         <% end %>
                       </td>
+                    <% else %>
+                      <td class="position-relative"></td>
                     <% end %>
+                  <% else %>
+                    <td class="position-relative"></td>
                   <% end %>
                 </tr>
               <% end %>
@@ -179,19 +208,7 @@
                 <th >First Name</th>
                 <th >Last Name</th>
                 <th >Contact Number</th>
-                <% if session[:user_type] == "ADMIN"%>
-                  <<<<<<< HEAD
-                    <td class="position-relative">
-                    <% if evac_center.status == nil%>
-                      <%= link_to "/remove_volunteer/#{av.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-                        Remove <i class="fa fa-trash" aria-hidden="true"></i>
-                      <% end %>
-                    <% end %>
-                  </td>
-                  =======
-                  <th >Actions</th>
-                  >>>>>>> 574493b0c1fa242202539acec5f6e1734079eeee
-                <% end %>
+                <th >Actions</th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -202,11 +219,17 @@
                   <td><%= user.lname%></td>
                   <td><%= user.cnum%></td>
                   <% if session[:user_type] == "ADMIN"%>
-                    <td class="position-relative">
-                      <%= link_to "/remove_volunteer/#{av.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-                        Remove <i class="fa fa-trash" aria-hidden="true"></i>
-                      <% end %>
-                    </td>
+                    <% if evac_center.status == nil%>
+                      <td class="position-relative">
+                        <%= link_to "/remove_volunteer/#{av.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+                          Remove <i class="fa fa-trash" aria-hidden="true"></i>
+                        <% end %>
+                      </td>
+                    <% else %>
+                      <td></td>
+                    <% end %>
+                  <%else %>
+                    <td></td>
                   <% end %>
                 </tr>
               <% end %>

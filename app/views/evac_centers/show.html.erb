@@ -1,43 +1,5 @@
-<div class="container-fluid">
-  <%= link_to "/evac_centers", class: 'ms-5 mt-3 mb-2 btn btn-outline-dark oswald fs-4 text-decoration-none' do %>
-    <i class="fa-solid fa-left-long"></i> Back
-  <% end %>
-  <div style="overflow-x:hidden; margin-left:30%;margin-right:30%;" class="text-xs-center">
-    <div class = "row">
-      <div class = "col-md-4" >
-        <p class="h4 oswald fw" style = "float:right;">Select Profile: </p>
-      </div>
-      <div class = "col-md-4">
-        <%= form_with url: "/evac_centers/#{@evac_center.id}/display_year_profile" do |form|%>
-          <%= form.collection_select :eid , EvacYearlyProfile.all.where(evac_id: @evac_center.id).order(:year), :id, :year,{:prompt => "Select Year"},{class:"form-control",style:"float:right;", oninput: "this.form.requestSubmit()" } %>
-        <% end %>
-      </div>
-      <% if @evac_center.status == nil %>
-        <div class = "col-md-4">
-          <button  class="btn btn-primary form-control" data-bs-toggle= "modal" data-bs-target="#add_profile" type="button">Add profile <i class="fa fa-plus" aria-hidden="true"></i></button>
-          <div id="add_profile" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-md">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title text-dark">Adding a new Year Profile</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <%= form_with url: "/add_new_profile/#{@evac_center.id}", method: :post do |form|%>
-                  <%= form.date_field :date, class:"form-control", :value => Date.today(), max: Date.today()%>
-                  <br>
-                  <div>
-                    <%= form.submit "Generate", class:"btn btn-success form-control"%>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div>
+<div class="container-fluid p-0">
   <div id = "display_year_profile">
     <%= render partial: "display_year_profile", locals:{evac_center: @evac_center, evac_yearly_profile:@evacYearlyProfile, assigned_yearly_vol: AssignedYearlyVol.all.where(evac_profile_id: @evacYearlyProfile.id)}%>
   </div>
 </div>
-

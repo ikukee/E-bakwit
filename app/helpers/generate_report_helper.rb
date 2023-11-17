@@ -99,7 +99,7 @@ module GenerateReportHelper
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
         evacuees.each do |ec|
             family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(family_id: family.id).where("age > 1 AND age <= 3").where(sex: sexVal)
+            family_members = FamilyMember.all.where(family_id: family.id).where(evacuee_id: ec.id).where("age > 1 AND age <= 3").where(sex: sexVal)
             total = total + family_members.length
         end
         return total
@@ -110,7 +110,7 @@ module GenerateReportHelper
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
         evacuees.each do |ec|
             family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(family_id: family.id).where("age > 3 AND age <= 5").where(sex: sexVal)
+            family_members = FamilyMember.all.where(family_id: family.id).where(evacuee_id: ec.id).where("age > 3 AND age <= 5").where(sex: sexVal)
             total = total + family_members.length
         end
         return total
@@ -121,7 +121,7 @@ module GenerateReportHelper
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
         evacuees.each do |ec|
             family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(family_id: family.id).where("age > 6 AND age <= 12").where(sex: sexVal)
+            family_members = FamilyMember.all.where(family_id: family.id).where(evacuee_id: ec.id).where("age > 6 AND age <= 12").where(sex: sexVal)
             total = total + family_members.length
         end
         return total
@@ -132,7 +132,7 @@ module GenerateReportHelper
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
         evacuees.each do |ec|
             family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(family_id: family.id).where("age > 12 AND age <= 17").where(sex: sexVal)
+            family_members = FamilyMember.all.where(family_id: family.id).where(evacuee_id: ec.id).where("age > 12 AND age <= 17").where(sex: sexVal)
             total = total + family_members.length
         end
         return total
@@ -143,7 +143,7 @@ module GenerateReportHelper
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
         evacuees.each do |ec|
             family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(family_id: family.id).where("age > 17 AND age <= 60").where(sex: sexVal)
+            family_members = FamilyMember.all.where(family_id: family.id).where(evacuee_id: ec.id).where("age > 17 AND age <= 60").where(sex: sexVal)
             total = total + family_members.length
         end
         return total
@@ -154,7 +154,7 @@ module GenerateReportHelper
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
         evacuees.each do |ec|
             family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(family_id: family.id).where("age >= 60").where(sex: sexVal)
+            family_members = FamilyMember.all.where(family_id: family.id).where(evacuee_id: ec.id).where("age >= 60").where(sex: sexVal)
             total = total + family_members.length
         end
         return total
