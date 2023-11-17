@@ -39,6 +39,10 @@ Rails.application.routes.draw do
   post "/add_facility",to:"evac_centers#add_facility"
   post "/add_item",to:"evac_centers#add_item"
 
+  ## GENERATION OF REPORT
+
+  get "evac_centers/:evac_center/:disaster_id/generate", to: "generate_report#generate"
+  get "disasters/:disaster_id/generate", to: "generate_report#generate_all"
   ## LOGGING
   
   get "evac_centers/:id/log/:disaster_id", to: "log_family#logging"

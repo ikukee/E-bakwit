@@ -13,6 +13,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+/* Custom Colors*/
 
 .default-background1{
     background-image: linear-gradient(#b8dbd9, #f0f0f0 );
@@ -28,6 +29,16 @@ body {
 
 .default-background4{
     background-image: linear-gradient(#b8dbd9, #f0f0f0 );
+}
+
+.bg-dgray{
+    background: #20292e;
+    border-color: #20292e;
+}
+
+.bg-navy{
+    background: rgb(19, 31, 65);
+    border-color: rgb(19, 31, 65);
 }
 
 /* Google Fonts */
@@ -97,6 +108,21 @@ body {
 #login-button:hover{
     transition-duration: 2s;
     text-shadow: 0px 0px 10px #ffffff;
+}
+
+/*Breadcrumb*/
+.a-crumb{
+    text-shadow: 1px 1px 1px #000;
+}
+
+.breadcrumb .inactive{
+    color: #4894c0;
+    text-decoration: none;
+}
+
+.breadcrumb .inactive:hover{
+    text-shadow: 1px 1px 0.1em #868686;
+    transition-duration: 0.2s;
 }
 
 /*Landing Dashboard Page*/
@@ -178,8 +204,8 @@ body {
 }
 
 #disaster-name-dv {
-    color: #20292e;
-    text-shadow: 1px 1px 0.05em #20292e;
+    color: black;
+    text-shadow: 0px 0px 0.05em white;
 }
 
 #add-evac-center {

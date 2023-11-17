@@ -1,8 +1,4 @@
-<%= link_to '/evac_centers', class: 'ms-5 mt-3 mb-2 btn btn-outline-dark oswald fs-4 text-decoration-none' do %>
-  <i class="fa-solid fa-left-long"></i> Back
-<% end %>
-
-<div class="row p-2 m-0">
+<div class="row p-2 m-0 mt-5">
   <div class="col"></div>
   <div class="col-md-8" id="logging-style-form">
     <div class = "row">
@@ -10,7 +6,7 @@
         <h1 class="oswald fw">DISASTERS</h1>
       </div>
       <div class = "col-md-4">
-        <a href = "/disasters/new" ><button style = "margin-top:5px;" class = "btn btn-primary form-control"><i class="fa-solid fa-plus"></i> Record new Disaster</button></a>
+        <a href = "/disasters/new" ><button style = "margin-top:5px;" class = "btn btn-primary bg-navy oswald fw-bold form-control"><i class="fa-solid fa-plus"></i> Record new Disaster</button></a>
       </div>
     </div>
     <%= form_with url: "/disasters/search", method: :post do |form| %>

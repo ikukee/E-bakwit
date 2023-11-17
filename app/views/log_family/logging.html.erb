@@ -1,41 +1,30 @@
-<%= link_to "/evac_centers/#{@evac_center.id}", class: 'ms-5 mt-3 mb-2 btn btn-outline-dark oswald fs-4 text-decoration-none' do %>
-  <i class="fa-solid fa-left-long"></i> Back
-<% end %>
-<div class="row p-2">
-  <div class="col"></div>
-  <div class="col-md-8" >
-    <div class="row m-0">
-      <p class="h1 oswald fw-bold ps-0" style="border-bottom: 2px solid black;">
-        <%= @evac_center.name %> EVACUATION CENTER
-      </p>
-    </div>
+<div class="container-fluid" style="background: rgb(89,147,188); background: linear-gradient(0deg, rgba(89,147,188,1) 1%, rgba(21,38,74,1) 100%); color:white;">
+  <div class="row p-2 m-0" >
     <p id="notice"> </p>
-    <div class="row p-1">
-      <div class="col p-3 m-1" id="logging-style-form">
-        <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >FAMILY LOGGING</h2>
-        <%= form_with url: "/log/search", method: :post do |form|%>
+    <div class="p-3" >
+      <p class="h1 oswald fw-bold ps-0">
+        <%= @evac_center.name.titleize %>
+      </p>
+      <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid white;" align="center">EVACUEE LOGGING</h2>
+      <%= form_with url: "/log/search", method: :post do |form|%>
+        <div class="mb-3">
           <div class="form-group">
             <div class="input-group">
               <div class="input-prepend w-25">
-                <p align="center" class="h5 oswald fw">Family Name: </p>
+                <p align="center" class="h2 oswald fw">Family Name: </p>
               </div>
               <%= form.hidden_field :evac_center, :value => @evac_center.id%>
               <%= form.hidden_field :disaster_id, :value => @disaster.id%>
-              <%= form.collection_select :id , FamilyMember.all.order(:full_name), :id, :full_name,{:prompt => "Select Member"},{class:"form-control",style:"float:right;",oninput: "this.form.requestSubmit()"} %>
+              <%= form.collection_select :id , FamilyMember.all.order(:full_name), :id, :full_name,{:prompt => "Select Member"},{class:"form-control",oninput: "this.form.requestSubmit()"} %>
             </div>
           </div>
-          <br>
-        <%end%>
-      </div>
-      <div style="background: white; box-shadow: 1px 1px .5em #586F7C">
-        <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;">MEMBER LOGGING</h2>
-        <div id="member-list">
         </div>
+      <%end%>
+      <div id="member-list">
       </div>
     </div>
   </div>
-  <div class="col"></div>
 </div>
-</div>
-<div class="">
+<div class="p-3" style=" background:white">
+  transparent
 </div>

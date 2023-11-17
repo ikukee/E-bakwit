@@ -1,7 +1,7 @@
 <div class = "row">
   <div class="col-md-6 col-sm-12">
     <div class="row">
-      <div class="col-md-9">
+      <div class="col-md-auto">
         <h1 class="oswald fw" >EVACUEES OVERVIEW</h1>
       </div>
       <% if session[:user_type] == "ADMIN"%>
@@ -22,14 +22,15 @@
         <% end %>
       <% end %>
     </div>
+    <p>&nbsp;</p>
     <div class="row">
-      <div class="col" style="border-right: 2px solid black;">
+      <div class="col" style="border-right: 2px solid white;">
         <div class="row">
           <div class="col-md-5">
             <p class="h4 oswald fw" align="right">MALE: </p>
           </div>
           <div class="col">
-            <p class="h2 oswald fw"><%= countGenderEvacuated(evac_center.id,disaster, "Male") %></p>
+            <p class="h2 oswald fw"><%= countGenderEvacuated(evac_center.id,disaster, "Male") %> <i class="fa-solid fa-person"></i></p>
           </div>
         </div>
         <div class="row">
@@ -37,7 +38,7 @@
             <p class="h4 oswald fw" align="right">FEMALES: </p>
           </div>
           <div class="col">
-            <p class="h2 oswald fw"><%= countGenderEvacuated(evac_center.id,disaster, "Female") %></p>
+            <p class="h2 oswald fw"><%= countGenderEvacuated(evac_center.id,disaster, "Female") %> <i class="fa-solid fa-person-dress"></i></p>
           </div>
         </div>
         <div class="row">
@@ -45,13 +46,12 @@
             <p class="h4 oswald fw" align="right">TOTAL: </p>
           </div>
           <div class="col">
-            <p class="h2 oswald fw"><%= countIndivEvacuated(evac_center.id,disaster)%></p>
+            <p class="h2 oswald fw"><%= countIndivEvacuated(evac_center.id,disaster)%> <i class="fa-solid fa-people-group"></i></p>
           </div>
         </div>
-      </div>
-      <div class="col">
+        <p>&nbsp;</p>
         <div class="row">
-          <div class="col-md-5">
+          <div class="col-md-7">
             <p class="h4 oswald fw" align="right">FAMILIES CURRENTLY EVACUATED: </p>
           </div>
           <div class="col">
@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-5">
+          <div class="col-md-7">
             <p class="h4 oswald fw" align="right">OVERALL FAMILIES EVACUATED: </p>
           </div>
           <div class="col">
@@ -67,14 +67,42 @@
           </div>
         </div>
       </div>
+      <div class="col">
+        <h2 class="oswald fw">ACTIONS</h2>
+        <% if session[:user_type] == "ADMIN"%>
+          <div class="col">
+            <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-primary bg-navy oswald fw-bold w-100 m-1" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user fa-xl"></i></a>
+          </div>
+        <% else %>
+          <% if User.find(session[:user_id]).currently_assigned != nil%>
+            <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
+              <div class="col">
+                <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-primary bg-navy oswald fw-bold w-100" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user"></i></a>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% if User.find(session[:user_id]).currently_assigned != nil|| session[:user_type] == "ADMIN" %>
+          <% if User.find(session[:user_id]).currently_assigned == evac_center.id || session[:user_type] == "ADMIN" %>
+            <a href="<%=evac_center.id%>/<%=disaster.id%>/evacuated" class="btn btn-primary bg-navy w-100 oswald fw-bold m-1" style="font-size: 22px">VIEW EVACUEES <i class="fa-solid fa-users-viewfinder fa-xl"></i></a>
+          <% end %>
+        <% end %>
+        <% if session[:user_type] == "ADMIN"%>
+          <div class="col">
+            <button type="button" style="font-size: 22px" class="btn btn-dark bg-dgray w-100 dropdown-toggle oswald fw-bold m-1 dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              DOWNLOAD As
+            </button>
+            <ul class="dropdown-menu oswald fw p-1 text-center" style="font-size:2em">
+              <p class="">Lists</p>
+              <li class="m-1"><a href="<%=evac_center.id%>/<%=disaster.id%>/generate.xls", class= "dropdown-item p-1 mt-1">.XLS <i class="fa-solid fa-table d-inline"></i></a></li>
+              <li class="m-1"><a href="<%=evac_center.id%>/<%=disaster.id%>/generate.csv", class= "dropdown-item p-1 mb-1">.CSV <i class="fa-solid fa-file-csv d-inline"></i></a></li>
+            </ul>
+          </div>
+        <%end%>
+      </div>
     </div>
-    <% if User.find(session[:user_id]).currently_assigned != nil|| session[:user_type] == "ADMIN" %>
-      <% if User.find(session[:user_id]).currently_assigned == evac_center.id || session[:user_type] == "ADMIN" %>
-        <a href="<%=evac_center.id%>/<%=disaster.id%>/evacuated" class="btn btn-dark w-100 oswald fw-bold mt-4" style="background: #004d80;">View Evacuees</a>
-      <% end %>
-    <% end %>
-    <br>
-    <br>
+  </div>
+  <div class="col-md-6 col-sm-12">
     <% capacityPercentage = getCapacityPercentage(countIndivEvacuated(evac_center.id,disaster),evac_center.capacity.to_i)%>
     <h4>Capacity: </h4>
     <div class="w3-border" style = "text-align:center;border:1px solid #ccc; border-radius:5px; overflow:hidden;">
@@ -142,55 +170,56 @@
       </table>
     </div>
   </div>
-  <div class="col-md-6 col-sm-12">
-    <div class="row">
-      <div class="col-md-9">
-        <h1 class="oswald fw" style="border-bottom: 2px solid black">RELIEF GOODS OVERVIEW</h1>
-      </div>
-      <% if session[:user_type] == "ADMIN"%>
-        <% if evac_center.status == nil%>
+  <p style="border-bottom:4px solid white">&nbsp;</p>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-auto">
+          <h1 class="oswald fw" >RELIEF GOODS OVERVIEW</h1>
+        </div>
+        <% if session[:user_type] == "ADMIN"%>
           <div class="col">
-            <%= link_to "Update", log_relief_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+            <a href="#" class="btn btn-info w-100 oswald fw-bold m-1" style="font-size:22px"> UPDATE RELIEF GOODS <i class="fa-solid fa-utensils fa-xl"></i> </a>
           </div>
-        <% end %>
-      <% else %>
-        <% if User.find(session[:user_id]).currently_assigned != nil%>
-          <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
-            <% if evac_center.status == nil%>
-              <div class="col">
-                <%= link_to "Update", log_relief_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
-              </div>
+        <% else %>
+          <% if User.find(session[:user_id]).currently_assigned != nil%>
+            <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
+              <% if evac_center.status == nil%>
+                <div class="col">
+                  <%= link_to "Update", log_relief_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+                </div>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>
-      <% end %>
-    </div>
-    <p>&nbsp;</p>
-    <div class="row">
-      <div class="col">
       </div>
-      <div class="col-md-9">
-        <div class="row">
-          <div class="col">
-            <p class="h2 oswald fw" align="center">FOOD: </p>
+      <p>&nbsp;</p>
+      <div class="row">
+        <div class="col">
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col">
+              <p class="h2 oswald fw" align="center">FOOD: </p>
+            </div>
+            <div class="col">
+              <p class="h2 oswald fw" align="center">0 <i class="fa-solid fa-bowl-food"></i></p>
+            </div>
           </div>
-          <div class="col">
-            <p class="h2 oswald fw" align="center">NON-FOOD </p>
+          <div class="row" style="border-top: 2px solid white;">
+            <div class="col">
+              <p class="h2 oswald fw" align="center"> NON-FOOD: </p>
+            </div>
+            <div class="col">
+              <p class="h2 oswald fw" align="center">0 <i class="fa-solid fa-shirt"></i></p>
+            </div>
           </div>
         </div>
-        <div class="row" style="border-top: 2px solid black;">
-          <div class="col">
-            <p class="h2 oswald fw" align="center"> 2</p>
-          </div>
-          <div class="col">
-            <p class="h2 oswald fw" align="center">2</p>
-          </div>
+        <div class="col">
         </div>
       </div>
-      <div class="col">
-      </div>
+      <p>&nbsp;</p>
+      <a href="" class="btn btn-secondary w-100 oswald fw-bold">VIEW RELIEF</a>
     </div>
-    <p>&nbsp;</p>
-    <a href="" class="btn btn-secondary w-100 oswald fw-bold">VIEW RELIEF</a>
   </div>
 </div>

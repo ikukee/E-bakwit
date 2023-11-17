@@ -15,6 +15,10 @@ class LogFamilyController < ApplicationController
         @evac_center = EvacCenter.find(params[:id])
         evacuee = Evacuee.new
         family = Family.new
+
+        add_breadcrumb('Evacuation Centers', evac_centers_path)
+        add_breadcrumb(@evac_center.name, evac_center_path(@evac_center))
+        add_breadcrumb('Log Family')
     end
 # if evacuee not exist
 # elseif evacuee exist but not in the same evacuation center and have left
@@ -26,6 +30,10 @@ class LogFamilyController < ApplicationController
     # family id = 1,is_evacuated true
     def evacuatedView 
         @evacuee_list = Evacuee.all.where(evac_id: params[:evac_id]).where(disaster_id: params[:disaster_id])
+        evac_center = EvacCenter.find(params[:evac_id]) 
+        add_breadcrumb("Evacuation Centers", evac_centers_path)
+        add_breadcrumb(evac_center.name, "/evac_centers/#{params[:evac_id]}")
+        add_breadcrumb("View Evacuees")
     end
 
     def view_evacuated_family
@@ -117,7 +125,6 @@ class LogFamilyController < ApplicationController
             format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{evac_center: evac_center, families:family.family_members, disaster:disaster})}  
         end
     end
-
 
     def evacueeOut  
         evacuee = FamilyMember.find(params[:member_id])

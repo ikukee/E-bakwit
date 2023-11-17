@@ -1,20 +1,10 @@
 <div class="row p-5 m-0">
   <% evac_centers.each do |evac_center| %>
     <div class="col-md-4 col-lg-3 col-sm-6 mb-4">
-      <% if session[:user_id] == nil  %>
+      
           <%= render partial: "evac_center_card", locals:{evac_center: evac_center} %>
-        <%else%>
-          <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
-            <div class="m-0 p-0" style="outline: 5px dashed red">
-              <%= render partial: "evac_center_card", locals:{evac_center: evac_center} %>
-              </div>
-            <%else%>
-            <%= render partial: "evac_center_card", locals:{evac_center: evac_center} %>
-          <%end%>
-          
-        
-      <%end%>
-      </div>
+       
+    </div>
         
   <%end%>
 </div>
