@@ -44,7 +44,7 @@
             <%= form.label :date_of_occurence, class: "h5 oswald fw text-uppercase" do %>
               Date of Occurence: 
             <% end %>
-            <%= form.date_field :date_of_occurence, class:"form-control #{'is-invalid' if invalid_year}", placeholder: "Date of Occurence" %>
+            <%= form.date_field :date_of_occurence, class:"form-control #{'is-invalid' if invalid_year}", placeholder: "Date of Occurence", max: Date.today()%>
             <% if invalid_year %>
               <div class="invalid-feedback d-block">
                 <% disaster.errors[:date_of_occurence].each do |error_message| %>

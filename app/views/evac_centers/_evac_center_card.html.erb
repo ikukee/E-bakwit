@@ -44,11 +44,17 @@
 <div id="view-del" class="row text-center m-0">
   <% if session[:user_type] != nil %>
     <% if session[:user_type] == "ADMIN"%>
-      <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #233b43", class: "col-9 link text-decoration-none text-light py-2 m-0" do %>
+      <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #233b43", class: "col-8 link text-decoration-none text-light py-2 m-0" do %>
         View <i class="fa-solid fa-eye"></i>
       <% end %>
-      <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #3e6a79", class:"col-3 link text-decoration-none text-light py-2 ", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-        Delete <i class="fa fa-trash" aria-hidden="true"></i>
+      <% if evac_center.status == "ARCHIVED" %>
+        <%= link_to "/evac_centers/#{evac_center.id}/unarchive", style: "background: #3e6a79", class:"col-4 link text-decoration-none text-light py-2 ", data: { turbo_method: :post } do %>
+          Unarchive <i class="fa-solid fa-box-archive"></i>
+        <% end %>
+      <% else %>
+        <%= link_to "/evac_centers/#{evac_center.id}/archive", style: "background: #3e6a79", class:"col-4 link text-decoration-none text-light py-2 ", data: { turbo_method: :post } do %>
+          Archive <i class="fa-solid fa-box-archive"></i>
+        <% end %>
       <% end %>
     <% else %>
       <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #233b43", class: "col link text-decoration-none text-light py-2 m-0" do %>

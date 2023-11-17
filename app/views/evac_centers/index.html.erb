@@ -1,27 +1,30 @@
 <div class="row mx-5 mt-3">
-  <div class="col-6">
+  <div class="col-4">
     <h3 class="fs-1 oswald fw-bold bottom-0">Evacuation Centers</h3>
   </div>
-  
-  
-    <div class="col-4">
-        <%= form_with url: "/evac_centers/search", method: :post do |form| %>
-          <label for = "search_criteria"><strong>Search for Evacuation Center:</strong></label>
-          <%= form.search_field :search_value , class: "form-control", placeholder: "Search an Evacuation Center", oninput: "this.form.requestSubmit()" %>
-        <% end %>
-    </div>
-
+  <div class="col-4">
+    <%= form_with url: "/evac_centers/search", method: :post do |form| %>
+      <label for = "search_criteria"><strong>Search for Evacuation Center:</strong></label>
+      <%= form.search_field :search_value , class: "form-control", placeholder: "Search an Evacuation Center", oninput: "this.form.requestSubmit()" %>
+    <% end %>
+  </div>
   <% if session[:user_type] == "ADMIN"%>
-    <div class="col-2 d-flex flex-column justify-content-end p-0">
-      <%= link_to '/evac_centers/new', class: 'btn btn-dark oswald mt-auto' do %>
-        Add New Evacuation Center <i class="fa-solid fa-folder-plus"></i>
-      <% end %>
+    <div class="col-4 d-flex flex-column justify-content-end p-0">
+      <div class = "row">
+        <div class = "col-md-8" >
+          <%= link_to '/evac_centers/new', class: 'btn btn-dark oswald mt-auto', style: "float:right;" do %>
+            Add New Evacuation Center <i class="fa-solid fa-folder-plus"></i>
+          <% end %>
+        </div>
+        <div class = "col-md-4" >
+          <%= link_to '/evac_centers/show/archives', class: 'btn btn-dark oswald mt-auto' do %>
+            View Archive <i class="fa-solid fa-box-archive"></i>
+          <% end %>
+        </div>
+      </div>
     </div>
   <% end %>
-  
 </div>
-
-
 <div id = "evac_centers">
   <%= render partial: "evac_search_results", locals:{evac_centers:@evac_centers}%>
 </div>

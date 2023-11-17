@@ -1,4 +1,3 @@
-  
 <div class="montserrat fw-bold col-10">
   <table class="table table-responsive table-sm table-hover ">
     <thead class="table-dark">
@@ -14,6 +13,8 @@
       <th class="text-center p-2">ACTION</th>
     </thead>
     <% evac_members.each do |em| %>
+      <% evacuee = Evacuee.find(em.evacuee_id)%>
+      <% evac_center = EvacCenter.find(evacuee.evac_id) %>
       <% mem = FamilyMember.find(em.member_id) %>
       <tr>
         <td class="p-2"><a href = "/families/<%= mem.family_id%>" ><%= mem.lname %></a> </td>
@@ -45,22 +46,26 @@
           <td class="p-2"></td>
         <% end %>
         <td class="p-2"><%= em.status %> </td>
-        <td style="width: 30%;" class="pt-1 ps-2">
-          <%if em.status == "UNRELEASED"%>
-            <div class = "row">
-              <div class = "col-md-6" >
-                <%= form_with url: "out/#{mem.id}", method: :post do |form| %>
-                  <button type="submit" class="btn btn-danger" style="font-size: 0.9em; float:right;">REMOVE<i class="fa-solid fa-person-circle-minus"></i></button>
-                <% end %>
+        <% if evac_center.status == nil%>
+          <td style="width: 30%;" class="pt-1 ps-2">
+            <%if em.status == "UNRELEASED"%>
+              <div class = "row">
+                <div class = "col-md-6" >
+                  <%= form_with url: "out/#{mem.id}", method: :post do |form| %>
+                    <button type="submit" class="btn btn-danger" style="font-size: 0.9em; float:right;">REMOVE<i class="fa-solid fa-person-circle-minus"></i></button>
+                  <% end %>
+                </div>
+                <div class = "col-md-6">
+                  <%= form_with url: "released/#{mem.id}", method: :post do |form| %>
+                    <button type="submit" class="btn btn-success" style="font-size: 0.9em;">MARK AS RELEASED<i class="fa-solid fa-check"></i></button>
+                  <% end %>
+                </div>
               </div>
-              <div class = "col-md-6">
-                <%= form_with url: "released/#{mem.id}", method: :post do |form| %>
-                  <button type="submit" class="btn btn-success" style="font-size: 0.9em;">MARK AS RELEASED<i class="fa-solid fa-check"></i></button>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-        </td>
+            <% end %>
+          </td>
+        <% else %>
+          <td></td>
+        <% end %>
       </tr>
     <% end %>
   </table>

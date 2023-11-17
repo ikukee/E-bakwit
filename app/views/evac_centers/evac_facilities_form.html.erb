@@ -6,9 +6,11 @@
   <%= link_to "Essentials", "/evac_essentials_form/#{@evac_center.id}/#{@evac_yearly_profile.id}", id: "esse-tab" , class: "poppins p-3 btn btn-secondary position-absolute" %>
   <h4 class="oswald fw-bold"><%= @evac_center.name %></h4>
   <h4 class="oswald">Add Facilities</h4>
-  <div id = "form_area">
-    <%= render partial: "evac_facilities_form", locals:{evac_center: @evac_center, evac_yearly_profile: @evac_yearly_profile, assigned_yearly_ess: AssignedYearlyEss.new}%>
-  </div>
+  <% if @evac_center.status == nil%>
+    <div id = "form_area">
+      <%= render partial: "evac_facilities_form", locals:{evac_center: @evac_center, evac_yearly_profile: @evac_yearly_profile, assigned_yearly_ess: AssignedYearlyEss.new}%>
+    </div>
+  <% end %>
   <br>
   <div class="row">
     <div class="col-md-12">
@@ -31,7 +33,9 @@
                   <td><%= ae.quantity %></td>
                   <td><%= ae.status %></td>
                   <td style = "width:30%;">
-                    <%= render partial: "/layouts/delete_button",locals:{link: "/assigned_essential/#{ae.id}"}%>
+                    <% if @evac_center.status == nil%>
+                      <%= render partial: "/layouts/delete_button",locals:{link: "/assigned_essential/#{ae.id}"}%>
+                    <% end %>
                   </td>
                 </tr>
               <% end %>
@@ -41,7 +45,9 @@
                 <td><%= ae.quantity %></td>
                 <td><%= ae.status %></td>
                 <td style = "width:30%;">
-                 <%= render partial: "/layouts/delete_button",locals:{link: "/assigned_essential/#{ae.id}"}%>
+                  <% if @evac_center.status == nil%>
+                    <%= render partial: "/layouts/delete_button",locals:{link: "/assigned_essential/#{ae.id}"}%>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

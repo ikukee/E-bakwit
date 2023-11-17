@@ -3,7 +3,7 @@ class EvacCentersController < ApplicationController
 
   # GET /evac_centers or /evac_centers.json
   def index
-    @evac_centers = EvacCenter.all.order(name: :asc)
+    @evac_centers = EvacCenter.all.where(status: nil).order(name: :asc)
   end
 
   # GET /evac_centers/1 or /evac_centers/1.json
@@ -25,6 +25,31 @@ class EvacCentersController < ApplicationController
 
   end
 
+  def archives
+    @evac_centers = EvacCenter.all.where(status: "ARCHIVED").order(name: :asc)
+
+  end
+
+  def add_profile
+    @evac_center = EvacCenter.find(params[:id])
+    @evac_yearly_profiles = EvacYearlyProfile.all.where(evac_id: params[:id])
+    @evac_yearly_profile = EvacYearlyProfile.new
+    @evac_yearly_profile.year = params[:date]
+    key = false
+    @evac_yearly_profiles.each do |eyp|
+      if eyp.year == @evac_yearly_profile.year.year
+        key = true
+      end
+    end
+
+    if !key
+      @evac_yearly_profile.evac_id = params[:id]
+      @evac_yearly_profile.year = @evac_yearly_profile.year.year
+      @evac_yearly_profile.save
+    end
+    redirect_to "/evac_centers/#{params[:id]}"
+  end
+
   def display_yearly_profile
     @evac_center = EvacCenter.find(params[:id])
     @evacYearlyProfile = EvacYearlyProfile.find(params[:eid])
@@ -42,6 +67,18 @@ class EvacCentersController < ApplicationController
       format.turbo_stream{render turbo_stream: turbo_stream.update("display_disaster_evacuation", partial:"display_disaster_evacuation", locals:{evac_center: @evac_center, disaster:@disaster})}
     end
 
+  end
+
+  def archive_center
+    @evac_center = EvacCenter.find(params[:id])
+    @evac_center.update_attribute(:status, "ARCHIVED")
+    redirect_to "/evac_centers/show/archives"
+  end
+
+  def unarchive_center
+    @evac_center = EvacCenter.find(params[:id])
+    @evac_center.update_attribute(:status, nil)
+    redirect_to "/evac_centers"
   end
 
   def add_volunteer

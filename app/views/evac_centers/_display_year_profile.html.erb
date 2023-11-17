@@ -9,9 +9,11 @@
             <h1 class="oswald fw" style="border-bottom: 2px solid black">EVACUATION PROFILE</h1>
           </div>
           <% if session[:user_type] == "ADMIN"%>
-            <div class="col">
-              <a  href = "/evac_centers/<%=evac_center.id%>/edit" class="btn btn-outline-danger w-100 oswald fw-bold">UPDATE</a>
-            </div>
+            <% if evac_center.status == nil%>
+              <div class="col">
+                <a  href = "/evac_centers/<%=evac_center.id%>/edit" class="btn btn-outline-danger w-100 oswald fw-bold">UPDATE</a>
+              </div>
+            <% end %>
           <% end %>
         </div>
         <div class="row">
@@ -138,11 +140,13 @@
                     <td><%= user.lname%></td>
                     <td><%= user.cnum%></td>
                     <% if session[:user_type] == "ADMIN"%>
-                      <td class="position-relative">
-                        <%= link_to "/remove_campmanager/#{evac_yearly_profile.id}", class:"btn btn-danger form-control", data: { turbo_method: :post, turbo_confirm: "Are you sure?" } do %>
-                          Remove <i class="fa fa-trash" aria-hidden="true"></i>
-                        <% end %>
-                      </td>
+                      <% if evac_center.status == nil%>
+                        <td class="position-relative">
+                          <%= link_to "/remove_campmanager/#{evac_yearly_profile.id}", class:"btn btn-danger form-control", data: { turbo_method: :post, turbo_confirm: "Are you sure?" } do %>
+                            Remove <i class="fa fa-trash" aria-hidden="true"></i>
+                          <% end %>
+                        </td>
+                      <% end %>
                     <% end %>
                   </tr>
                 <% end %>
@@ -161,20 +165,22 @@
         </div>
         <% if session[:user_type] == "ADMIN"%>
           <% if User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").count > 0 %>
-            <label class="oswald fw">Volunteer Name: </label>
-            <%= form_with url:"/add_volunteer", method: :post do |form|%>
-              <div class="row">
-                <div class="col-md-8">
-                  <%= form.hidden_field :evac_profile_id, :value => evac_yearly_profile.id %>
-                  <%= form.collection_select :volunteer_id , User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").order(:lname), :id, :full_name,{:prompt => "Select Volunteer"},{class:"form-control",style:"float:right;"} %>
-                  <p id = "errmsg" style = "color:red;"></p>
+            <% if evac_center.status == nil%>
+              <label class="oswald fw">Volunteer Name: </label>
+              <%= form_with url:"/add_volunteer", method: :post do |form|%>
+                <div class="row">
+                  <div class="col-md-8">
+                    <%= form.hidden_field :evac_profile_id, :value => evac_yearly_profile.id %>
+                    <%= form.collection_select :volunteer_id , User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").order(:lname), :id, :full_name,{:prompt => "Select Volunteer"},{class:"form-control",style:"float:right;"} %>
+                    <p id = "errmsg" style = "color:red;"></p>
+                  </div>
+                  <div class = "col-md-4">
+                    <%= form.button nil, class:"form-control btn btn-success" do %>
+                      Add volunteer <i class="fa-solid fa-plus"></i>
+                    <% end %>
+                  </div>
                 </div>
-                <div class = "col-md-4">
-                  <%= form.button nil, class:"form-control btn btn-success" do %>
-                    Add volunteer <i class="fa-solid fa-plus"></i>
-                  <% end %>
-                </div>
-              </div>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>
@@ -200,8 +206,10 @@
                   <td><%= user.cnum%></td>
                   <% if session[:user_type] == "ADMIN"%>
                     <td class="position-relative">
-                      <%= link_to "/remove_volunteer/#{av.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
-                        Remove <i class="fa fa-trash" aria-hidden="true"></i>
+                      <% if evac_center.status == nil%>
+                        <%= link_to "/remove_volunteer/#{av.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+                          Remove <i class="fa fa-trash" aria-hidden="true"></i>
+                        <% end %>
                       <% end %>
                     </td>
                   <% end %>

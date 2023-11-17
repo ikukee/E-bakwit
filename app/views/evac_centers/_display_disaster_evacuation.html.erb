@@ -5,15 +5,19 @@
         <h1 class="oswald fw" >EVACUEES OVERVIEW</h1>
       </div>
       <% if session[:user_type] == "ADMIN"%>
-        <div class="col">
-          <%= link_to "Log Evacuee", "#{evac_center.id}/log/#{disaster.id}", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
-        </div>
+        <% if evac_center.status == nil%>
+          <div class="col">
+            <%= link_to "Log Evacuee", "#{evac_center.id}/log/#{disaster.id}", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+          </div>
+        <% end %>
       <% else %>
         <% if User.find(session[:user_id]).currently_assigned != nil%>
           <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
-            <div class="col">
-              <%= link_to "Log Evacuee", "#{evac_center.id}/log/#{disaster.id}", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
-            </div>
+            <% if evac_center.status == nil%>
+              <div class="col">
+                <%= link_to "Log Evacuee", "#{evac_center.id}/log/#{disaster.id}", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+              </div>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
@@ -144,15 +148,19 @@
         <h1 class="oswald fw" style="border-bottom: 2px solid black">RELIEF GOODS OVERVIEW</h1>
       </div>
       <% if session[:user_type] == "ADMIN"%>
-        <div class="col">
-          <%= link_to "Update", log_relief_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
-        </div>
+        <% if evac_center.status == nil%>
+          <div class="col">
+            <%= link_to "Update", log_relief_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+          </div>
+        <% end %>
       <% else %>
         <% if User.find(session[:user_id]).currently_assigned != nil%>
           <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
-            <div class="col">
-              <%= link_to "Update", log_relief_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
-            </div>
+            <% if evac_center.status == nil%>
+              <div class="col">
+                <%= link_to "Update", log_relief_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+              </div>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
