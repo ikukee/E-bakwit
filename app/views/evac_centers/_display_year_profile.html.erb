@@ -1,29 +1,17 @@
-<div class="row pt-4" style="background: rgb(89,147,188); background: linear-gradient(0deg, rgba(89,147,188,1) 1%, rgba(21,38,74,1) 100%); color:white;">
+<div class="p-0 pt-4" style="background: rgb(89,147,188); background: linear-gradient(0deg, rgba(89,147,188,1) 1%, rgba(21,38,74,1) 100%); color:white;">
   <div class="col-md-12 p-4 ">
     <div class="row">
-      <div class="col">
+      <div class="col-6">
         <div class="row" name="action-btn">
           <div class="col-md-7">
-            <% if session[:user_type] == "ADMIN"%>
-              <div class="col">
-                <a href="/evac_centers/<%=evac_center.id%>/edit"class="btn btn-outline-warning oswald fw-bold w-100"><i class="fa-solid fa-pen-to-square"></i> EDIT EVACUATION CENTER</a>
-              </div>
-            <% else %>
-              <% if User.find(session[:user_id]).currently_assigned != nil%>
-                <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
-                  <div class="col">
-                    <a href="/evac_centers/<%=evac_center.id%>/edit"class="btn btn-outline-warning oswald fw-bold w-100"><i class="fa-solid fa-pen-to-square"></i> EDIT EVACUATION CENTER</a>
-                  </div>
-                <% end %>
-              <% end %>
-            <% end %>
+            
           </div>
           <div class="col-md-5">
             
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-6">
         <div class = "row">
           <div class = "col-md-6" >
             <p class="h4 oswald fw" style = "float:right;">Select Year Profile: </p>
@@ -38,29 +26,28 @@
       <div class="col"></div>
     </div>
     <div class="row mb-5">
-      <div class="row" name='title-tag'>
-        <p class="oswald fw-bold" style="font-size: 5.5em"><%= evac_center.name %> <% if evac_center.isInside == true %><i class="fa-regular fa-bookmark fa-xs"></i><% else %><% end%></p>
-      </div>
-      <div class="row">
-        <div class="col"style="border-right: 1px solid white">
-          <div class="row">
-            <div class="col-md-auto">
-              <p class="h2 oswald fw" align="right">ADDRESS: </p>
-            </div>
-            <div class="col-md-auto">
-              <p class="h2 oswald fw"><%= evac_center.barangay %></p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-auto">
-              <p class="h2 oswald fw">CAPACITY: </p>
-            </div>
-            <div class="col-md-auto">
-              <p class="h2 oswald fw"><%= evac_center.capacity %>  <i class="fa-solid fa-people-roof fa-lg"></i></p>
-            </div>
-          </div>
+      <div class="row position-relative" name='title-tag'>
+        <p class="oswald fw-bold position-relative" style="font-size: 5.5em"><%= evac_center.name.titleize %>
+        <% if session[:user_type] == "ADMIN"%>
+          <a href="/evac_centers/<%=evac_center.id%>/edit" class="text-light position-absolute" style="font-size: 0.4em;"><i class="fa-solid fa-pen-to-square"></i></a></p>
+        <% else %>
+          <% if User.find(session[:user_id]).currently_assigned != nil%>
+            <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
+              <a href="/evac_centers/<%=evac_center.id%>/edit" class="text-light position-absolute" style="font-size: 0.4em;"><i class="fa-solid fa-pen-to-square"></i></a></p>
+            <% end %>
+          <% end %>
+        <% end %>
+        
+        <div class="row position-absolute oswald" style="top:8.7em; font-size: 0.8em;">
+        <div class="col-auto pe-0">BARANGAY <%= evac_center.barangay.upcase %></div>
+        <div class="col-auto ps-0 pe-0">, CAPACITY: <%= evac_center.capacity %></div>
+          <% if evac_center.isInside == true %>
+            <div class="col ps-0">, OFFICIAL EVACUATION CENTER<% else %></div>
+          <% end%>
         </div>
-        <div class="col" style="border-left: 1px solid white">
+      </div>
+      <div class="row m-0 p-0 justify-content-end">
+        <div class="col-6 ">
           <div class="row">
             <div class="col-md-5">
               <p class="h2 oswald fw h-100" align="right">FACILITIES: </p>
@@ -115,7 +102,7 @@
                     <p id = "camp_errmsg" style = "color:red;"></p>
                   </div>
                   <div class = "col-md-4">
-                    <%= form.button nil, class:"form-control btn btn-info oswald fw-bold" do %>
+                    <%= form.button nil, class:"form-control text-light btn btn-dark bg-dgray oswald fw-bold" do %>
                       Add Camp Manager <i class="fa-solid fa-plus"></i>
                     <% end %>
                   </div>
@@ -175,8 +162,8 @@
                     <p id = "errmsg" style = "color:red;"></p>
                   </div>
                   <div class = "col-md-4">
-                    <%= form.button nil, class:"form-control btn btn-success" do %>
-                      Add volunteer <i class="fa-solid fa-plus"></i>
+                    <%= form.button nil, class:"form-control btn btn-dark bg-dgray oswald fw-bold" do %>
+                      Add Volunteer <i class="fa-solid fa-plus"></i>
                     <% end %>
                   </div>
                 </div>
@@ -218,15 +205,15 @@
         </div>
       </div>
     </div>
-    <p >&nbsp;</p>
-    <div class="row p-2">
-      <%= form_with url: "/view_disaster_evacuation", method: :post do |form| %>
-        <%= form.hidden_field :evac_center, :value=> evac_center.id%>
-        <%= form.collection_select :disaster_id , Disaster.all.order(:name).where(year: evac_yearly_profile.year), :id, :name,{:prompt => "SELECT DISASTER"},{class:"btn fs-1 oswald-fw dropdown-toggle border-0 fw-bold mt-2 mx-2 bg-transparent", id:"disaster-name-dv", oninput: "this.form.requestSubmit()"}%>
-      <% end %>
-      <div id = "display_disaster_evacuation">
-      </div>
+  </div>
+  <div class="row m-0">
+    <%= form_with url: "/view_disaster_evacuation", method: :post do |form| %>
+      <%= form.hidden_field :evac_center, :value=> evac_center.id%>
+      <%= form.collection_select :disaster_id , Disaster.all.order(:name).where(year: evac_yearly_profile.year), :id, :name,{:prompt => "SELECT DISASTER"},{class:"btn fs-1 oswald-fw dropdown-toggle border-0 fw-bold mt-2 mx-2 bg-transparent", id:"disaster-name-dv", oninput: "this.form.requestSubmit()"}%>
+    <% end %>
+    <div id = "display_disaster_evacuation">
     </div>
   </div>
 </div>
-</div>
+
+

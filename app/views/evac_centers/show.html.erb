@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid p-0">
 <div id = "display_year_profile">
   <%= render partial: "display_year_profile", locals:{evac_center: @evac_center, evac_yearly_profile:@evacYearlyProfile, assigned_yearly_vol: AssignedYearlyVol.all.where(evac_profile_id: @evacYearlyProfile.id)}%>
 </div>

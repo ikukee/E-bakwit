@@ -13,6 +13,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+/* Custom Colors*/
 
 .default-background1{
     background-image: linear-gradient(#b8dbd9, #f0f0f0 );
@@ -28,6 +29,16 @@ body {
 
 .default-background4{
     background-image: linear-gradient(#b8dbd9, #f0f0f0 );
+}
+
+.bg-dgray{
+    background: #20292e;
+    border-color: #20292e;
+}
+
+.bg-navy{
+    background: rgb(19, 31, 65);
+    border-color: rgb(19, 31, 65);
 }
 
 /* Google Fonts */
