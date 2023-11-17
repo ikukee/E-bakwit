@@ -25,15 +25,15 @@
         <% else %>
           <td>NO</td>
         <% end %>
-        <td style = "width:40%;">
+        <td class="p-1 ps-3 oswald">
           <div class = "row">
-            <div class = "col-md-6">
-              <%= link_to "/families/#{family.id}", class: "btn btn-info form-control" do %>
+            <div class = "col-auto p-0 pe-2">
+              <%= link_to "/families/#{family.id}", class: "btn btn-dark bg-dgray form-control" do %>
                 <i class="fa-solid fa-eye"></i> View
               <% end %>
             </div>
-            <div class = "col-md-6">
-              <%= link_to "/families/#{family.id}/edit", class: "btn btn-secondary form-control" do %>
+            <div class = "col-auto p-0">
+              <%= link_to "/families/#{family.id}/edit", class: "btn btn-outline-dark form-control" do %>
                 <i class="fa-solid fa-pen-to-square"></i> Edit
               <% end %>
             </div>

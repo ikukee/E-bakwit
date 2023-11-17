@@ -54,25 +54,25 @@
         <h2 class="oswald fw">ACTIONS</h2>
         <% if session[:user_type] == "ADMIN"%>
           <div class="col">
-            <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-info oswald fw-bold w-100 m-1" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user fa-xl"></i></a>
+            <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-primary bg-navy oswald fw-bold w-100 m-1" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user fa-xl"></i></a>
           </div>
         <% else %>
           <% if User.find(session[:user_id]).currently_assigned != nil%>
             <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
               <div class="col">
-                <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-info oswald fw-bold w-100" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user"></i></a>
+                <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-primary bg-navy oswald fw-bold w-100" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user"></i></a>
               </div>
             <% end %>
           <% end %>
         <% end %>
         <% if User.find(session[:user_id]).currently_assigned != nil|| session[:user_type] == "ADMIN" %>
           <% if User.find(session[:user_id]).currently_assigned == evac_center.id || session[:user_type] == "ADMIN" %>
-            <a href="<%=evac_center.id%>/<%=disaster.id%>/evacuated" class="btn btn-info w-100 oswald fw-bold m-1" style="font-size: 22px">View Evacuees <i class="fa-solid fa-users-viewfinder fa-xl"></i></a>
+            <a href="<%=evac_center.id%>/<%=disaster.id%>/evacuated" class="btn btn-primary bg-navy w-100 oswald fw-bold m-1" style="font-size: 22px">VIEW EVACUEES <i class="fa-solid fa-users-viewfinder fa-xl"></i></a>
           <% end %>
         <% end %>
         <% if session[:user_type] == "ADMIN"%>
           <div class="col">
-            <button type="button" style="font-size: 22px" class="btn btn-success w-100 dropdown-toggle oswald fw-bold m-1 dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" style="font-size: 22px" class="btn btn-dark bg-dgray w-100 dropdown-toggle oswald fw-bold m-1 dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
               DOWNLOAD As
             </button>
             <ul class="dropdown-menu oswald fw p-1 text-center" style="font-size:2em">

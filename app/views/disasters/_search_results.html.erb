@@ -4,7 +4,7 @@
       <th class="col">Name</th>
       <th class="col">Type</th>
       <th class="col">Date of Occurence</th>
-      <th class="col-md-2">Actions</th>
+      <th class="col text-center">Actions</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
@@ -13,9 +13,9 @@
         <td><b><%= disaster.name%></b></td>
         <td><%= disaster.disaster_type %></td>
         <td><%= disaster.date_of_occurence%></td>
-        <td style = "width:30%;">
-          <%= link_to "/disasters/#{disaster.id}/edit", class: "btn btn-dark form-control" do %>
-            <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>&nbsp;Edit
+        <td>
+          <%= link_to "/disasters/#{disaster.id}/edit", class: "btn btn-outline-dark form-control" do %>
+            <i class="fa-regular fa-pen-to-square"></i>&nbsp;Edit
           <% end %>
         </td>
       </tr>
