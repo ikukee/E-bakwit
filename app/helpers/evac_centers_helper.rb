@@ -48,7 +48,7 @@ module EvacCentersHelper
         return evacuatedIndiv
     end
     
-    def countGenFamily(evac_center, disaster)
+    def countGenFamily(evac_center, disaster, key )
         
         countFam = 0
         evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster.id)
