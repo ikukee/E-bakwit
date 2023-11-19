@@ -4,7 +4,7 @@
       <th class="col">Name</th>
       <th class="col">Type</th>
       <th class="col">Date of Occurence</th>
-      <th class="col text-center">Actions</th>
+      <th class="col-md-4">Actions</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
@@ -13,23 +13,27 @@
         <td><b><%= disaster.name%></b></td>
         <td><%= disaster.disaster_type %></td>
         <td><%= disaster.date_of_occurence%></td>
-        <td>
-          <%= link_to "/disasters/#{disaster.id}/edit", class: "btn btn-outline-dark form-control d-inline oswald fw-bold" do %>
-            <i class="fa-regular fa-pen-to-square"></i>&nbsp;Edit
-          <% end %>
+        <td class="row m-0 p-2">
 
-        <% if session[:user_type] == "ADMIN"%>
-          <div class="d-inline">
-            <button type="button" style="font-size: 20px" class="btn btn-dark bg-dgray dropdown-toggle oswald fw-bold m-1 dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-              DOWNLOAD As
-            </button>
-            <ul class="dropdown-menu oswald fw p-1 text-center" style="font-size:2em">
-              <p class="">Lists</p>
-              <li class="m-1"><a href="disasters/<%=disaster.id%>/generate.xls", class= "dropdown-item p-1 mt-1">.XLS <i class="fa-solid fa-table d-inline"></i></a></li>
-              <li class="m-1"><a href="disasters/<%=disaster.id%>/generate.csv", class= "dropdown-item p-1 mb-1">.CSV <i class="fa-solid fa-file-csv d-inline"></i></a></li>
-            </ul>
-          </div>
-        <%end%>
+            <div class="col-md-6">
+              <%= link_to "/disasters/#{disaster.id}/edit", class: "btn btn-outline-dark form-control oswald fw-bold" do %>
+                <i class="fa-regular fa-pen-to-square"></i>&nbsp;Edit
+              <% end %>
+            </div>
+            <% if session[:user_type] == "ADMIN"%>
+              <div class="col-md-6">
+                <button  style="font-size: 20px" class="btn btn-dark bg-dgray dropdown-toggle oswald fw-bold form-control dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                  DOWNLOAD As
+                </button>
+                
+                <ul class="dropdown-menu oswald fw p-1 text-center" style="font-size:2em">
+                  <p class="">Lists</p>
+                  <li class="m-1"><a href="disasters/<%=disaster.id%>/generate.xls", class= "dropdown-item p-1 mt-1">.XLS <i class="fa-solid fa-table d-inline"></i></a></li>
+                  <li class="m-1"><a href="disasters/<%=disaster.id%>/generate.csv", class= "dropdown-item p-1 mb-1">.CSV <i class="fa-solid fa-file-csv d-inline"></i></a></li>
+                </ul>
+              </div>
+            <%end%>
+  
         </td>
       </tr>
     <% end %>
