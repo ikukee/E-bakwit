@@ -5,103 +5,121 @@
   <% invalid_email = request.errors.include?(:email) %>
   <% invalid_address = request.errors.include?(:address) %>
   <% invalid_cnum = request.errors.include?(:cnum) %>
-  <div class='row'>
+  <div class='row m-0 mt-5'>
     <div class="col">
-      <%= form.label :fname, class: "form-label poppins" do %>
-        First Name
-      <% end %>
-      <div class="form-group">
-        <%= form.text_field :fname, class:"form-control #{'is-invalid' if invalid_fname}", placeholder: "First Name"%>
-        <% if invalid_fname %>
-          <div class="invalid-feedback d-block">
-            <% request.errors[:fname].each do |error_message| %>
-              <%= error_message %>.
-            <% end %>
+      <div class="card" >
+        <div class="card-body" >
+          <div class="card-deck">
+            <div class="card shadow p-4">
+              <p class="h1 oswald fw-bold">PERSONAL INFORMATION</p>
+              <%= form.label :fname, class: "form-label poppins" do %>
+                First Name 
+              <% end %>
+              <div class="form-group">
+                <%= form.text_field :fname, class:"form-control #{'is-invalid' if invalid_fname}", placeholder: "First Name"%>
+                <% if invalid_fname %>
+                  <div class="invalid-feedback d-block">
+                    <% request.errors[:fname].each do |error_message| %>
+                      <%= error_message %>.
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <%= form.label :lname, class: "form-label poppins" do %>
+                Last Name
+              <% end %>
+              <div class="form-group">
+                <%= form.text_field :lname, class:"form-control #{'is-invalid' if invalid_lname}", placeholder: "Last Name"%>
+                <% if invalid_lname %>
+                  <div class="invalid-feedback d-block">
+                    <% request.errors[:lname].each do |error_message| %>
+                      <%= error_message %>.
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <%= form.label :bdate, class: "form-label poppins" do %>
+                Birthdate
+              <% end %>
+              <div class="form-group">
+                <%= form.date_field :bdate, class:"form-control #{'is-invalid' if invalid_bdate}", placeholder: "Birthdate"%>
+                <% if invalid_bdate %>
+                  <div class="invalid-feedback d-block">
+                    <% request.errors[:bdate].each do |error_message| %>
+                      <%= error_message %>.
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <%= form.label :email, class: "form-label poppins" do %>
+                Email
+              <% end %>
+              <div class="form-group">
+                <%= form.email_field :email, class:"form-control #{'is-invalid' if invalid_email}", placeholder: "Email"%>
+                <% if invalid_email %>
+                  <div class="invalid-feedback d-block">
+                    <% request.errors[:email].each do |error_message| %>
+                      <%= error_message %>.
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <%= form.label :cnum, class: "form-label poppins" do %>
+                Contact Number
+              <% end %>
+              <div class="form-group">
+                <%= form.text_field :cnum, class:"form-control #{'is-invalid' if invalid_cnum}", placeholder: "Contact Number"%>
+                <% if invalid_cnum %>
+                  <div class="invalid-feedback d-block">
+                    <% request.errors[:cnum].each do |error_message| %>
+                      <%= error_message %>.
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <%= form.label :address, class: "form-label poppins" do %>
+                Address
+              <% end %>
+              <div class="form-group">
+                <%= form.text_field :address, class:"form-control #{'is-invalid' if invalid_address}", placeholder: "Address"%>
+                <% if invalid_address %>
+                  <div class="invalid-feedback d-block">
+                    <% request.errors[:address].each do |error_message| %>
+                      <%= error_message %>.
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
           </div>
-        <% end %>
-      </div>
-      <%= form.label :lname, class: "form-label poppins" do %>
-        Last Name
-      <% end %>
-      <div class="form-group">
-        <%= form.text_field :lname, class:"form-control #{'is-invalid' if invalid_lname}", placeholder: "Last Name"%>
-        <% if invalid_lname %>
-          <div class="invalid-feedback d-block">
-            <% request.errors[:lname].each do |error_message| %>
-              <%= error_message %>.
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-      <%= form.label :bdate, class: "form-label poppins" do %>
-        Birthdate
-      <% end %>
-      <div class="form-group">
-        <%= form.date_field :bdate, class:"form-control #{'is-invalid' if invalid_bdate}", placeholder: "Birthdate"%>
-        <% if invalid_bdate %>
-          <div class="invalid-feedback d-block">
-            <% request.errors[:bdate].each do |error_message| %>
-              <%= error_message %>.
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-      <%= form.label :email, class: "form-label poppins" do %>
-        Email
-      <% end %>
-      <div class="form-group">
-        <%= form.email_field :email, class:"form-control #{'is-invalid' if invalid_email}", placeholder: "Email"%>
-        <% if invalid_email %>
-          <div class="invalid-feedback d-block">
-            <% request.errors[:email].each do |error_message| %>
-              <%= error_message %>.
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-      <%= form.label :cnum, class: "form-label poppins" do %>
-        Contact Number
-      <% end %>
-      <div class="form-group">
-        <%= form.text_field :cnum, class:"form-control #{'is-invalid' if invalid_cnum}", placeholder: "Contact Number"%>
-        <% if invalid_cnum %>
-          <div class="invalid-feedback d-block">
-            <% request.errors[:cnum].each do |error_message| %>
-              <%= error_message %>.
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-      <%= form.label :address, class: "form-label poppins" do %>
-        Address
-      <% end %>
-      <div class="form-group">
-        <%= form.text_field :address, class:"form-control #{'is-invalid' if invalid_address}", placeholder: "Address"%>
-        <% if invalid_address %>
-          <div class="invalid-feedback d-block">
-            <% request.errors[:address].each do |error_message| %>
-              <%= error_message %>.
-            <% end %>
-          </div>
-        <% end %>
+        </div>
       </div>
     </div>
     <div class="col">
-      <%= form.label :valid_id, class: "form-label poppins" do %>
-        Valid ID
-      <% end %>
-      <div class="form-group">
-        <%= form.file_field :valid_id, class:"form-control", accept: 'image/png,image/gif,image/jpeg',placeholder: "Valid ID"%>
+      <div class="card" >
+        <div class="card-body" >
+          <div class="card-deck">
+            <div class="card shadow p-4">
+              <p class="h1 oswald fw-bold">DOCUMENTS</p>
+              <%= form.label :valid_id, class: "form-label poppins" do %>
+                Valid ID
+              <% end %>
+              <div class="form-group">
+                <%= form.file_field :valid_id, class:"form-control", accept: 'image/png,image/gif,image/jpeg',placeholder: "Valid ID"%>
+              </div>
+              <%= form.label :selfie, class: "form-label poppins" do %>
+                Selfie
+              <% end %>
+              <div class="form-group">
+                <%= form.file_field :selfie, class:"form-control",accept: 'image/png,image/gif,image/jpeg',placeholder: "Selfie"%>
+              </div>
+              <p id= "login_errorArea" style = "color:red;"></p>
+              <span>&nbsp;</span>
+              <%= form.submit "Submit", class:"btn btn-success float-right w-100 font-weight-bold" %>
+            </div>
+          </div>
+        </div>
       </div>
-      <%= form.label :selfie, class: "form-label poppins" do %>
-        Selfie
-      <% end %>
-      <div class="form-group">
-        <%= form.file_field :selfie, class:"form-control",accept: 'image/png,image/gif,image/jpeg',placeholder: "Selfie"%>
-      </div>
-      <p id= "login_errorArea" style = "color:red;"></p>
-      <span>&nbsp;</span>
-      <%= form.submit "Submit", class:"btn btn-success float-right w-100 font-weight-bold" %>
     </div>
   </div>
 <% end %>

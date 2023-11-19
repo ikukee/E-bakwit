@@ -1,7 +1,5 @@
 <div class='container'>
-  <%= render "/layouts/default_back" %>
-        <h1 align="center">BE A VOLUNTEER</h1>
-        <div id = "request_form">
-          <%= render partial: "reqCreate_form", locals: {request: Request.new} %>
-        </div>
+  <div id = "request_form">
+    <%= render partial: "reqCreate_form", locals: {request: Request.new} %>
+  </div>
 </div>
