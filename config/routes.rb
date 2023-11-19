@@ -9,16 +9,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root to:"main#index"
-  get "/detailed_view", to: "main#detailed_view"
-  get "/evac_center_form", to: "main#evac_center_form"
   get "/evac_essentials_form/:evac_id/:profile_id", to: "evac_centers#evac_essentials_form"
   get "/evac_facilities_form/:evac_id/:profile_id", to: "evac_centers#evac_facilities_form"
   get "/evac_centers/show/archives",to:"evac_centers#archives"
   get "/log_relief_form", to: "main#log_relief_form"
   get "/login", to: "main#login"
   get "/register", to: "main#register"
-  #get "/log", to: "main#log_evacuee"
-  get "/update", to: "main#updateFacilities"
   get "/requestcreate", to: "main#reqCreate"
   get "/logout",to:"main#logout"
   get "/account", to:"main#account"

@@ -1,19 +1,33 @@
-<div class="container mt-5">
-    <div class="card">
+<div class="container mt-5 oswald fw">
+  <div class="card m-1">
+    <div class="card-body" >
+      <div class="card-deck">
+        <div class="card shadow p-4 m-2" style="">
+          <p style="font-size:5em"> <%= @user.full_name %> &nbsp;<span class="h1"><%= @user.user_type%></span></p>
+          <p class="h3"><%= @user.email%></p>
+          <p class="h3"><%= @user.cnum%></p>
+          <p class="h3"><%= @user.address%></p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <%if @user.user_type == "VOLUNTEER"%>
+    <div class="card m-1">
       <div class="card-body" >
         <div class="card-deck">
-          <div class="card shadow p-4">
-            <label>Email:</label><input type="text" class="form-control mb-1 mt-1" placeholder="sample" disabled/>
-            <label>Password:</label><input type="text" class="form-control mb-1 mt-1" placeholder="sample" disabled/>
-            <label>Confirm Password:</label><input type="text" class="form-control mb-1 mt-1" placeholder="sample" disabled/>
-            <button class="btn btn-warning oswald w-100 m-2">
-              <h5>EDIT</h5>
-            </button>
-            <button class="btn btn-danger oswald w-100 m-2">
-              <h5>DELETE ACCOUNT</h5>
-            </button>
+          <div class="card shadow p-4 m-2" style="">
+
+            <span class="h2">Assigned to:</span>
+            <% if @user.currently_assigned != nil && @user.currently_assigned > 0 %>
+            <a style="font-size:5em" class="btn btn-primary bg-navy" href="evac_centers/<%=EvacCenter.find(@user.currently_assigned).id%>"><%= EvacCenter.find(@user.currently_assigned).name %></a>
+            <p class="h3">&nbsp; Barangay <%= EvacCenter.find(@user.currently_assigned).barangay %>, Naga City</p>
+            <%else%>
+            <p class="h1">NONE</p>
+            <%end%>
           </div>
         </div>
       </div>
     </div>
+  <%end%>
 </div>

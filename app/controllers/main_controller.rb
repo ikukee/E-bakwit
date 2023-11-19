@@ -14,13 +14,9 @@ class MainController < ApplicationController
         redirect_to "/login"
     end
 
-    def detailed_view
+    def account
+        @user = User.find(session[:user_id])
         
-    end
-
-
-    def log_relief_form
-        #@families = Family.all
     end
 
     def login_proceed
@@ -64,7 +60,7 @@ class MainController < ApplicationController
         end
     end
 
-    def log_evacuee
+    def log_relief_form
         
     end
 
