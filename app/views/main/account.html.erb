@@ -3,31 +3,36 @@
     <div class="card-body" >
       <div class="card-deck">
         <div class="card shadow p-4 m-2" style="">
-          <p style="font-size:5em"> <%= @user.full_name %> &nbsp;<span class="h1"><%= @user.user_type%></span></p>
-          <p class="h3"><%= @user.email%></p>
-          <p class="h3"><%= @user.cnum%></p>
-          <p class="h3"><%= @user.address%></p>
-          
+          <h1> ACCOUNT INFO </h1>
+          <div class="row"> 
+            <div class="col-md-6">
+              <p style="font-size:5em"> <%= @user.full_name %> </p>
+              <label>Address:</label><p class="h3"><%= @user.address%></p>
+              <label>Email:</label><p class="h3"><%= @user.email%></p>
+              <label>Contanct#:</label><p class="h3"><%= @user.cnum%></p>
+              
+
+              <label>User type:</label><p class="h1"><%= @user.user_type%></p>
+            </div>
+            <div class="col-md-6">
+              <%if @user.user_type == "ADMIN"%>
+                <span class="h2">Assigned to:</span>
+                <% if @user.currently_assigned != nil && @user.currently_assigned > 0 %>
+                  <a style="font-size:5em" class="btn btn-primary bg-navy" href="evac_centers/<%=EvacCenter.find(@user.currently_assigned).id%>"><%= EvacCenter.find(@user.currently_assigned).name %></a>
+                  <p class="h3">&nbsp; Barangay <%= EvacCenter.find(@user.currently_assigned).barangay %>, Naga City</p>
+                <%else%>
+                  <p class="h1">NONE</p>
+                <%end%>
+              <%end%>
+            </div>
+          </div>
+        </div>
+
+        <div class="card shadow p-4 m-2" style="">
+          <h1>ACTIONS</h1>
+          <%= link_to "CHANGE PASSWORD","#", class:"btn btn-dark" %>
         </div>
       </div>
     </div>
   </div>
-  <%if @user.user_type == "VOLUNTEER"%>
-    <div class="card m-1">
-      <div class="card-body" >
-        <div class="card-deck">
-          <div class="card shadow p-4 m-2" style="">
-
-            <span class="h2">Assigned to:</span>
-            <% if @user.currently_assigned != nil && @user.currently_assigned > 0 %>
-            <a style="font-size:5em" class="btn btn-primary bg-navy" href="evac_centers/<%=EvacCenter.find(@user.currently_assigned).id%>"><%= EvacCenter.find(@user.currently_assigned).name %></a>
-            <p class="h3">&nbsp; Barangay <%= EvacCenter.find(@user.currently_assigned).barangay %>, Naga City</p>
-            <%else%>
-            <p class="h1">NONE</p>
-            <%end%>
-          </div>
-        </div>
-      </div>
-    </div>
-  <%end%>
 </div>
