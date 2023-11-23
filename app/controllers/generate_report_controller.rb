@@ -4,7 +4,22 @@ class GenerateReportController < ApplicationController
         @evac_center = EvacCenter.find(params[:evac_center])
         @disaster = Disaster.find(params[:disaster_id])
         reliefGoods = ReliefGood.where("evac_center = ? AND disaster = ?").all
-        result = CSV.generate do |csv|
+
+        @tprice = 0
+        rlGoods = []
+
+        GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", @disaster.id , @evac_center.id).each do |rg|               
+            rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])  
+            if ReliefGood.find(rg.rg_id).is_food == true
+                @tprice = @tprice + rg.price 
+            elsif ReliefGood.find(rg.rg_id).is_food == false
+                @tprice = @tprice + rg.price 
+            else
+                @tprice = @tprice + rg.price
+            end
+        end
+        
+        result = CSV.generate(encoding: "utf-8") do |csv|
             ## EVACUEE
             csv << ["GENERATED AS OF", Time.current]
             csv << ["DISASTER NAME", @disaster.name, "DISASTER TYPE",@disaster.disaster_type,"DATE OF OCCURENCE", @disaster.date_of_occurence]
@@ -19,16 +34,20 @@ class GenerateReportController < ApplicationController
             csv << ["SENIORS",helpers.getSeniors(@evac_center.id, @disaster.id,"Male"),helpers.getSeniors(@evac_center.id, @disaster.id,"Female"),helpers.getSeniors(@evac_center.id, @disaster.id,"Male") + helpers.getSeniors(@evac_center.id, @disaster.id,"Female")]
             csv << ["TOTAL",helpers.countGenderEvacuated(@evac_center.id,@disaster, "Male"),helpers.countGenderEvacuated(@evac_center.id,@disaster, "Female"),helpers.countGenderEvacuated(@evac_center.id,@disaster, "Male") + helpers.countGenderEvacuated(@evac_center.id,@disaster, "Female")]
             ##RELIEF
-            ## csv << ["Name", "Unit of Measurement", "Quantity", "Cost"]
-            #reliefGoods.each do |relief|
-                #csv << [relief.name, relief.unit, relief.quantity, relief.cost]
-           # end
+            csv << [""]
+            csv << [""]
+            csv << ["RELIEF GOODS"]
+            csv << [""]
+            csv << ["NAME", "UNIT / PRICE", "QUANTITY", "CUMULATIVE PRICE"]
+            rlGoods.each do |rlG|
+                csv << rlG
+            end
             
         end
         respond_to do |format|
             format.html
-            format.xls {send_data result, filename: "#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.xls", type: 'text/xls; charset=utf-8'}
-            format.csv {send_data result, filename: "#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.csv", type: 'text/csv; charset=utf-8'}
+            format.xls {send_data result, filename: "#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.xls", type: 'text/xls' }
+            format.csv {send_data result, filename: "#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.csv", type: 'text/csv' }
         end
     end
     def generate_all # disasters/1/generate
@@ -49,6 +68,10 @@ class GenerateReportController < ApplicationController
         @adultF = 0
         @seniorF = 0
 
+        ## RELIEF GOODS PART
+        @tprice = 0
+        rlGoods = []
+
         @disaster = Disaster.find(params[:disaster_id])
         @evac_centers = EvacCenter.all
         @evac_centers.each do |center|
@@ -67,14 +90,27 @@ class GenerateReportController < ApplicationController
             @teenageF = @teenageF + helpers.getTeenagers(center.id, @disaster.id, "Female")
             @adultF = @adultF + helpers.getAdults(center.id, @disaster.id, "Female")
             @seniorF = @seniorF + helpers.getSeniors(center.id, @disaster.id, "Female")
-        
+            
+
+            GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", @disaster.id , center.id).each do |rg|               
+                rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])  
+                if ReliefGood.find(rg.rg_id).is_food == true
+                    @tprice = @tprice + rg.price 
+                elsif ReliefGood.find(rg.rg_id).is_food == false
+                    @tprice = @tprice + rg.price 
+                else
+                    @tprice = @tprice + rg.price
+                end
+            end
         end
-        result = CSV.generate do |csv|
+        result = CSV.generate(encoding: "utf-8") do |csv|
             csv << ["GENERATED AS OF", Time.current]
             csv << ["EVACUATION REPORT OF NAGA CITY"]
             csv << ["DISASTER NAME", @disaster.name, "DISASTER TYPE",@disaster.disaster_type,"DATE OF OCCURENCE", @disaster.date_of_occurence]
+            csv << [""]
             csv << ["BARANGAY", "", "EVACUATION CENTER", ""].concat(age_group)
             csv << ["GRAND TOTAL", barangay_group.length, "",EvacCenter.all.length, @infantM, @infatF, @toddlerM, @toddlerF,@preschoolersM,@preschoolersF,@schoolageM,@schoolageF,@teenageM,@teenageF,@adultM,@adultF,@seniorM,@seniorM]
+            csv << [""]
             barangay_group.each do |brgy|
                 csv << [brgy, "","", limiterForBarangay(brgy),]
                 @evac_centers.each do |center|
@@ -98,11 +134,19 @@ class GenerateReportController < ApplicationController
                     end
                 end
             end
+            csv << [""]
+            csv << ["RELIEF GOODS"]
+            csv << [""]
+            csv << ["NAME", "UNIT / PRICE", "QUANTITY", "CUMULATIVE PRICE"]
+            rlGoods.each do |rlG|
+                csv << rlG
+            end
+
         end
         respond_to do |format|
             format.html {render result}
-            format.xls {send_data result, filename: "#{@disaster.name}-#{@disaster.date_of_occurence}.xls", type: 'text/xls; charset=utf-8'}
-            format.csv {send_data result, filename: "#{@disaster.name}-#{@disaster.date_of_occurence}.csv", type: 'text/csv; charset=utf-8'}
+            format.xls {send_data result, filename: "#{@disaster.name}-#{@disaster.date_of_occurence}.xls", type: 'text/xls' }
+            format.csv {send_data result, filename: "#{@disaster.name}-#{@disaster.date_of_occurence}.csv", type: 'text/csv' }
         end
     end
     private
