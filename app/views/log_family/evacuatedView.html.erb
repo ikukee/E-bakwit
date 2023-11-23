@@ -5,7 +5,7 @@
   </div>
   <div class = "col-md-3">
     <%= form_with url: "/view_evacuated_family", method: :post do |form| %>
-      <%= form.collection_select :evacuee_id , @evacuee_list, :id, :family_name ,{:prompt => "SELECT EVACUEE"},{ class:"form-control", oninput: "this.form.requestSubmit()"}%>
+      <%= form.collection_select :evacuee_id , @evacuee_list.order(id: :desc), :id, :family_name ,{:prompt => "SELECT EVACUEE"},{ class:"form-control", oninput: "this.form.requestSubmit()"}%>
     <% end %>
   </div>
 </div>

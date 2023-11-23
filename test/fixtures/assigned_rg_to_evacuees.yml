@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  evacuee_id: 1
+  criteria_id: 1
+  quantity: 1.5
+
+two:
+  evacuee_id: 1
+  criteria_id: 1
+  quantity: 1.5

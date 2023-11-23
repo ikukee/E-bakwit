@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_19_125001) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_23_061630) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -64,6 +64,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_19_125001) do
     t.date "date_of_occurence"
   end
 
+  create_table "dispatched_rgs", force: :cascade do |t|
+    t.integer "request_id"
+    t.integer "rg_id"
+    t.integer "quantity"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "evac_centers", force: :cascade do |t|
     t.string "name"
     t.boolean "isInside"
@@ -107,6 +116,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_19_125001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "family_name"
+    t.string "relief_good_status"
   end
 
   create_table "families", force: :cascade do |t|
@@ -138,6 +148,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_19_125001) do
     t.string "full_name"
   end
 
+  create_table "gen_rg_allocs", force: :cascade do |t|
+    t.integer "rg_id"
+    t.integer "disaster_id"
+    t.integer "evac_id"
+    t.float "quantity"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "price"
+  end
+
+  create_table "relief_good_to_evacuees", force: :cascade do |t|
+    t.integer "evacuee_id"
+    t.integer "criterium_id"
+    t.integer "gen_id"
+    t.float "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "batch"
+  end
+
   create_table "relief_goods", force: :cascade do |t|
     t.string "name"
     t.string "unit"
@@ -145,6 +176,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_19_125001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_food"
+    t.string "eligibility"
+    t.string "category"
+  end
+
+  create_table "relief_requests", force: :cascade do |t|
+    t.integer "volunteer_id"
+    t.integer "evac_id"
+    t.integer "disaster_id"
+    t.string "status"
+    t.string "message"
+    t.date "date_of_request"
+    t.date "date_of_dispatch"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "requests", force: :cascade do |t|
@@ -158,6 +203,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_19_125001) do
     t.datetime "updated_at", null: false
     t.string "cnum"
     t.date "request_date"
+  end
+
+  create_table "rg_criteria", force: :cascade do |t|
+    t.integer "gen_rg_alloc_id"
+    t.integer "criteria"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

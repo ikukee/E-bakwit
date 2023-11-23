@@ -1,0 +1,50 @@
+<%= form_with(url: "/allocate_rg", method: :post , model: dispatched_rg ,local: true, class: "row g-3") do |form| %>
+  <%= form.hidden_field :request_id, :value => relief_request.id %>
+  <% invalid_quantity = dispatched_rg.errors.include?(:quantity) %>
+  <% invalid_rg = dispatched_rg.errors.include?(:rg_id) %>
+  <div class = "row">
+    <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;">Relief Good Allocation</h2>
+    <div class ="row">
+      <div class = "col-md-4">
+        <%= form.label :fname, class: "h5 oswald fw text-uppercase" do %>
+          Relief Good: 
+        <% end %>
+        <div class="form-group">
+          <% if dispatched_rg.rg_id == nil%>
+            <%= form.collection_select :rg_id , ReliefGood.all.order(:name), :id, :name,{:prompt => "Select Relief Good"},{class:"form-control #{'is-invalid' if invalid_rg}"} %>
+          <% else %>
+            <%= form.collection_select :rg_id , ReliefGood.all.order(:name), :id, :name,{:prompt => "Select Relief Good", :selected=>dispatched_rg.rg_id },{class:"form-control #{'is-invalid' if invalid_rg}"} %>
+          <% end %>
+          <% if invalid_rg %>
+            <div class="invalid-feedback d-block">
+              <% dispatched_rg.errors[:rg_id].each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class = "col-md-4">
+        <%= form.label :quantity, class: "h5 oswald fw text-uppercase" do %>
+          Quantity: 
+        <% end %>
+        <div class="form-group">
+          <%= form.number_field :quantity, class:"form-control  #{'is-invalid' if invalid_rg}"%>
+          <% if invalid_quantity %>
+            <div class="invalid-feedback d-block">
+              <% dispatched_rg.errors[:quantity].each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class = "col-md-4">
+        <br>
+        <%= form.button nil, class: "btn btn-success form-control" do %>
+          ALLOCATE <i class="fas fa-tasks"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

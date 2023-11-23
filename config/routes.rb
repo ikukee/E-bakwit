@@ -72,6 +72,36 @@ Rails.application.routes.draw do
   post  "/remove_campmanager/:id",to:"evac_centers#remove_campmanager"
   post "/add_new_profile/:id",to:"evac_centers#add_profile"
 
+
+  #RELIEF GOOD ALLOCATION
+  get "/relief_good/requests",to:"relief_allocation#relief_request"
+  get "/relief_good/accepted_requests",to:"relief_allocation#accepted_request"
+  get "/dispatch/request/:id",to: "relief_allocation#allocation"
+  get "/relief_good/dispatched_requests",to:"relief_allocation#dispatched_request"
+  get "/relief_allocation/:evac_id/:disaster_id", to: "relief_allocation#your_request"
+  get "/relief_allocation/configuration/:evac_id/:disaster_id", to: "relief_allocation#configuration"
+  get "/relief_allocation/storage/:evac_id/:disaster_id",to: "relief_allocation#storage"
+  get "/evac_centers/distributed_rg/:evac_id/:disaster_id", to:"relief_allocation#distributed_rg"
+  get "/evac_centers/non_distributed_rg/:evac_id/:disaster_id", to:"relief_allocation#non_distributed_rg"
+  get "/view/evacuee/members/:id/:method", to:"relief_allocation#view_evac_members"
+
+  post "/send/relief/:evac_id/:disaster_id",to:"relief_allocation#send_request"
+  post "/view/request/:id",to:"relief_allocation#view_request"
+  post "/approve/request/:id",to:"relief_allocation#approve_request"
+  post "/allocate_rg",to:"relief_allocation#allocate_rg"
+  post "/edit_rg/:rg_id/:request_id",to:"relief_allocation#edit_rg"
+  post "/dispatch/request/:id",to: "relief_allocation#dispatch_request"
+  post "/mark_received/request/:id",to:"relief_allocation#receive_request"
+  post "/sort_by", to: "relief_allocation#sort_by"
+  post "/sort_by/type", to: "relief_allocation#sort_by_type"
+  post "/sort_by/search", to: "relief_allocation#sort_by_search"
+  post "/show/configurations", to:"relief_allocation#show_configurations"
+  post "/save/configuration/:id",to:"relief_allocation#save_configuration"
+  post "/distribute/relief_goods/:id", to:"relief_allocation#distribute_goods"
+  post "/view/allocated_rgs", to:"relief_allocation#view_allocated_rgs"
+  post "/search/evacuees", to:"relief_allocation#search_evacuees"
+  
+
   delete "/remove_volunteer/:id",to:"evac_centers#remove_volunteer"
   delete "/evac_centers/:id/destroy",to:"evac_centers#destroy"
   delete "/family_member/:id/destroy",to:"families#destroy_member"

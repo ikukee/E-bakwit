@@ -40,6 +40,11 @@
                 <%= link_to "/relief_goods", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
                   <i class="fa-solid fa-wheat-awn"></i> Relief Goods
                 <% end %>
+                <%= link_to "/relief_good/requests", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-eye"></i> <i class="fa-solid fa-wheat-awn"></i> Relief Goods Request
+                <% end %>
+              </div>
+              <div class="row my-2">
                 <%= link_to "/volunteers", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
                   <i class="fa-solid fa-user-pen"></i> Volunteers
                 <% end %>
@@ -74,6 +79,7 @@
           <li><%= link_to "Disasters", "/disasters", class: "dropdown-item" %></li>
           <li><%= link_to "Households", "/families", class: "dropdown-item" %></li>
           <li><%= link_to "Relief Goods", "/relief_goods", class: "dropdown-item" %></li>
+          <li><%= link_to "View Relief Good Requests", "/relief_good/requests", class: "dropdown-item" %></li>
           <li><%= link_to "Volunteers", "/volunteers", class: "dropdown-item" %></li>
           <li><hr class="dropdown-divider"></li>
           <p class="text-center">Controls</p>

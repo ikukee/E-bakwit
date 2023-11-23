@@ -53,15 +53,19 @@
       <div class="col">
         <h2 class="oswald fw">ACTIONS</h2>
         <% if session[:user_type] == "ADMIN"%>
-          <div class="col">
-            <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-primary bg-navy oswald fw-bold w-100 m-1" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user fa-xl"></i></a>
-          </div>
+          <% if evac_center.status != "ARCHIVED"%>
+            <div class="col">
+              <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-primary bg-navy oswald fw-bold w-100 m-1" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user fa-xl"></i></a>
+            </div>
+          <% end %>
         <% else %>
           <% if User.find(session[:user_id]).currently_assigned != nil%>
             <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
-              <div class="col">
-                <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-primary bg-navy oswald fw-bold w-100" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user"></i></a>
-              </div>
+              <% if evac_center.status != "ARCHIVED"%>
+                <div class="col">
+                  <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-primary bg-navy oswald fw-bold w-100" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user"></i></a>
+                </div>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>
@@ -121,7 +125,6 @@
           </tr>
           <tr>
             <th>Schoolage</th>
-
             <td style="color:#005ec9;"><%= getSchoolagers(evac_center.id, disaster.id,"Male")%></td>
             <td style="color:#cf4696;"><%= getSchoolagers(evac_center.id, disaster.id,"Female")%></td>
             <td><%= getSchoolagers(evac_center.id, disaster.id,"Male") + getSchoolagers(evac_center.id, disaster.id,"Female")%></td>
@@ -162,16 +165,46 @@
           <h1 class="oswald fw" >RELIEF GOODS OVERVIEW</h1>
         </div>
         <% if session[:user_type] == "ADMIN"%>
-          <div class="col">
-            <a href="#" class="btn btn-info w-100 oswald fw-bold m-1" style="font-size:22px"> UPDATE RELIEF GOODS <i class="fa-solid fa-utensils fa-xl"></i> </a>
-          </div>
+          <% if ReliefRequest.where(disaster_id: disaster.id).where(evac_id: evac_center.id).length > 0 %>
+            <div class="col">
+              <a href = "/relief_allocation/<%=evac_center.id%>/<%= disaster.id%>" class = "btn btn-info w-100 oswald fw-bold m-1">Configure Relief Good Allocation<i class="fa-solid fa-gear"></i></a>
+            </div>
+          <% else%>
+            <% if evac_center.status == nil%>
+              <div class="col">
+                <button  style = "font-size:22px;"class="btn btn-info w-100 oswald fw-bold m-1" data-bs-toggle= "modal" data-bs-target="#display_relief_request" type="button">Initiate Relief Request<i class="fa-solid fa-utensils fa-xl"></i></button>
+                <div id="display_relief_request" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title text-dark">Sending Relief Good Request</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <%= form_with url:"/send/relief/#{evac_center.id}/#{disaster.id}", method: :post do |form|%>
+                        <p style = "color:black;margin-left: 15px;"><strong>Date of Request:</strong> <%= Date.today %></p>
+                        <%= form.hidden_field :volunteer_id, :value  => session[:user_id] %>
+                        <%= form.text_area :message, class:"form-control", :placeholder => "Input message here..."%>
+                        <%= form.submit "Send Request", class:"btn btn-primary form-control"%>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
         <% else %>
           <% if User.find(session[:user_id]).currently_assigned != nil%>
             <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
               <% if evac_center.status == nil%>
-                <div class="col">
-                  <%= link_to "Update", log_relief_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
-                </div>
+                <% if GenRgAlloc.where(disaster_id: disaster.id).where(evac_id: evac_center.id).length > 0 %>
+                  <div class="col">
+                    <%= link_to "Update", log_relief_form_path, class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+                  </div>
+                <% else%>
+                  <div class="col">
+                    <%= link_to "Initiate Request", "/send/relief_good_request/#{evac_center.id}/#{disaster.id}", class: "btn btn-outline-danger w-100 oswald fw-bold" %>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
@@ -187,7 +220,7 @@
               <p class="h2 oswald fw" align="center">FOOD: </p>
             </div>
             <div class="col">
-              <p class="h2 oswald fw" align="center">0 <i class="fa-solid fa-bowl-food"></i></p>
+              <p class="h2 oswald fw" align="center"><%=getRg(evac_center.id,disaster.id,true)%> <i class="fa-solid fa-bowl-food"></i></p>
             </div>
           </div>
           <div class="row" style="border-top: 2px solid white;">
@@ -195,7 +228,7 @@
               <p class="h2 oswald fw" align="center"> NON-FOOD: </p>
             </div>
             <div class="col">
-              <p class="h2 oswald fw" align="center">0 <i class="fa-solid fa-shirt"></i></p>
+              <p class="h2 oswald fw" align="center"><%=getRg(evac_center.id,disaster.id,false)%> <i class="fa-solid fa-shirt"></i></p>
             </div>
           </div>
         </div>
@@ -203,7 +236,14 @@
         </div>
       </div>
       <p>&nbsp;</p>
-      <a href="" class="btn btn-secondary w-100 oswald fw-bold">VIEW RELIEF</a>
+      <a href="/evac_centers/non_distributed_rg/<%=evac_center.id%>/<%= disaster.id%>" class="btn btn-secondary w-100 oswald fw-bold">VIEW DISTRIBUTED RELIEF GOODS</a>
+    </div>
+    <div class = "col-md-6">
+      <%= column_chart GenRgAlloc.where(disaster_id: disaster.id).where(evac_id: evac_center.id).group(:quantity).group(:name).count, class:"form-control" %>
+      <h3>Date In</h3>
+      <%= line_chart Evacuee.where(disaster_id: disaster.id).where(evac_id: evac_center.id).group_by_day(:date_in).count, class:"form-control" %>
+      <h3>Date Out</h3>
+      <%= line_chart Evacuee.where(disaster_id: disaster.id).where(evac_id: evac_center.id).group_by_day(:date_out).count, class:"form-control" %>
     </div>
   </div>
 </div>

@@ -1,0 +1,24 @@
+<div style="overflow-x:hidden; margin: 25px 25px 25px 25px;" class="text-xs-center" >
+  <div class="row p-2">
+    <div class="col-md-12">
+      <div class="card" >
+        <div class="card-body" >
+          <div class="card-deck">
+            <div class="card shadow">
+              <div style = "margin: 25px 25px 25px 25px">
+                <% if @relief_request.status != "DISPATCHED" && @relief_request.status != "RECEIVED"%>
+                  <div id= "rg_form_area">
+                    <%= render partial:"add_rg", locals:{relief_request: @relief_request, dispatched_rg: DispatchedRg.new}%>
+                  </div>
+                <% end %>
+                <div id ="show_rg_area">
+                  <%= render partial: "show_allocated_rg", locals:{dispatched_rg: @dispatched_rg, relief_request:@relief_request }%>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th >Name</th>
+      <th >Quantity</th>
+      <th >Unit</th>
+      <th >Cumulative Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tprice = 0 %>
+    <% relief_goods.each do |rg|%>
+      <% if search_type == "FOOD"%>
+        <% if ReliefGood.find(rg.rg_id).is_food == true%>
+          <tr>
+            <td><%= rg.name%></td>
+            <td><%= rg.quantity%></td>
+            <td><%= ReliefGood.find(rg.rg_id).unit %></td>
+            <td><%= rg.price %> </td>
+            <% tprice = tprice + rg.price%>
+          </tr>
+        <% end %>
+      <% elsif search_type == "NON-FOOD"%>
+        <% if ReliefGood.find(rg.rg_id).is_food == false %>
+          <tr>
+            <td><%= rg.name%></td>
+            <td><%= rg.quantity%></td>
+            <td><%= ReliefGood.find(rg.rg_id).unit %></td>
+            <td><%= rg.price %> </td>
+            <% tprice = tprice + rg.price%>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td><%= rg.name%></td>
+          <td><%= rg.quantity%></td>
+          <td><%= ReliefGood.find(rg.rg_id).unit %></td>
+          <td><%= rg.price %> </td>
+          <% tprice = tprice + rg.price%>
+        </tr>
+      <% end%>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td><strong>TOTAL PRICE:</strong></td>
+      <td><strong><%= tprice %></strong></td>
+    </tr>
+  </tfoot>
+</table>

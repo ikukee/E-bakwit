@@ -65,8 +65,10 @@ class ReliefGoodsController < ApplicationController
 
   # PATCH/PUT /relief_goods/1 or /relief_goods/1.json
   def update
+   
     respond_to do |format|
       if @relief_good.update(relief_good_params)
+       
         format.html { redirect_to  "/relief_goods", notice: "Relief good was successfully updated." }
         format.json { render :show, status: :ok, location: @relief_good }
       else
@@ -94,6 +96,6 @@ class ReliefGoodsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def relief_good_params
-      params.require(:relief_good).permit(:name, :is_food, :unit, :price)
+      params.require(:relief_good).permit(:name, :is_food, :unit, :price, :eligibility, :category)
     end
 end

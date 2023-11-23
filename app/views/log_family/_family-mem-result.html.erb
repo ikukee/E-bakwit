@@ -27,8 +27,8 @@
                 <%= form.submit "Evacuate", class:"form-control btn btn-primary w-100"%>
               <% end %></td>
           <%else%>
-            <% evac_center =EvacCenter.find(Evacuee.find(member.evacuee_id).evac_id) %>
-            <td><strong><a href = "/evac_centers/<%= evac_center.id%>/<%= disaster.id%>/evacuated"><%= evac_center.name%></a></strong></td>
+            <% tmp =EvacCenter.find(Evacuee.find(member.evacuee_id).evac_id) %>
+            <td><strong><a href = "/evac_centers/<%= tmp.id%>/<%= disaster.id%>/evacuated"><%= tmp.name%></a></strong></td>
             <td><button class = "form-control btn btn-success w-100" disabled>Evacuated</button></td>
           <%end%>
         </tr>

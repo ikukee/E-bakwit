@@ -17,12 +17,7 @@
         <td class="position-relative">
           <div class = "row">
             <div class = "col-md-6">
-              <%= form_with url:"/remove_volunteer", method: :delete do |form| %>
-                <%= form.hidden_field :id, :value => av.id %>
-                <%= form.button nil, class:"btn btn-outline-danger btn-sm" do %>
-                  Remove <i class="fa-solid fa-x px-2"></i>
-                <% end %>
-              <% end %>
+              <%= render partial: "/layouts/delete_button", locals: {link: "/remove_volunteer/#{av.id}"}%>
             </div>
           </div>
         </td>

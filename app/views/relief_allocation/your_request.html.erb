@@ -1,0 +1,100 @@
+<div id="evac-form" class="row position-relative my-auto mx-5 p-3 rounded">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href = "/relief_allocation/<%=@evac_id%>/<%= @disaster_id%>" class="text-decoration-none poppins fw-bold"><button class = "nav-link active">Your Requests</button></a>
+    </li>
+    <li class="nav-item">
+      <a href = "/relief_allocation/storage/<%=@evac_id%>/<%= @disaster_id%>" class="text-decoration-none poppins fw-bold"><button class = "nav-link text-dark">Storage</button></a>
+    </li>
+    <li class="nav-item">
+      <a href = "/relief_allocation/configuration/<%= @evac_id%>/<%= @disaster_id%>" class="text-decoration-none poppins fw-bold"><button class = "nav-link text-dark">Configuration</button></a>
+    </li>
+  </ul>
+  <div id="req-table " class="col-md-6">
+    <div class = "row">
+      <div class = "col-md-8">
+        <h1 class="oswald fw-bold p-3">List of Your Requests</h1>
+      </div>
+      <div class = "col-md-4">
+        <br>
+        <% if EvacCenter.find(@evac_id).status == nil%>
+          <div class="col">
+            <button  style = "font-size:22px;"class="btn btn-secondary w-100 oswald fw-bold m-1" data-bs-toggle= "modal" data-bs-target="#display_relief_request" type="button">New Request <i class="fa-solid fa-utensils fa-xl"></i></button>
+            <div id="display_relief_request" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-dark">Sending Relief Good Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <%= form_with url:"/send/relief/#{@evac_id}/#{@disaster_id}", method: :post do |form|%>
+                    <p style = "color:black;margin-left: 15px;"><strong>Date of Request:</strong> <%= Date.today %></p>
+                    <%= form.hidden_field :volunteer_id, :value  => session[:user_id] %>
+                    <%= form.text_area :message, class:"form-control", :placeholder => "Input message here..."%>
+                    <%= form.submit "Send Request", class:"btn btn-primary form-control"%>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th >Date Requested</th>
+          <th >Disaster</th>
+          <th >Status</th>
+          <th >Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @requests.each do |req| %>
+          <tr>
+            <td><%= req.date_of_request%></td>
+            <td><%= Disaster.find(req.disaster_id).name%></td>
+            <td><%= req.status%></td>
+            <td>
+              <%= form_with url:"/view/request/#{req.id}", method: :post do |form|%>
+                <%= form.button nil, class:"btn btn-info form-control " do %>
+                  View Request <i class="fa-solid fa-eye"></i>
+                <% end %>
+              <% end %>
+              <br>
+              <% if session[:user_type] == "ADMIN"%>
+                <% if req.status == "DISPATCHED" %>
+                  <% if EvacCenter.find(@evac_id).status == nil%>
+                    <%= form_with url:"/mark_received/request/#{req.id}", method: :post do |form|%>
+                      <%= form.button nil, class:"btn btn-success form-control" do %>
+                        Mark as Received <i class="fa-solid fa-check"></i>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <% if @requests_count > 5 %>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-left">
+            <li class="page-item ">
+              <% if @page  > 0 %>
+                <%= link_to "Previous Page", "/relief_allocation/#{@evac_id}/#{@disaster_id}?page=#{@page-1}", class:"page-link"%>
+              <% end %>
+            </li>
+            <li class="page-item">
+              <%= link_to "Next Page","/relief_allocation/#{@evac_id}/#{@disaster_id}?page=#{@page + 1}", class:"page-link"%>
+            </li>
+          </ul>
+        </nav>
+      <% end %>
+    </div>
+    <div class="col-md-6 default-background2">
+      <h1 class="oswald fw-bold p-3">Display Area</h1>
+      <div id = "view_request" class = "my-auto border-1 poppins p-3">
+      </div>
+    </div>
+  </div>

@@ -2,6 +2,8 @@
   <% invalid_name = relief_good.errors.include?(:name) %>
   <% invalid_unit = relief_good.errors.include?(:unit) %>
   <% invalid_price = relief_good.errors.include?(:price) %>
+  <% invalid_eligibility = relief_good.errors.include?(:eligibility) %>
+  <% invalid_category = relief_good.errors.include?(:category) %>
   <div class="col p-3 m-1" id="logging-style-form">
     <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >RELIEF INFORMATION</h2>
     <div class="form-group">
@@ -25,7 +27,7 @@
       <% if relief_good.unit == nil %>
         <%= form.select :unit, options_for_select(["Kilograms", "Pieces", "Meter"]), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_unit}"} %>
       <% else %>
-        <%= form.select :unit, options_for_select(["Kilograms", "Pieces", "Meter"],:selected => relief_good.unit.to_s ), {}, {class: "form-control #{'is-invalid' if invalid_unit}"} %>
+        <%= form.select :unit, options_for_select(["Kilograms", "Pieces", "Meter"],:selected => relief_good.unit.to_s ), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_unit}"} %>
       <%  end %>
       <% if invalid_unit %>
         <div class="invalid-feedback d-block">
@@ -44,6 +46,42 @@
       <% if invalid_price %>
         <div class="invalid-feedback d-block">
           <% relief_good.errors[:price].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <br>
+    <div class="form-group">
+      <%= form.label :eligibility, class: "h5 oswald fw text-uppercase" do %>
+        Product is for: 
+      <% end %>
+      <% if relief_good.eligibility == nil %>
+        <%= form.select :eligibility, options_for_select(["MALE", "FEMALE", "UNISEX"]), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_eligibility}"} %>
+      <% else %>
+        <%= form.select :eligibility, options_for_select(["MALE", "FEMALE", "UNISEX"],:selected => relief_good.eligibility.to_s), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_eligibility}"} %>
+      <%  end %>
+      <% if invalid_eligibility %>
+        <div class="invalid-feedback d-block">
+          <% relief_good.errors[:eligibility].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <br>
+    <div class="form-group">
+      <%= form.label :category, class: "h5 oswald fw text-uppercase" do %>
+        Category(This will be assumed that the product can be use by chosen category and above): 
+      <% end %>
+      <% if relief_good.category == nil %>
+        <%= form.select :category, options_for_select(["INFANTS","TODDLERS","PRE-SCHOOLERS","SCHOOLAGERS","TEENAGERS","ADULTS","SENIOR CITIZENS","ALL"]), {:prompt => "Select Category"}, {class: "form-control #{'is-invalid' if invalid_category}"} %>
+      <% else %>
+        <%= form.select :category, options_for_select(["INFANTS","TODDLERS","PRE-SCHOOLERS","SCHOOLAGERS","TEENAGERS","ADULTS","SENIOR CITIZENS","ALL"],:selected => relief_good.category.to_s), {:prompt => "Select Category"}, {class: "form-control #{'is-invalid' if invalid_category}"} %>
+      <%  end %>
+      <% if invalid_category %>
+        <div class="invalid-feedback d-block">
+          <% relief_good.errors[:category].each do |error_message| %>
             <%= error_message %>.
           <% end %>
         </div>

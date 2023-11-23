@@ -39,10 +39,7 @@ module EvacCentersHelper
         evacuatedIndiv = 0
         evacuees = Evacuee.all.where(disaster_id: disaster.id).where(evac_id: evac_center)
         if evacuees.length > 0
-            evacuees.each do |evacuee|
-                evacuee_members = EvacMember.all.where(evacuee_id: evacuee.id)
-                evacuatedIndiv = evacuatedIndiv + evacuee_members.length
-            end
+            evacuatedIndiv = getMembers(evacuees).length
         end
         
         return evacuatedIndiv
@@ -51,11 +48,14 @@ module EvacCentersHelper
     def countGenFamily(evac_center, disaster, key )
         
         countFam = 0
-        evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster.id)
+        if key 
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster.id).where(date_out: nil).group(:family_id)
+        else
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster.id).group(:family_id)
+        end
+        
         evacuee.each do |x| 
-            if x.date_out.blank? 
-                countFam = countFam + 1
-            end
+            countFam = countFam + 1
         end   
         return countFam
     end
@@ -64,13 +64,10 @@ module EvacCentersHelper
         evacuatedIndiv = 0
         evacuees = Evacuee.all.where(disaster_id: disaster.id).where(evac_id: evac_center)
         if evacuees.length > 0
-            evacuees.each do |evacuee|
-                evacuee_members = EvacMember.all.where(evacuee_id: evacuee.id)
-                evacuee_members.each do |em|
-                    fam_mem = FamilyMember.find(em.member_id)
-                    if fam_mem.sex == sexVal
-                        evacuatedIndiv = evacuatedIndiv +1
-                    end
+            getMembers(evacuees).each do |mem|
+                fam_mem = FamilyMember.find(mem)
+                if fam_mem.sex == sexVal
+                    evacuatedIndiv = evacuatedIndiv +1
                 end
             end
         end
@@ -80,10 +77,11 @@ module EvacCentersHelper
     def getInfants(evac_center,disaster, sexVal)
         total = 0
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
-        evacuees.each do |ec|
-            family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(family_id: family.id).where(evacuee_id: ec.id).where("age <= 1").where(sex: sexVal)
-            total = total + family_members.length
+        getMembers(evacuees).each do |mem|
+            fam_mem = FamilyMember.find(mem)
+            if fam_mem.sex == sexVal && fam_mem.age < 1
+                total = total + 1
+            end
         end
         return total
     end
@@ -91,10 +89,11 @@ module EvacCentersHelper
     def getToddlers(evac_center,disaster,sexVal)
         total = 0
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
-        evacuees.each do |ec|
-            family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(family_id: family.id).where(evacuee_id: ec.id).where("age > 1 AND age <= 3").where(sex: sexVal)
-            total = total + family_members.length
+        getMembers(evacuees).each do |mem|
+            fam_mem = FamilyMember.find(mem)
+            if fam_mem.sex == sexVal && fam_mem.age > 1 && fam_mem.age <=3
+                total = total + 1
+            end
         end
         return total
     end
@@ -102,10 +101,11 @@ module EvacCentersHelper
     def getPreschoolers(evac_center,disaster,sexVal)
         total = 0
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
-        evacuees.each do |ec|
-            family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(family_id: family.id).where(evacuee_id: ec.id).where("age > 3 AND age <= 5").where(sex: sexVal)
-            total = total + family_members.length
+        getMembers(evacuees).each do |mem|
+            fam_mem = FamilyMember.find(mem)
+            if fam_mem.sex == sexVal && fam_mem.age > 3 && fam_mem.age <=5
+                total = total + 1
+            end
         end
         return total
     end
@@ -113,10 +113,11 @@ module EvacCentersHelper
     def getSchoolagers(evac_center,disaster,sexVal)
         total = 0
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
-        evacuees.each do |ec|
-            family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(evacuee_id: ec.id).where("age > 6 AND age <= 12").where(sex: sexVal)
-            total = total + family_members.length
+        getMembers(evacuees).each do |mem|
+            fam_mem = FamilyMember.find(mem)
+            if fam_mem.sex == sexVal && fam_mem.age > 5 && fam_mem.age <=12
+                total = total + 1
+            end
         end
         return total
     end
@@ -124,10 +125,11 @@ module EvacCentersHelper
     def getTeenagers(evac_center,disaster,sexVal)
         total = 0
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
-        evacuees.each do |ec|
-            family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(family_id: family.id).where(evacuee_id: ec.id).where("age > 12 AND age <= 17").where(sex: sexVal)
-            total = total + family_members.length
+        getMembers(evacuees).each do |mem|
+            fam_mem = FamilyMember.find(mem)
+            if fam_mem.sex == sexVal && fam_mem.age > 12 && fam_mem.age <=17
+                total = total + 1
+            end
         end
         return total
     end
@@ -135,10 +137,11 @@ module EvacCentersHelper
     def getAdults(evac_center,disaster,sexVal)
         total = 0
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
-        evacuees.each do |ec|
-            family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(family_id: family.id).where(evacuee_id: ec.id).where("age > 17 AND age <= 60").where(sex: sexVal)
-            total = total + family_members.length
+        getMembers(evacuees).each do |mem|
+            fam_mem = FamilyMember.find(mem)
+            if fam_mem.sex == sexVal && fam_mem.age > 17 && fam_mem.age < 60
+                total = total + 1
+            end
         end
         return total
     end
@@ -146,16 +149,50 @@ module EvacCentersHelper
     def getSeniors(evac_center,disaster,sexVal)
         total = 0
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)
-        evacuees.each do |ec|
-            family = Family.find(ec.family_id)
-            family_members = FamilyMember.all.where(family_id: family.id).where(evacuee_id: ec.id).where("age >= 60").where(sex: sexVal)
-            total = total + family_members.length
+        getMembers(evacuees).each do |mem|
+            fam_mem = FamilyMember.find(mem)
+            if fam_mem.sex == sexVal && fam_mem.age >= 60
+                total = total + 1
+            end
         end
         return total
     end
 
     def getCapacityPercentage(evacuees, capacity)
         return (evacuees.to_f/capacity.to_f) * 100
+    end
+
+    def getRg(evac_center,disaster,key)#if key is true choose food else non food
+        food = 0
+        non_food =0
+        gen_rg_allocs = GenRgAlloc.all.where(evac_id: evac_center).where(disaster_id: disaster)
+        gen_rg_allocs.each do |gen|
+            rg = ReliefGood.find(gen.rg_id)
+            if rg.is_food == true
+                food = food+1
+            else
+                non_food = non_food +1
+            end
+        end
+        if key 
+            return food
+        else
+            return non_food
+        end
+    end
+
+    private 
+
+    def getMembers(evacuees)
+        member_ids = Array.new
+        evacuees.each do |ec|
+            EvacMember.all.where(evacuee_id: ec.id).each do |em|
+                if !member_ids.include?(em.member_id)
+                    member_ids.push(em.member_id)
+                end
+            end
+        end
+        return member_ids
     end
 end
 
