@@ -68,6 +68,13 @@ class GenerateReportController < ApplicationController
     end
     def generate_all # disasters/1/generate
         ## GRAND TOTAL OF ALL EVAC CENTERS
+        @totalfamily = 0
+        @totalPersons = 0
+        @CumFamilies = 0
+        @NowFamilies = 0
+        @CumPerson = 0
+        @NowPerson = 0
+        # DEMOGRAPHICS
         @infantM = 0
         @toddlerM = 0
         @preschoolersM = 0
@@ -107,6 +114,14 @@ class GenerateReportController < ApplicationController
             @adultF = @adultF + helpers.getAdults(center.id, @disaster.id, "Female")
             @seniorF = @seniorF + helpers.getSeniors(center.id, @disaster.id, "Female")
             
+            @totalfamily += countServedFamily(center.id, @disaster.id, false)
+            @totalPersons += countIndivEvacuated(center.id, @disaster.id, false)
+            @CumFamilies += countServedFamily(center.id, @disaster.id, false)
+            @NowFamilies += countServedFamily(center.id, @disaster.id, true)
+            @CumPerson +=countIndivEvacuated(center.id, @disaster.id, false)
+            @NowPerson +=countIndivEvacuated(center.id, @disaster.id, true)
+                
+                
 
             GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", @disaster.id , center.id).each do |rg|               
                 rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])  
@@ -132,9 +147,9 @@ class GenerateReportController < ApplicationController
             csv << ["INCIDENT NAME", @disaster.name, "DISASTER TYPE",@disaster.disaster_type,"DATE OF OCCURENCE", @disaster.date_of_occurence]
             csv << ["NOTED BY"]
             csv << [""]
-            csv << ["","","","","","","","","","","","","","","","","","","","EVACUATION CENTER FACILITIES",""]
-            csv << ["BARANGAY", "", "EVACUATION CENTER", ""].concat(age_group).concat(essFaciTitles)
-            csv << ["GRAND TOTAL", barangay_group.length, "",EvacCenter.all.length, @infantM, @infatF, @toddlerM, @toddlerF,@preschoolersM,@preschoolersF,@schoolageM,@schoolageF,@teenageM,@teenageF,@adultM,@adultF,@seniorM,@seniorM, ]
+            csv << ["","","","","","","","","","","","","","","","","","","","","","","","","","","","EVACUATION CENTER FACILITIES",""]
+            csv << ["BARANGAY", "", "EVACUATION CENTER", "","FAMILIES","PERSONS","FAMILIES(CUM)","FAMILIES(NOW)", "PERSONS(CUM)","PERSONS(NOW)"].concat(age_group).concat(essFaciTitles)
+            csv << ["GRAND TOTAL", barangay_group.length, "",EvacCenter.all.length, @totalfamily, @totalPersons, @CumFamilies, @NowFamilies, @CumPerson, @NowPerson, @infantM, @infantF, @toddlerM, @toddlerF,@preschoolersM,@preschoolersF,@schoolageM,@schoolageF,@teenageM,@teenageF,@adultM,@adultF,@seniorM,@seniorM, ]
             csv << [""]
             barangay_group.each do |brgy|
                 csv << ["#{brgy}", "","", limiterForBarangay(brgy),]
@@ -142,6 +157,13 @@ class GenerateReportController < ApplicationController
 
                     if center.barangay == brgy
                         csv << ["", "", center.name, "1",
+                        
+                            countServedFamily(center.id, @disaster.id, false),
+                            countIndivEvacuated(center.id, @disaster.id, false),
+                            countServedFamily(center.id, @disaster.id, false),
+                            countServedFamily(center.id, @disaster.id, true),
+                            countIndivEvacuated(center.id, @disaster.id, false),
+                            countIndivEvacuated(center.id, @disaster.id, true),
                             helpers.getInfants(center.id, @disaster.id, "Male"),
                             helpers.getInfants(center.id, @disaster.id, "Female"),
                             helpers.getToddlers(center.id, @disaster.id, "Male"),
@@ -194,7 +216,44 @@ class GenerateReportController < ApplicationController
         end
         return xyValues
     end
-
+    def countServedFamily(evac_center, disaster, key )
+        
+        countFam = 0
+        if key 
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).group(:family_id)
+        else
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).group(:family_id)
+        end
+        
+        evacuee.each do |x| 
+            countFam = countFam + 1
+        end   
+        return countFam
+    end
+    def countIndivEvacuated(evac_center,disaster,key)
+        evacuees = Evacuee.all.where(disaster_id: disaster).where(evac_id: evac_center)
+        if key 
+            member_ids = Array.new
+            evacuees.each do |ec|
+                EvacMember.all.where(evacuee_id: ec.id).where(status: "UNRELEASED").each do |em|
+                       if !member_ids.include?(em.member_id)
+                        member_ids.push(em.member_id)
+                    end
+                end
+            end
+            return member_ids.length
+        else
+            member_ids = Array.new
+            evacuees.each do |ec|
+                EvacMember.all.where(evacuee_id: ec.id).each do |em|
+                       if !member_ids.include?(em.member_id)
+                        member_ids.push(em.member_id)
+                    end
+                end
+            end
+            return member_ids.length
+        end
+    end
     def age_group 
         titles = ["INFANT(MALE)", "INFANT(FEMALE)", "TODDLERS(MALE)","TODDLERS(FEMALE)", "PRESCHOOLER(MALE)", "PRESCHOOLER(FEMALE)", "SCHOOLAGE(MALE)", "SCHOOLAGE(FEMALE)","TEENAGE(MALE)","TEENAGE(FEMALE)", "ADULT(MALE)", "ADULT(FEMALE)", "SENIOR CITIZEN(MALE)", "SENIOR CITIZEN(FEMALE)"]
     end
