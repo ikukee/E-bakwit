@@ -122,6 +122,8 @@ class GenerateReportController < ApplicationController
         @seniorF_now = 0
         ## RELIEF GOODS PART
         @tprice = 0
+        @tnfprice =0 
+        @tfprice =0 
         rlGoods = []
         essFaciTitles = [""]
         @disaster = Disaster.find(params[:disaster_id])
@@ -172,8 +174,10 @@ class GenerateReportController < ApplicationController
                 rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])  
                 if ReliefGood.find(rg.rg_id).is_food == true
                     @tprice = @tprice + rg.price 
+                    @tfprice += rg.price
                 elsif ReliefGood.find(rg.rg_id).is_food == false
                     @tprice = @tprice + rg.price 
+                    @tnfprice += rg.price
                 else
                     @tprice = @tprice + rg.price
                 end
@@ -197,8 +201,8 @@ class GenerateReportController < ApplicationController
             sheet.add_row ["INCIDENT NAME", @disaster.name, "DISASTER TYPE",@disaster.disaster_type,"DATE OF OCCURENCE", @disaster.date_of_occurence]
             sheet.add_row ["NOTED BY"]
             sheet.add_row ["BARANGAY", "Number of Affected"].concat(whitespacer(4)).concat(["Number of Displaced Inside ECs"]).concat(whitespacer(3),age_groupT(true, 3))
-            sheet.add_row [""].concat(whitespacer(5)).concat(["FAMILIES","","PERSONS"]).concat(whitespacer(1), malefemale(7),whitespacer(1), ["EVACUATION CENTER FACILITIES", whitespacer(1)])
-            sheet.add_row ["", "EVACUATION CENTER", "COUNT","FAMILIES","PERSONS","4Ps FAMILIES"].concat(cumnow(8),essFaciTitles)
+            sheet.add_row [""].concat(whitespacer(5)).concat(["FAMILIES","","PERSONS"]).concat(whitespacer(1), malefemale(7),whitespacer(1), ["RELIEF ASSISTANCE", ""]).concat(whitespacer(1),["EVACUATION CENTER FACILITIES"])
+            sheet.add_row ["", "EVACUATION CENTER", "COUNT","FAMILIES","PERSONS","4Ps FAMILIES"].concat(cumnow(8), ["","FOOD", "NON-FOOD"],essFaciTitles)
             sheet.add_row ["GRAND TOTAL", "",EvacCenter.all.length, 
             @totalfamily, @totalPersons, @totalfamily4ps, @CumFamilies, @NowFamilies, @CumPerson, @NowPerson, @infantM,@infantM_now, @infantF, @infantF_now,
             @toddlerM,@toddlerM_now, @toddlerF,@toddlerF_now,
@@ -206,7 +210,7 @@ class GenerateReportController < ApplicationController
             @schoolageM,@schoolageM_now,@schoolageF,@schoolageF_now,
             @teenageM,@teenageM_now,@teenageF,@teenageF_now,
             @adultM,@adultM_now,@adultF,@adultF_now,
-            @seniorM,@seniorM_now,@seniorM,@seniorM_now], style: grandTotalHeader
+            @seniorM,@seniorM_now,@seniorM,@seniorM_now].concat(whitespacer(1), [@tfprice,@tnfprice]).concat(whitespacer(essFaciTitles.length)), style: grandTotalHeader
             sheet.sheet_view.pane do |pane|
                 pane.top_left_cell = "B8:C8"
                 pane.state = :frozen_split
@@ -215,7 +219,7 @@ class GenerateReportController < ApplicationController
                 pane.active_pane = :bottom_right
             end
             barangay_group.each do |brgy|
-                sheet.add_row ["#{brgy}", limiterForBarangay(brgy)].concat(whitespacer(36 + essFaciTitles.length)), style: brngyHeader
+                sheet.add_row ["#{brgy}", limiterForBarangay(brgy)].concat(whitespacer(39 + essFaciTitles.length)), style: brngyHeader
                 @evac_centers.each do |center|
                     
                     if center.barangay == brgy
@@ -262,16 +266,9 @@ class GenerateReportController < ApplicationController
                             helpers.ggetSeniors(center.id, @disaster.id, "Male",true),                         
                             helpers.getSeniors(center.id, @disaster.id, "Female"),                       
                             helpers.ggetSeniors(center.id, @disaster.id, "Female",true),
-                    ].concat(whitespacer(1),getQuantity(center.id, @disaster))
+                    ].concat(whitespacer(1),[getReliefCost(center.id, @disaster.id,true),getReliefCost(center.id, @disaster.id,false), ""], getQuantity(center.id, @disaster))
                     end
                 end
-            end
-            sheet.add_row [" "]
-            sheet.add_row ["RELIEF GOODS RECIEVED"]
-            sheet.add_row [" "]
-            sheet.add_row ["NAME", "UNIT / PRICE", "QUANTITY", "CUMULATIVE PRICE"]
-            rlGoods.each do |rlG|
-                sheet.add_row rlG
             end
             sheet.merge_cells("G6:H6")
             sheet.merge_cells("I6:J6")
@@ -425,7 +422,24 @@ class GenerateReportController < ApplicationController
         end
         return titles
     end
-
+    def getReliefCost(center,disaster,k)
+        priceValF = 0
+        priceValN = 0
+        GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", disaster , center).each do |rg|
+            if ReliefGood.find(rg.rg_id).is_food == true
+                priceValF +=rg.price 
+            elsif ReliefGood.find(rg.rg_id).is_food == false
+                priceValN +=rg.price 
+            end
+        end
+        
+        if k 
+            return priceValF
+        else
+            return priceValN
+        end
+        
+    end
     def barangay_group
         titles = [
             "Abella", "Bagumbayan Norte", "Bagumbayan Sur", "Balatas", 
