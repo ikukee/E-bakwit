@@ -2,47 +2,47 @@
   <% invalid_name = evacuation_essential.errors.include?(:name) %>
   <% invalid_type = evacuation_essential.errors.include?(:ess_type) %>
   <div class="card shadow p-4 m-1">
-  <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >EVACUATION ESSENTIAL INFORMATION</h2>
-  <div class="form-group">
-    <%= form.label :name, class: "h5 oswald fw text-uppercase" do %>
-      Name: 
-    <% end %>
-    <%= form.text_field :name, class:"form-control #{'is-invalid' if invalid_name}", placeholder: "Name"%>
-    <% if invalid_name %>
-      <div class="invalid-feedback d-block">
-        <% evacuation_essential.errors[:name].each do |error_message| %>
-          <%= error_message %>.
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-  <br>
-  <div class="form-group">
-    <%= form.label :type, class: "h5 oswald fw text-uppercase" do %>
-      Essential Type: 
-    <% end %>
-    <% if evacuation_essential.ess_type == nil %>
-      <%= form.select :ess_type, options_for_select(["FACILITY", "ESSENTIAL"]), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_type}"} %>
-    <% else %>
-      <%= form.select :ess_type, options_for_select(["FACILITY", "ESSENTIAL"],:selected => evacuation_essential.ess_type.to_s ), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_type}"} %>
-    <%  end %>
-    <% if invalid_type %>
-      <div class="invalid-feedback d-block">
-        <% evacuation_essential.errors[:ess_type].each do |error_message| %>
-          <%= error_message %>.
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-  <br>
-  <div class="form-group">
-    <%= form.label :description, class: "h5 oswald fw text-uppercase" do %>
-      Description: 
-    <% end %>
-    <%= form.text_area :description, class:"form-control", placeholder: "Description"%>
-  </div>
-  <div class="row justify-content-end mx-1 mt-3">
-    <%= form.submit "Submit", class:"col-auto btn btn-primary bg-navy oswald px-3 text-decoration-none"%>
-  </div>
+    <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >EVACUATION ESSENTIAL INFORMATION</h2>
+    <div class="form-group">
+      <%= form.label :name, class: "h5 oswald fw text-uppercase" do %>
+        Name: 
+      <% end %>
+      <%= form.text_field :name, class:"form-control #{'is-invalid' if invalid_name}", placeholder: "Name"%>
+      <% if invalid_name %>
+        <div class="invalid-feedback d-block">
+          <% evacuation_essential.errors[:name].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <br>
+    <div class="form-group">
+      <%= form.label :type, class: "h5 oswald fw text-uppercase" do %>
+        Essential Type: 
+      <% end %>
+      <% if evacuation_essential.ess_type == nil %>
+        <%= form.select :ess_type, options_for_select(["FACILITY", "ESSENTIAL"]), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_type}"} %>
+      <% else %>
+        <%= form.select :ess_type, options_for_select(["FACILITY", "ESSENTIAL"],:selected => evacuation_essential.ess_type.to_s ), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_type}"} %>
+      <%  end %>
+      <% if invalid_type %>
+        <div class="invalid-feedback d-block">
+          <% evacuation_essential.errors[:ess_type].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <br>
+    <div class="form-group">
+      <%= form.label :description, class: "h5 oswald fw text-uppercase" do %>
+        Description: 
+      <% end %>
+      <%= form.text_area :description, class:"form-control", placeholder: "Description"%>
+    </div>
+    <div class="row justify-content-end mx-1 mt-3">
+      <%= form.submit "Submit", class:"col-auto btn btn-primary bg-navy oswald px-3 text-decoration-none"%>
+    </div>
   </div>
 <% end %>

@@ -1,3 +1,13 @@
-<div id = "form_area" class="mt-5">
-  <%= render partial:"form", locals:{disaster:@disaster}%>
+<div class="row m-0">
+  <div class="col-md-11 m-5 text-xs-center  mt-5">
+    <div class="card" >
+      <div class="card-body" >
+        <div class="card-deck">
+          <div id = "form_area">
+            <%= render partial:"form", locals:{disaster:@disaster}%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
