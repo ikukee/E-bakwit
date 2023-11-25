@@ -19,4 +19,5 @@ class ApplicationController < ActionController::Base
     def set_breadcrumbs
         @breadcrumbs = []
     end
+
 end

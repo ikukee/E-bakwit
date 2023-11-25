@@ -9,7 +9,7 @@
     <!-- Example single danger button -->
     <% if session[:user_type] == "ADMIN"%>
       <div class="btn-group">
-        <button href="/evac_centers" class="btn btn-outline-info" data-bs-toggle= "modal" data-bs-target="#adminTab" type="button">Admin Tab</button>
+        <button href="/evac_centers" class="btn btn-outline-info" data-bs-toggle= "modal" data-bs-target="#adminTab" type="button">Admin Tab <% if notifIcon(1) %><i class="fa-solid fa-circle-exclamation fa-lg" style="color: #ffdd00;"></i><%end%></button>
         <button type="button" class="btn btn-outline-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
           <span class="visually-hidden">Toggle Dropdown</span>
         </button>
@@ -41,7 +41,7 @@
                   <i class="fa-solid fa-wheat-awn"></i> Relief Goods
                 <% end %>
                 <%= link_to "/relief_good/requests", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
-                  <i class="fa-solid fa-eye"></i> <i class="fa-solid fa-wheat-awn"></i> Relief Goods Request
+                  <i class="fa-solid fa-eye"></i> <i class="fa-solid fa-wheat-awn"></i> Relief Goods Request <% if notifIcon(1) %><i class="fa-solid fa-circle-exclamation fa-lg" style="color: #ffdd00;"></i><%end%></i>
                 <% end %>
               </div>
               <div class="row my-2">
