@@ -1,4 +1,4 @@
-<div class="p-0 pt-4" style="background: rgb(89,147,188); background: linear-gradient(0deg, rgba(89,147,188,1) 1%, rgba(21,38,74,1) 100%); color:white;">
+<div class="p-0 pt-4 text-light" >
   <div class="col-md-12 p-4 ">
     <div class="row">
       <div class="col-6">
@@ -48,8 +48,8 @@
       <div class="col"></div>
     </div>
     <div class="row mb-5">
-      <div class="row position-relative" name='title-tag'>
-        <p class="oswald fw-bold position-relative" style="font-size: 5.5em"><%= evac_center.name.titleize %>
+      <div class="row" name='title-tag'>
+        <p class="oswald fw-bold position-relative m-0" style="font-size: 5.5em"><%= evac_center.name %>
           <% if session[:user_type] == "ADMIN"%>
             <a href="/evac_centers/<%=evac_center.id%>/edit" class="text-light position-absolute" style="font-size: 0.4em;"><i class="fa-solid fa-pen-to-square"></i></a></p>
         <% else %>
@@ -59,7 +59,7 @@
           <% end %>
         <% end %>
       <% end %>
-      <div class="row position-absolute oswald" style="top:10em; font-size: 0.8em;">
+      <div class="row oswald" style="font-size: 0.8em;">
         <div class="col-auto pe-0">BARANGAY <%= evac_center.barangay.upcase %></div>
         <div class="col-auto ps-0 pe-0">, CAPACITY: <%= evac_center.capacity %></div>
         <% if evac_center.isInside == true %>

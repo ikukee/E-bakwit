@@ -1,4 +1,4 @@
-<div class = "row">
+<div class = "row default-background4 text-dark mt-5 p-2" style="border: 0.2em solid rgb(89,147,188); border-radius: 30px;">
   <div class="col-md-6 col-sm-12">
     <div class="row">
       <div class="col-md-auto">
@@ -63,7 +63,7 @@
             <% if User.find(session[:user_id]).currently_assigned == evac_center.id && session[:user_type] == "VOLUNTEER" %>
               <% if evac_center.status != "ARCHIVED"%>
                 <div class="col">
-                  <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-primary bg-navy oswald fw-bold w-100" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user"></i></a>
+                  <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-primary bg-navy oswald fw-bold w-100 m-1" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user"></i></a>
                 </div>
               <% end %>
             <% end %>
