@@ -49,7 +49,7 @@
 <% evac_yearly_profile = EvacYearlyProfile.all.where(evac_id: evac_center.id)%>
 <div id="view-del" class="row text-center m-0">
   <% if session[:user_type] != nil %>
-    <% if session[:user_type] == "ADMIN"%>
+    <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
       <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #233b43", class: "col-8 link text-decoration-none text-light py-2 m-0" do %>
         View <i class="fa-solid fa-eye"></i>
       <% end %>

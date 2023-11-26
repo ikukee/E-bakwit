@@ -1,13 +1,18 @@
 
 <div class = "row m-0 mt-5">
-  <div class = "col-md-6">
+  <div class = "col-md-4">
     <h3 style = "float:right;">Search Family: </h3>
   </div>
-  <div class = "col-md-3">
-    <%= form_with url: "/view_evacuated_family", method: :post do |form| %>
-      <%= form.collection_select :evacuee_id , @evacuee_list.order(id: :desc), :id, :family_name ,{:prompt => "SELECT EVACUEE"},{ class:"form-control", oninput: "this.form.requestSubmit()"}%>
-    <% end %>
-  </div>
+    <div class = "col-md-3">
+        <%= form_with url: "/evacuated/sort_by", method: :post do |form| %>
+          <%= form.hidden_field :evac_id, :value=> @evac_id%>
+          <%= form.hidden_field :disaster_id, :value=> @disaster_id%>
+          <%= form.select :search_type, options_for_select(["RELEASED","UNRELEASED"]),{:prompt => "Select Search Type"},{class:"form-control", oninput: "this.form.requestSubmit()"}%>
+        <% end %>
+    </div>
+    <div class = "col-md-3" id = "type_output">
+    </div>
+ 
 </div>
 <br>
 <div id="evacuated-list" align="center">

@@ -19,7 +19,7 @@
               <td>All <strong><%=ReliefGood.find(gen.rg_id).eligibility %></strong> will receive </td>
             <% end %>
             <td>
-              <% if  EvacCenter.find(gen.evac_id).status == nil%>
+              <% if  EvacCenter.find(gen.evac_id).status != "ARCHIVED"%>
                 <%= form_with url:"/save/configuration/#{RgCriterium.find_by(gen_rg_alloc_id: gen.id).id}", method: :post do |form|%>
                   <%= form.number_field :criteria, class:"form-control", :value => criterium.criteria, oninput: "this.form.requestSubmit()" %>
                 <% end %>
@@ -33,12 +33,12 @@
         <% else %>
           <% if ReliefGood.find(gen.rg_id).is_food == false %>
             <% if ReliefGood.find(gen.rg_id).eligibility == "UNISEX"%>
-              <td>All evacuees will receive </td>
+              <td>All <strong>EVACUEES</strong> will receive </td>
             <% else %>
               <td>All <strong><%=ReliefGood.find(gen.rg_id).eligibility %></strong> will receive </td>
             <% end %>
             <td>
-              <% if  EvacCenter.find(gen.evac_id).status == nil%>
+              <% if  EvacCenter.find(gen.evac_id).status != "ARCHIVED"%>
                 <%= form_with url:"/save/configuration/#{RgCriterium.find_by(gen_rg_alloc_id: gen.id).id}", method: :post do |form|%>
                   <%= form.number_field :criteria, class:"form-control", :value => criterium.criteria, oninput: "this.form.requestSubmit()" %>
                 <% end %>

@@ -16,7 +16,7 @@
         <td><%= Disaster.find(evacuee.disaster_id).name%></td>
         <td><%=evacuee.relief_good_status%></td>
         <% if evacuee.relief_good_status == nil%>
-          <% if EvacCenter.find(evacuee.evac_id).status == nil%>
+          <% if EvacCenter.find(evacuee.evac_id).status != "ARCHIVED" && session[:user_type] == "VOLUNTEER"%>
             <td>
               <a href = "/view/evacuee/members/<%=evacuee.id%>/new" class= "btn btn-info form-control">View <i class="fa-solid fa-eye"></i></a>
             </td>
@@ -27,7 +27,7 @@
               <div class = "col-md-6">
                 <a href = "/view/evacuee/members/<%=evacuee.id%>/allotted" class= "btn btn-info form-control">View <i class="fa-solid fa-eye"></i></a>
               </div>
-              <% if EvacCenter.find(evacuee.evac_id).status == nil%>
+              <% if EvacCenter.find(evacuee.evac_id).status != "ARCHIVED" && session[:user_type] == "VOLUNTEER"%>
                 <div class = "col-md-6">
                   <a href = "/view/evacuee/members/<%=evacuee.id%>/new" class= "btn btn-primary form-control">New Distribution <i class="fa-solid fa-plus"></i></a>
                 </div>

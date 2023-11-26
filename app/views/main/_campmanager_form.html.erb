@@ -3,6 +3,7 @@
   <% invalid_lname = request.errors.include?(:lname) %>
   <% invalid_bdate = request.errors.include?(:bdate) %>
   <% invalid_email = request.errors.include?(:email) %>
+  <% invalid_user_type = request.errors.include?(:user_type) %>
   <% invalid_address = request.errors.include?(:address) %>
   <% invalid_cnum = request.errors.include?(:cnum) %>
   <div class='row m-0 mt-5'>
@@ -90,6 +91,19 @@
                   </div>
                 <% end %>
               </div>
+               <%= form.label :user_type, class: "form-label poppins" do %>
+                User Type
+              <% end %>
+              <div class="form-group">
+                <%= form.select :user_type, options_for_select(["ADMIN","CAMP MANAGER"]),{:prompt => "Select User Type"},{class:"form-control #{'is-invalid' if invalid_user_type}"}%>
+                <% if invalid_user_type %>
+                  <div class="invalid-feedback d-block">
+                    <% request.errors[:user_type].each do |error_message| %>
+                      <%= error_message %>.
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
@@ -123,3 +137,6 @@
     </div>
   </div>
 <% end %>
+
+
+

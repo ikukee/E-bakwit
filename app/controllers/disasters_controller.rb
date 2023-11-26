@@ -1,13 +1,15 @@
 class DisastersController < ApplicationController
   before_action :set_disaster, only: %i[ show edit update destroy ]
   before_action :add_index_breadcrumb, only: [:new, :edit]
+  before_action :is_logged_in
+  before_action :checkValidUser
 
   # GET /disasters or /disasters.json
   def index
     add_breadcrumb('Disasters')
     @disasters = Disaster.all
     @page = params.fetch(:page, 0).to_i
-    if  @page < 0 
+    if  @page < 0
         @page = 0
     end
     @disasters_count = @disasters.length

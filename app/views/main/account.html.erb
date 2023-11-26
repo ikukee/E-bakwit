@@ -30,7 +30,7 @@
 
         <div class="card shadow p-4 m-2" style="">
           <h1>ACTIONS</h1>
-          <%= link_to "CHANGE PASSWORD","#", class:"btn btn-dark" %>
+          <%= render partial:"volunteer/first_login_form", locals: {user: User.find(session[:user_id])}%>
         </div>
       </div>
     </div>

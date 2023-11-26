@@ -1,6 +1,9 @@
 <div id="evac-form" class="row position-relative my-auto mx-5 p-3 rounded">
   <ul class="nav nav-tabs">
     <li class="nav-item">
+      <a href = "/admins" class="text-decoration-none poppins fw"><button class = "nav-link text-dark">Administrators</button></a>
+    </li>
+    <li class="nav-item">
       <a href = "/volunteers" class="text-decoration-none poppins"><button class = "nav-link text-dark">Volunteers</button></a>
     </li>
     <li class="nav-item">
@@ -17,6 +20,7 @@
         <tr>
           <th class="col-md-1">Date Requested</th>
           <th class="col-md-3">Name</th>
+          <th class="col-md-3">Account Type</th>
           <th class="col-md-1">Status</th>
           <th class="col-md-1">Action</th>
         </tr>
@@ -26,6 +30,7 @@
           <tr>
             <td class="col-md-1"><%= request.request_date%></td>
             <td class="col-md-3"><%= request.lname %>, <%= request.fname%></td>
+            <td class="col-md-3"><%= request.user_type%></td>
             <% if request.status == "PENDING" %>
               <td  style = "color:yellow;"><strong><%= request.status%></strong></td>
             <% elsif  request.status == "APPROVED" %>

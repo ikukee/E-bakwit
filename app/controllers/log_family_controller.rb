@@ -1,12 +1,13 @@
 class LogFamilyController < ApplicationController
+    before_action :is_logged_in
     def search
         @disaster = Disaster.find(params[:disaster_id])
         @evac_center = EvacCenter.find(params[:evac_center])
-        
+
         @family_member = FamilyMember.find(params[:id])
         @family = Family.find(@family_member.family_id)
         respond_to do |format|
-            format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{evac_center: @evac_center, families:@family.family_members, disaster:@disaster})}  
+            format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{evac_center: @evac_center, families:@family.family_members, disaster:@disaster})}
         end
     end
     def logging
@@ -14,7 +15,7 @@ class LogFamilyController < ApplicationController
         @evac_center = EvacCenter.find(params[:id])
         evacuee = Evacuee.new
         family = Family.new
-       
+
 
         add_breadcrumb('Evacuation Centers', evac_centers_path)
         add_breadcrumb(@evac_center.name, evac_center_path(@evac_center))
@@ -24,16 +25,33 @@ class LogFamilyController < ApplicationController
 # elseif evacuee exist but not in the same evacuation center and have left
 # elseif evacuee exist but not in the same evacuation center and have not left
 # elseif evacuee exist on the same evacuation center and have left
-    
+
 
     # evacuee model id = 2, family_id = 1  <<< RECORD
     # family id = 1,is_evacuated true
-    def evacuatedView 
+    def evacuatedView
+        @evac_id = params[:evac_id]
+        @disaster_id = params[:disaster_id]
         @evacuee_list = Evacuee.all.where(evac_id: params[:evac_id]).where(disaster_id: params[:disaster_id])
-        evac_center = EvacCenter.find(params[:evac_id]) 
+        evac_center = EvacCenter.find(params[:evac_id])
         add_breadcrumb("Evacuation Centers", evac_centers_path)
         add_breadcrumb(evac_center.name, "/evac_centers/#{params[:evac_id]}")
         add_breadcrumb("View Evacuees")
+    end
+
+    def sort_by
+        search_type = params[:search_type]
+        @disaster_id = params[:disaster_id]
+        @evac_id = params[:evac_id]
+        if search_type == "RELEASED"
+            evacuee_list =Evacuee.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id).where("date_out != ?",nil)
+        else
+            evacuee_list =Evacuee.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id).where(date_out: nil)
+        end
+
+        respond_to do |format|
+            format.turbo_stream{render turbo_stream: turbo_stream.update("type_output", partial: "search_type",locals:{evacuee_list: evacuee_list})}
+        end
     end
 
     def view_evacuated_family
@@ -59,7 +77,7 @@ class LogFamilyController < ApplicationController
             end
         end
 
-        if !key 
+        if !key
             evacuee_data.family_id = family.id
             evacuee_data.family_name = family.name
             evacuee_data.disaster_id = params[:disaster_id]
@@ -82,20 +100,20 @@ class LogFamilyController < ApplicationController
         end
         family.update_attribute(:is_evacuated, true)
         respond_to do |format|
-            format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{evac_center: evac_center, families:family.family_members, disaster:disaster})}  
+            format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{evac_center: evac_center, families:family.family_members, disaster:disaster})}
         end
 
-      
+
     end
 
     def evacuate
         disaster = Disaster.find(params[:disaster_id])
-        evac_center = EvacCenter.find(params[:evac_id])     
+        evac_center = EvacCenter.find(params[:evac_id])
         family_member = FamilyMember.find(params[:member_id])
         family = Family.find(family_member.family_id)
         evacuees = Evacuee.all.where(family_id: family.id).where(disaster_id: disaster.id).where(date_out: nil)
         respond_to do |format|
-            key = false  
+            key = false
             evacuee_data = Evacuee.new
             evacuees.each do |evacuee| #checks if the existing evacuee record related to the member is on the same evac center
                 if evacuee.evac_id == evac_center.id
@@ -104,7 +122,7 @@ class LogFamilyController < ApplicationController
                     break
                 end
             end
-                
+
             if !key
                 evacuee_data.family_id = family.id
                 evacuee_data.family_name = family.name
@@ -121,11 +139,11 @@ class LogFamilyController < ApplicationController
             evac_member.status = "UNRELEASED"
             evac_member.save
             family_member.update_attribute(:evacuee_id, evacuee_data.id)
-            format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{evac_center: evac_center, families:family.family_members, disaster:disaster})}  
+            format.turbo_stream{render turbo_stream: turbo_stream.update("member-list",partial: "family-mem-result", locals:{evac_center: evac_center, families:family.family_members, disaster:disaster})}
         end
     end
 
-    def evacueeOut  
+    def evacueeOut
         fam_mem = FamilyMember.find(params[:member_id])
         evacuee = Evacuee.find(fam_mem.evacuee_id)
         member = EvacMember.where(member_id: params[:member_id]).where(evacuee_id: evacuee.id).first
@@ -139,14 +157,14 @@ class LogFamilyController < ApplicationController
                 format.html{redirect_to "/evac_centers/#{evac_id}"}
             else
                 format.turbo_stream{render turbo_stream: turbo_stream.update("evacuated-list", partial: "evacuated-result", locals:{evac_members: evac_members})}
-            end  
+            end
         end
-        
+
     end
 
-    def evacueeReleased  
+    def evacueeReleased
         family_member = FamilyMember.find(params[:member_id])
-        evacuee = Evacuee.find(family_member.evacuee_id)       
+        evacuee = Evacuee.find(family_member.evacuee_id)
         evac_center = EvacCenter.find(evacuee.evac_id)
         evac_member = EvacMember.where(evacuee_id: evacuee.id).where(member_id: family_member.id)
         evac_member.first.update_attribute(:status, "RELEASED")
@@ -160,7 +178,7 @@ class LogFamilyController < ApplicationController
                 break
             end
         end
-        
+
         if !key
             evacuee.update_attribute(:date_out, Date.today)
         end
@@ -179,10 +197,9 @@ class LogFamilyController < ApplicationController
         respond_to do |format|
             format.turbo_stream{render turbo_stream: turbo_stream.update("evacuated-list", partial: "evacuated-result", locals:{evac_members: evac_members})}
         end
-        
-       
+
+
     end
 
 
 end
-

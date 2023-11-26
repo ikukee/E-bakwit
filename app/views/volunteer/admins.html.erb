@@ -1,26 +1,26 @@
 <div id="evac-form" class="row position-relative my-auto mx-5 p-3 rounded">
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a href = "/admins" class="text-decoration-none poppins"><button class = "nav-link text-dark">Administrators</button></a>
+      <a href = "/admins" class="text-decoration-none poppins fw-bold"><button class = "nav-link active">Administrators</button></a>
     </li>
     <li class="nav-item">
       <a href = "/volunteers" class="text-decoration-none poppins"><button class = "nav-link text-dark">Volunteers</button></a>
     </li>
     <li class="nav-item">
-      <a href = "/camp_managers" class="text-decoration-none poppins fw-bold"><button class = "nav-link active">Camp Managers</button></a>
+      <a href = "/camp_managers" class="text-decoration-none poppins"><button class = "nav-link text-dark">Camp Managers</button></a>
     </li>
     <li class="nav-item">
       <a href = "/requests" class="text-decoration-none poppins"><button class = "nav-link text-dark">Volunteer Requests</button></a>
     </li>
   </ul>
   <div id="req-table " class="col-md-6">
-    <h1 class="oswald fw-bold p-3">List of Camp Managers</h1>
+    <h1 class="oswald fw-bold p-3">List of Administrators</h1>
     <%= form_with url: "/users/search", method: :post do |form| %>
       <label for = "search_criteria"><strong>Search Criteria:</strong></label>
       <div class="input-group mb-3">
-        <%= form.hidden_field :user_type, :value => "CAMP MANAGER"%>
+        <%= form.hidden_field :user_type, :value => "ADMIN"%>
         <%= form.select :search_type, options_for_select(["LAST NAME","IS ASSIGNED","STATUS"]),{},{class:"form-control"}%>
-        <%= form.search_field :search_value , class: "form-control", placeholder: "Search a Camp Manager", oninput: "this.form.requestSubmit()" %>
+        <%= form.search_field :search_value , class: "form-control", placeholder: "Search Administrator", oninput: "this.form.requestSubmit()" %>
       </div>
     <% end %>
     <div id = "users">

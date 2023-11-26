@@ -1,6 +1,7 @@
 class EvacuationEssentialsController < ApplicationController
   before_action :set_evacuation_essential, only: %i[ show edit update destroy ]
   before_action :add_index_breadcrumb, only: [:show, :new, :edit]
+  before_action :is_logged_in
 
   def search
     search_type = params[:search_type]
@@ -24,7 +25,7 @@ class EvacuationEssentialsController < ApplicationController
     @evacuation_essentials = EvacuationEssential.all
 
     @page = params.fetch(:page, 0).to_i
-    if  @page < 0 
+    if  @page < 0
         @page = 0
     end
     @evacuation_essentials_count = @evacuation_essentials.length
@@ -64,7 +65,7 @@ class EvacuationEssentialsController < ApplicationController
 
   # PATCH/PUT /evacuation_essentials/1 or /evacuation_essentials/1.json
   def update
-    
+
     respond_to do |format|
       params[:evacuation_essential][:name] = params[:evacuation_essential][:name].upcase
       if @evacuation_essential.update(evacuation_essential_params)
@@ -80,7 +81,7 @@ class EvacuationEssentialsController < ApplicationController
   # DELETE /evacuation_essentials/1 or /evacuation_essentials/1.json
   def destroy
     @evacuation_essential.destroy
-    
+
     respond_to do |format|
       format.html { redirect_to evacuation_essentials_url, notice: "Evacuation essential was successfully destroyed." }
       format.json { head :no_content }

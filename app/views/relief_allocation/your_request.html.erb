@@ -62,7 +62,7 @@
                 <% end %>
               <% end %>
               <br>
-              <% if session[:user_type] == "ADMIN"%>
+              <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
                 <% if req.status == "DISPATCHED" %>
                   <% if EvacCenter.find(@evac_id).status == nil%>
                     <%= form_with url:"/mark_received/request/#{req.id}", method: :post do |form|%>

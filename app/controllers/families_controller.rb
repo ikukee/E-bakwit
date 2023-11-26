@@ -1,6 +1,7 @@
 class FamiliesController < ApplicationController
   before_action :set_family, only: %i[ show edit update destroy ]
   before_action :add_index_breadcrumb, only: [:show, :new, :edit]
+  before_action :is_logged_in
 
   def search
     search_type = params[:search_type]
@@ -23,7 +24,7 @@ class FamiliesController < ApplicationController
     add_breadcrumb('Families')
     @families = Family.all
     @page = params.fetch(:page, 0).to_i
-    if  @page < 0 
+    if  @page < 0
         @page = 0
     end
     @families_count = @families.length
@@ -67,7 +68,7 @@ class FamiliesController < ApplicationController
   end
 
   # PATCH/PUT /families/1 or /families/1.json
-  def update   
+  def update
     params[:family][:name] = params[:family][:name].upcase
     params[:family][:streetName] = params[:family][:streetName].upcase
     params[:family][:barangay] = params[:family][:barangay].upcase
@@ -148,7 +149,7 @@ class FamiliesController < ApplicationController
       member.destroy
     end
     @family.destroy
-    
+
     respond_to do |format|
       format.html { redirect_to families_url, notice: "Family was successfully destroyed." }
       format.json { head :no_content }

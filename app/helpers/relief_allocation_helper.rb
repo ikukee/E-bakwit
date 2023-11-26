@@ -57,12 +57,12 @@ module ReliefAllocationHelper
             fam_members = FamilyMember.all.where(family_id: fam_mem.family_id).where(evacuee_id: fam_mem.evacuee_id).where(sex: sexVal)
         end
 
-        if category == "INFANTS" 
+        if category == "INFANTS"
             if fam_members.where("age < 0").count > 0
                 return true
             end
         elsif category == "TODDLERS"
-            if fam_members.where("age > 1 && age <= 3").count > 0
+            if fam_members.where("age > 1 AND age <= 3").count > 0
                 return true
             end
         elsif category == "PRE-SCHOOLERS"

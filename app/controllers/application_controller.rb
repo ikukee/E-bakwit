@@ -1,7 +1,13 @@
 class ApplicationController < ActionController::Base
     #Mime::Type.register "application/xlsx", :xlsx
     before_action :set_breadcrumbs
-    
+
+    def checkValidUser
+        if session[:user_type] != "ADMIN" || session[:user_type] == "SUPERUSER"
+           redirect_to "/error"
+        end
+
+    end
 
     def is_logged_in
         if !session[:user_id].present?

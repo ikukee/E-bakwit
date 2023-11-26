@@ -8,7 +8,7 @@
   <p><strong>Message: </strong> </p>
   <textarea disabled class ="form-control"><%=request.message%></textarea>
   <br>
-  <% if session[:user_type] == "ADMIN"%>
+  <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
     <%if request.status == "PENDING"%>
       <div  style = "margin: 0 auto; width:40%;">
         <%= form_with url: "/approve/request/#{request.id}", method: :post do |form|%>

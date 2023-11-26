@@ -8,7 +8,7 @@
       <%= form.search_field :search_value , class: "form-control", placeholder: "Search an Evacuation Center", oninput: "this.form.requestSubmit()" %>
     <% end %>
   </div>
-  <% if session[:user_type] == "ADMIN"%>
+  <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
     <div class="col-4 d-flex flex-column justify-content-end p-0">
       <div class = "row">
         <div class = "col-md-8" >

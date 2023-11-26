@@ -1,10 +1,11 @@
 class EvacCentersController < ApplicationController
   before_action :set_evac_center, only: %i[ show edit update destroy ]
   before_action :add_index_breadcrumb, only: [:show, :new, :edit, :evac_essentials_form, :evac_facilities_form]
+  before_action :is_logged_in
 
   # GET /evac_centers or /evac_centers.json
   def index
-    @evac_centers = EvacCenter.all.where(status: nil).order(name: :asc)
+    @evac_centers = EvacCenter.all.where("status == 'ACTIVE'").order(name: :asc)
     add_breadcrumb("Evacuation Centers")
   end
 
@@ -16,7 +17,7 @@ class EvacCentersController < ApplicationController
 
   def search
     search_type = "name"
-    @evac_centers = EvacCenter.where("#{search_type} LIKE ? ", "#{params[:search_value]}%").order(name: :asc)
+    @evac_centers = EvacCenter.where("#{search_type} LIKE ? ", "#{params[:search_value]}%").where(status: "ACTIVE").order(name: :asc)
     respond_to do |format|
       if @evac_centers.length > 0
           format.turbo_stream{render turbo_stream: turbo_stream.update("evac_centers",partial: "evac_search_results", locals:{evac_centers:@evac_centers })}
@@ -79,7 +80,7 @@ class EvacCentersController < ApplicationController
 
   def unarchive_center
     @evac_center = EvacCenter.find(params[:id])
-    @evac_center.update_attribute(:status, nil)
+    @evac_center.update_attribute(:status, "ACTIVE")
     redirect_to "/evac_centers"
   end
 
@@ -135,7 +136,7 @@ class EvacCentersController < ApplicationController
       else
         format.turbo_stream{render turbo_stream: turbo_stream.update("camp_errmsg", "Camp Manager has already been assigned this year.")}
       end
-       
+
     end
   end
 
@@ -168,7 +169,7 @@ class EvacCentersController < ApplicationController
   # POST /evac_centers or /evac_centers.json
   def create
     @evac_center = EvacCenter.new(evac_center_params)
-    
+    @evac_center.status = "ACTIVE"
     respond_to do |format|
       if @evac_center.save
         @evacYearlyProfile = EvacYearlyProfile.new
@@ -183,8 +184,8 @@ class EvacCentersController < ApplicationController
       end
     end
 
-   
-   
+
+
   end
 
   # PATCH/PUT /evac_centers/1 or /evac_centers/1.json
@@ -215,7 +216,7 @@ class EvacCentersController < ApplicationController
       ec.destroy
     end
     @evac_center.destroy
-   
+
     respond_to do |format|
       format.html { redirect_to evac_centers_url, notice: "Evac center was successfully destroyed." }
       format.json { head :no_content }
@@ -230,7 +231,7 @@ class EvacCentersController < ApplicationController
     @assigned_yearly_esses = AssignedYearlyEss.all.where(evac_profile_id: params[:profile_id])
     @new_yearly_ess = AssignedYearlyEss.new
     @page = params.fetch(:page, 0).to_i
-    if  @page < 0 
+    if  @page < 0
         @page = 0
     end
     @assigned_yearly_esses_count = @assigned_yearly_esses.length
@@ -247,7 +248,7 @@ class EvacCentersController < ApplicationController
     @assigned_yearly_ess.evac_profile_id = params[:assigned_yearly_ess][:profile_id]
     @assigned_yearly_ess.quantity = params[:assigned_yearly_ess][:quantity]
     @assigned_yearly_ess.status = params[:assigned_yearly_ess][:status]
-   
+
     respond_to do |format|
       if @assigned_yearly_ess.valid?
         @assigned_yearly_ess.save
@@ -266,7 +267,7 @@ class EvacCentersController < ApplicationController
     @assigned_yearly_esses = AssignedYearlyEss.all.where(evac_profile_id: params[:profile_id])
     @new_yearly_ess = AssignedYearlyEss.new
     @page = params.fetch(:page, 0).to_i
-    if  @page < 0 
+    if  @page < 0
         @page = 0
     end
     @assigned_yearly_esses_count = @assigned_yearly_esses.length

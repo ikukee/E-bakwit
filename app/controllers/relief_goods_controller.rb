@@ -1,6 +1,7 @@
 class ReliefGoodsController < ApplicationController
   before_action :set_relief_good, only: %i[ show edit update destroy ]
-
+  before_action :is_logged_in
+  before_action :checkValidUser
   def search
     search_type = params[:search_type]
     if search_type == "UNIT"
@@ -22,7 +23,7 @@ class ReliefGoodsController < ApplicationController
     add_breadcrumb('Relief Goods')
     @relief_goods = ReliefGood.all
     @page = params.fetch(:page, 0).to_i
-    if  @page < 0 
+    if  @page < 0
         @page = 0
     end
     @relief_goods_count = @relief_goods.length
@@ -65,10 +66,10 @@ class ReliefGoodsController < ApplicationController
 
   # PATCH/PUT /relief_goods/1 or /relief_goods/1.json
   def update
-   
+
     respond_to do |format|
       if @relief_good.update(relief_good_params)
-       
+
         format.html { redirect_to  "/relief_goods", notice: "Relief good was successfully updated." }
         format.json { render :show, status: :ok, location: @relief_good }
       else

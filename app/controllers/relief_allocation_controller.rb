@@ -1,20 +1,20 @@
 class ReliefAllocationController < ApplicationController
-
+    before_action :is_logged_in
     def relief_request
         @requests = ReliefRequest.all.where(status: "PENDING").order(:date_of_request)
         @page = params.fetch(:page, 0).to_i
-        if  @page < 0 
+        if  @page < 0
             @page = 0
         end
         @requests_count = @requests.length
         @requests_count_per_page = 5
         @requests = ReliefRequest.offset(@page * @requests_count_per_page).limit(@requests_count_per_page).where(status: "PENDING").order(date_of_request: :desc)
-       
+
     end
     def accepted_request
         @requests = ReliefRequest.all.where(status: "ACCEPTED").order(:date_of_request)
         @page = params.fetch(:page, 0).to_i
-        if  @page < 0 
+        if  @page < 0
             @page = 0
         end
         @requests_count = @requests.length
@@ -25,7 +25,7 @@ class ReliefAllocationController < ApplicationController
     def dispatched_request
         @requests = ReliefRequest.all.where("status == 'DISPATCHED' OR status == 'RECEIVED'").order(:date_of_request)
         @page = params.fetch(:page, 0).to_i
-        if  @page < 0 
+        if  @page < 0
             @page = 0
         end
         @requests_count = @requests.length
@@ -92,7 +92,7 @@ class ReliefAllocationController < ApplicationController
         end
 
         dispatched_rg.quantity = params[:dispatched_rg][:quantity]
-        if ReliefGood.where(id: dispatched_rg.rg_id).length > 0 
+        if ReliefGood.where(id: dispatched_rg.rg_id).length > 0
             dispatched_rg.name = ReliefGood.find(dispatched_rg.rg_id).name
         end
         respond_to do |format|
@@ -120,7 +120,7 @@ class ReliefAllocationController < ApplicationController
         @evac_id = params[:evac_id]
         @requests = ReliefRequest.all.where(disaster_id: @disaster_id).where(evac_id:@evac_id)
         @page = params.fetch(:page, 0).to_i
-        if  @page < 0 
+        if  @page < 0
             @page = 0
         end
         @requests_count = @requests.length
@@ -131,7 +131,7 @@ class ReliefAllocationController < ApplicationController
 
     def receive_request
         @relief_request = ReliefRequest.find(params[:id])
-      
+
         evac_id = @relief_request.evac_id
         disaster_id = @relief_request.disaster_id
         @dispatched_rgs = DispatchedRg.all.where(request_id: @relief_request.id)
@@ -141,7 +141,7 @@ class ReliefAllocationController < ApplicationController
             if gen_rg_alloc.length < 1
                 key = true
                 gen_rg_alloc = GenRgAlloc.new
-               
+
                 gen_rg_alloc.rg_id = drg.rg_id
                 gen_rg_alloc.disaster_id = disaster_id
                 gen_rg_alloc.evac_id = evac_id
@@ -161,7 +161,7 @@ class ReliefAllocationController < ApplicationController
                 criteria.criteria = 1
                 criteria.save
             end
-          
+
         end
         @relief_request.update_attribute(:status, "RECEIVED")
         redirect_to "/relief_allocation/#{@relief_request.evac_id}/#{@relief_request.disaster_id}"
@@ -176,14 +176,7 @@ class ReliefAllocationController < ApplicationController
     def storage
         @disaster_id = params[:disaster_id]
         @evac_id = params[:evac_id]
-        @relief_goods = GenRgAlloc.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id)
-        @page = params.fetch(:page, 0).to_i
-        if  @page < 0 
-            @page = 0
-        end
-        @relief_goods_count = @relief_goods.length
-        @relief_goods_count_per_page = 10
-        @relief_goods = GenRgAlloc.offset(@page * @relief_goods_count_per_page).limit(@relief_goods_count_per_page).where(disaster_id: @disaster_id).where(evac_id: @evac_id).order(:name)
+        @relief_goods = GenRgAlloc.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id).order(:name)
     end
 
     def sort_by
@@ -200,14 +193,7 @@ class ReliefAllocationController < ApplicationController
         search_type = params[:search_type]
         @disaster_id = params[:disaster_id]
         @evac_id = params[:evac_id]
-        @relief_goods = GenRgAlloc.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id)
-        @page = params.fetch(:page, 0).to_i
-        if  @page < 0 
-            @page = 0
-        end
-        @relief_goods_count = @relief_goods.length
-        @relief_goods_count_per_page = 10
-        @relief_goods = GenRgAlloc.offset(@page * @relief_goods_count_per_page).limit(@relief_goods_count_per_page).where(disaster_id: @disaster_id).where(evac_id: @evac_id).order(:name)
+        @relief_goods = GenRgAlloc.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id).order(:name)
         respond_to do |format|
             format.turbo_stream{render turbo_stream: turbo_stream.update("storage", partial: "food_storage",locals:{relief_goods: @relief_goods, search_type: search_type})}
         end
@@ -233,7 +219,7 @@ class ReliefAllocationController < ApplicationController
         end
     end
 
-    def save_configuration 
+    def save_configuration
         rg_criterium = RgCriterium.find(params[:id])
         gen_rg_alloc = GenRgAlloc.find(rg_criterium.gen_rg_alloc_id)
         if ReliefGood.find(gen_rg_alloc.rg_id).is_food == true
@@ -255,7 +241,7 @@ class ReliefAllocationController < ApplicationController
 
         @evacuees= Evacuee.all.where(disaster_id: @disaster_id).where(evac_id:@evac_id).where(relief_good_status: "RECEIVED")
         @page = params.fetch(:page, 0).to_i
-        if  @page < 0 
+        if  @page < 0
             @page = 0
         end
         @evacuees_count = @evacuees.length
@@ -270,7 +256,7 @@ class ReliefAllocationController < ApplicationController
 
         @evacuees= Evacuee.all.where(disaster_id: @disaster_id).where(evac_id:@evac_id).where(relief_good_status: "RECEIVED")
         @page = params.fetch(:page, 0).to_i
-        if  @page < 0 
+        if  @page < 0
             @page = 0
         end
         @evacuees_count = @evacuees.length
@@ -316,7 +302,7 @@ class ReliefAllocationController < ApplicationController
                 gen_id = "gen_id"+x.to_s
                 quantity = "quantity"+x.to_s
                 criterium = RgCriterium.find_by(gen_rg_alloc_id: params[gen_id])
-           
+
                 if params[include].to_i == 1
                     assignedRg = ReliefGoodToEvacuee.new
                     assignedRg.evacuee_id = evacuee.id
@@ -328,11 +314,11 @@ class ReliefAllocationController < ApplicationController
                     gen = GenRgAlloc.find(params[gen_id])
                     if gen.quantity.to_f - assignedRg.quantity.to_f < 1
                         gen.update_attribute(:quantity, 0)
-                    else 
+                    else
                         gen.update_attribute(:quantity, gen.quantity.to_f - assignedRg.quantity.to_f)
                     end
                 end
-                x = x + 1 
+                x = x + 1
             end
             evacuee.update_attribute(:relief_good_status, "RECEIVED")
             redirect_to "/view/evacuee/members/#{evacuee.id}/allotted"
@@ -343,8 +329,8 @@ class ReliefAllocationController < ApplicationController
             end
         end
 
-        
-        
+
+
     end
 
     def view_allocated_rgs
@@ -372,9 +358,9 @@ class ReliefAllocationController < ApplicationController
 
 
 
-  
 
-    
 
-    
+
+
+
 end

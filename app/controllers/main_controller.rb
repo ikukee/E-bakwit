@@ -1,13 +1,17 @@
 class MainController < ApplicationController
-    #before_action :is_logged_in, except: %i[login logout register login_proceed register_proceed index]
+    before_action :is_logged_in, except: %i[login logout register login_proceed register_proceed index]
     def index
         @evac_centers = EvacCenter.all
+    end
+
+    def error
+
     end
 
     def login
 
     end
-    
+
     def logout
         session[:user_id] = nil
         session[:user_type] = nil
@@ -16,7 +20,7 @@ class MainController < ApplicationController
 
     def account
         @user = User.find(session[:user_id])
-        
+
     end
 
     def login_proceed
@@ -27,11 +31,7 @@ class MainController < ApplicationController
                     if user.password_digest == params[:password]
                         session[:user_id] = user.id
                         session[:user_type] = user.user_type
-                        if user.user_type == "ADMIN"
-                            format.html{redirect_to "/evac_centers"}
-                        else
-                            format.html{redirect_to "/new_user/#{user.id}"}
-                        end
+                        format.html{redirect_to "/new_user/#{user.id}"}
                     else
                         format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>INCORRECT PASSWORD!</li></ul>")}
                     end
@@ -48,12 +48,12 @@ class MainController < ApplicationController
                                 format.html{redirect_to "/dashboard"}
                             end
                         end
-                        
+
                     else
                         format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>INCORRECT PASSWORD!</li></ul>")}
                     end
                 end
-             
+
             else
                 format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>ACCOUNT NOT FOUND!</li></ul>")}
             end
@@ -61,12 +61,12 @@ class MainController < ApplicationController
     end
 
     def log_relief_form
-        
+
     end
 
     def send_request_proceed
         @request = Request.new
-     
+
         @request.fname = params[:request][:fname].upcase
         @request.lname = params[:request][:lname].upcase
         @request.bdate = params[:request][:bdate]
@@ -76,6 +76,7 @@ class MainController < ApplicationController
         @request.address = params[:request][:address].upcase
         @request.images.attach(params[:request][:valid_id])
         @request.images.attach(params[:request][:selfie])
+        @request.user_type = "VOLUNTEER"
         @request.status = "PENDING"
         respond_to do |format|
             if @request.valid?
@@ -92,14 +93,14 @@ class MainController < ApplicationController
 
     end
 
-  
+
     def new_camp_manager
 
     end
 
     def create_campmanager
         @request = Request.new
-     
+
         @request.fname = params[:request][:fname].upcase
         @request.lname = params[:request][:lname].upcase
         @request.bdate = params[:request][:bdate]
@@ -109,6 +110,7 @@ class MainController < ApplicationController
         @request.address = params[:request][:address].upcase
         @request.images.attach(params[:request][:valid_id])
         @request.images.attach(params[:request][:selfie])
+        @request.user_type = params[:request][:user_type]
         @request.status = "PENDING"
         respond_to do |format|
             if @request.valid?
@@ -120,7 +122,8 @@ class MainController < ApplicationController
                     num2 = rand(10..99).to_s
                     @user = User.new
                     @user.assigned = false
-                    @user.user_type = "CAMP MANAGER"
+                    puts params[:request][:user_type]
+                    @user.user_type = @request.user_type
                     @user.status = "PENDING"
                     @user.fname = @request.fname
                     @user.lname = @request.lname
@@ -128,7 +131,7 @@ class MainController < ApplicationController
                     @user.cnum = @request.cnum
                     @user.bdate = @request.bdate
                     @user.address = @request.address
-                    @user.password_digest = "@Vr"+ num1 + num2 + @request.bdate.year.to_s    
+                    @user.password_digest = "@Vr"+ num1 + num2 + @request.bdate.year.to_s
                     @user.full_name = @request.lname.to_s + ", "+ @request.fname.to_s
                     if @user.valid?
                         @user.save
@@ -138,13 +141,13 @@ class MainController < ApplicationController
                         format.html{redirect_to "/camp_managers"}
                     end
                 end
-                
+
             else
-                format.turbo_stream{render turbo_stream: turbo_stream.update("request_form",partial:"reqCreate_form",locals:{request:@request})}
+                format.turbo_stream{render turbo_stream: turbo_stream.update("request_form",partial:"campmanager_form",locals:{request:@request})}
             end
         end
 
-        
+
     end
 
 end

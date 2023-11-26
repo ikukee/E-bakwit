@@ -13,7 +13,7 @@
       <% if search_type == "FOOD"%>
         <% if ReliefGood.find(rg.rg_id).is_food == true%>
           <tr>
-            <td><%= rg.name%></td>
+            <td><strong><%= rg.name%></strong></td>
             <td><%= rg.quantity%></td>
             <td><%= ReliefGood.find(rg.rg_id).unit %></td>
             <td><%= rg.price %> </td>
@@ -23,7 +23,7 @@
       <% elsif search_type == "NON-FOOD"%>
         <% if ReliefGood.find(rg.rg_id).is_food == false %>
           <tr>
-            <td><%= rg.name%></td>
+            <td><strong><%= rg.name%></strong></td>
             <td><%= rg.quantity%></td>
             <td><%= ReliefGood.find(rg.rg_id).unit %></td>
             <td><%= rg.price %> </td>
@@ -32,7 +32,7 @@
         <% end %>
       <% else %>
         <tr>
-          <td><%= rg.name%></td>
+          <td><strong><%= rg.name%></strong></td>
           <td><%= rg.quantity%></td>
           <td><%= ReliefGood.find(rg.rg_id).unit %></td>
           <td><%= rg.price %> </td>

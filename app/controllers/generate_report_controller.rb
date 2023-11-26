@@ -1,4 +1,5 @@
 class GenerateReportController < ApplicationController
+    before_action :is_logged_in
     require 'axlsx'
     def generate ## evac_centers/1/:disaster/generate
         @evac_center = EvacCenter.find(params[:evac_center])
@@ -13,12 +14,12 @@ class GenerateReportController < ApplicationController
                 @essFaci.push([EvacuationEssential.find(ye.ess_id).name,EvacuationEssential.find(ye.ess_id).ess_type, EvacuationEssential.find(ye.ess_id).description, ye.quantity, ye.status])
             end
         end
-        GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", @disaster.id , @evac_center.id).each do |rg|               
-            @rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])  
+        GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", @disaster.id , @evac_center.id).each do |rg|
+            @rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])
             if ReliefGood.find(rg.rg_id).is_food == true
-                @tprice = @tprice + rg.price 
+                @tprice = @tprice + rg.price
             elsif ReliefGood.find(rg.rg_id).is_food == false
-                @tprice = @tprice + rg.price 
+                @tprice = @tprice + rg.price
             else
                 @tprice = @tprice + rg.price
             end
@@ -54,14 +55,14 @@ class GenerateReportController < ApplicationController
             sheet.add_row ["TEENAGERS",helpers.ggetTeenagers(@evac_center.id, @disaster.id,"Male", false),helpers.ggetTeenagers(@evac_center.id, @disaster.id,"Male", true),helpers.ggetTeenagers(@evac_center.id, @disaster.id,"Female", false),helpers.ggetTeenagers(@evac_center.id, @disaster.id,"Female", true)].concat(whitespacer(3))
             sheet.add_row ["ADULTS",helpers.ggetAdults(@evac_center.id, @disaster.id,"Male", false),helpers.ggetAdults(@evac_center.id, @disaster.id,"Male", true),helpers.ggetAdults(@evac_center.id, @disaster.id,"Female", false),helpers.ggetAdults(@evac_center.id, @disaster.id,"Female", true)].concat(whitespacer(3))
             sheet.add_row ["SENIORS",helpers.ggetSeniors(@evac_center.id, @disaster.id,"Male", false),helpers.ggetSeniors(@evac_center.id, @disaster.id,"Male", true),helpers.ggetSeniors(@evac_center.id, @disaster.id,"Female", false),helpers.ggetSeniors(@evac_center.id, @disaster.id,"Female", true)].concat(whitespacer(3))
-            
+
             sheet.merge_cells('B7:C7')
             sheet.merge_cells('D7:E7')
             sheet.merge_cells('A7:A8')
             sheet["A7:H8"].each do |cell|
                 cell.style = wb.styles.add_style({bg_color:"c5e0b3", :alignment => {:horizontal => :center, :vertical => :center, :wrap_text => true}})
             end
-            
+
         end
         wb.add_worksheet(name: "RELIEF GOODS RECIEVED") do |sheet|
             sheet.add_row ["Report Number"]
@@ -79,7 +80,7 @@ class GenerateReportController < ApplicationController
                 pane.active_pane = :bottom_right
             end
             sheet.add_row ["RELIEF GOODS RECIEVED"].concat(whitespacer(7))
-            
+
             sheet.add_row ["NAME", "UNIT / PRICE", "QUANTITY", "CUMULATIVE PRICE"].concat(whitespacer(4))
             sheet["A7:H8"].each do |cell|
                 cell.style = wb.styles.add_style({bg_color:"c5e0b3",:alignment => {:horizontal => :center, :vertical => :center, :wrap_text => true}})
@@ -88,7 +89,7 @@ class GenerateReportController < ApplicationController
             @rlGoods.each do |rlG|
                 sheet.add_row rlG
             end
-            
+
         end
         wb.add_worksheet(name: "EVACUATION CENTER FACILITIES") do |sheet|
             sheet.add_row ["Report Number"]
@@ -119,7 +120,7 @@ class GenerateReportController < ApplicationController
 
         p.serialize "#{Rails.root}/tmp/generate.xlsx"
         send_file("#{Rails.root}/tmp/generate.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.xlsx", type: "application/xlsx")
-        
+
     end
     def generate_all # disasters/1/generate
         ## GRAND TOTAL OF ALL EVAC CENTERS
@@ -166,8 +167,8 @@ class GenerateReportController < ApplicationController
         @seniorF_now = 0
         ## RELIEF GOODS PART
         @tprice = 0
-        @tnfprice =0 
-        @tfprice =0 
+        @tnfprice =0
+        @tfprice =0
         rlGoods = []
         essFaciTitles = [""]
         @disaster = Disaster.find(params[:disaster_id])
@@ -204,7 +205,7 @@ class GenerateReportController < ApplicationController
             @teenageF_now += helpers.ggetTeenagers(center.id, @disaster.id, "Female",true)
             @adultF_now += helpers.ggetAdults(center.id, @disaster.id, "Female",true)
             @seniorF_now += helpers.ggetSeniors(center.id, @disaster.id, "Female",true)
-            
+
             @totalfamily += countServedFamily(center.id, @disaster.id, false)
             @totalPersons += countIndivEvacuated(center.id, @disaster.id, false)
             @CumFamilies += countServedFamily(center.id, @disaster.id, false)
@@ -212,15 +213,15 @@ class GenerateReportController < ApplicationController
             @CumPerson +=countIndivEvacuated(center.id, @disaster.id, false)
             @NowPerson +=countIndivEvacuated(center.id, @disaster.id, true)
             @totalfamily4ps +=countServedFamily4ps(center.id, @disaster.id, false)
-                
 
-            GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", @disaster.id , center.id).each do |rg|               
-                rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])  
+
+            GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", @disaster.id , center.id).each do |rg|
+                rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])
                 if ReliefGood.find(rg.rg_id).is_food == true
-                    @tprice = @tprice + rg.price 
+                    @tprice = @tprice + rg.price
                     @tfprice += rg.price
                 elsif ReliefGood.find(rg.rg_id).is_food == false
-                    @tprice = @tprice + rg.price 
+                    @tprice = @tprice + rg.price
                     @tnfprice += rg.price
                 else
                     @tprice = @tprice + rg.price
@@ -239,7 +240,9 @@ class GenerateReportController < ApplicationController
         grandTotalHeader = s.add_style bg_color: '7f7f7f'
         brngyHeader = s.add_style bg_color: 'a5a5a5'
         defaultColorHead = s.add_style bg_color: '9fc5e8', :alignment => {:horizontal => :center, :vertical => :center, :wrap_text => true}
-        wb.add_worksheet(name: "NAGA CITY_#{@disaster.name}_#{@disaster.date_of_occurence}") do |sheet|
+        worksheet_name ="#{@disaster.name}_#{@disaster.date_of_occurence}"
+
+        wb.add_worksheet(name:worksheet_name ) do |sheet|
             sheet.add_row ["Report Number"]
             sheet.add_row ["GENERATED AS OF", Time.current, "GENERATED BY", User.find(session[:user_id]).full_name, "EMAIL", User.find(session[:user_id]).email, "MOBILE No.", User.find(session[:user_id]).cnum]
             sheet.add_row ["INCIDENT NAME", @disaster.name, "DISASTER TYPE",@disaster.disaster_type,"DATE OF OCCURENCE", @disaster.date_of_occurence]
@@ -247,7 +250,7 @@ class GenerateReportController < ApplicationController
             sheet.add_row ["BARANGAY", "Number of Affected"].concat(whitespacer(4)).concat(["Number of Displaced Inside ECs"]).concat(whitespacer(3),age_groupT(true, 3)).concat(whitespacer(essFaciTitles.length+3)),style:defaultColorHead
             sheet.add_row [""].concat(whitespacer(5)).concat(["FAMILIES","","PERSONS"]).concat(whitespacer(1), malefemale(7),whitespacer(1), ["TOTAL COST OF ASSISTANCE", ""]).concat(whitespacer(1),["EVACUATION CENTER FACILITIES"]).concat(whitespacer(essFaciTitles.length-2)),style:defaultColorHead
             sheet.add_row ["", "EVACUATION CENTER", "COUNT","FAMILIES","PERSONS","4Ps FAMILIES"].concat(cumnow(8), ["","FOOD", "NON-FOOD"],essFaciTitles),style:defaultColorHead
-            sheet.add_row ["GRAND TOTAL", "",EvacCenter.all.length, 
+            sheet.add_row ["GRAND TOTAL", "",EvacCenter.all.length,
             @totalfamily, @totalPersons, @totalfamily4ps, @CumFamilies, @NowFamilies, @CumPerson, @NowPerson, @infantM,@infantM_now, @infantF, @infantF_now,
             @toddlerM,@toddlerM_now, @toddlerF,@toddlerF_now,
             @preschoolersM,@preschoolersM_now,@preschoolersF,@preschoolersF_now,
@@ -265,9 +268,9 @@ class GenerateReportController < ApplicationController
             barangay_group.each do |brgy|
                 sheet.add_row ["#{brgy}", limiterForBarangay(brgy)].concat(whitespacer(39 + essFaciTitles.length)), style: brngyHeader
                 @evac_centers.each do |center|
-                    
+
                     if center.barangay == brgy
-                        sheet.add_row ["", center.name, "1",                      
+                        sheet.add_row ["", center.name, "1",
                             countServedFamily(center.id, @disaster.id, false),
                             countIndivEvacuated(center.id, @disaster.id, false),
                             countServedFamily4ps(center.id, @disaster.id, false),
@@ -305,10 +308,10 @@ class GenerateReportController < ApplicationController
                             helpers.ggetAdults(center.id, @disaster.id, "Male",true),
                             helpers.getAdults(center.id, @disaster.id, "Female"),
                             helpers.ggetAdults(center.id, @disaster.id, "Female",true),
-                            
-                            helpers.getSeniors(center.id, @disaster.id, "Male"),  
-                            helpers.ggetSeniors(center.id, @disaster.id, "Male",true),                         
-                            helpers.getSeniors(center.id, @disaster.id, "Female"),                       
+
+                            helpers.getSeniors(center.id, @disaster.id, "Male"),
+                            helpers.ggetSeniors(center.id, @disaster.id, "Male",true),
+                            helpers.getSeniors(center.id, @disaster.id, "Female"),
                             helpers.ggetSeniors(center.id, @disaster.id, "Female",true),
                     ].concat(whitespacer(1),[getReliefCost(center.id, @disaster.id,true),getReliefCost(center.id, @disaster.id,false), ""], getQuantity(center.id, @disaster))
                     end
@@ -357,27 +360,27 @@ class GenerateReportController < ApplicationController
             sheet["K5:AL7"].each do |cell|
                 cell.style = wb.styles.add_style({bg_color:"fef2cb",:alignment => {:horizontal => :center, :vertical => :center, :wrap_text => true}})
             end
-            
+
             sheet["G5:J7"].each do |cell|
                 cell.style = wb.styles.add_style({bg_color:"93c47d",:alignment => {:horizontal => :center, :vertical => :center, :wrap_text => true}})
             end
             sheet["AM5:AP7"].each do |cell|
                 cell.style = wb.styles.add_style({bg_color:"f7caac", :alignment => {:horizontal => :center, :vertical => :center, :wrap_text => true}})
             end
-            
+
         end
         p.serialize "#{Rails.root}/tmp/generate_all.xlsx"
-            send_file("#{Rails.root}/tmp/generate_all.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}.xlsx", type: "application/xlsx")    
+            send_file("#{Rails.root}/tmp/generate_all.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}.xlsx", type: "application/xlsx")
 
-    end   
+    end
     private
     def limiterForBarangay(brgy)
         x = EvacCenter.where("BARANGAY = ?", brgy).all.length
         if(x > 0)
-            return x 
-        else 
-            return "" 
-        end 
+            return x
+        else
+            return ""
+        end
     end
     def getQuantity(x, y)
         xyValues = []
@@ -389,38 +392,38 @@ class GenerateReportController < ApplicationController
         return xyValues
     end
     def countServedFamily(evac_center, disaster, key )
-        
+
         countFam = 0
-        if key 
+        if key
             evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).group(:family_id)
         else
             evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).group(:family_id)
         end
-        
-        evacuee.each do |x| 
+
+        evacuee.each do |x|
             countFam = countFam + 1
-        end   
+        end
         return countFam
     end
     def countServedFamily4ps(evac_center, disaster, key )
-        
+
         countFam = 0
-        if key 
+        if key
             evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).group(:family_id)
         else
             evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).group(:family_id)
         end
-        
-        evacuee.each do |x| 
+
+        evacuee.each do |x|
             if(Family.find(x.family_id).is_4ps == true)
                 countFam = countFam + 1
             end
-        end   
+        end
         return countFam
     end
     def countIndivEvacuated(evac_center,disaster,key)
         evacuees = Evacuee.all.where(disaster_id: disaster).where(evac_id: evac_center)
-        if key 
+        if key
             member_ids = Array.new
             evacuees.each do |ec|
                 EvacMember.all.where(evacuee_id: ec.id).where(status: "UNRELEASED").each do |em|
@@ -474,29 +477,29 @@ class GenerateReportController < ApplicationController
         priceValN = 0
         GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", disaster , center).each do |rg|
             if ReliefGood.find(rg.rg_id).is_food == true
-                priceValF +=rg.price 
+                priceValF +=rg.price
             elsif ReliefGood.find(rg.rg_id).is_food == false
-                priceValN +=rg.price 
+                priceValN +=rg.price
             end
         end
-        
-        if k 
+
+        if k
             return priceValF
         else
             return priceValN
         end
-        
+
     end
     def barangay_group
         titles = [
-            "Abella", "Bagumbayan Norte", "Bagumbayan Sur", "Balatas", 
-            "Calauag", "Cararayan", "Carolina", "Concepcion Grande", 
-            "Concepcion Pequeña", "Dayangdang", "Del Rosario", "Dinaga", 
-            "Igualdad Interior","Lerma","Liboton", "Mabolo", "Pacol", 
-            "Panicuason", "Peñafrancia", "Sabang", "San Felipe", 
-            "San Francisco", "San Isidro", "Santa Cruz", "Tabuco", 
+            "Abella", "Bagumbayan Norte", "Bagumbayan Sur", "Balatas",
+            "Calauag", "Cararayan", "Carolina", "Concepcion Grande",
+            "Concepcion Pequeña", "Dayangdang", "Del Rosario", "Dinaga",
+            "Igualdad Interior","Lerma","Liboton", "Mabolo", "Pacol",
+            "Panicuason", "Peñafrancia", "Sabang", "San Felipe",
+            "San Francisco", "San Isidro", "Santa Cruz", "Tabuco",
             "Tinago", "Triangulo"
         ]
     end
-    
+
 end

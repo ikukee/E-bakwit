@@ -21,6 +21,7 @@
           </div>
           <div class = "col-md-4">
             <% if evac_center.status == nil %>
+            <% if session[:user_type] == "CAMP MANAGER" %>
               <button  class="btn btn-primary form-control" data-bs-toggle= "modal" data-bs-target="#add_profile" type="button">Add profile <i class="fa fa-plus" aria-hidden="true"></i></button>
               <div id="add_profile" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-md">
@@ -39,6 +40,7 @@
                   </div>
                 </div>
               </div>
+            <% end  %>
             <% end %>
           </div>
         </div>
@@ -75,7 +77,7 @@
             <p class="h2 oswald fw h-100" align="right">FACILITIES: </p>
           </div>
           <div class="col">
-            <p class="h2 oswald fw"><%= countFacilities(evac_yearly_profile)%> <i class="fa-solid fa-shower"></i><% if session[:user_type] == "ADMIN"%>
+            <p class="h2 oswald fw"><%= countFacilities(evac_yearly_profile)%> <i class="fa-solid fa-shower"></i><% if session[:user_type] == "CAMP MANAGER"%>
                 <a href="/evac_facilities_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-outline-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
               <% else %>
                 <% if User.find(session[:user_id]).currently_assigned != nil%>
@@ -91,7 +93,7 @@
             <p class="h2 oswald fw" align="right">ESSENTIAL ITEMS: </p>
           </div>
           <div class="col">
-            <p class="h2 oswald fw"><%= countItems(evac_yearly_profile)%> <i class="fa-solid fa-box-archive"></i><% if session[:user_type] == "ADMIN"%>
+            <p class="h2 oswald fw"><%= countItems(evac_yearly_profile)%> <i class="fa-solid fa-box-archive"></i><% if session[:user_type] == "CAMP MANAGER"%>
                 <a href="/evac_essentials_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-outline-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
               <% else %>
                 <% if User.find(session[:user_id]).currently_assigned != nil%>
@@ -113,7 +115,7 @@
             <h1 class="oswald fw">CAMP MANAGER</h1>
           </div>
         </div>
-        <% if session[:user_type] == "ADMIN" %>
+        <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER" %>
           <% if evac_yearly_profile.manager_id == nil %>
             <label class="oswald fw">Camp Manager Name: </label>
             <%= form_with url:"/add_campmanager", method: :post do |form|%>
@@ -140,9 +142,10 @@
                 <th >First Name</th>
                 <th >Last Name</th>
                 <th >Contact Number</th>
-                <% if session[:user_type] == "ADMIN"%>
+                <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
                   <th >Actions</th>
                 <% end %>
+              
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -152,7 +155,7 @@
                   <td><%= user.fname%></td>
                   <td><%= user.lname%></td>
                   <td><%= user.cnum%></td>
-                  <% if session[:user_type] == "ADMIN"%>
+                  <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
                     <% if evac_center.status == nil%>
                       <td class="position-relative">
                         <%= link_to "/remove_campmanager/#{evac_yearly_profile.id}", class:"btn btn-danger form-control", data: { turbo_method: :post, turbo_confirm: "Are you sure?" } do %>
@@ -162,8 +165,6 @@
                     <% else %>
                       <td class="position-relative"></td>
                     <% end %>
-                  <% else %>
-                    <td class="position-relative"></td>
                   <% end %>
                 </tr>
               <% end %>
@@ -179,7 +180,7 @@
             <h1 class="oswald fw">VOLUNTEERS</h1>
           </div>
         </div>
-        <% if session[:user_type] == "ADMIN"%>
+        <% if session[:user_type] != "VOLUNTEER" %>
           <% if User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").count > 0 %>
             <% if evac_center.status == nil%>
               <label class="oswald fw">Volunteer Name: </label>
@@ -218,8 +219,8 @@
                   <td><%= user.fname%></td>
                   <td><%= user.lname%></td>
                   <td><%= user.cnum%></td>
-                  <% if session[:user_type] == "ADMIN"%>
-                    <% if evac_center.status == nil%>
+                  <% if session[:user_type] != "VOLUNTEER"%>
+                    <% if evac_center.status != "ARCHIVED" %>
                       <td class="position-relative">
                         <%= link_to "/remove_volunteer/#{av.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
                           Remove <i class="fa fa-trash" aria-hidden="true"></i>

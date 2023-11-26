@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root to:"main#index"
+  get "/error",to:"main#error"
   get "/evac_essentials_form/:evac_id/:profile_id", to: "evac_centers#evac_essentials_form"
   get "/evac_facilities_form/:evac_id/:profile_id", to: "evac_centers#evac_facilities_form"
   get "/evac_centers/show/archives",to:"evac_centers#archives"
@@ -26,6 +27,7 @@ Rails.application.routes.draw do
   get "/download/:id/:img_id/:counter",to:"volunteer#download"
   get "/camp_manager/new",to:"main#new_camp_manager"
   get "/camp_managers",to:"volunteer#camp_managers"
+  get "/admins",to:"volunteer#admins"
 
   # base tables
   post "/disasters/search",to:"disasters#search"
@@ -40,7 +42,7 @@ Rails.application.routes.draw do
   get "evac_centers/:evac_center/:disaster_id/generate", to: "generate_report#generate"
   get "disasters/:disaster_id/generate", to: "generate_report#generate_all"
   ## LOGGING
-  
+
   get "evac_centers/:id/log/:disaster_id", to: "log_family#logging"
   get "evac_centers/:evac_id/:disaster_id/evacuated", to: "log_family#evacuatedView"
   post "evac_centers/:evac_id/:disaster_id/out/:member_id", to: "log_family#evacueeOut"
@@ -52,6 +54,7 @@ Rails.application.routes.draw do
   post "/log/:member_id/:evac_id/:disaster_id", to: "log_family#evacuate"
   post "/log/all/:family_id",to:"log_family#evacuate_all"
   post "/view_disaster_evacuation",to: "evac_centers#view_disaster_evacuation"
+  post "/evacuated/sort_by",to:"log_family#sort_by"
 
   post "/login/proceed",to:"main#login_proceed"
   post "/send_request",to:"main#send_request_proceed"
@@ -100,7 +103,7 @@ Rails.application.routes.draw do
   post "/distribute/relief_goods/:id", to:"relief_allocation#distribute_goods"
   post "/view/allocated_rgs", to:"relief_allocation#view_allocated_rgs"
   post "/search/evacuees", to:"relief_allocation#search_evacuees"
-  
+
 
   delete "/remove_volunteer/:id",to:"evac_centers#remove_volunteer"
   delete "/evac_centers/:id/destroy",to:"evac_centers#destroy"
