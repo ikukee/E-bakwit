@@ -45,7 +45,7 @@
             <% else %>
               <td>NO</td>
             <% end %>
-            <% if member.evacuee_id != 0 %>
+            <% if member.evacuee_id != 0 && member.evacuee_id != nil %>
               <% evacuee =Evacuee.find(member.evacuee_id)%>
               <td><a href = "/evac_centers/<%=evacuee.evac_id%>/<%=evacuee.disaster_id%>/evacuated"><%= EvacCenter.find(evacuee.evac_id).name %></a></td>
             <% else %>

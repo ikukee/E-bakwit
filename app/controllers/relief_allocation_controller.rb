@@ -1,6 +1,9 @@
 class ReliefAllocationController < ApplicationController
+    before_action :add_index_breadcrumb, only: [:storage, :your_request, :configuration]
+
 
     def relief_request
+        add_breadcrumb('Pending Requests')
         @requests = ReliefRequest.all.where(status: "PENDING").order(:date_of_request)
         @page = params.fetch(:page, 0).to_i
         if  @page < 0 
@@ -12,6 +15,7 @@ class ReliefAllocationController < ApplicationController
        
     end
     def accepted_request
+        add_breadcrumb('Accepted Requests')
         @requests = ReliefRequest.all.where(status: "ACCEPTED").order(:date_of_request)
         @page = params.fetch(:page, 0).to_i
         if  @page < 0 
@@ -23,6 +27,7 @@ class ReliefAllocationController < ApplicationController
     end
 
     def dispatched_request
+        add_breadcrumb('Dispatched Requests')
         @requests = ReliefRequest.all.where("status == 'DISPATCHED' OR status == 'RECEIVED'").order(:date_of_request)
         @page = params.fetch(:page, 0).to_i
         if  @page < 0 
@@ -64,6 +69,11 @@ class ReliefAllocationController < ApplicationController
     def allocation
         @relief_request =ReliefRequest.find(params[:id])
         @dispatched_rg = DispatchedRg.all.where(request_id: @relief_request.id)
+        @evac_center = EvacCenter.find_by(id: @relief_request.evac_id)
+        add_breadcrumb("Evacuation Centers", evac_centers_path)
+        add_breadcrumb(@evac_center.name, evac_center_path(@evac_center))
+        add_breadcrumb("Relief Goods Allocation", "/evac_centers/non_distributed_rg/" + @relief_request.evac_id.to_s + "/" + @relief_request.disaster_id.to_s)
+        add_breadcrumb("Allocated Relief Goods")
     end
 
     def dispatch_request
@@ -261,6 +271,11 @@ class ReliefAllocationController < ApplicationController
         @evacuees_count = @evacuees.length
         @evacuees_count_per_page = 5
         @evacuees = Evacuee.offset(@page * @evacuees_count_per_page).limit(@evacuees_count_per_page).order(:family_name).where(disaster_id: @disaster_id).where(evac_id:@evac_id).where(relief_good_status: "RECEIVED")
+    
+        @evac_center = EvacCenter.find_by(id: @evac_id)
+        add_breadcrumb("Evacuation Centers", evac_centers_path)
+        add_breadcrumb(@evac_center.name, evac_center_path(@evac_center))
+        add_breadcrumb("Relief Goods Allocation")
     end
 
     def non_distributed_rg
@@ -276,6 +291,11 @@ class ReliefAllocationController < ApplicationController
         @evacuees_count = @evacuees.length
         @evacuees_count_per_page = 5
         @evacuees = Evacuee.offset(@page * @evacuees_count_per_page).limit(@evacuees_count_per_page).order(:family_name).where(disaster_id: @disaster_id).where(evac_id:@evac_id).where(relief_good_status: nil).where(date_out: nil)
+        
+        @evac_center = EvacCenter.find_by(id: @evac_id)
+        add_breadcrumb("Evacuation Centers", evac_centers_path)
+        add_breadcrumb(@evac_center.name, evac_center_path(@evac_center))
+        add_breadcrumb("Relief Goods Allocation")
     end
 
     def view_evac_members
@@ -283,6 +303,11 @@ class ReliefAllocationController < ApplicationController
         @evacuee = Evacuee.find(params[:id])
         @members = EvacMember.all.where(evacuee_id: @evacuee.id)
         @gen_rg_allocs = GenRgAlloc.all.where(disaster_id: @evacuee.disaster_id).where(evac_id: @evacuee.evac_id)
+        @evac_center = EvacCenter.find_by(id: @evacuee.evac_id)
+        add_breadcrumb("Evacuation Centers", evac_centers_path)
+        add_breadcrumb(@evac_center.name, evac_center_path(@evac_center))
+        add_breadcrumb("Relief Goods Allocation", "/evac_centers/non_distributed_rg/" + @evac_center.id.to_s + "/" + @evacuee.disaster_id.to_s)
+        add_breadcrumb(@evacuee.family_name)
     end
 
     def distribute_goods
@@ -367,10 +392,12 @@ class ReliefAllocationController < ApplicationController
         end
     end
 
-
-
-
-
+    def add_index_breadcrumb
+        @evac_center = EvacCenter.find_by(id: params[:evac_id])
+        add_breadcrumb("Evacuation Centers", evac_centers_path)
+        add_breadcrumb(@evac_center.name, evac_center_path(@evac_center))
+        add_breadcrumb("Relief Goods Configuration")
+    end
 
   
 

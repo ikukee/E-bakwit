@@ -18,18 +18,18 @@
         <% if evacuee.relief_good_status == nil%>
           <% if EvacCenter.find(evacuee.evac_id).status == nil%>
             <td>
-              <a href = "/view/evacuee/members/<%=evacuee.id%>/new" class= "btn btn-info form-control">View <i class="fa-solid fa-eye"></i></a>
+              <a href = "/view/evacuee/members/<%=evacuee.id%>/new" class= "btn btn-info bg-dinfo form-control">View <i class="fa-solid fa-eye"></i></a>
             </td>
           <% end %>
         <% else %>
           <td>
             <div class = "row">
               <div class = "col-md-6">
-                <a href = "/view/evacuee/members/<%=evacuee.id%>/allotted" class= "btn btn-info form-control">View <i class="fa-solid fa-eye"></i></a>
+                <a href = "/view/evacuee/members/<%=evacuee.id%>/allotted" class= "btn btn-info bg-dinfo text-light form-control">View <i class="fa-solid fa-eye"></i></a>
               </div>
               <% if EvacCenter.find(evacuee.evac_id).status == nil%>
                 <div class = "col-md-6">
-                  <a href = "/view/evacuee/members/<%=evacuee.id%>/new" class= "btn btn-primary form-control">New Distribution <i class="fa-solid fa-plus"></i></a>
+                  <a href = "/view/evacuee/members/<%=evacuee.id%>/new" class= "btn btn-primary bg-navy form-control">New Distribution <i class="fa-solid fa-plus"></i></a>
                 </div>
               <% end %>
             </div>
