@@ -15,6 +15,7 @@ class MainController < ApplicationController
     end
 
     def account
+        add_breadcrumb('Your Account')
         @user = User.find(session[:user_id])
         
     end
