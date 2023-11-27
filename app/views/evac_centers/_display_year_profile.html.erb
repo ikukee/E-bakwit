@@ -20,7 +20,7 @@
             <% end %>
           </div>
           <div class = "col-md-4">
-            <% if evac_center.status == nil %>
+            <% if evac_center.status != "ARCHIVED" %>
             <% if session[:user_type] == "CAMP MANAGER" %>
               <button  class="btn btn-primary form-control" data-bs-toggle= "modal" data-bs-target="#add_profile" type="button">Add profile <i class="fa fa-plus" aria-hidden="true"></i></button>
               <div id="add_profile" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -156,7 +156,7 @@
                   <td><%= user.lname%></td>
                   <td><%= user.cnum%></td>
                   <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
-                    <% if evac_center.status == nil%>
+                    <% if evac_center.status != "ARCHIVED" %>
                       <td class="position-relative">
                         <%= link_to "/remove_campmanager/#{evac_yearly_profile.id}", class:"btn btn-danger form-control", data: { turbo_method: :post, turbo_confirm: "Are you sure?" } do %>
                           Remove <i class="fa fa-trash" aria-hidden="true"></i>
@@ -182,7 +182,7 @@
         </div>
         <% if session[:user_type] != "VOLUNTEER" %>
           <% if User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").count > 0 %>
-            <% if evac_center.status == "ACTIVE"%>
+            <% if evac_center.status != "ARCHIVED"%>
               <label class="oswald fw">Volunteer Name: </label>
               <%= form_with url:"/add_volunteer", method: :post do |form|%>
                 <div class="row">
