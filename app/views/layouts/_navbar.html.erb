@@ -1,4 +1,4 @@
-<nav id="ebak-nav" class="poppins row navbar navbar-expand-lg m-0 pb-0">
+<nav id="ebak-nav" class="poppins row navbar navbar-expand-lg m-0">
   <div class="container px-lg-5 ">
     <%= link_to root_path, class: "navbar-brand oswald fs-3 fw-bold", id: "nav-home-title" do %>
       <i class="fa-solid fa-person-shelter mx-2"></i>NAGA <span class="fs-3 navbar-brand oswald" style="color:#2e9cdb;">E-BAKWIT</span>
@@ -25,7 +25,7 @@
                   <i class="fa-solid fa-person-shelter"></i> Evacuation Centers
                 <% end %>
                 <%= link_to "/evacuation_essentials", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
-                  <i class="fa-solid fa-person-booth"></i> Evacuation Essentials
+                  <i class="fa-solid fa-person-booth"></i> Essentials and Facilities
                 <% end %>
               </div>
               <div class="row my-2">
@@ -75,7 +75,7 @@
         <ul class="dropdown-menu poppins">
           <p class="text-center">Lists</p>
           <li><%= link_to "Evacuation Centers", "/evac_centers", class: "dropdown-item" %></li>
-          <li><%= link_to "Evacuation Essentials", "/evacuation_essentials", class: "dropdown-item" %></li>
+          <li><%= link_to "Essentials and Facilities", "/evacuation_essentials", class: "dropdown-item" %></li>
           <li><%= link_to "Disasters", "/disasters", class: "dropdown-item" %></li>
           <li><%= link_to "Households", "/families", class: "dropdown-item" %></li>
           <li><%= link_to "Relief Goods", "/relief_goods", class: "dropdown-item" %></li>
