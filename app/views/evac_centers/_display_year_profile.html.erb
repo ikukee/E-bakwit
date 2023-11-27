@@ -20,27 +20,27 @@
             <% end %>
           </div>
           <div class = "col-md-4">
-            <% if evac_center.status == nil %>
-            <% if session[:user_type] == "CAMP MANAGER" %>
-              <button  class="btn btn-primary form-control" data-bs-toggle= "modal" data-bs-target="#add_profile" type="button">Add profile <i class="fa fa-plus" aria-hidden="true"></i></button>
-              <div id="add_profile" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-md">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title text-dark">Adding a new Year Profile</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <%= form_with url: "/add_new_profile/#{evac_center.id}", method: :post do |form|%>
-                      <%= form.date_field :date, class:"form-control", :value => Date.today(), max: Date.today()%>
-                      <br>
-                      <div>
-                        <%= form.submit "Generate", class:"btn btn-success form-control"%>
+            <% if evac_center.status != "ARCHIVED" %>
+              <% if session[:user_type] == "CAMP MANAGER" %>
+                <button  class="btn btn-primary form-control" data-bs-toggle= "modal" data-bs-target="#add_profile" type="button">Add profile <i class="fa fa-plus" aria-hidden="true"></i></button>
+                <div id="add_profile" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-md">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title text-dark">Adding a new Year Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                    <% end %>
+                      <%= form_with url: "/add_new_profile/#{evac_center.id}", method: :post do |form|%>
+                        <%= form.date_field :date, class:"form-control", :value => Date.today(), max: Date.today()%>
+                        <br>
+                        <div>
+                          <%= form.submit "Generate", class:"btn btn-success form-control"%>
+                        </div>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
-              </div>
-            <% end  %>
+              <% end  %>
             <% end %>
           </div>
         </div>
@@ -54,7 +54,7 @@
             <a href="/evac_centers/<%=evac_center.id%>/edit" class="text-light position-absolute" style="font-size: 0.4em;"><i class="fa-solid fa-pen-to-square"></i></a></p>
         <% else %>
           <% if User.find(session[:user_id]).currently_assigned != nil%>
-            <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
+            <% if User.find(session[:user_id]).currently_assigned == evac_center.id && User.find(session[:user_id]).user_type != "VOLUNTEER" %>
               <a href="/evac_centers/<%=evac_center.id%>/edit" class="text-light position-absolute" style="font-size: 0.4em;"><i class="fa-solid fa-pen-to-square"></i></a></p>
           <% end %>
         <% end %>
@@ -145,7 +145,6 @@
                 <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
                   <th >Actions</th>
                 <% end %>
-              
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -156,7 +155,7 @@
                   <td><%= user.lname%></td>
                   <td><%= user.cnum%></td>
                   <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
-                    <% if evac_center.status == nil%>
+                    <% if evac_center.status != "ARCHIVED" %>
                       <td class="position-relative">
                         <%= link_to "/remove_campmanager/#{evac_yearly_profile.id}", class:"btn btn-danger form-control", data: { turbo_method: :post, turbo_confirm: "Are you sure?" } do %>
                           Remove <i class="fa fa-trash" aria-hidden="true"></i>
@@ -182,7 +181,7 @@
         </div>
         <% if session[:user_type] != "VOLUNTEER" %>
           <% if User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").count > 0 %>
-            <% if evac_center.status == nil%>
+            <% if evac_center.status != "ARCHIVED"%>
               <label class="oswald fw">Volunteer Name: </label>
               <%= form_with url:"/add_volunteer", method: :post do |form|%>
                 <div class="row">
