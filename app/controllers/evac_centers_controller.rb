@@ -30,7 +30,8 @@ class EvacCentersController < ApplicationController
 
   def archives
     @evac_centers = EvacCenter.all.where(status: "ARCHIVED").order(name: :asc)
-
+    add_breadcrumb("Evacuation Centers", evac_centers_path)
+    add_breadcrumb("Archived")
   end
 
   def add_profile
