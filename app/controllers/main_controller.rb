@@ -1,5 +1,5 @@
 class MainController < ApplicationController
-    before_action :is_logged_in, except: %i[login logout register login_proceed register_proceed index]
+    before_action :is_logged_in, except: %i[login logout register login_proceed register_proceed index send_request_proceed index reqCreate]
     def index
         @evac_centers = EvacCenter.all
     end
