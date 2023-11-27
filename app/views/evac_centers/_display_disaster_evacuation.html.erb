@@ -1,4 +1,4 @@
-<div class = "row default-background4 text-dark mt-5 p-2" style="border: 0.2em solid rgb(89,147,188); border-radius: 30px;">
+<div class = "row default-background4 text-dark p-2 m-0">
   <div class="col-md-6 col-sm-12">
     <div class="row">
       <div class="col-md-auto">
@@ -172,7 +172,7 @@
           <% else%>
             <% if evac_center.status != "ARCHIVED"%>
               <div class="col">
-                <button  style = "font-size:22px;"class="btn btn-info w-100 oswald fw-bold m-1" data-bs-toggle= "modal" data-bs-target="#display_relief_request" type="button">Initiate Relief Request<i class="fa-solid fa-utensils fa-xl"></i></button>
+                <button  style = "font-size:22px;"class="btn btn-info bg-dinfo text-light w-100 oswald fw-bold m-1" data-bs-toggle= "modal" data-bs-target="#display_relief_request" type="button">Initiate Relief Request &nbsp; <i class="fa-solid fa-utensils fa-xl"></i></button>
                 <div id="display_relief_request" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
@@ -202,7 +202,7 @@
                     <% else%>
                       <% if evac_center.status != "ARCHIVED"%>
                         <div class="col">
-                          <button  style = "font-size:22px;"class="btn btn-info w-100 oswald fw-bold m-1" data-bs-toggle= "modal" data-bs-target="#display_relief_request" type="button">Initiate Relief Request<i class="fa-solid fa-utensils fa-xl"></i></button>
+                          <button  style = "font-size:22px;"class="btn btn-info bg-dinfo text-light w-100 oswald fw-bold m-1" data-bs-toggle= "modal" data-bs-target="#display_relief_request" type="button">Initiate Relief Request &nbsp; <i class="fa-solid fa-utensils fa-xl"></i></button>
                           <div id="display_relief_request" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-lg">
                               <div class="modal-content">
@@ -252,7 +252,7 @@
         </div>
       </div>
       <p>&nbsp;</p>
-      <a href="/evac_centers/non_distributed_rg/<%=evac_center.id%>/<%= disaster.id%>" class="btn btn-secondary w-100 oswald fw-bold">VIEW DISTRIBUTED RELIEF GOODS</a>
+      <a href="/evac_centers/non_distributed_rg/<%=evac_center.id%>/<%= disaster.id%>" class="btn btn-secondary bg-dgray w-100 oswald fw-bold">VIEW DISTRIBUTED RELIEF GOODS</a>
     </div>
     <div class = "col-md-6">
       <%= column_chart GenRgAlloc.where(disaster_id: disaster.id).where(evac_id: evac_center.id).group(:quantity).group(:name).count, class:"form-control" %>
