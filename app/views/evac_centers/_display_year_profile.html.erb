@@ -182,7 +182,7 @@
         </div>
         <% if session[:user_type] != "VOLUNTEER" %>
           <% if User.all.where(status: "ACTIVE").where(user_type: "VOLUNTEER").count > 0 %>
-            <% if evac_center.status == nil%>
+            <% if evac_center.status == "ACTIVE"%>
               <label class="oswald fw">Volunteer Name: </label>
               <%= form_with url:"/add_volunteer", method: :post do |form|%>
                 <div class="row">
