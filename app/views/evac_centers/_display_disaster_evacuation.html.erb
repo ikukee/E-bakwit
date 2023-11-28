@@ -1,57 +1,10 @@
-<div class = "row default-background4 text-dark p-2 m-0">
+<div class = "row default-background1 text-dark p-2 m-0">
   <div class="col-md-6 col-sm-12">
-    <div class="row">
+    <div class="row mt-5">
       <div class="col-md-auto">
         <h1 class="oswald fw" >EVACUEES OVERVIEW</h1>
       </div>
-    </div>
-    <p>&nbsp;</p>
-    <div class="row">
-      <div class="col" style="border-right: 2px solid white;">
-        <div class="row">
-          <div class="col-md-5">
-            <p class="h4 oswald fw" align="right">MALE: </p>
-          </div>
-          <div class="col">
-            <p class="h2 oswald fw"><%= countGenderEvacuated(evac_center.id,disaster, "Male") %> <i class="fa-solid fa-person"></i></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-5">
-            <p class="h4 oswald fw" align="right">FEMALES: </p>
-          </div>
-          <div class="col">
-            <p class="h2 oswald fw"><%= countGenderEvacuated(evac_center.id,disaster, "Female") %> <i class="fa-solid fa-person-dress"></i></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-5">
-            <p class="h4 oswald fw" align="right">TOTAL: </p>
-          </div>
-          <div class="col">
-            <p class="h2 oswald fw"><%= countIndivEvacuated(evac_center.id,disaster)%> <i class="fa-solid fa-people-group"></i></p>
-          </div>
-        </div>
-        <p>&nbsp;</p>
-        <div class="row">
-          <div class="col-md-7">
-            <p class="h4 oswald fw" align="right">FAMILIES CURRENTLY EVACUATED: </p>
-          </div>
-          <div class="col">
-            <p class="h2 oswald fw"><%= countGenFamily(evac_center.id,disaster,true) %></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-7">
-            <p class="h4 oswald fw" align="right">OVERALL FAMILIES EVACUATED: </p>
-          </div>
-          <div class="col">
-            <p class="h2 oswald fw"><%= countGenFamily(evac_center.id,disaster,false) %></p>
-          </div>
-        </div>
-      </div>
       <div class="col">
-        <h2 class="oswald fw">ACTIONS</h2>
         <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER" %>
           <% if evac_center.status != "ARCHIVED"%>
             <div class="col">
@@ -88,8 +41,73 @@
         <%end%>
       </div>
     </div>
+
+    <div class="row mt-3 p-4 default-background3  rounded position-relative">
+      <p class="oswald position-absolute start-0 top-0 text-secondary text-center">EVACUEE COUNT</p>
+      <div class="col p-0 mt-3">
+        <div class="row">
+          <div class="col-6">
+            <h6 class="oswald m-0">OVERALL EVACUATED</h6>
+            <h1 class="fw-bold oswald m-0 mb-3 p-0 border-bottom border-dark border-2  ps-4"><%= countGenFamily(evac_center.id,disaster,false) %> FAMILIES</h1>
+            <div class="row m-0">
+              <div class="col-md-5 ">
+                <p class="h4 oswald fw" align="right">MALE: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw"><%= countGenderEvacuated(evac_center.id,disaster, "Male") %> <i class="fa-solid fa-person"></i></p>
+              </div>
+            </div>
+            <div class="row m-0">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">FEMALES: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw"><%= countGenderEvacuated(evac_center.id,disaster, "Female") %> <i class="fa-solid fa-person-dress"></i></p>
+              </div>
+            </div>
+            <div class="row m-0">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">TOTAL: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw"><%= countIndivEvacuated(evac_center.id,disaster)%> <i class="fa-solid fa-people-group"></i></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 bg-white border border-2 border-dark rounded m-0 px-2">
+            <h6 class="oswald m-0">CURRENTLY EVACUATED</h6>
+            <h1 class="fw-bold oswald m-0 mb-3 p-0  ps-4 border-bottom border-dark border-2"><%= countGenFamily(evac_center.id,disaster,true) %> FAMILIES</h1>
+            <div class="row m-0">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">MALE: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw"><%= countGenderCurrentlyEvacuated(evac_center.id,disaster, "Male") %></p>
+              </div>
+            </div>
+            <div class="row m-0">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">FEMALES: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw"><%= countGenderCurrentlyEvacuated(evac_center.id,disaster, "Female") %> <i class="fa-solid fa-person-dress"></i></p>
+              </div>
+            </div>
+            <div class="row m-0">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">TOTAL: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw"><%= countIndivCurrentlyEvacuated(evac_center.id,disaster)%> <i class="fa-solid fa-people-group"></i></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
   </div>
-  <div class="col-md-6 col-sm-12">
+  <div class="col-md-6 col-sm-12 mt-5">
     <% capacityPercentage = getCapacityPercentage(countIndivEvacuated(evac_center.id,disaster),evac_center.capacity.to_i)%>
     <h4>Capacity: </h4>
     <div class="w3-border" style = "text-align:center;border:1px solid #ccc; border-radius:5px; overflow:hidden;">
@@ -157,8 +175,8 @@
       </table>
     </div>
   </div>
-  <p style="border-bottom:4px solid white">&nbsp;</p>
-  <div class="row">
+  <p>&nbsp;</p>
+  <div class="row mt-5">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-auto">
@@ -167,7 +185,7 @@
         <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
           <% if ReliefRequest.where(disaster_id: disaster.id).where(evac_id: evac_center.id).length > 0 %>
             <div class="col">
-              <a href = "/relief_allocation/<%=evac_center.id%>/<%= disaster.id%>" class = "btn btn-info w-100 oswald fw-bold m-1">Configure Relief Good Allocation<i class="fa-solid fa-gear"></i></a>
+              <a href = "/relief_allocation/<%=evac_center.id%>/<%= disaster.id%>" class = "btn btn-info bg-dinfo text-light w-100 oswald fw-bold m-1">Configure Relief Good Allocation<i class="fa-solid fa-gear"></i></a>
             </div>
           <% else%>
             <% if evac_center.status != "ARCHIVED"%>
@@ -197,7 +215,7 @@
             <% if User.find(session[:user_id]).currently_assigned == evac_center.id && session[:user_type] == "CAMP MANAGER" %>
                     <% if ReliefRequest.where(disaster_id: disaster.id).where(evac_id: evac_center.id).length > 0 %>
                       <div class="col">
-                        <a href = "/relief_allocation/<%=evac_center.id%>/<%= disaster.id%>" class = "btn btn-info w-100 oswald fw-bold m-1">Configure Relief Good Allocation<i class="fa-solid fa-gear"></i></a>
+                        <a href = "/relief_allocation/<%=evac_center.id%>/<%= disaster.id%>" class = "btn btn-info bg-dinfo text-light w-100 oswald fw-bold m-1">Configure Relief Good Allocation<i class="fa-solid fa-gear"></i></a>
                       </div>
                     <% else%>
                       <% if evac_center.status != "ARCHIVED"%>

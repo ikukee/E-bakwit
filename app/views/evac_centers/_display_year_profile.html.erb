@@ -157,7 +157,7 @@
                   <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
                     <% if evac_center.status != "ARCHIVED" %>
                       <td class="position-relative">
-                        <%= link_to "/remove_campmanager/#{evac_yearly_profile.id}", class:"btn btn-danger form-control", data: { turbo_method: :post, turbo_confirm: "Are you sure?" } do %>
+                        <%= link_to "/remove_campmanager/#{evac_yearly_profile.id}", class:"link oswald fw-bold text-danger text-decoration-none", data: { turbo_method: :post, turbo_confirm: "Are you sure?" } do %>
                           Remove <i class="fa fa-trash" aria-hidden="true"></i>
                         <% end %>
                       </td>
@@ -221,7 +221,7 @@
                   <% if session[:user_type] != "VOLUNTEER"%>
                     <% if evac_center.status != "ARCHIVED" %>
                       <td class="position-relative">
-                        <%= link_to "/remove_volunteer/#{av.id}", class:"btn btn-danger form-control", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
+                        <%= link_to "/remove_volunteer/#{av.id}", class:"link oswald fw-bold text-danger text-decoration-none", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } do %>
                           Remove <i class="fa fa-trash" aria-hidden="true"></i>
                         <% end %>
                       </td>
@@ -240,10 +240,10 @@
     </div>
   </div>
   <div class="border border-2 rounded px-0">
-    <div class="row m-0 default-background1 p-2">
+    <div class="row m-0 default-background3 p-2">
       <%= form_with url: "/view_disaster_evacuation", method: :post do |form| %>
         <%= form.hidden_field :evac_center, :value=> evac_center.id%>
-        <%= form.collection_select :disaster_id , Disaster.all.order(:name).where(year: evac_yearly_profile.year), :id, :name,{:prompt => "SELECT DISASTER"},{class:"btn fs-1 oswald-fw dropdown-toggle fw-bold", id:"disaster-name-dv", oninput: "this.form.requestSubmit()"}%>
+        <%= form.collection_select :disaster_id , Disaster.all.order(date_of_occurence: :desc).where(year: evac_yearly_profile.year), :id, :name,{:prompt => "SELECT DISASTER"},{class:"btn fs-1 oswald-fw dropdown-toggle fw-bold", id:"disaster-name-dv", oninput: "this.form.requestSubmit()"}%>
       <% end %>
     </div>
     <div id = "display_disaster_evacuation">

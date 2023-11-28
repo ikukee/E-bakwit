@@ -96,7 +96,7 @@ class MainController < ApplicationController
 
 
     def new_camp_manager
-
+        add_breadcrumb("New Camp Manager")
     end
 
     def create_campmanager

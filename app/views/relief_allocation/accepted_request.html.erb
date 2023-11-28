@@ -31,7 +31,7 @@
             <td><%= request.status%></td>
             <td class="col-md-1">
               <%= form_with url:"/view/request/#{request.id}", method: :post do |form|%>
-                <%= form.button nil, class:"btn btn-info" do %>
+                <%= form.button nil, class:"btn btn-primary bg-navy oswald fw-bold text-light" do %>
                   View Request <i class="fa-solid fa-eye"></i>
                 <% end %>
               <% end %>
