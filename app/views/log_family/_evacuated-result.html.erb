@@ -50,17 +50,10 @@
         <% if evac_center.status != "ARCHIVED" && session[:user_type] == "VOLUNTEER"%>
           <td style="width: 30%;" class="pt-1 ps-2">
             <%if em.status == "UNRELEASED"%>
-              <div class = "row">
-                <div class = "col-md-6" >
-                  <%= form_with url: "out/#{mem.id}", method: :post do |form| %>
-                    <button type="submit" class="btn btn-danger" style="font-size: 0.9em; float:right;">REMOVE<i class="fa-solid fa-person-circle-minus"></i></button>
-                  <% end %>
-                </div>
-                <div class = "col-md-6">
+              <div class = "row text-center">
                   <%= form_with url: "released/#{mem.id}", method: :post do |form| %>
-                    <button type="submit" class="btn btn-success" style="font-size: 0.9em;">MARK AS RELEASED<i class="fa-solid fa-check"></i></button>
+                    <button type="submit" class="btn btn-primary bg-navy oswald" style="font-size: 0.9em;">MARK AS RELEASED &nbsp; <i class="fa-solid fa-check"></i></button>
                   <% end %>
-                </div>
               </div>
             <% end %>
           </td>

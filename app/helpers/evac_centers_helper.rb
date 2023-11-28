@@ -74,6 +74,32 @@ module EvacCentersHelper
         return evacuatedIndiv
     end
 
+    def countGenderCurrentlyEvacuated(evac_center,disaster, sexVal)
+        count = 0
+        EvacMember.all.where(evacuee_id: Evacuee.all.where(disaster_id: disaster).where(evac_id: evac_center)).where(status: "UNRELEASED").each do |ur|
+            if FamilyMember.find_by(id: ur.member_id).sex == sexVal
+                count = count + 1
+            end
+        end
+        return count
+    end
+
+    def countIndivCurrentlyEvacuated(evac_center,disaster)
+        currently_evacuated = EvacMember.all.where(evacuee_id: Evacuee.all.where(disaster_id: disaster).where(evac_id: evac_center)).where(status: "UNRELEASED")
+        if currently_evacuated == nil
+            return 0
+        end
+        return currently_evacuated.length
+    end
+
+    def countIndivCurrentlyEvacuatedCard(evac_center)
+        return EvacMember.all.where(status: "UNRELEASED").where(evacuee_id: Evacuee.all.where(evac_id: evac_center)).length
+    end
+
+    def countFamCurrentlyEvacuatedCard(evac_center)
+        return Evacuee.all.where(evac_id: evac_center).where(date_out: nil).length
+    end
+
     def getInfants(evac_center,disaster, sexVal)
         total = 0
         evacuees = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster)

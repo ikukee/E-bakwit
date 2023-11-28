@@ -21,32 +21,35 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="row my-2">
+                <%= link_to root_path, class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-house"></i> Home
+                <% end %>
                 <%= link_to "/evac_centers", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
                   <i class="fa-solid fa-person-shelter"></i> Evacuation Centers
-                <% end %>
-                <%= link_to "/evacuation_essentials", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
-                  <i class="fa-solid fa-person-booth"></i> Essentials and Facilities
                 <% end %>
               </div>
               <div class="row my-2">
                 <%= link_to "/disasters", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
                   <i class="fa-solid fa-hurricane"></i> Disasters
                 <% end %>
-                <%= link_to "/families", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
-                  <i class="fa-solid fa-people-roof"></i> Households
+                <%= link_to "/evacuation_essentials", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-person-booth"></i> Essentials and Facilities
                 <% end %>
               </div>
               <div class="row my-2">
                 <%= link_to "/relief_goods", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
                   <i class="fa-solid fa-wheat-awn"></i> Relief Goods
                 <% end %>
-                <%= link_to "/relief_good/requests", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
-                  <i class="fa-solid fa-eye"></i> <i class="fa-solid fa-wheat-awn"></i> Relief Goods Request <% if notifIcon(1) %><i class="fa-solid fa-circle-exclamation fa-lg" style="color: #ffdd00;"></i><%end%></i>
+                <%= link_to "/families", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-people-roof"></i> Families
                 <% end %>
               </div>
               <div class="row my-2">
                 <%= link_to "/volunteers", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
                   <i class="fa-solid fa-user-pen"></i> Volunteers
+                <% end %>
+                <%= link_to "/relief_good/requests", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-scroll"></i> Relief Goods Request <% if notifIcon(1) %><i class="fa-solid fa-circle-exclamation fa-lg" style="color: #ffdd00;"></i><%end%></i>
                 <% end %>
               </div>
               <div class="modal-header">
@@ -55,6 +58,9 @@
               <div class="rowcols-auto px-4 fw-light m-auto mb-4">
                 <%= link_to "/evac_centers/new", class: "cbtn btn btn-primary col-auto m-2 p-2" do %>
                   <i class="fa-solid fa-plus"></i> Add Evacuation Center
+                <% end %>
+                <%= link_to "/evacuation_essentials/new", class: "cbtn btn btn-primary col-auto m-2 p-2" do %>
+                  <i class="fa-solid fa-plus"></i> Add Essentials And Facilities
                 <% end %>
                 <%= link_to "/disasters/new", class: "cbtn btn btn-primary col-auto m-2 p-2" do %>
                   <i class="fa-solid fa-plus"></i> Add Disaster
@@ -83,8 +89,9 @@
           <li><%= link_to "Volunteers", "/volunteers", class: "dropdown-item" %></li>
           <li><hr class="dropdown-divider"></li>
           <p class="text-center">Controls</p>
-          <li><%= link_to "New Evacuation Centers", "/evac_centers/new", class: "dropdown-item" %></li>
-          <li><%= link_to "New Disasters", "/disasters/new", class: "dropdown-item" %></li>
+          <li><%= link_to "Add Evacuation Centers", "/evac_centers/new", class: "dropdown-item" %></li>
+          <li><%= link_to "Add Essentials and Facilities", "/evacuation_essentials/new", class: "dropdown-item" %></li>
+          <li><%= link_to "Add Disasters", "/disasters/new", class: "dropdown-item" %></li>
           <li><%= link_to "Add Family", "/families/new", class: "dropdown-item" %></li>
           <li><%= link_to "Add Relief Good", "/relief_goods/new", class: "dropdown-item" %></li>
           <li><%= link_to "Register Camp Manager", "/camp_manager/new", class: "dropdown-item" %></li>
