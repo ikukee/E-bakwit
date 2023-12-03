@@ -9,7 +9,7 @@ module ReliefAllocationHelper
             quantity = criterium.criteria * getTotalCategoryMembers(members, rg.category, "Male")#gets total number of males in a specific category and above
         elsif rg.eligibility == "FEMALE"
             quantity = criterium.criteria * getTotalCategoryMembers(members, rg.category, "Female")#gets total number of females in a specific category and above
-        elsif rg.eligibility == "UNISEX"
+        elsif rg.eligibility == "GENERAL USE"
             quantity = criterium.criteria * getTotalCategoryMembers(members, rg.category, nil)#gets total number of members in a specific category and above
         end
         return quantity
@@ -37,7 +37,7 @@ module ReliefAllocationHelper
             else
                 return false
             end
-        elsif rg.eligibility == "UNISEX"
+        elsif rg.eligibility == "GENERAL USE"
             if checkIfCategoryExist(members,rg.category,nil)
                 return true
             else

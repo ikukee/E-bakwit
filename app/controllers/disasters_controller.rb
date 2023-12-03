@@ -14,7 +14,7 @@ class DisastersController < ApplicationController
     end
     @disasters_count = @disasters.length
     @disasters_count_per_page = 5
-    @disasters = Disaster.offset(@page * @disasters_count_per_page).limit(@disasters_count_per_page).order(:name)
+    @disasters = Disaster.offset(@page * @disasters_count_per_page).limit(@disasters_count_per_page).order(date_of_occurence: :desc)
   end
 
   def search
