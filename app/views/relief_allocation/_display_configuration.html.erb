@@ -13,8 +13,8 @@
       <tr>
         <%if search_type == "FOOD"%>
           <% if ReliefGood.find(gen.rg_id).is_food == true %>
-            <% if ReliefGood.find(gen.rg_id).eligibility == "UNISEX"%>
-              <td>All <strong>EVACUEES</strong> will receive </td>
+            <% if ReliefGood.find(gen.rg_id).eligibility == "GENERAL USE"%>
+              <td>All <strong>INDIVIDUALS</strong> will receive </td>
             <% else %>
               <td>All <strong><%=ReliefGood.find(gen.rg_id).eligibility %></strong> will receive </td>
             <% end %>
@@ -32,8 +32,8 @@
           <% end %>
         <% else %>
           <% if ReliefGood.find(gen.rg_id).is_food == false %>
-            <% if ReliefGood.find(gen.rg_id).eligibility == "UNISEX"%>
-              <td>All <strong>EVACUEES</strong> will receive </td>
+            <% if ReliefGood.find(gen.rg_id).eligibility == "GENERAL USE"%>
+              <td>All <strong>GENERAL USE</strong> will receive </td>
             <% else %>
               <td>All <strong><%=ReliefGood.find(gen.rg_id).eligibility %></strong> will receive </td>
             <% end %>
