@@ -73,6 +73,9 @@ class VolunteerController < ApplicationController
 
     def first_login
         @user = User.find(params[:id])
+        if @user.id != session[:user_id]
+            redirect_to "/error"
+        end
     end
 
 
