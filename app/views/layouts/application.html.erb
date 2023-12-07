@@ -49,12 +49,3 @@
 </html>
 
 
-<% if current_page?(evac_center_path(EvacCenter.where(id: params[:id])))%>
-          <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="p-1 m-0 breadcrumb oswald fs-5" style="background: rgb(21,38,74,1)">
-              <li class="breadcrumb-item"><a href="/" class="inactive" style="color: rgb(89,147,188);">Home</a></li>
-              <li class="breadcrumb-item"><%= link_to "Evacuation Centers", evac_centers_path, style: "color: rgb(89,147,188);", class: "inactive" %></li>
-              <li class="breadcrumb-item text-decoration-none active fw-bold text-light" aria-current="page"><%= @evac_center.name %></li>
-            </ol>
-          </nav>
-        <% end %>
