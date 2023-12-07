@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
     before_action :set_breadcrumbs
 
     def checkValidUser
-        if session[:user_type] != "ADMIN" || session[:user_type] == "SUPERUSER"
+        if session[:user_type] == "VOLUNTEER" || session[:user_type] == "CAMP MANAGER"
            redirect_to "/error"
         end
 
