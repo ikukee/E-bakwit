@@ -1,6 +1,6 @@
 class VolunteerController < ApplicationController
     before_action :is_logged_in
-    before_action :checkValidUser, except: %i[change_password]
+    before_action :checkValidUser, except: %i[change_password first_login]
     def camp_managers
         add_breadcrumb('Camp Managers')
         @users = User.all.where(user_type: "CAMP MANAGER")

@@ -139,6 +139,7 @@ class MainController < ApplicationController
                         @request.status = "APPROVED"
                         @request.save
                         AccountMailer.with(user: @user).account_confirmation.deliver_now
+                        puts "success sent"
                         format.html{redirect_to "/camp_managers"}
                     end
                 end
