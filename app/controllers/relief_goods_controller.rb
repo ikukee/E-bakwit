@@ -14,7 +14,8 @@ class ReliefGoodsController < ApplicationController
       if @relief_goods.length > 0
           format.turbo_stream{render turbo_stream: turbo_stream.update("relief_goods",partial: "search_results", locals:{relief_goods:@relief_goods })}
       elsif @relief_goods.length <= 0
-          format.turbo_stream{render turbo_stream: turbo_stream.update("relief_goods","<h2 style = 'text-align:center'>No Record/s found.</h2>")}
+        @relief_goods = ReliefGood.all
+        format.turbo_stream{render turbo_stream: turbo_stream.update("relief_goods",partial: "search_results", locals:{relief_goods:@relief_goods })}
       end
     end
   end

@@ -5,7 +5,7 @@ class CreateGenRgAllocs < ActiveRecord::Migration[7.0]
       t.integer :disaster_id
       t.integer :evac_id
       t.float :quantity
-      t.string :name
+      t.text :name
 
       t.timestamps
     end

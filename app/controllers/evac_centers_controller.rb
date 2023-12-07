@@ -5,7 +5,7 @@ class EvacCentersController < ApplicationController
 
   # GET /evac_centers or /evac_centers.json
   def index
-    @evac_centers = EvacCenter.all.where("status == 'ACTIVE'").order(barangay: :asc)
+    @evac_centers = EvacCenter.all.where(status: "ACTIVE").order(barangay: :asc)
     add_breadcrumb("Evacuation Centers")
   end
 

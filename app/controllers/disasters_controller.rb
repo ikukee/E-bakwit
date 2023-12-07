@@ -26,12 +26,15 @@ class DisastersController < ApplicationController
     else
       search_type = "name"
     end
-    @disasters = Disaster.where("#{search_type} LIKE ? ", "#{params[:search_value]}%").order(:name)
+    search_value = params[:search_value].upcase
+    @disasters = Disaster.where("#{search_type} LIKE ? ", "#{search_value}").order(:name)
+
     respond_to do |format|
       if @disasters.length > 0
           format.turbo_stream{render turbo_stream: turbo_stream.update("disasters",partial: "search_results", locals:{disasters:@disasters })}
       elsif @disasters.length <= 0
-          format.turbo_stream{render turbo_stream: turbo_stream.update("disasters","<h2 style = 'text-align:center'>No Record/s found.</h2>")}
+        @disasters = Disaster.all
+          format.turbo_stream{render turbo_stream: turbo_stream.update("disasters",partial: "search_results", locals:{disasters:@disasters })}
       end
     end
   end

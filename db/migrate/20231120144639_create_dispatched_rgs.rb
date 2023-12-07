@@ -4,7 +4,7 @@ class CreateDispatchedRgs < ActiveRecord::Migration[7.0]
       t.integer :request_id
       t.integer :rg_id
       t.integer :quantity
-      t.string :name
+      t.text :name
 
       t.timestamps
     end

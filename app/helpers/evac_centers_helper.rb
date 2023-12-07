@@ -24,16 +24,16 @@ module EvacCentersHelper
         evacuated = 0
         evac_families = Family.all.where(is_evacuated: true)
         evac_families.each do |fam|
-            if(FamilyMember.all.where("family_id = ? AND evacuee_id > ? ", fam.id,  0).length > 0) 
+            if(FamilyMember.all.where("family_id = ? AND evacuee_id > ? ", fam.id,  0).length > 0)
                 if(Evacuee.find_by(family_id: fam.id) != nil)
                     evacuated = evacuated +1
                 end
-            end 
+            end
         end
         return evacuated
     end
     # match evacuee.evacuee_id = family_member.evacuee_id
-    # match evacuee.evac_id = evac_id 
+    # match evacuee.evac_id = evac_id
 
     def countIndivEvacuated(evac_center,disaster)
         evacuatedIndiv = 0
@@ -41,23 +41,23 @@ module EvacCentersHelper
         if evacuees.length > 0
             evacuatedIndiv = getMembers(evacuees).length
         end
-        
+
         return evacuatedIndiv
     end
-    
+
     def countGenFamily(evac_center, disaster, key )
-        
+
         countFam = 0
-        if key 
-            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster.id).where(date_out: nil).group(:family_id)
+        if key
+            #evacuee = Evacuee.find_by_sql("Select * FROM evacuees where evac_id = '#{evac_center}' AND disaster_id = '#{disaster.id}' AND date_out = #{nil} GROUP BY family_id")
+           evacuee = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster.id).where(date_out: nil).group(:family_id).count
         else
-            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster.id).group(:family_id)
+            #evacuee = Evacuee.find_by_sql("Select * FROM evacuees where evac_id = '#{evac_center}' AND disaster_id = '#{disaster.id}' GROUP BY family_id")
+            evacuee = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster.id).group(:family_id).count
         end
-        
-        evacuee.each do |x| 
-            countFam = countFam + 1
-        end   
-        return countFam
+
+
+        return evacuee
     end
 
     def countGenderEvacuated(evac_center,disaster, sexVal)
@@ -200,14 +200,14 @@ module EvacCentersHelper
                 non_food = non_food +1
             end
         end
-        if key 
+        if key
             return food
         else
             return non_food
         end
     end
 
-    private 
+    private
 
     def getMembers(evacuees)
         member_ids = Array.new
@@ -221,9 +221,3 @@ module EvacCentersHelper
         return member_ids
     end
 end
-
-
-
-  
-
-   

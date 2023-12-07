@@ -15,8 +15,8 @@ class FamiliesController < ApplicationController
       if @families.length > 0
           format.turbo_stream{render turbo_stream: turbo_stream.update("families",partial: "search_results", locals:{families:@families })}
       elsif @families.length <= 0
-          format.turbo_stream{render turbo_stream: turbo_stream.update("families","<h2 style = 'text-align:center'>No Record/s found.</h2>")}
-      end
+        @families = Family.all
+        format.turbo_stream{render turbo_stream: turbo_stream.update("families",partial: "search_results", locals:{families:@families })}      end
     end
   end
   # GET /families or /families.json

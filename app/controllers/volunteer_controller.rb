@@ -52,7 +52,8 @@ class VolunteerController < ApplicationController
           if @users.length > 0
               format.turbo_stream{render turbo_stream: turbo_stream.update("users",partial: "search_results", locals:{users:@users })}
           elsif @users.length <= 0
-              format.turbo_stream{render turbo_stream: turbo_stream.update("users","No Record/s Found")}
+            @users = User.where(user_type: user_type).order(lname: :asc)
+            format.turbo_stream{render turbo_stream: turbo_stream.update("users",partial: "search_results", locals:{users:@users })}
           end
         end
 

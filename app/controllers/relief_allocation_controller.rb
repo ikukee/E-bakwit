@@ -29,14 +29,14 @@ class ReliefAllocationController < ApplicationController
 
     def dispatched_request
         add_breadcrumb('Dispatched Requests')
-        @requests = ReliefRequest.all.where("status == 'DISPATCHED' OR status == 'RECEIVED'").order(:date_of_request)
+        @requests = ReliefRequest.all.where("status = 'DISPATCHED' OR status = 'RECEIVED'").order(:date_of_request)
         @page = params.fetch(:page, 0).to_i
         if  @page < 0
             @page = 0
         end
         @requests_count = @requests.length
         @requests_count_per_page = 5
-        @requests = ReliefRequest.offset(@page * @requests_count_per_page).limit(@requests_count_per_page).where("status == 'RECEIVED' OR status == 'DISPATCHED' ").order(date_of_request: :desc)
+        @requests = ReliefRequest.offset(@page * @requests_count_per_page).limit(@requests_count_per_page).where("status = 'RECEIVED' OR status = 'DISPATCHED' ").order(date_of_request: :desc)
     end
 
     def send_request

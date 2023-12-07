@@ -3,7 +3,7 @@ class CreateEvacYearlyProfiles < ActiveRecord::Migration[7.0]
     create_table :evac_yearly_profiles do |t|
       t.integer :evac_id
       t.integer :manager_id
-      t.date :year
+      t.text :year
 
       t.timestamps
     end

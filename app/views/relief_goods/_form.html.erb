@@ -71,9 +71,9 @@
             Product is for: 
           <% end %>
           <% if relief_good.eligibility == nil %>
-            <%= form.select :eligibility, options_for_select(["MALE", "FEMALE", "GENERAL USE"]), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_eligibility}"} %>
+            <%= form.select :eligibility, options_for_select(["MALE", "FEMALE", "UNISEX"]), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_eligibility}"} %>
           <% else %>
-            <%= form.select :eligibility, options_for_select(["MALE", "FEMALE", "GENERAL USE"],:selected => relief_good.eligibility.to_s), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_eligibility}"} %>
+            <%= form.select :eligibility, options_for_select(["MALE", "FEMALE", "UNISEX"],:selected => relief_good.eligibility.to_s), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_eligibility}"} %>
           <%  end %>
           <% if invalid_eligibility %>
             <div class="invalid-feedback d-block">
