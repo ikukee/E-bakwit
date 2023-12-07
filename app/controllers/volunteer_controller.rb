@@ -112,7 +112,7 @@ class VolunteerController < ApplicationController
             @user.save
             request.status = "APPROVED"
             request.save
-            AccountMailer.with(user: @user).account_confirmation.deliver_now!
+            AccountMailer.with(user: @user).account_confirmation.deliver_now
             puts "success sent"
             redirect_to "/requests"
         end
@@ -122,7 +122,7 @@ class VolunteerController < ApplicationController
         request = Request.find(params[:id])
         message = params[:message]
         request.update_attribute(:status, "REJECTED")
-        AccountMailer.with(user:request,message: message).reject_request.deliver_now!
+        AccountMailer.with(user:request,message: message).reject_request.deliver_now
         puts "success reject"
         redirect_to "/requests"
     end
