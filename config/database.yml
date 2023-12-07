@@ -88,7 +88,6 @@ test:
 #
 production:
   <<: *default
-  database: E_bakwit_production
-  host: localhost
-  username: E_bakwit
-  password: <%= Rails.application.credentials.dig(:prod_db_pass)%>
+  url: <%= ENV["DATABASE_URL"] %>
+
+ 
