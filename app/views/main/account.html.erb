@@ -9,13 +9,13 @@
               <p style="font-size:5em"> <%= @user.full_name %> </p>
               <label>Address:</label><p class="h3"><%= @user.address%></p>
               <label>Email:</label><p class="h3"><%= @user.email%></p>
-              <label>Contanct#:</label><p class="h3"><%= @user.cnum%></p>
+              <label>Contact#:</label><p class="h3"><%= @user.cnum%></p>
               
 
               <label>User type:</label><p class="h1"><%= @user.user_type%></p>
             </div>
             <div class="col-md-6">
-              <%if @user.user_type == "ADMIN"%>
+              <%if @user.user_type != "ADMIN"%>
                 <span class="h2">Assigned to:</span>
                 <% if @user.currently_assigned != nil && @user.currently_assigned > 0 %>
                   <a style="font-size:5em" class="btn btn-primary bg-navy" href="evac_centers/<%=EvacCenter.find(@user.currently_assigned).id%>"><%= EvacCenter.find(@user.currently_assigned).name %></a>
