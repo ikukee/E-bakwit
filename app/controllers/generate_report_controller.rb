@@ -274,12 +274,7 @@ class GenerateReportController < ApplicationController
 
                     if center.barangay == brgy
                         sheet.add_row ["", center.name,
-                            if countServedFamily(center.id, @disaster.id, false) > 0
-                                "1"
-                            else
-                                "0"
-                            end
-                            ,
+                            countServedFamilyType(countServedFamily(center.id, @disaster.id, false)),
                             countServedFamily(center.id, @disaster.id, false),
                             countIndivEvacuated(center.id, @disaster.id, false),
                             countServedFamily4ps(center.id, @disaster.id, false),

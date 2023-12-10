@@ -1,5 +1,7 @@
 module EvacCentersHelper
 
+   
+
     def countFacilities(evac_yearly_profile)
         facilities =0
         assigned_yearly_esses = AssignedYearlyEss.all.where(evac_profile_id: evac_yearly_profile.id)
