@@ -395,9 +395,9 @@ class GenerateReportController < ApplicationController
 
         countFam = 0
         if key
-            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).group(:family_id)
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).distinct(:family_id)
         else
-            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).group(:family_id)
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).distinct(:family_id)
         end
 
         evacuee.each do |x|
@@ -409,9 +409,9 @@ class GenerateReportController < ApplicationController
 
         countFam = 0
         if key
-            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).group(:family_id)
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).distinct(:family_id)
         else
-            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).group(:family_id)
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).distinct(:family_id)
         end
 
         evacuee.each do |x|
