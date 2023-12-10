@@ -45,7 +45,7 @@ class LogFamilyController < ApplicationController
         @evac_id = params[:evac_id]
         if search_type == "RELEASED"
             evacuee_list =Evacuee.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id).where("date_out != ?",nil)
-        elsif search_type == "UNRELEASED"
+        else
             evacuee_list =Evacuee.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id).where(date_out: nil)
         end
 
