@@ -45,7 +45,7 @@ class LogFamilyController < ApplicationController
         @evac_id = params[:evac_id]
         if search_type == "RELEASED"
             evacuee_list =Evacuee.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id).where("date_out != ?",nil)
-        else
+        elsif search_type == "UNRELEASED"
             evacuee_list =Evacuee.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id).where(date_out: nil)
         end
 
@@ -166,8 +166,12 @@ class LogFamilyController < ApplicationController
         family_member = FamilyMember.find(params[:member_id])
         evacuee = Evacuee.find(family_member.evacuee_id)
         evac_center = EvacCenter.find(evacuee.evac_id)
-        evac_member = EvacMember.where(evacuee_id: evacuee.id).where(member_id: family_member.id)
-        evac_member.first.update_attribute(:status, "RELEASED")
+        #evac_member = EvacMember.where(evacuee_id: evacuee.id).where(member_id: family_member.id)
+        #evac_member.first.update_attribute(:status, "RELEASED")
+        evac_member = EvacMember.all.where(evacuee_id: evacuee.id).where(member_id: family_member.id)
+        evac_member.each do |x|
+            x.update_attribute(:status, "RELEASED")
+        end
         family_member.update_attribute(:evacuee_id, 0)
 
         key = false
