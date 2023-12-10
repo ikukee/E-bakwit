@@ -270,7 +270,11 @@
         </div>
       </div>
       <p>&nbsp;</p>
-      <a href="/evac_centers/non_distributed_rg/<%=evac_center.id%>/<%= disaster.id%>" class="btn btn-secondary bg-dgray w-100 oswald fw-bold">VIEW DISTRIBUTED RELIEF GOODS</a>
+      <% if User.find(session[:user_id]).currently_assigned != nil%>
+        <% if User.find(session[:user_id]).currently_assigned == evac_center.id || session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
+          <a href="/evac_centers/non_distributed_rg/<%=evac_center.id%>/<%= disaster.id%>" class="btn btn-secondary bg-dgray w-100 oswald fw-bold">VIEW DISTRIBUTED RELIEF GOODS</a>
+        <%end%>
+      <%end%>
     </div>
     <div class = "col-md-6">
       <%= column_chart GenRgAlloc.where(disaster_id: disaster.id).where(evac_id: evac_center.id).group(:quantity).group(:name).count, class:"form-control" %>
