@@ -497,7 +497,7 @@ class GenerateReportController < ApplicationController
             "Concepcion Pequeña", "Dayangdang", "Del Rosario", "Dinaga",
             "Igualdad Interior","Lerma","Liboton", "Mabolo", "Pacol",
             "Panicuason", "Peñafrancia", "Sabang", "San Felipe",
-            "San Francisco", "San Isidro", "Santa Cruz", "Tabuco",
+            "San Francisco", "San Isidro", "Sta. Cruz", "Tabuco",
             "Tinago", "Triangulo"
         ]
     end
