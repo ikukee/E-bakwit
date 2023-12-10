@@ -17,7 +17,7 @@
       </div>
       <div class = "col-md-4">
         <br>
-        <% if EvacCenter.find(@evac_id).status == nil%>
+        <% if EvacCenter.find(@evac_id).status != "ARCHIVED"%>
           <div class="col">
             <button  style = "font-size:22px;"class="btn btn-secondary w-100 oswald fw-bold m-1" data-bs-toggle= "modal" data-bs-target="#display_relief_request" type="button">New Request <i class="fa-solid fa-utensils fa-xl"></i></button>
             <div id="display_relief_request" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
