@@ -4,15 +4,17 @@
       <div class="card-deck">
         <div class="card shadow p-4 m-2" style="">
           <h1> ACCOUNT INFO </h1>
-          <div class="row"> 
+          <div class="row">
             <div class="col-md-6">
               <p style="font-size:5em"> <%= @user.full_name %> </p>
-              <label>Address:</label><p class="h3"><%= @user.address%></p>
-              <label>Email:</label><p class="h3"><%= @user.email%></p>
-              <label>Contact#:</label><p class="h3"><%= @user.cnum%></p>
-              
-
-              <label>User type:</label><p class="h1"><%= @user.user_type%></p>
+              <label>Address:</label>
+              <p class="h3"><%= @user.address%></p>
+              <label>Email:</label>
+              <p class="h3"><%= @user.email%></p>
+              <label>Contact#:</label>
+              <p class="h3"><%= @user.cnum%></p>
+              <label>User type:</label>
+              <p class="h1"><%= @user.user_type%></p>
             </div>
             <div class="col-md-6">
               <%if @user.user_type != "ADMIN"%>
@@ -27,25 +29,29 @@
             </div>
           </div>
         </div>
-
         <div class="card shadow p-4 m-2" style="">
           <h1>SETTINGS</h1>
-
           <div class="col">
             <button  style = "font-size:22px;"class="btn btn-primary bg-navy w-100 oswald fw-bold m-1" data-bs-toggle= "modal" data-bs-target="#display_relief_request" type="button">CHANGE PASSWORD <i class="fa-solid fa-utensils fa-xl"></i></button>
             <div id="display_relief_request" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg">
+              <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title text-dark">CHANGE PASSWORD</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                   </div>
-                  <%= render partial:"volunteer/first_login_form", locals: {user: User.find(session[:user_id])}%>
+                  <div class="modal-body">
+                    <%= render partial:"volunteer/first_login_form", locals: {user: User.find(session[:user_id])}%>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          
         </div>
       </div>
     </div>
