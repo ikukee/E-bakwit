@@ -133,6 +133,7 @@ class GenerateReportController < ApplicationController
         @NowFamilies = 0
         @CumPerson = 0
         @NowPerson = 0
+        @affectedEvac = 0
         # DEMOGRAPHICS
         @infantM = 0
         @toddlerM = 0
@@ -214,7 +215,9 @@ class GenerateReportController < ApplicationController
             @NowPerson +=countIndivEvacuated(center.id, @disaster.id, true)
             @totalfamily4ps +=countServedFamily4ps(center.id, @disaster.id, false)
 
-
+            if(countServedFamily(center.id, @disaster.id, false) > 0)
+                @affectedEvac +=1
+            end
             GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", @disaster.id , center.id).each do |rg|
                 rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])
                 if ReliefGood.find(rg.rg_id).is_food == true
@@ -250,7 +253,7 @@ class GenerateReportController < ApplicationController
             sheet.add_row ["BARANGAY", "Number of Affected"].concat(whitespacer(4)).concat(["Number of Displaced Inside ECs"]).concat(whitespacer(3),age_groupT(true, 3)).concat(whitespacer(essFaciTitles.length+3)),style:defaultColorHead
             sheet.add_row [""].concat(whitespacer(5)).concat(["FAMILIES","","PERSONS"]).concat(whitespacer(1), malefemale(7),whitespacer(1), ["TOTAL COST OF ASSISTANCE", ""]).concat(whitespacer(1),["EVACUATION CENTER FACILITIES"]).concat(whitespacer(essFaciTitles.length-2)),style:defaultColorHead
             sheet.add_row ["", "EVACUATION CENTER", "COUNT","FAMILIES","PERSONS","4Ps FAMILIES"].concat(cumnow(8), ["","FOOD", "NON-FOOD"],essFaciTitles),style:defaultColorHead
-            sheet.add_row ["GRAND TOTAL", "",EvacCenter.all.length,
+            sheet.add_row ["GRAND TOTAL", "",@affectedEvac,
             @totalfamily, @totalPersons, @totalfamily4ps, @CumFamilies, @NowFamilies, @CumPerson, @NowPerson, @infantM,@infantM_now, @infantF, @infantF_now,
             @toddlerM,@toddlerM_now, @toddlerF,@toddlerF_now,
             @preschoolersM,@preschoolersM_now,@preschoolersF,@preschoolersF_now,
@@ -270,7 +273,13 @@ class GenerateReportController < ApplicationController
                 @evac_centers.each do |center|
 
                     if center.barangay == brgy
-                        sheet.add_row ["", center.name, "1",
+                        sheet.add_row ["", center.name,
+                            if countServedFamily(center.id, @disaster.id, false) >  0
+                                "1"
+                            else
+                                "0"
+                            end
+                            ,
                             countServedFamily(center.id, @disaster.id, false),
                             countIndivEvacuated(center.id, @disaster.id, false),
                             countServedFamily4ps(center.id, @disaster.id, false),
@@ -395,9 +404,9 @@ class GenerateReportController < ApplicationController
 
         countFam = 0
         if key
-            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).group(:family_id)
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).distinct(:family_id)
         else
-            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).group(:family_id)
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).distinct(:family_id)
         end
 
         evacuee.each do |x|
@@ -409,9 +418,9 @@ class GenerateReportController < ApplicationController
 
         countFam = 0
         if key
-            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).group(:family_id)
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).distinct(:family_id)
         else
-            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).group(:family_id)
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).distinct(:family_id)
         end
 
         evacuee.each do |x|
@@ -495,9 +504,9 @@ class GenerateReportController < ApplicationController
             "Abella", "Bagumbayan Norte", "Bagumbayan Sur", "Balatas",
             "Calauag", "Cararayan", "Carolina", "Concepcion Grande",
             "Concepcion Pequeña", "Dayangdang", "Del Rosario", "Dinaga",
-            "Igualdad Interior","Lerma","Liboton", "Mabolo", "Pacol",
-            "Panicuason", "Peñafrancia", "Sabang", "San Felipe",
-            "San Francisco", "San Isidro", "Santa Cruz", "Tabuco",
+            "Igualdad","Lerma","Liboton", "Mabolo", "Pacol",
+            "Panicuason", "Penafrancia", "Sabang", "San Felipe",
+            "San Francisco", "San Isidro", "Sta. Cruz", "Tabuco",
             "Tinago", "Triangulo"
         ]
     end
