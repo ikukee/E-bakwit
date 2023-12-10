@@ -7,10 +7,25 @@ module ReliefAllocationHelper
 
         if rg.eligibility == "MALE"
             quantity = criterium.criteria * getTotalCategoryMembers(members, rg.category, "Male")#gets total number of males in a specific category and above
+            if gen_alloc.quantity > 0 && gen_alloc.quantity < quantity
+                quantity = gen_alloc.quantity
+            elsif gen_alloc.quantity < 1
+                quantity = 0
+            end
         elsif rg.eligibility == "FEMALE"
             quantity = criterium.criteria * getTotalCategoryMembers(members, rg.category, "Female")#gets total number of females in a specific category and above
+            if gen_alloc.quantity > 0 && gen_alloc.quantity < quantity
+                quantity = gen_alloc.quantity
+            elsif gen_alloc.quantity < 1
+                quantity = 0
+            end
         elsif rg.eligibility == "GENERAL USE"
             quantity = criterium.criteria * getTotalCategoryMembers(members, rg.category, nil)#gets total number of members in a specific category and above
+            if gen_alloc.quantity > 0 && gen_alloc.quantity < quantity
+                quantity = gen_alloc.quantity
+            elsif gen_alloc.quantity < 1
+                quantity = 0
+            end
         end
         return quantity
     end

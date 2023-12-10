@@ -304,59 +304,70 @@ class ReliefAllocationController < ApplicationController
         x = 0
         rg = ReliefGoodToEvacuee.all.where(evacuee_id: evacuee.id)
         batch = 0
-
+        
         if rg.length < 1 #checks if assigned rg exists
             batch = 1
         else #increments batch by finding the last batch
            batch = rg.last.batch.to_i + 1
         end
-
-        key = false
-        while x < counter.to_i #checks if there were relief goods included
-            include = "include" + x.to_s
-            if params[include].to_i == 1
-                key = true
-                break
-            end
-            x= x + 1
-        end
-
-        if key
-            x = 0
-            while x < counter.to_i
-                include = "include"+ x.to_s
-                gen_id = "gen_id"+x.to_s
-                quantity = "quantity"+x.to_s
-                criterium = RgCriterium.find_by(gen_rg_alloc_id: params[gen_id])
-
+        respond_to do |format|
+            key = false
+            while x < counter.to_i #checks if there were relief goods included
+                include = "include" + x.to_s
                 if params[include].to_i == 1
-                    assignedRg = ReliefGoodToEvacuee.new
-                    assignedRg.evacuee_id = evacuee.id
-                    assignedRg.criterium_id = criterium.id
-                    assignedRg.gen_id = params[gen_id]
-                    assignedRg.quantity = params[quantity]
-                    assignedRg.batch = batch
-                    assignedRg.save
-                    gen = GenRgAlloc.find(params[gen_id])
-                    if gen.quantity.to_f - assignedRg.quantity.to_f < 1
-                        gen.update_attribute(:quantity, 0)
-                    else
-                        gen.update_attribute(:quantity, gen.quantity.to_f - assignedRg.quantity.to_f)
-                    end
+                    key = true
+                    break
                 end
-                x = x + 1
+                x= x + 1
             end
-            evacuee.update_attribute(:relief_good_status, "RECEIVED")
-            redirect_to "/view/evacuee/members/#{evacuee.id}/allotted"
-        else
 
-            respond_to do |format|
+            if key
+                x = 0
+                while x < counter.to_i #checks if there were relief goods included
+                    gen_id = "gen_id"+x.to_s
+                    gen_rg_alloc = GenRgAlloc.find(params[gen_id])
+                    quantity = "quantity"+x.to_s
+                    if params[quantity].to_f > gen_rg_alloc.quantity || gen_rg_alloc.quantity == 0
+                        format.turbo_stream{render turbo_stream: turbo_stream.update("err_msg","Insufficient Amount of relief good in storage.")}
+                        break
+                    end
+                    if params[quantity].to_f < 1
+                        format.turbo_stream{render turbo_stream: turbo_stream.update("err_msg","Quantity to be distributed must not be 0. If you don't want to include it please uncheck the checkbox instead.")}
+                        break
+                    end
+                    x= x + 1
+                end
+
+                x = 0
+                while x < counter.to_i
+                    include = "include"+ x.to_s
+                    gen_id = "gen_id"+x.to_s
+                    quantity = "quantity"+x.to_s
+                    criterium = RgCriterium.find_by(gen_rg_alloc_id: params[gen_id])
+                
+                    if params[include].to_i == 1
+                        assignedRg = ReliefGoodToEvacuee.new
+                        assignedRg.evacuee_id = evacuee.id
+                        assignedRg.criterium_id = criterium.id
+                        assignedRg.gen_id = params[gen_id]
+                        assignedRg.quantity = params[quantity]
+                        assignedRg.batch = batch
+                        assignedRg.save
+                        gen = GenRgAlloc.find(params[gen_id])
+                        if gen.quantity.to_f - assignedRg.quantity.to_f < 1
+                            gen.update_attribute(:quantity, 0)
+                        else
+                            gen.update_attribute(:quantity, gen.quantity.to_f - assignedRg.quantity.to_f)
+                        end
+                    end
+                    x = x + 1
+                end
+                evacuee.update_attribute(:relief_good_status, "RECEIVED")
+                format.html{redirect_to "/view/evacuee/members/#{evacuee.id}/allotted"}
+            else
                 format.turbo_stream{render turbo_stream: turbo_stream.update("err_msg","Cannot Distribute nothing. At least one relief good must be included.")}
             end
         end
-
-
-
     end
 
     def view_allocated_rgs

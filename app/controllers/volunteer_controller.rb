@@ -132,14 +132,15 @@ class VolunteerController < ApplicationController
 
     def change_password
         user = User.find(params[:user_id])
-        puts params[:password_digest]
-        puts params[:confirm_password]
-
         respond_to do |format|
             if user.valid?
+                
                 if user.status == "ACTIVE"
                     if user.authenticate(params[:password])
                         if params[:password_digest] == params[:confirm_password]
+                            if params[:password_digest] == nil || params[:password_digest] == ""
+                                format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>Password Cannot be blank</li></ul>")}
+                            end
                             user.password_digest = params[:password_digest]
                             user.update_attribute(:password_digest, BCrypt::Password.create(params[:password_digest]) )
                             format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:green;'>Password Successfully Changed</li></ul>")}
@@ -151,6 +152,9 @@ class VolunteerController < ApplicationController
                     end
                 else
                     if params[:password_digest] == params[:confirm_password]
+                        if params[:password_digest] == nil || params[:password_digest] == ""
+                            format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>Password Cannot be blank</li></ul>")}
+                        end
                         user.password_digest = params[:password_digest]
                         user.update_attribute(:password_digest, BCrypt::Password.create(params[:password_digest]) )
                         user.update_attribute(:status, "ACTIVE")

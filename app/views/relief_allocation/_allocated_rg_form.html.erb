@@ -10,7 +10,8 @@
             <tr>
               <th>Include?</th>
               <th>Relief Good</th>
-              <th>Quantity</th>
+              <th>Remaining in Storage</th>
+              <th>Quantity to be distributed</th>
               <th>Unit</th>
             </tr>
           </thead>
@@ -25,8 +26,9 @@
                     </td>
                     <input type ="hidden" name="gen_id<%=counter%>" id = "gen_id<%=counter%>" value = <%=gen.id%>>
                     <td><%= ReliefGood.find(gen.rg_id).name%> </td>
+                    <td><%= gen.quantity%> </td>
                     <td style = "width:30%;">
-                      <input type = "number" class= "form-control" name= "quantity<%=counter%>" id = "quantity<%= counter%>" value =<%=getQuantity(gen,members)%> min= "1">
+                      <input type = "number" class= "form-control" name= "quantity<%=counter%>" id = "quantity<%= counter%>" value =<%=getQuantity(gen,members)%> min= "0" max = <%= gen.quantity%>>
                     </td>
                     <td><%= ReliefGood.find(gen.rg_id).unit%> </td>
                     <% counter = counter+1%>
@@ -42,7 +44,8 @@
             <tr>
               <th>Include?</th>
               <th>Relief Good</th>
-              <th>Quantity</th>
+              <th>Remaining in Storage</th>
+              <th>Quantity to be distributed</th>
               <th>Unit</th>
             </tr>
           </thead>
@@ -57,8 +60,9 @@
                     </td>
                     <input type ="hidden" name="gen_id<%=counter%>" id = "gen_id<%=counter%>" value = <%=gen.id%>>
                     <td><%= ReliefGood.find(gen.rg_id).name%> </td>
+                    <td><%= gen.quantity%> </td>
                     <td style = "width:30%;">
-                      <input type = "number" class= "form-control" name= "quantity<%=counter%>" id = "quantity<%= counter%>" value =<%=getQuantity(gen,members)%> min= "1">
+                      <input type = "number" class= "form-control" name= "quantity<%=counter%>" id = "quantity<%= counter%>" value =<%=getQuantity(gen,members)%> min= "0" max = <%= gen.quantity%>>
                     </td>
                     <td><%= ReliefGood.find(gen.rg_id).unit%> </td>
                     <% counter = counter+1%>
@@ -74,7 +78,7 @@
         <%= form.button nil, class:"btn btn-success form-control" do %>
           DISTRIBUTE <i class="fa-solid fa-handshake-angle"></i>
         <% end %>
-        <p id = "err_msg" style = "color:red"></p>
+        <p id = "err_msg" style = "color:red; text-align:center; font-weight:bold;"></p>
       </div>
       <br>
     <% end %>

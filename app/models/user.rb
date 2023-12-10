@@ -4,4 +4,5 @@ class User < ApplicationRecord
     validates :cnum, length:{maximum: 11}
     validates :email, uniqueness:true
     validates :password_digest, length:{minimum: 8}
+    validates :password_digest, presence: true, on: :update
 end
