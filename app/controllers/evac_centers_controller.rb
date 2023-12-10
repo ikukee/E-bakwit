@@ -253,7 +253,7 @@ class EvacCentersController < ApplicationController
     respond_to do |format|
       if @assigned_yearly_ess.valid?
         @assigned_yearly_ess.save
-        format.js{render inline: "location.reload();"}
+        format.html{redirect_to "/evac_facilities_form/#{@evac_center.id}/#{@evac_yearly_profile.id}"}
       else
         format.turbo_stream{render turbo_stream: turbo_stream.update("form_area",partial: "evac_facilities_form",locals:{evac_center: @evac_center, evac_yearly_profile: @evac_yearly_profile, assigned_yearly_ess: @assigned_yearly_ess})}
       end
@@ -287,7 +287,8 @@ class EvacCentersController < ApplicationController
     respond_to do |format|
       if @assigned_yearly_ess.valid?
          @assigned_yearly_ess.save
-         format.js{render inline: "location.reload();"}
+         @assigned_yearly_esses = AssignedYearlyEss.all.where(evac_profile_id: @evac_yearly_profile.id)
+        format.turbo_stream{render turbo_stream: turbo_stream.update("display_area",partial: "display_evac_essential",locals:{evac_center: @evac_center, evac_yearly_profile: @evac_yearly_profile, assigned_yearly_esses: @assigned_yearly_esses})}
       else
         format.turbo_stream{render turbo_stream: turbo_stream.update("form_area",partial: "evac_essentials_form",locals:{evac_center: @evac_center, evac_yearly_profile: @evac_yearly_profile, assigned_yearly_ess: @assigned_yearly_ess})}
       end
@@ -296,9 +297,18 @@ class EvacCentersController < ApplicationController
 
   def destroy_essential
     assigned_yearly_ess = AssignedYearlyEss.find(params[:id])
+    evac_yearly_profile = EvacYearlyProfile.find(assigned_yearly_ess.evac_profile_id)
+    evac_center = evac_yearly_profile.evac_id
+    essential = EvacuationEssential.find(assigned_yearly_ess.ess_id).ess_type
     assigned_yearly_ess.destroy
       respond_to do |format|
-        format.js{render inline: "location.reload();"}
+        if essential == "FACILITY"
+          redirect_to "/evac_facilities_form/#{evac_center}/#{evac_yearly_profile.id}"
+        else
+          redirect_to "/evac_essentials_form/#{evac_center}/#{evac_yearly_profile.id}"
+        end
+
+        
       end
   end
 

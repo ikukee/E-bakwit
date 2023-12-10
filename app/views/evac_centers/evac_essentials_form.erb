@@ -2,68 +2,26 @@
   <%= link_to "Facilities", "/evac_facilities_form/#{@evac_center.id}/#{@evac_yearly_profile.id}", id: "faci-tab",  style: "z-index: 1",class: "poppins py-3 px-4 btn btn-secondary position-absolute" %>
   <%= link_to "Essentials", "/evac_essentials_form/#{@evac_center.id}/#{@evac_yearly_profile.id}", id: "esse-tab" ,class: "is-active poppins py-3 px-4 position-absolute rounded-top"  %>
   <h4 class="oswald fw-bold"><%= @evac_center.name%></h4>
-  
   <% if @evac_center.status != "ARCHIVED" && session[:user_type] == "CAMP MANAGER"%>
-  <h4 class="oswald">Add Essentials</h4>
+    <h4 class="oswald">Add Essentials</h4>
     <div id =  "form_area">
       <%= render partial: "evac_essentials_form", locals:{evac_center: @evac_center, evac_yearly_profile: @evac_yearly_profile, assigned_yearly_ess: AssignedYearlyEss.new}%>
     </div>
   <% end %>
   <br>
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-striped table-hover border rounded">
-        <h4 class="oswald">List of Essential Items for Year <%= @evac_yearly_profile.year %></h4>
-        <thead>
-          <tr>
-            <th class="col-md-6">Item</th>
-            <th class="col-md-2">Count</th>
-            <th class="col-md-2">Status</th>
-            <th class="col-md-4">Action</th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          <% @assigned_yearly_esses.each do |ae| %>
-            <% if EvacuationEssential.find_by(id: ae.ess_id)%>
-              <% if EvacuationEssential.find(ae.ess_id).ess_type == "ESSENTIAL"%>
-                <tr>
-                  <td><strong><%= EvacuationEssential.find(ae.ess_id).name %></strong></td>
-                  <td><%= ae.quantity %></td>
-                  <td><%= ae.status %></td>
-                  <td style = "width:30%;">
-                     <% if @evac_center.status != "ARCHIVED" && session[:user_type] == "CAMP MANAGER"%>
-                      <%= render partial: "/layouts/delete_button",locals:{link: "/assigned_essential/#{ae.id}"}%>
-                    <% end %>
-                  </td>
-                </tr>
-              <% end %>
-            <% else %>
-              <tr>
-                <td>NULL</td>
-                <td><%= ae.quantity %></td>
-                <td><%= ae.status %></td>
-                <td style = "width:30%;">
-                  <% if @evac_center.status != "ARCHIVED" && session[:user_type] == "CAMP MANAGER"%>
-                    <%= render partial: "/layouts/delete_button",locals:{link: "/assigned_essential/#{ae.id}"}%>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
-      </table>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-left">
-          <li class="page-item ">
-            <% if @page  > 0 %>
-              <%= link_to "Previous Page", "/evac_essentials_form/#{@evac_center.id}/#{@evac_yearly_profile.id}?page=#{@page-1}", class:"page-link"%>
-            <% end %>
-          </li>
-          <li class="page-item">
-            <%= link_to "Next Page","/evac_essentials_form/#{@evac_center.id}/#{@evac_yearly_profile.id}?page=#{@page + 1}", class:"page-link"%>
-          </li>
-        </ul>
-      </nav>
-    </div>
+  <div id = "display_area">
+    <%= render partial: "display_evac_essential", locals:{evac_center:@evac_center, evac_yearly_profile: @evac_yearly_profile, assigned_yearly_esses: @assigned_yearly_esses }%>
   </div>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-left">
+      <li class="page-item ">
+        <% if @page  > 0 %>
+          <%= link_to "Previous Page", "/evac_essentials_form/#{@evac_center.id}/#{@evac_yearly_profile.id}?page=#{@page-1}", class:"page-link"%>
+        <% end %>
+      </li>
+      <li class="page-item">
+        <%= link_to "Next Page","/evac_essentials_form/#{@evac_center.id}/#{@evac_yearly_profile.id}?page=#{@page + 1}", class:"page-link"%>
+      </li>
+    </ul>
+  </nav>
 </fieldset>

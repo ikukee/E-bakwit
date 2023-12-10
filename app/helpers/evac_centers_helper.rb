@@ -56,8 +56,7 @@ module EvacCentersHelper
             evacuee = Evacuee.all.where(evac_id: evac_center).where(disaster_id: disaster.id).group(:family_id).count
         end
 
-
-        return evacuee
+        return evacuee.length
     end
 
     def countGenderEvacuated(evac_center,disaster, sexVal)

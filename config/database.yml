@@ -25,8 +25,8 @@ development:
   <<: *default
   database: E_bakwit_development
   host: localhost
-  username: E_bakwit
-  password: <%= Rails.application.credentials.dig(:prod_db_pass)%>
+  username: postgres
+  password: 12345678
 
 
   # The specified database role being used to connect to postgres.
@@ -63,8 +63,8 @@ test:
   <<: *default
   database: E_bakwit_test
   host: localhost
-  username: E_bakwit
-  password: <%= Rails.application.credentials.dig(:prod_db_pass)%>
+  username: postgres
+  password: 12345678
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

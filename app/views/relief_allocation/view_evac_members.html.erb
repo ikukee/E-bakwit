@@ -38,7 +38,7 @@
                   <%= form_with url: "/view/allocated_rgs", method: :post do |form|%>
                     <%= form.hidden_field :evacuee_id, :value=> @evacuee.id%>
                     <div style = "width:30%;">
-                      <%= form.collection_select :batch , ReliefGoodToEvacuee.all.where(evacuee_id: @evacuee.id).group(:batch), :batch, :batch,{:prompt => "Select Batch"},{class:"form-control",oninput: "this.form.requestSubmit()"} %>
+                      <%= form.collection_select :batch , ReliefGoodToEvacuee.find_by_sql("SELECT DISTINCT(batch) from relief_good_to_evacuees where evacuee_id = #{@evacuee.id}"), :batch, :batch,{:prompt => "Select Batch"},{class:"form-control",oninput: "this.form.requestSubmit()"} %>
                     </div>
                   <% end %>
                   <br>
