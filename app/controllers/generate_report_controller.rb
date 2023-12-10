@@ -133,6 +133,7 @@ class GenerateReportController < ApplicationController
         @NowFamilies = 0
         @CumPerson = 0
         @NowPerson = 0
+        @affectedEvac = 0
         # DEMOGRAPHICS
         @infantM = 0
         @toddlerM = 0
@@ -214,7 +215,9 @@ class GenerateReportController < ApplicationController
             @NowPerson +=countIndivEvacuated(center.id, @disaster.id, true)
             @totalfamily4ps +=countServedFamily4ps(center.id, @disaster.id, false)
 
-
+            if(countServedFamily(center.id, @disaster.id, false) > 0)
+                @affectedEvac +=1
+            end
             GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", @disaster.id , center.id).each do |rg|
                 rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])
                 if ReliefGood.find(rg.rg_id).is_food == true
@@ -270,7 +273,13 @@ class GenerateReportController < ApplicationController
                 @evac_centers.each do |center|
 
                     if center.barangay == brgy
-                        sheet.add_row ["", center.name, "1",
+                        sheet.add_row ["", center.name,
+                            if countServedFamily(center.id, @disaster.id, false) > 0
+                                "1"
+                            else
+                                "0"
+                            end
+                            ,
                             countServedFamily(center.id, @disaster.id, false),
                             countIndivEvacuated(center.id, @disaster.id, false),
                             countServedFamily4ps(center.id, @disaster.id, false),
