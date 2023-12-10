@@ -17,7 +17,7 @@ class EvacCentersController < ApplicationController
 
   def search
     search_type = "name"
-    @evac_centers = EvacCenter.where("#{search_type} LIKE ? ", "#{params[:search_value]}%").where(status: "ACTIVE").order(name: :asc)
+    @evac_centers = EvacCenter.where("lower(#{search_type}) LIKE ? ", "#{params[:search_value].downcase}%").where(status: "ACTIVE").order(name: :asc)
     respond_to do |format|
       if @evac_centers.length > 0
           format.turbo_stream{render turbo_stream: turbo_stream.update("evac_centers",partial: "evac_search_results", locals:{evac_centers:@evac_centers })}
