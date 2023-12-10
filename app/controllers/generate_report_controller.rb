@@ -253,7 +253,7 @@ class GenerateReportController < ApplicationController
             sheet.add_row ["BARANGAY", "Number of Affected"].concat(whitespacer(4)).concat(["Number of Displaced Inside ECs"]).concat(whitespacer(3),age_groupT(true, 3)).concat(whitespacer(essFaciTitles.length+3)),style:defaultColorHead
             sheet.add_row [""].concat(whitespacer(5)).concat(["FAMILIES","","PERSONS"]).concat(whitespacer(1), malefemale(7),whitespacer(1), ["TOTAL COST OF ASSISTANCE", ""]).concat(whitespacer(1),["EVACUATION CENTER FACILITIES"]).concat(whitespacer(essFaciTitles.length-2)),style:defaultColorHead
             sheet.add_row ["", "EVACUATION CENTER", "COUNT","FAMILIES","PERSONS","4Ps FAMILIES"].concat(cumnow(8), ["","FOOD", "NON-FOOD"],essFaciTitles),style:defaultColorHead
-            sheet.add_row ["GRAND TOTAL", "",EvacCenter.all.length,
+            sheet.add_row ["GRAND TOTAL", "",@affectedEvac,
             @totalfamily, @totalPersons, @totalfamily4ps, @CumFamilies, @NowFamilies, @CumPerson, @NowPerson, @infantM,@infantM_now, @infantF, @infantF_now,
             @toddlerM,@toddlerM_now, @toddlerF,@toddlerF_now,
             @preschoolersM,@preschoolersM_now,@preschoolersF,@preschoolersF_now,
