@@ -495,8 +495,8 @@ class GenerateReportController < ApplicationController
             "Abella", "Bagumbayan Norte", "Bagumbayan Sur", "Balatas",
             "Calauag", "Cararayan", "Carolina", "Concepcion Grande",
             "Concepcion Pequeña", "Dayangdang", "Del Rosario", "Dinaga",
-            "Igualdad Interior","Lerma","Liboton", "Mabolo", "Pacol",
-            "Panicuason", "Peñafrancia", "Sabang", "San Felipe",
+            "Igualdad","Lerma","Liboton", "Mabolo", "Pacol",
+            "Panicuason", "Penafrancia", "Sabang", "San Felipe",
             "San Francisco", "San Isidro", "Sta. Cruz", "Tabuco",
             "Tinago", "Triangulo"
         ]
