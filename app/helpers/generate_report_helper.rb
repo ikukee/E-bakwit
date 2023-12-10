@@ -99,6 +99,7 @@ module GenerateReportHelper
     def zcountServedFamily(evac_center, disaster, key )
         
         countFam = 0
+        
         if key 
             evacuee = Evacuee.find_by_sql("SELECT DISTINCT(family_id) from evacuee where evac_id = #{evac_center} AND disaster_id = #{disaster} AND date_out = #{nil}")
             
