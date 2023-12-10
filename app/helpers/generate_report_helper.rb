@@ -100,9 +100,10 @@ module GenerateReportHelper
         
         countFam = 0
         if key 
-            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).distinct(:family_id)
+            evacuee = Evacuee.find_by_sql("SELECT DISTINCT(family_id) from evacuee where evac_id = #{evac_center} AND disaster_id = #{disaster} AND date_out = #{nil}")
+            
         else
-            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).distinct(:family_id)
+            evacuee = Evacuee.find_by_sql("SELECT DISTINCT(family_id) from evacuee where evac_id = #{evac_center} AND disaster_id = #{disaster}")
         end
         
         evacuee.each do |x| 
