@@ -38,17 +38,18 @@ class EvacCentersController < ApplicationController
     @evac_center = EvacCenter.find(params[:id])
     @evac_yearly_profiles = EvacYearlyProfile.all.where(evac_id: params[:id])
     @evac_yearly_profile = EvacYearlyProfile.new
-    @evac_yearly_profile.year = params[:date]
+    year = params[:date].split("/")
+    @evac_yearly_profile.year = year[2]
     key = false
     @evac_yearly_profiles.each do |eyp|
-      if eyp.year == @evac_yearly_profile.year.year
+      if eyp.year == @evac_yearly_profile.year
         key = true
       end
     end
 
     if !key
       @evac_yearly_profile.evac_id = params[:id]
-      @evac_yearly_profile.year = @evac_yearly_profile.year.year
+      @evac_yearly_profile.year = @evac_yearly_profile.year
       @evac_yearly_profile.save
     end
     redirect_to "/evac_centers/#{params[:id]}"
