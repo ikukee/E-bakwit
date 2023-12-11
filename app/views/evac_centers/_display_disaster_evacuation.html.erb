@@ -35,13 +35,11 @@
             <ul class="dropdown-menu oswald fw p-1 text-center" style="font-size:2em">
               <p class="">Lists</p>
               <li class="m-1"><a href="<%=evac_center.id%>/<%=disaster.id%>/generate.xlsx", class= "dropdown-item p-1 mt-1">.xlsx <i class="fa-solid fa-table d-inline"></i></a></li>
-              
             </ul>
           </div>
         <%end%>
       </div>
     </div>
-
     <div class="row mt-3 p-4 default-background3  rounded position-relative">
       <p class="oswald position-absolute start-0 top-0 text-secondary text-center">EVACUEE COUNT</p>
       <div class="col p-0 mt-3">
@@ -104,7 +102,6 @@
           </div>
         </div>
       </div>
-      
     </div>
   </div>
   <div class="col-md-6 col-sm-12 mt-5">
@@ -213,36 +210,36 @@
         <% else %>
           <% if User.find(session[:user_id]).currently_assigned != nil%>
             <% if User.find(session[:user_id]).currently_assigned == evac_center.id && session[:user_type] == "CAMP MANAGER" %>
-                    <% if ReliefRequest.where(disaster_id: disaster.id).where(evac_id: evac_center.id).length > 0 %>
-                      <div class="col">
-                        <a href = "/relief_allocation/<%=evac_center.id%>/<%= disaster.id%>" class = "btn btn-info bg-dinfo text-light w-100 oswald fw-bold m-1">Configure Relief Good Allocation<i class="fa-solid fa-gear"></i></a>
-                      </div>
-                    <% else%>
-                      <% if evac_center.status != "ARCHIVED"%>
-                        <div class="col">
-                          <button  style = "font-size:22px;"class="btn btn-info bg-dinfo text-light w-100 oswald fw-bold m-1" data-bs-toggle= "modal" data-bs-target="#display_relief_request" type="button">Initiate Relief Request &nbsp; <i class="fa-solid fa-utensils fa-xl"></i></button>
-                          <div id="display_relief_request" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title text-dark">Sending Relief Good Request</h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <%= form_with url:"/send/relief/#{evac_center.id}/#{disaster.id}", method: :post do |form|%>
-                                  <p style = "color:black;margin-left: 15px;"><strong>Date of Request:</strong> <%= Date.today %></p>
-                                  <%= form.hidden_field :volunteer_id, :value  => session[:user_id] %>
-                                  <%= form.text_area :message, class:"form-control", :placeholder => "Input message here..."%>
-                                  <%= form.submit "Send Request", class:"btn btn-primary form-control"%>
-                                <% end %>
-                              </div>
-                           </div>
+              <% if ReliefRequest.where(disaster_id: disaster.id).where(evac_id: evac_center.id).length > 0 %>
+                <div class="col">
+                  <a href = "/relief_allocation/<%=evac_center.id%>/<%= disaster.id%>" class = "btn btn-info bg-dinfo text-light w-100 oswald fw-bold m-1">Configure Relief Good Allocation<i class="fa-solid fa-gear"></i></a>
+                </div>
+              <% else%>
+                <% if evac_center.status != "ARCHIVED"%>
+                  <div class="col">
+                    <button  style = "font-size:22px;"class="btn btn-info bg-dinfo text-light w-100 oswald fw-bold m-1" data-bs-toggle= "modal" data-bs-target="#display_relief_request" type="button">Initiate Relief Request &nbsp; <i class="fa-solid fa-utensils fa-xl"></i></button>
+                    <div id="display_relief_request" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title text-dark">Sending Relief Good Request</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <%= form_with url:"/send/relief/#{evac_center.id}/#{disaster.id}", method: :post do |form|%>
+                            <p style = "color:black;margin-left: 15px;"><strong>Date of Request:</strong> <%= Date.today %></p>
+                            <%= form.hidden_field :volunteer_id, :value  => session[:user_id] %>
+                            <%= form.text_area :message, class:"form-control", :placeholder => "Input message here..."%>
+                            <%= form.submit "Send Request", class:"btn btn-primary form-control"%>
+                          <% end %>
                         </div>
                       </div>
-                    <% end %>
-                  <% end %>
+                    </div>
+                  </div>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
+        <% end %>
       </div>
       <p>&nbsp;</p>
       <div class="row">
@@ -270,10 +267,8 @@
         </div>
       </div>
       <p>&nbsp;</p>
-      <% if User.find(session[:user_id]).currently_assigned != nil%>
-        <% if User.find(session[:user_id]).currently_assigned == evac_center.id || session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
-          <a href="/evac_centers/non_distributed_rg/<%=evac_center.id%>/<%= disaster.id%>" class="btn btn-secondary bg-dgray w-100 oswald fw-bold">VIEW DISTRIBUTED RELIEF GOODS</a>
-        <%end%>
+      <% if User.find(session[:user_id]).currently_assigned == evac_center.id || session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
+        <a href="/evac_centers/non_distributed_rg/<%=evac_center.id%>/<%= disaster.id%>" class="btn btn-secondary bg-dgray w-100 oswald fw-bold">VIEW DISTRIBUTED RELIEF GOODS</a>
       <%end%>
     </div>
     <div class = "col-md-6">
