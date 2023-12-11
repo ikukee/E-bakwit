@@ -39,7 +39,7 @@ class EvacCentersController < ApplicationController
     @evac_yearly_profiles = EvacYearlyProfile.all.where(evac_id: params[:id])
     @evac_yearly_profile = EvacYearlyProfile.new
     year = params[:date].split("/")
-    @evac_yearly_profile.year = year[2]
+    @evac_yearly_profile.year = year[0]
     key = false
     @evac_yearly_profiles.each do |eyp|
       if eyp.year == @evac_yearly_profile.year
