@@ -4,7 +4,7 @@
       <div class = "col-md-9">
         <h2 class="m-3 oswald"  ><strong><%=Disaster.find(relief_request.disaster_id).name%></strong> | Allocated Relief Goods for <%=EvacCenter.find(relief_request.evac_id).name%></h2>
       </div>
-      <% if session[:user_type] != "ADMIN" || session[:user_type] == "SUPERUSER" %>
+      <% if session[:user_type] == "CAMP MANAGER" %>
         <% if relief_request.status == "DISPATCHED" %>
           <div class = "col-md-3">
             <%= form_with url:"/mark_received/request/#{relief_request.id}", method: :post do |form|%>
