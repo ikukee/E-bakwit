@@ -44,9 +44,9 @@ class LogFamilyController < ApplicationController
         @disaster_id = params[:disaster_id]
         @evac_id = params[:evac_id]
         if search_type == "RELEASED"
-            evacuee_list =Evacuee.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id).where("date_out != ?",nil)
+            evacuee_list = Evacuee.find_by_sql("SELECT * FROM evacuees where disaster_id = #{@disaster_id} AND evac_id = #{@evac_id} AND date_out IS NOT NULL ORDER BY family_name")
         else
-            evacuee_list =Evacuee.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id).where(date_out: nil)
+            evacuee_list =Evacuee.all.where(disaster_id: @disaster_id).where(evac_id: @evac_id).where(date_out: nil).order(:family_name)
         end
 
         respond_to do |format|
