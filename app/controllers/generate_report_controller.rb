@@ -118,10 +118,14 @@ class GenerateReportController < ApplicationController
             end
         end
 
-        p.serialize "#{Rails.root}/tmp/generate.xlsx"
-        send_file("#{Rails.root}/tmp/generate.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.xlsx", type: "application/xlsx",disposition: 'inline', headers: { 'Content-Disposition' => 'inline' })
-        
-        
+        p.serialize "#{Rails.root}/app/views/generate_report/generate.xlsx.erb"
+        #send_file("#{Rails.root}/tmp/generate.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.xlsx", type: "application/xlsx",disposition: 'inline', headers: { 'Content-Disposition' => 'inline' })
+        respond_to do |format|
+            format.xlsx do
+                render template: 'generate.xlsx.erb',
+                content_type: 'application/xlsx'
+            end
+        end
     end
     def generate_all # disasters/1/generate
         ## GRAND TOTAL OF ALL EVAC CENTERS
