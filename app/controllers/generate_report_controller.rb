@@ -120,7 +120,7 @@ class GenerateReportController < ApplicationController
                 @affectedEvac +=1
             end
             GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", @disaster.id , center.id).each do |rg|
-                rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])
+                @rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])
                 if ReliefGood.find(rg.rg_id).is_food == true
                     @tprice = @tprice + rg.price
                     @tfprice += rg.price
@@ -134,7 +134,7 @@ class GenerateReportController < ApplicationController
 
             @yProf = EvacYearlyProfile.all.where(evac_id: center.id).where(year: @disaster.year).each do |yp|
                 AssignedYearlyEss.all.where(evac_profile_id: yp.id).each do |ye|
-                    essFaciTitles.push(EvacuationEssential.find(ye.ess_id).name);
+                    @essFaciTitles.push(EvacuationEssential.find(ye.ess_id).name);
                     #essFaci.push([EvacuationEssential.find(ye.ess_id).name,EvacuationEssential.find(ye.ess_id).ess_type, EvacuationEssential.find(ye.ess_id).description, ye.quantity, ye.status])
                 end
             end
