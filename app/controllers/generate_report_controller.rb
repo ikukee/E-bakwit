@@ -1,6 +1,31 @@
 class GenerateReportController < ApplicationController
     before_action :is_logged_in
     require 'axlsx'
+    def viewSpecificReport
+        @evac_center = EvacCenter.find(params[:evac_center])
+        @disaster = Disaster.find(params[:disaster_id])
+        @tprice = 0
+        @rlGoods = []
+        @essFaci = []
+        @yProf = EvacYearlyProfile.all.where(evac_id: @evac_center.id).where(year: @disaster.year).each do |yp|
+            AssignedYearlyEss.all.where(evac_profile_id: yp.id).each do |ye|
+                @essFaci.push([EvacuationEssential.find(ye.ess_id).name,EvacuationEssential.find(ye.ess_id).ess_type, EvacuationEssential.find(ye.ess_id).description, ye.quantity, ye.status])
+            end
+        end
+        GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", @disaster.id , @evac_center.id).each do |rg|
+            @rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])
+            if ReliefGood.find(rg.rg_id).is_food == true
+                @tprice = @tprice + rg.price
+            elsif ReliefGood.find(rg.rg_id).is_food == false
+                @tprice = @tprice + rg.price
+            else
+                @tprice = @tprice + rg.price
+            end
+        end
+        respond_to do |format|
+            format.htm
+        end
+    end
     def generate ## evac_centers/1/:disaster/generate
         @evac_center = EvacCenter.find(params[:evac_center])
         @disaster = Disaster.find(params[:disaster_id])
