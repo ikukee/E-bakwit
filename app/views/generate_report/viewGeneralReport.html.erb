@@ -47,14 +47,14 @@
               <td rowspan="3">Barangay</td>
               <td colspan="5" rowspan="2">Number of Affected</td>
               <td colspan="4">Number of Displaced Inside ECs</td>
-              <% @ageTitles.each do |titles| %>
+              <% age_groupT(false, 0).each do |titles| %>
                 <td colspan="4"><%= titles %></td>
               <%end%>
             </tr>
             <tr align ="center" style="background: #c5e0b3">
               <td colspan="2">FAMILIES</td>
               <td colspan="2">PERSONS</td>
-              <% @ageTitles.each do |titles|  %>
+              <% age_groupT(false, 0).each do |titles|  %>
                 <td colspan="2">MALE</td>
                 <td colspan="2">FEMALE</td>
               <%end%>
