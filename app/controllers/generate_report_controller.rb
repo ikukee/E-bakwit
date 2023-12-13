@@ -535,6 +535,7 @@ class GenerateReportController < ApplicationController
             "San Francisco", "San Isidro", "Sta. Cruz", "Tabuco",
             "Tinago", "Triangulo"
         ]
+        return titles
     end
     private
     def limiterForBarangay(brgy)
