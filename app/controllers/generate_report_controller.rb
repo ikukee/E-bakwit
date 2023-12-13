@@ -23,7 +23,7 @@ class GenerateReportController < ApplicationController
             end
         end
         respond_to do |format|
-            format.htm
+            format.html
         end
     end
     def generate ## evac_centers/1/:disaster/generate
