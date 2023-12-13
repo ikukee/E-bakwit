@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-    #Mime::Type.register "application/xlsx", :xlsx
+    Mime::Type.register "application/xlsx", :xlsx
     before_action :set_breadcrumbs
 
     def checkValidUser
