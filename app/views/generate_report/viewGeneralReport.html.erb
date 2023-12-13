@@ -76,62 +76,10 @@
             </tr>
             <tr style="background: #7f7f7f">
               <td>GRAND TOTAL</td>
-              <td><%= gcountGenderEvacuated(@evac_center.id,@disaster, "Male", false) %></td>
-              <td><%= gcountGenderEvacuated(@evac_center.id,@disaster, "Male", true) %></td>
-              <td><%= gcountGenderEvacuated(@evac_center.id,@disaster, "Female", false) %></td>
-              <td><%= gcountGenderEvacuated(@evac_center.id,@disaster, "Female", true)%></td>
+              
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>INFANT</td>
-              <td><%= ggetInfants(@evac_center.id, @disaster.id,"Male", false) %></td>
-              <td><%= ggetInfants(@evac_center.id, @disaster.id,"Male", true) %></td>
-              <td><%= ggetInfants(@evac_center.id, @disaster.id,"Female", false) %></td>
-              <td><%= ggetInfants(@evac_center.id, @disaster.id,"Female", true)%></td>
-            </tr>
-            <tr>
-              <td>TODDLER</td>
-              <td><%= ggetInfants(@evac_center.id, @disaster.id,"Male", false) %></td>
-              <td><%= ggetInfants(@evac_center.id, @disaster.id,"Male", true) %></td>
-              <td><%= ggetInfants(@evac_center.id, @disaster.id,"Female", false) %></td>
-              <td><%= ggetInfants(@evac_center.id, @disaster.id,"Female", true)%></td>
-            </tr>
-            <tr>
-              <td>PRESCHOOLER</td>
-              <td><%= ggetPreschoolers(@evac_center.id, @disaster.id,"Male", false) %></td>
-              <td><%= ggetPreschoolers(@evac_center.id, @disaster.id,"Male", true) %></td>
-              <td><%= ggetPreschoolers(@evac_center.id, @disaster.id,"Female", false) %></td>
-              <td><%= ggetPreschoolers(@evac_center.id, @disaster.id,"Female", true)%></td>
-            </tr>
-            <tr>
-              <td>SCHOOLAGE</td>
-              <td><%= ggetSchoolagers(@evac_center.id, @disaster.id,"Male", false) %></td>
-              <td><%= ggetSchoolagers(@evac_center.id, @disaster.id,"Male", true) %></td>
-              <td><%= ggetSchoolagers(@evac_center.id, @disaster.id,"Female", false) %></td>
-              <td><%= ggetSchoolagers(@evac_center.id, @disaster.id,"Female", true)%></td>
-            </tr>
-            <tr>
-              <td>TEENAGE</td>
-              <td><%= ggetTeenagers(@evac_center.id, @disaster.id,"Male", false) %></td>
-              <td><%= ggetTeenagers(@evac_center.id, @disaster.id,"Male", true) %></td>
-              <td><%= ggetTeenagers(@evac_center.id, @disaster.id,"Female", false) %></td>
-              <td><%= ggetTeenagers(@evac_center.id, @disaster.id,"Female", true)%></td>
-            </tr>
-            <tr>
-              <td>ADULT</td>
-              <td><%= ggetAdults(@evac_center.id, @disaster.id,"Male", false) %></td>
-              <td><%= ggetAdults(@evac_center.id, @disaster.id,"Male", true) %></td>
-              <td><%= ggetAdults(@evac_center.id, @disaster.id,"Female", false) %></td>
-              <td><%= ggetAdults(@evac_center.id, @disaster.id,"Female", true)%></td>
-            </tr>
-            <tr>
-              <td>SENIOR</td>
-              <td><%= ggetSeniors(@evac_center.id, @disaster.id,"Male", false) %></td>
-              <td><%= ggetSeniors(@evac_center.id, @disaster.id,"Male", true) %></td>
-              <td><%= ggetSeniors(@evac_center.id, @disaster.id,"Female", false) %></td>
-              <td><%= ggetSeniors(@evac_center.id, @disaster.id,"Female", true)%></td>
-            </tr>
           </tbody>
         </table>
       </div>
