@@ -122,10 +122,9 @@ class GenerateReportController < ApplicationController
        # p.serialize "#{Rails.root}/app/views/generate_report/generate.xlsx.axlsx"
         #send_file("#{Rails.root}/tmp/generate.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.xlsx", type: "application/xlsx",disposition: 'inline')
          
-        respond_to do |format|
             #format.xlsx { render p, template: 'generate', filename: "generate.xlsx.axlsx", layout:false}
-            render file: "#{Rails.root}/tmp/generate.xlsx.axlsx", layout: false
-        end
+        render file: "#{Rails.root}/tmp/generate.xlsx.axlsx", layout: false
+        
 
     end
     def generate_all # disasters/1/generate
