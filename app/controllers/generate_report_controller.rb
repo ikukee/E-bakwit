@@ -118,7 +118,8 @@ class GenerateReportController < ApplicationController
             end
         end
 
-        p.serialize "#{Rails.root}/tmp/generate.xlsx.axlsx"
+        #p.serialize "#{Rails.root}/tmp/generate.xlsx.axlsx"
+        p.serialize "#{Rails.root}/app/views/generate_report/generate.xlsx.axlsx"
         #send_file("#{Rails.root}/tmp/generate.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.xlsx", type: "application/xlsx",disposition: 'inline')
         
         respond_to do |format|
