@@ -54,20 +54,11 @@
     <tr align ="center" style="background: #c5e0b3">
       <td colspan="2">FAMILIES</td>
       <td colspan="2">PERSONS</td>
+      <% for i in 1..7 do %>
       <td colspan="2">MALE</td>
       <td colspan="2">FEMALE</td>
-      <td colspan="2">MALE</td>
-      <td colspan="2">FEMALE</td>
-      <td colspan="2">MALE</td>
-      <td colspan="2">FEMALE</td>
-      <td colspan="2">MALE</td>
-      <td colspan="2">FEMALE</td>
-      <td colspan="2">MALE</td>
-      <td colspan="2">FEMALE</td>
-      <td colspan="2">MALE</td>
-      <td colspan="2">FEMALE</td>
-      <td colspan="2">MALE</td>
-      <td colspan="2">FEMALE</td>
+      <%end%>
+      <td colspan="2">TOTAL COST OF ASSISTANCE</td>
     </tr>
     <tr style="background: #c5e0b3">
       <td>EVACUATION CENTER</td>
@@ -75,9 +66,18 @@
       <td>FAMILIES</td>
       <td>PERSONS</td>
       <td>4Ps FAMILIES</td>
-      <% for i in 1..16 do %>
+      <% for i in 1..2 do %>
         <td>CUM</td>
         <td>NOW</td>
+      <%end%>
+      <% for i in 1..14 do %>
+        <td>CUM</td>
+        <td>NOW</td>
+      <%end%>
+      <td>FOOD</td>
+      <td>NON-FOOD</td>
+      <%@essFaciTitles.each do |faci|%>
+      <td><%=faci%></td>
       <%end%>
     </tr>
   </thead>

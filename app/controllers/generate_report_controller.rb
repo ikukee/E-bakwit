@@ -71,8 +71,8 @@ class GenerateReportController < ApplicationController
         @tprice = 0
         @tnfprice =0
         @tfprice =0
-        rlGoods = []
-        essFaciTitles = [""]
+        @rlGoods = []
+        @essFaciTitles = []
         @disaster = Disaster.find(params[:disaster_id])
         @evac_centers = EvacCenter.all
         @evac_centers.each do |center|
