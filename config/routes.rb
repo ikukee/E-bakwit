@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   get "evac_centers/:evac_center/:disaster_id/generate", to: "generate_report#generate"
   get "evac_centers/:evac_center/:disaster_id/view_report", to: "generate_report#viewSpecificReport"
   get "disasters/:disaster_id/generate", to: "generate_report#generate_all"
+  get "disasters/:disaster_id/view_report", to: "generate_report#viewGeneralReport"
   ## LOGGING
 
   get "evac_centers/:id/log/:disaster_id", to: "log_family#logging"

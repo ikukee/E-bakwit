@@ -26,6 +26,124 @@ class GenerateReportController < ApplicationController
             format.html
         end
     end
+    def viewGeneralReport
+        @totalfamily = 0
+        @totalPersons = 0
+        @totalfamily4ps = 0
+        @CumFamilies = 0
+        @NowFamilies = 0
+        @CumPerson = 0
+        @NowPerson = 0
+        @affectedEvac = 0
+        # DEMOGRAPHICS
+        @infantM = 0
+        @toddlerM = 0
+        @preschoolersM = 0
+        @schoolageM = 0
+        @teenageM = 0
+        @adultM = 0
+        @seniorM = 0
+
+        @infantM_now = 0
+        @toddlerM_now = 0
+        @preschoolersM_now = 0
+        @schoolageM_now = 0
+        @teenageM_now = 0
+        @adultM_now = 0
+        @seniorM_now = 0
+
+        @infantF = 0
+        @toddlerF = 0
+        @preschoolersF = 0
+        @schoolageF = 0
+        @teenageF = 0
+        @adultF = 0
+        @seniorF = 0
+
+        @infantF_now = 0
+        @toddlerF_now = 0
+        @preschoolersF_now = 0
+        @schoolageF_now = 0
+        @teenageF_now = 0
+        @adultF_now = 0
+        @seniorF_now = 0
+        ## RELIEF GOODS PART
+        @tprice = 0
+        @tnfprice =0
+        @tfprice =0
+        rlGoods = []
+        essFaciTitles = [""]
+        @ageTitles = age_groupT(false, 0)
+        @disaster = Disaster.find(params[:disaster_id])
+        @evac_centers = EvacCenter.all
+        @evac_centers.each do |center|
+            @infantM = @infantM + helpers.getInfants(center.id, @disaster.id, "Male")
+            @toddlerM = @toddlerM + helpers.getToddlers(center.id, @disaster.id, "Male")
+            @preschoolersM = @preschoolersM + helpers.getPreschoolers(center.id, @disaster.id, "Male")
+            @schoolageM = @schoolageM + helpers.getSchoolagers(center.id, @disaster.id, "Male")
+            @teenageM = @teenageM + helpers.getTeenagers(center.id, @disaster.id, "Male")
+            @adultM = @adultM + helpers.getAdults(center.id, @disaster.id, "Male")
+            @seniorM = @seniorM + helpers.getSeniors(center.id, @disaster.id, "Male")
+
+            @infantF = @infantF + helpers.getInfants(center.id, @disaster.id, "Female")
+            @toddlerF = @toddlerF + helpers.getToddlers(center.id, @disaster.id, "Female")
+            @preschoolersF = @preschoolersF + helpers.getPreschoolers(center.id, @disaster.id, "Female")
+            @schoolageF = @schoolageF + helpers.getSchoolagers(center.id, @disaster.id, "Female")
+            @teenageF = @teenageF + helpers.getTeenagers(center.id, @disaster.id, "Female")
+            @adultF = @adultF + helpers.getAdults(center.id, @disaster.id, "Female")
+            @seniorF = @seniorF + helpers.getSeniors(center.id, @disaster.id, "Female")
+
+            @infantM_now += helpers.ggetInfants(center.id, @disaster.id, "Male",true)
+            @toddlerM_now+= helpers.ggetToddlers(center.id, @disaster.id, "Male",true)
+            @preschoolersM_now += helpers.ggetPreschoolers(center.id, @disaster.id, "Male",true)
+            @schoolageM_now += helpers.ggetSchoolagers(center.id, @disaster.id, "Male",true)
+            @teenageM_now += helpers.ggetTeenagers(center.id, @disaster.id, "Male",true)
+            @adultM_now += helpers.ggetAdults(center.id, @disaster.id, "Male",true)
+            @seniorM_now += helpers.ggetSeniors(center.id, @disaster.id, "Male",true)
+
+            @infantF_now += helpers.ggetInfants(center.id, @disaster.id, "Female",true)
+            @toddlerF_now += helpers.ggetToddlers(center.id, @disaster.id, "Female",true)
+            @preschoolersF_now += helpers.ggetPreschoolers(center.id, @disaster.id, "Female",true)
+            @schoolageF_now += helpers.ggetSchoolagers(center.id, @disaster.id, "Female",true)
+            @teenageF_now += helpers.ggetTeenagers(center.id, @disaster.id, "Female",true)
+            @adultF_now += helpers.ggetAdults(center.id, @disaster.id, "Female",true)
+            @seniorF_now += helpers.ggetSeniors(center.id, @disaster.id, "Female",true)
+
+            @totalfamily += countServedFamily(center.id, @disaster.id, false)
+            @totalPersons += countIndivEvacuated(center.id, @disaster.id, false)
+            @CumFamilies += countServedFamily(center.id, @disaster.id, false)
+            @NowFamilies += countServedFamily(center.id, @disaster.id, true)
+            @CumPerson +=countIndivEvacuated(center.id, @disaster.id, false)
+            @NowPerson +=countIndivEvacuated(center.id, @disaster.id, true)
+            @totalfamily4ps +=countServedFamily4ps(center.id, @disaster.id, false)
+
+            if(countServedFamily(center.id, @disaster.id, false) > 0)
+                @affectedEvac +=1
+            end
+            GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", @disaster.id , center.id).each do |rg|
+                rlGoods.push([rg.name, "#{ReliefGood.find(rg.rg_id).unit } / #{ReliefGood.find(rg.rg_id).price }" , rg.price / ReliefGood.find(rg.rg_id).price, rg.price])
+                if ReliefGood.find(rg.rg_id).is_food == true
+                    @tprice = @tprice + rg.price
+                    @tfprice += rg.price
+                elsif ReliefGood.find(rg.rg_id).is_food == false
+                    @tprice = @tprice + rg.price
+                    @tnfprice += rg.price
+                else
+                    @tprice = @tprice + rg.price
+                end
+            end
+
+            @yProf = EvacYearlyProfile.all.where(evac_id: center.id).where(year: @disaster.year).each do |yp|
+                AssignedYearlyEss.all.where(evac_profile_id: yp.id).each do |ye|
+                    essFaciTitles.push(EvacuationEssential.find(ye.ess_id).name);
+                    #essFaci.push([EvacuationEssential.find(ye.ess_id).name,EvacuationEssential.find(ye.ess_id).ess_type, EvacuationEssential.find(ye.ess_id).description, ye.quantity, ye.status])
+                end
+            end
+        end
+        respond_to do |format|
+            format.html
+        end
+    end
     def generate ## evac_centers/1/:disaster/generate
         @evac_center = EvacCenter.find(params[:evac_center])
         @disaster = Disaster.find(params[:disaster_id])
