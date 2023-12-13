@@ -122,7 +122,7 @@ class GenerateReportController < ApplicationController
         #send_file("#{Rails.root}/tmp/generate.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.xlsx", type: "application/xlsx")
         respond_to do |format|
             format.xlsx {
-                render xlsx: p, filename: "generate.xlsx"
+                render xlsx: "#{Rails.root}/tmp/generate.xlsx", filename: "generate.xlsx"
                 }
         end
         
