@@ -16,73 +16,71 @@
   padding: 5px;
   }
 </style>
-<div class="card" >
-  <div class="card-body" >
-    <div class="card-deck">
-      <div class="card shadow p-4 mb-1">
-        <table class="customTable">
-          <thead>
-            <tr>
-              <td>Report Number</td>
-              <td colspan="6"></td>
-            </tr>
-            <tr>
-              <td>GENERATED AS OF</td>
-              <td><%= Time.current %></td>
-              <td><%= User.find(session[:user_id]).full_name %></td>
-              <td><%= User.find(session[:user_id]).email %></td>
-              <td><%= User.find(session[:user_id]).cnum %></td>
-            </tr>
-            <tr>
-              <td>INCIDENT NAME</td>
-              <td><%= @disaster.name%></td>
-              <td><%= @disaster.disaster_type%></td>
-              <td colspan='2'><%= @disaster.date_of_occurence %></td>
-            </tr>
-            <tr style="background: #9fc5e8">
-              <td >NOTED BY</td>
-              <td colspan="6"></td>
-            </tr>
-            <tr align ="center" style="background: #c5e0b3">
-              <td rowspan="3">Barangay</td>
-              <td colspan="5" rowspan="2">Number of Affected</td>
-              <td colspan="4">Number of Displaced Inside ECs</td>
-              <td colspan="4">INFANT 1y/o(0-11mos)</td>
-              <td colspan="4">TODDLERS 1-3y/o</td>
-              <td colspan="4">PRESCHOOLERS 4-5y/o</td>
-              <td colspan="4">SCHOOLAGE 6-12y/o</td>
-              <td colspan="4">TEENAGE 13-19y/o</td>
-              <td colspan="4">ADULT 20-59y/o</td>
-              <td colspan="4">SENIOR CITIZEN 60 AND ABOVE</td>
-            </tr>
-            <tr align ="center" style="background: #c5e0b3">
-              <td colspan="2">FAMILIES</td>
-              <td colspan="2">PERSONS</td>
-
-              <td colspan="2">MALE</td>
-              <td colspan="2">FEMALE</td>
-              <td colspan="2">MALE</td>
-              <td colspan="2">FEMALE</td>
-              <td colspan="2">MALE</td>
-              <td colspan="2">FEMALE</td>
-              <td colspan="2">MALE</td>
-              <td colspan="2">FEMALE</td>
-              <td colspan="2">MALE</td>
-              <td colspan="2">FEMALE</td>
-              <td colspan="2">MALE</td>
-              <td colspan="2">FEMALE</td>
-              <td colspan="2">MALE</td>
-              <td colspan="2">FEMALE</td>
-            </tr>
-            <tr style="background: #7f7f7f">
-              <td>GRAND TOTAL</td>
-              
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
+<table class="customTable">
+  <thead>
+    <tr>
+      <td>Report Number</td>
+      <td colspan="6"></td>
+    </tr>
+    <tr>
+      <td>GENERATED AS OF</td>
+      <td><%= Time.current %></td>
+      <td><%= User.find(session[:user_id]).full_name %></td>
+      <td><%= User.find(session[:user_id]).email %></td>
+      <td><%= User.find(session[:user_id]).cnum %></td>
+    </tr>
+    <tr>
+      <td>INCIDENT NAME</td>
+      <td><%= @disaster.name%></td>
+      <td><%= @disaster.disaster_type%></td>
+      <td colspan='2'><%= @disaster.date_of_occurence %></td>
+    </tr>
+    <tr style="background: #9fc5e8">
+      <td >NOTED BY</td>
+      <td colspan="6"></td>
+    </tr>
+    <tr align ="center" style="background: #c5e0b3">
+      <td rowspan="3">Barangay</td>
+      <td colspan="5" rowspan="2">Number of Affected</td>
+      <td colspan="4">Number of Displaced Inside ECs</td>
+      <td colspan="4">INFANT 1y/o(0-11mos)</td>
+      <td colspan="4">TODDLERS 1-3y/o</td>
+      <td colspan="4">PRESCHOOLERS 4-5y/o</td>
+      <td colspan="4">SCHOOLAGE 6-12y/o</td>
+      <td colspan="4">TEENAGE 13-19y/o</td>
+      <td colspan="4">ADULT 20-59y/o</td>
+      <td colspan="4">SENIOR CITIZEN 60 AND ABOVE</td>
+    </tr>
+    <tr align ="center" style="background: #c5e0b3">
+      <td colspan="2">FAMILIES</td>
+      <td colspan="2">PERSONS</td>
+      <td colspan="2">MALE</td>
+      <td colspan="2">FEMALE</td>
+      <td colspan="2">MALE</td>
+      <td colspan="2">FEMALE</td>
+      <td colspan="2">MALE</td>
+      <td colspan="2">FEMALE</td>
+      <td colspan="2">MALE</td>
+      <td colspan="2">FEMALE</td>
+      <td colspan="2">MALE</td>
+      <td colspan="2">FEMALE</td>
+      <td colspan="2">MALE</td>
+      <td colspan="2">FEMALE</td>
+      <td colspan="2">MALE</td>
+      <td colspan="2">FEMALE</td>
+    </tr>
+    <tr style="background: #c5e0b3">
+      <td>EVACUATION CENTER</td>
+      <td>COUNT</td>
+      <td>FAMILIES</td>
+      <td>PERSONS</td>
+      <td>4Ps FAMILIES</td>
+      <% 16.times %>
+      <td>CUM</td>
+      <td>NOW</td>
+      <%end%>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
