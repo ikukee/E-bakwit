@@ -15,6 +15,9 @@
     border-style: solid;
     padding: 5px;
     }
+    thead{
+        position: fixed;
+    }
 </style>
 <table class="customTable">
   <thead>
@@ -64,6 +67,8 @@
       <td><%= gcountGenderEvacuated(@evac_center.id,@disaster, "Female", false) %></td>
       <td><%= gcountGenderEvacuated(@evac_center.id,@disaster, "Female", true)%></td>
     </tr>
+    </thead>
+    </tbody>
     <tr>
       <td>INFANT</td>
       <td><%= ggetInfants(@evac_center.id, @disaster.id,"Male", false) %></td>
@@ -113,5 +118,6 @@
       <td><%= ggetSeniors(@evac_center.id, @disaster.id,"Female", false) %></td>
       <td><%= ggetSeniors(@evac_center.id, @disaster.id,"Female", true)%></td>
     </tr>
-  </thead>
+  </tbody>
 </table>
+
