@@ -55,10 +55,11 @@
       <td colspan="2">FAMILIES</td>
       <td colspan="2">PERSONS</td>
       <% for i in 1..7 do %>
-      <td colspan="2">MALE</td>
-      <td colspan="2">FEMALE</td>
+        <td colspan="2">MALE</td>
+        <td colspan="2">FEMALE</td>
       <%end%>
       <td colspan="2">TOTAL COST OF ASSISTANCE</td>
+      <td colspan="2">EVACUATION CENTER FACILITIES</td>
     </tr>
     <tr style="background: #c5e0b3">
       <td>EVACUATION CENTER</td>
@@ -77,7 +78,7 @@
       <td>FOOD</td>
       <td>NON-FOOD</td>
       <%@essFaciTitles.each do |faci|%>
-      <td><%=faci%></td>
+        <td><%=faci%></td>
       <%end%>
     </tr>
   </thead>
