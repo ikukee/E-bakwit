@@ -3,8 +3,6 @@
     <tr>
       <th>Report Number</th>
     </tr>
-  </thead>
-  <tbody>
     <tr>
       <td>GENERATED AS OF</td>
       <td><%= Time.current %></td>
@@ -31,30 +29,21 @@
     <tr>
       <td>Age Range</td>
       <td colspan="2">No. Of MALEs</td>
-      <td></td>
       <td colspan="2">No. Of FEMALEs</td>
+    </tr>
+    <tr>
       <td></td>
-
+      <td>CUM</td>
+      <td>NOW</td>
+      <td>CUM</td>
+      <td>NOW</td>
     </tr>
     <tr>
-      <td>Row 6, Cell 1</td>
-      <td>Row 6, Cell 2</td>
-      <td>Row 6, Cell 3</td>
-      <td>Row 6, Cell 4</td>
-      <td>Row 6, Cell 5</td>
-      <td>Row 6, Cell 6</td>
-      <td>Row 6, Cell 7</td>
-      <td>Row 6, Cell 8</td>
-    </tr>
-    <tr>
-      <td>Row 7, Cell 1</td>
-      <td>Row 7, Cell 2</td>
-      <td>Row 7, Cell 3</td>
-      <td>Row 7, Cell 4</td>
-      <td>Row 7, Cell 5</td>
-      <td>Row 7, Cell 6</td>
-      <td>Row 7, Cell 7</td>
-      <td>Row 7, Cell 8</td>
+      <td>GRAND TOTAL</td>
+      <td><%= gcountGenderEvacuated(@evac_center.id,@disaster, "Male", false) %></td>
+      <td><%= gcountGenderEvacuated(@evac_center.id,@disaster, "Male", true) %></td>
+      <td><%= gcountGenderEvacuated(@evac_center.id,@disaster, "Female", false) %></td>
+      <td><%= gcountGenderEvacuated(@evac_center.id,@disaster, "Female", true)%></td>
     </tr>
     <tr>
       <td>Row 8, Cell 1</td>
@@ -66,15 +55,5 @@
       <td>Row 8, Cell 7</td>
       <td>Row 8, Cell 8</td>
     </tr>
-    <tr>
-      <td>Row 9, Cell 1</td>
-      <td>Row 9, Cell 2</td>
-      <td>Row 9, Cell 3</td>
-      <td>Row 9, Cell 4</td>
-      <td>Row 9, Cell 5</td>
-      <td>Row 9, Cell 6</td>
-      <td>Row 9, Cell 7</td>
-      <td>Row 9, Cell 8</td>
-    </tr>
-  </tbody>
+  </thead>
 </table>
