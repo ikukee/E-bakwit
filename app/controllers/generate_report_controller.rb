@@ -119,7 +119,7 @@ class GenerateReportController < ApplicationController
         end
 
         p.serialize "#{Rails.root}/tmp/generate.xlsx"
-        send_file("#{Rails.root}/tmp/generate.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.xlsx", type: "application/xlsx",disposition: 'inline')
+        send_file("#{Rails.root}/tmp/generate.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.xlsx", type: "application/xlsx",disposition: 'inline', headers: { 'Content-Disposition' => 'inline' })
         
         
     end
