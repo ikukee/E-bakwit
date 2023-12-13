@@ -35,28 +35,28 @@
       <td colspan='2'><%= @disaster.date_of_occurence %></td>
       
     </tr>
-    <tr>
+    <tr style="background: #9fc5e8">
       <td>EVACUATION CENTER</td>
       <td><%= @evac_center.name %></td>
       <td>ADDRESS</td>
       <td colspan="4"><%= @evac_center.barangay%>, Naga City, Camarines Sur</td>
     </tr>
-    <tr>
+    <tr style="background: #9fc5e8">
       <td colspan="7">NOTED BY</td>
     </tr>
-    <tr>
+    <tr style="background: #a5a5a5">
       <td rowspan="2">Age Range</td>
       <td colspan="2">No. Of MALEs</td>
       <td colspan="2">No. Of FEMALEs</td>
     </tr>
-    <tr>
+    <tr style="background: #a5a5a5">
       <td></td>
       <td>CUM</td>
       <td>NOW</td>
       <td>CUM</td>
       <td>NOW</td>
     </tr>
-    <tr>
+    <tr style="background: #7f7f7f">
       <td>GRAND TOTAL</td>
       <td><%= gcountGenderEvacuated(@evac_center.id,@disaster, "Male", false) %></td>
       <td><%= gcountGenderEvacuated(@evac_center.id,@disaster, "Male", true) %></td>
