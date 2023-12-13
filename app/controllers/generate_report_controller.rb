@@ -133,7 +133,7 @@ class GenerateReportController < ApplicationController
             end
             sheet.add_row ["FACILITIES AND ESSENTIALS"].concat(whitespacer(7))
             sheet.add_row [""].concat(whitespacer(7))
-            sheet.add_row ["NAME", "TYPE", "DESCRIPTION", "QUANTITY", "STATUS"].concat(whitespacer(3))
+            sheet.add_row ["NAME", "TYPE", "DESCRIPTION", "QUANTITY", "QUALITY"].concat(whitespacer(3))
             @essFaci.each do |rlG|
                 sheet.add_row rlG
             end
