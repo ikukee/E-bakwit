@@ -33,7 +33,7 @@
     </div>
     <div class="col-md-3">
       <div class="form-group">
-        <p class="form-label poppins">Status</p>
+        <p class="form-label poppins">QUALITY</p>
         <%= form.select :status, options_for_select(["BEST","GOOD","BAD"]),{:prompt => "Select Status"},{class:"form-control #{'is-invalid' if invalid_status}"}%>
         <% if invalid_status %>
           <div class="invalid-feedback d-block">
