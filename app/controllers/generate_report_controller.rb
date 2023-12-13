@@ -1,7 +1,7 @@
 class GenerateReportController < ApplicationController
     before_action :is_logged_in
     require 'axlsx'
-    
+    helper_method :barangay_group
     def viewSpecificReport
         @evac_center = EvacCenter.find(params[:evac_center])
         @disaster = Disaster.find(params[:disaster_id])
@@ -525,6 +525,17 @@ class GenerateReportController < ApplicationController
             send_file("#{Rails.root}/tmp/generate_all.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}.xlsx", type: "application/xlsx")
 
     end
+    def barangay_group
+        titles = [
+            "Abella", "Bagumbayan Norte", "Bagumbayan Sur", "Balatas",
+            "Calauag", "Cararayan", "Carolina", "Concepcion Grande",
+            "Concepcion Pequeña", "Dayangdang", "Del Rosario", "Dinaga",
+            "Igualdad","Lerma","Liboton", "Mabolo", "Pacol",
+            "Panicuason", "Penafrancia", "Sabang", "San Felipe",
+            "San Francisco", "San Isidro", "Sta. Cruz", "Tabuco",
+            "Tinago", "Triangulo"
+        ]
+    end
     private
     def limiterForBarangay(brgy)
         x = EvacCenter.where("BARANGAY = ?", brgy).all.length
@@ -646,16 +657,5 @@ class GenerateReportController < ApplicationController
         end
 
     end
-    def barangay_group
-        titles = [
-            "Abella", "Bagumbayan Norte", "Bagumbayan Sur", "Balatas",
-            "Calauag", "Cararayan", "Carolina", "Concepcion Grande",
-            "Concepcion Pequeña", "Dayangdang", "Del Rosario", "Dinaga",
-            "Igualdad","Lerma","Liboton", "Mabolo", "Pacol",
-            "Panicuason", "Penafrancia", "Sabang", "San Felipe",
-            "San Francisco", "San Isidro", "Sta. Cruz", "Tabuco",
-            "Tinago", "Triangulo"
-        ]
-    end
-    helper_method :barangay_group
+    
 end
