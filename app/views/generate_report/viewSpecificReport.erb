@@ -149,7 +149,6 @@
     </tr>
     <tr align ="center" style="background: #c5e0b3">
       <td colspan="4">Relief Recieved</td>
-
     </tr>
     <tr align ="center" style="background: #c5e0b3">
       <td>NAME</td>
@@ -166,17 +165,16 @@
   </thead>
   <tbody>
     <% @rlGoods.each do |rlg|%>
-    <tr>
-      <td><%= rlg[0] %></td>
-      <td><%= rlg[1] %></td>
-      <td><%= rlg[2] %></td>
-      <td><%= rlg[3] %></td>
-    </tr>
+      <tr>
+        <td><%= rlg[0] %></td>
+        <td><%= rlg[1] %></td>
+        <td><%= rlg[2] %></td>
+        <td><%= rlg[3] %></td>
+      </tr>
     <%end%>
   </tbody>
 </table>
 <h1>ESSENTIALS AND FACILITIES</h1>
-
 <table class="customTable">
   <thead>
     <tr>
@@ -208,31 +206,30 @@
     </tr>
     <tr align ="center" style="background: #c5e0b3">
       <td colspan="5">FACILITIES AND ESSENTIALS
-    </td>
-
+      </td>
     </tr>
     <tr style="background: #c5e0b3">
       <td colspan="5"></td>
-      
     </tr>
     <tr align ="center" style="background: #c5e0b3">
+      <td>ID</td>
       <td>NAME</td>
       <td>TYPE</td>
       <td>DESCRIPTION</td>
       <td>QUANTITY </td>
       <td>QUALITY</td>
     </tr>
-    
   </thead>
   <tbody>
     <% @essFaci.each do |rlg|%>
-    <tr>
-      <td><%= rlg[0] %></td>
-      <td><%= rlg[1] %></td>
-      <td><%= rlg[2] %></td>
-      <td><%= rlg[3] %></td>
-      <td><%= rlg[4] %></td>
-    </tr>
+      <tr>
+        <td><%= rlg.index + 1 %></td>
+        <td><%= rlg[0] %></td>
+        <td><%= rlg[1] %></td>
+        <td><%= rlg[2] %></td>
+        <td><%= rlg[3] %></td>
+        <td><%= rlg[4] %></td>
+      </tr>
     <%end%>
   </tbody>
 </table>
