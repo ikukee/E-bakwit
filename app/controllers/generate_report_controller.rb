@@ -119,8 +119,12 @@ class GenerateReportController < ApplicationController
         end
 
         p.serialize "#{Rails.root}/tmp/generate.xlsx"
-        send_file("#{Rails.root}/tmp/generate.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.xlsx", type: "application/xlsx")
-
+        #send_file("#{Rails.root}/tmp/generate.xlsx", filename:"#{@disaster.name}-#{@disaster.date_of_occurence}-#{@evac_center.name}.xlsx", type: "application/xlsx")
+        respond_to do |format|
+            format.xlsx {
+                response.headers['Content-Disposition'] = 'attachment; filename="generate.xlsx"'
+                }
+        end
     end
     def generate_all # disasters/1/generate
         ## GRAND TOTAL OF ALL EVAC CENTERS
