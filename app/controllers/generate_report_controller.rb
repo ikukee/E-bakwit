@@ -1,7 +1,7 @@
 class GenerateReportController < ApplicationController
     before_action :is_logged_in
     require 'axlsx'
-    helper_method :barangay_group
+    
     def viewSpecificReport
         @evac_center = EvacCenter.find(params[:evac_center])
         @disaster = Disaster.find(params[:disaster_id])
@@ -657,5 +657,5 @@ class GenerateReportController < ApplicationController
             "Tinago", "Triangulo"
         ]
     end
-
+    helper_method :barangay_group
 end
