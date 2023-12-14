@@ -98,6 +98,9 @@
             <td>
               <%= center.name %>
             </td>
+            <td>
+              <%= countServedFamilyType(zcountServedFamily(center.id, @disaster.id, false)) %>
+            </td>
           </tr>
         <%end%>
       <%end%>
