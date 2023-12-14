@@ -74,10 +74,13 @@ class GenerateReportController < ApplicationController
         @tfprice =0
         @rlGoods = []
         @essFaciTitles = []
-        @barangays = []
-        barangay_group.each do |x|
-            @barangays.push(x)
-        end
+        @barangays = ["Abella", "Bagumbayan Norte", "Bagumbayan Sur", "Balatas",
+        "Calauag", "Cararayan", "Carolina", "Concepcion Grande",
+        "Concepcion Pequeña", "Dayangdang", "Del Rosario", "Dinaga",
+        "Igualdad","Lerma","Liboton", "Mabolo", "Pacol",
+        "Panicuason", "Penafrancia", "Sabang", "San Felipe",
+        "San Francisco", "San Isidro", "Sta. Cruz", "Tabuco",
+        "Tinago", "Triangulo"]
         @disaster = Disaster.find(params[:disaster_id])
         @evac_centers = EvacCenter.all
         @evac_centers.each do |center|
