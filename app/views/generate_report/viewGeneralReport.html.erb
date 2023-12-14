@@ -82,31 +82,24 @@
     </tr>
   </thead>
   <tbody>
-    
     <% @barangays.each do |brgy|%>
-    <tr>
-      <td>
-        <%= brgy %>
-      </td>
-      
-      <td>
-        
-      </td>
-      
-    </tr>
-    <% @evac_centers.each do |center| %>
-     <% brgy == center.barangay %>
-    <tr>
-      <td>
-       
-      </td>
-      
-      <td>
-        <%= center.name %>
-      </td>
-      
-    </tr>
-    <%end%>
-    <%end%>
-  </tbody>
-</table>
+      <tr>
+        <td>
+          <%= brgy %>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <% @evac_centers.each do |center| %>
+        <% if  brgy == center.barangay %>
+          <tr>
+            <td>
+            </td>
+            <td>
+              <%= center.name %>
+            </td>
+          </tr>
+        <%end%>
+      <%end%>
+    </tbody>
+  </table>
