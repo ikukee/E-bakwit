@@ -88,7 +88,25 @@
       <td>
         <%= brgy %>
       </td>
+      
+      <td>
+        
+      </td>
+      
     </tr>
+    <% @evac_centers.each do |center| %>
+     <% brgy == center.barangay %>
+    <tr>
+      <td>
+       <%= center.name %>
+      </td>
+      
+      <td>
+        
+      </td>
+      
+    </tr>
+    <%end%>
     <%end%>
   </tbody>
 </table>
