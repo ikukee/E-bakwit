@@ -244,7 +244,7 @@
     <div class="row m-0 default-background3 p-2">
       <%= form_with url: "/view_disaster_evacuation", method: :post do |form| %>
         <%= form.hidden_field :evac_center, :value=> evac_center.id%>
-        <%= form.collection_select :disaster_id , Disaster.all.order(date_of_occurence: :desc).where(year: evac_yearly_profile.year), :id, :name,{:prompt => "SELECT DISASTER"},{class:"btn fs-1 oswald-fw dropdown-toggle fw-bold", id:"disaster-name-dv", oninput: "this.form.requestSubmit()"}%>
+        <%= form.collection_select :disaster_id , Disaster.all.order(date_of_occurence: :desc).where(year: evac_yearly_profile.year), :id, :name,{:selected => Disaster.all.order(date_of_occurence: :desc).where(year: evac_yearly_profile.year).first},{class:"btn fs-1 oswald-fw dropdown-toggle fw-bold", id:"disaster-name-dv", oninput: "this.form.requestSubmit()"}%>
       <% end %>
     </div>
     <div id = "display_disaster_evacuation">
