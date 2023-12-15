@@ -55,6 +55,7 @@
       <td colspan="4">TEENAGE 13-19y/o</td>
       <td colspan="4">ADULT 20-59y/o</td>
       <td colspan="4">SENIOR CITIZEN 60 AND ABOVE</td>
+      <td colspan="<%=@essFaciTitles.length + 2%>"></td>
     </tr>
     <tr align ="center" style="background: #c5e0b3">
       <td colspan="2">FAMILIES</td>
@@ -64,7 +65,7 @@
         <td colspan="2">FEMALE</td>
       <%end%>
       <td colspan="2">TOTAL COST OF ASSISTANCE</td>
-      <td colspan="2">EVACUATION CENTER FACILITIES</td>
+      <td colspan="<%=@essFaciTitles.length%>">EVACUATION CENTER FACILITIES</td>
     </tr>
     <tr style="background: #c5e0b3">
       <td >EVACUATION CENTER</td>
@@ -126,6 +127,8 @@
       <td><%= @seniorM_now%></td>
       <td><%= @seniorF%></td>
       <td><%= @seniorF_now%></td>
+      <td><%= @tfprice%></td>
+      <td><%= @tnfprice%></td>
       <%@essFaciTitles.each do |faci|%>
         <td>&nbsp;</td>
       <%end%>
