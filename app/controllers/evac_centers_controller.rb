@@ -16,9 +16,7 @@ class EvacCentersController < ApplicationController
     add_breadcrumb(@evac_center.name)
     
     @disaster =Disaster.find(params[:disaster_id])
-    respond_to do |format|
-      format.turbo_stream{render turbo_stream: turbo_stream.update("display_disaster_evacuation", partial:"display_disaster_evacuation", locals:{evac_center: @evac_center, disaster:@disaster})}
-    end
+    turbo_stream{render turbo_stream: turbo_stream.update("display_disaster_evacuation", partial:"display_disaster_evacuation", locals:{evac_center: @evac_center, disaster:@disaster})}
   end
 
   def search
