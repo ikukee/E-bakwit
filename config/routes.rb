@@ -55,7 +55,7 @@ Rails.application.routes.draw do
   post "log/search",to:"log_family#search"
   post "/log/:member_id/:evac_id/:disaster_id", to: "log_family#evacuate"
   post "/log/all/:family_id",to:"log_family#evacuate_all"
-  post "/view_disaster_evacuation",to: "evac_centers#view_disaster_evacuation"
+  post "/view_disaster_evacuation",to: "evac_centers#view_disaster_evacuation", action: :view_dis
   post "/evacuated/sort_by",to:"log_family#sort_by"
 
   post "/login/proceed",to:"main#login_proceed"
