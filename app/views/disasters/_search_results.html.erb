@@ -23,13 +23,13 @@
             <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
               <div class="col-md-6">
                 <button  style="font-size: 20px" class="btn btn-dark bg-dgray dropdown-toggle oswald fw-bold form-control dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                  DOWNLOAD As
+                  ACTIONS
                 </button>
                 
                 <ul class="dropdown-menu oswald fw p-1 text-center" style="font-size:2em">
                   <p class="">Lists</p>
                   <li class="m-1"><a href="disasters/<%=disaster.id%>/generate.xlsx", class= "dropdown-item p-1 mt-1">.xlsx <i class="fa-solid fa-table d-inline"></i></a></li>
-                  
+                  <li class="m-1"><a href="disasters/<%=disaster.id%>/view_report", class= "dropdown-item p-1 mt-1">View Report <i class="fa-solid fa-eye"></i></a></li>
                 </ul>
               </div>
             <%end%>
