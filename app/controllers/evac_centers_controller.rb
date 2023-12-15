@@ -12,7 +12,13 @@ class EvacCentersController < ApplicationController
   # GET /evac_centers/1 or /evac_centers/1.json
   def show
     @evacYearlyProfile = EvacYearlyProfile.all.where(evac_id: params[:id]).first
+    @evac_center = EvacCenter.find(params[:evac_center])
     add_breadcrumb(@evac_center.name)
+    
+    @disaster =Disaster.find(params[:disaster_id])
+    respond_to do |format|
+      format.turbo_stream{render turbo_stream: turbo_stream.update("display_disaster_evacuation", partial:"display_disaster_evacuation", locals:{evac_center: @evac_center, disaster:@disaster})}
+    end
   end
 
   def search
