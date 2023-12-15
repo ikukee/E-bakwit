@@ -96,7 +96,7 @@
   <tbody>
     <% @barangays.each do |brgy|%>
       <tr>
-        <td colspan="3">
+        <td >
           <%= brgy %>
         </td>
         <td>
@@ -107,7 +107,7 @@
           <tr>
             <td>
             </td>
-            <td>
+            <td colspan="3">
               <%= center.name %>
             </td>
             <td>
@@ -224,7 +224,11 @@
             <td>
               <%=gen_getReliefCost(center.id, @disaster.id,false)%>
             </td>
-            
+            <% gen_getQuantity(center.id, @disaster).each do |x| %>
+              <td>
+                <%=x%>
+              </td>
+            <%end%>
           </tr>
         <%end%>
       <%end%>
