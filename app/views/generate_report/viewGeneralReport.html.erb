@@ -32,8 +32,8 @@
       <td colspan="3"><%= User.find(session[:user_id]).cnum %></td>
     </tr>
     <tr>
-      <td colspan="2">INCIDENT NAME</td>
-      <td colspan="2"><%= @disaster.name%></td>
+      <td >INCIDENT NAME</td>
+      <td colspan="3"><%= @disaster.name%></td>
       <td colspan="2">DISASTER TYPE</td>
       <td colspan="2"><%= @disaster.disaster_type%></td>
       <td colspan="2">DATE OF OCCURENCE</td>
@@ -96,7 +96,7 @@
   <tbody>
     <% @barangays.each do |brgy|%>
       <tr>
-        <td >
+        <td>
           <%= brgy %>
         </td>
         <td>
