@@ -114,7 +114,6 @@
       <td><%= @schoolageM_now%></td>
       <td><%= @schoolageF%></td>
       <td><%= @schoolageF_now%></td>
-
       <td><%= @teenageM%></td>
       <td><%= @teenageM_now%></td>
       <td><%= @teenageF%></td>
@@ -141,9 +140,9 @@
           <%= brgy %>
         </td>
         <% for i in 1..39 + @essFaciTitles.length do %>
-        <td>
-          &nbsp;
-        </td>
+          <td>
+            &nbsp;
+          </td>
         <%end%>
       </tr>
       <% @evac_centers.each do |center| %>
@@ -268,10 +267,18 @@
             <td>
               <%=gen_getReliefCost(center.id, @disaster.id,false)%>
             </td>
+            <% getQ = gen_getQuantity(center.id, @disaster) %>
             <% gen_getQuantity(center.id, @disaster).each do |x| %>
               <td>
                 <%=x%>
               </td>
+            <%end%>
+            <% if getQ.length < @essFaciTitles.length%>
+              <% for i in getQ..@essFaciTitles-getQ do %>
+                <td>
+                  &nbsp;
+                </td>
+              <%end%>
             <%end%>
           </tr>
         <%end%>
