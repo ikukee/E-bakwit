@@ -12,9 +12,9 @@ class EvacCentersController < ApplicationController
   # GET /evac_centers/1 or /evac_centers/1.json
   def show
     @evacYearlyProfile = EvacYearlyProfile.all.where(evac_id: params[:id]).first
-   
+    @currDis = Disaster.all.order(date_of_occurence: :desc).where(year: @evacYearlyProfile.year).first
     add_breadcrumb(@evac_center.name)
-    redirect_to action: :view_dis, evac_center: @evac_center.id , disaster_id: Disaster.all.order(date_of_occurence: :desc).where(year: @evacYearlyProfile.year).first
+    redirect_to action: :view_dis, evac_center: @evac_center.id , disaster_id:@currDis.id 
   end
 
   def search
