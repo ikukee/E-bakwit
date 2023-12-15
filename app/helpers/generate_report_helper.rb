@@ -145,6 +145,24 @@ module GenerateReportHelper
             return member_ids.length
         end
     end
+    def zcountServedFamily4ps(evac_center, disaster, key )
+
+        countFam = 0
+        if key
+            #evacuee = Evacuee.find_by_sql("SELECT DISTINCT(family_id) from evacuee where evac_id = #{evac_center} AND disaster_id = #{disaster} AND date_out = #{nil}")
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).where(date_out: nil).distinct(:family_id)
+        else
+            #evacuee = Evacuee.find_by_sql("SELECT DISTINCT(family_id) from evacuee where evac_id = #{evac_center} AND disaster_id = #{disaster}")
+            evacuee = Evacuee.all.where("evac_id = ?", evac_center).where(disaster_id: disaster).distinct(:family_id)
+        end
+
+        evacuee.each do |x|
+            if(Family.find(x.family_id).is_4ps == true)
+                countFam = countFam + 1
+            end
+        end
+        return countFam
+    end
     private 
 
     def ggetMembers(evacuees, k)
