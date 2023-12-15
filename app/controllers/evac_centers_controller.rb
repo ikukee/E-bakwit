@@ -14,7 +14,7 @@ class EvacCentersController < ApplicationController
     @evacYearlyProfile = EvacYearlyProfile.all.where(evac_id: params[:id]).first
    
     add_breadcrumb(@evac_center.name)
-    redirect_to action: :view_dis, evac_center: @evac_center , disaster_id: Disaster.all.order(date_of_occurence: :desc).where(year: @evacYearlyProfile.year).first
+    redirect_to action: :view_dis, evac_center: @evac_center.id , disaster_id: Disaster.all.order(date_of_occurence: :desc).where(year: @evacYearlyProfile.year).first
   end
 
   def search
