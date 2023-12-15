@@ -40,32 +40,32 @@
       <td >DATE OF OCCURENCE</td>
       <td ><%= @disaster.date_of_occurence %></td>
     </tr>
-    <tr style="background: #9fc5e8">
+    <tr >
       <td >NOTED BY</td>
       <td colspan="6"></td>
     </tr>
     <tr align ="center" style="background: #c5e0b3">
-      <td rowspan="3">Barangay</td>
-      <td colspan="5" rowspan="2">Number of Affected</td>
-      <td colspan="4">Number of Displaced Inside ECs</td>
-      <td colspan="4">INFANT 1y/o(0-11mos)</td>
-      <td colspan="4">TODDLERS 1-3y/o</td>
-      <td colspan="4">PRESCHOOLERS 4-5y/o</td>
-      <td colspan="4">SCHOOLAGE 6-12y/o</td>
-      <td colspan="4">TEENAGE 13-19y/o</td>
-      <td colspan="4">ADULT 20-59y/o</td>
-      <td colspan="4">SENIOR CITIZEN 60 AND ABOVE</td>
+      <td rowspan="3" style="background: #9fc5e8">Barangay</td>
+      <td colspan="5" rowspan="2" >Number of Affected</td>
+      <td colspan="4" style="background:#93c47d">Number of Displaced Inside ECs</td>
+      <td colspan="4" style="background:#fef2cb">INFANT 1y/o(0-11mos)</td>
+      <td colspan="4" style="background:#fef2cb">TODDLERS 1-3y/o</td>
+      <td colspan="4" style="background:#fef2cb">PRESCHOOLERS 4-5y/o</td>
+      <td colspan="4" style="background:#fef2cb">SCHOOLAGE 6-12y/o</td>
+      <td colspan="4" style="background:#fef2cb">TEENAGE 13-19y/o</td>
+      <td colspan="4" style="background:#fef2cb">ADULT 20-59y/o</td>
+      <td colspan="4" style="background:#fef2cb">SENIOR CITIZEN 60 AND ABOVE</td>
       <td colspan="<%=@essFaciTitles.length + 2%>"></td>
-    </tr>
-    <tr align ="center" style="background: #c5e0b3">
-      <td colspan="2">FAMILIES</td>
-      <td colspan="2">PERSONS</td>
+    </tr> 
+    <tr align ="center">
+      <td colspan="2" style="background:#93c47d">FAMILIES</td>
+      <td colspan="2" style="background:#93c47d">PERSONS</td>
       <% for i in 1..7 do %>
-        <td colspan="2">MALE</td>
-        <td colspan="2">FEMALE</td>
+        <td colspan="2" style="background:#fef2cb">MALE</td>
+        <td colspan="2" style="background:#fef2cb">FEMALE</td>
       <%end%>
-      <td colspan="2">TOTAL COST OF ASSISTANCE</td>
-      <td colspan="<%=@essFaciTitles.length%>">EVACUATION CENTER FACILITIES</td>
+      <td colspan="2" style="background:#f7caac">TOTAL COST OF ASSISTANCE</td>
+      <td colspan="<%=@essFaciTitles.length%>" style="background:#9fc5e8">EVACUATION CENTER FACILITIES</td>
     </tr>
     <tr style="background: #c5e0b3">
       <td >EVACUATION CENTER</td>
@@ -74,17 +74,17 @@
       <td>PERSONS</td>
       <td>4Ps FAMILIES</td>
       <% for i in 1..2 do %>
-        <td>CUM</td>
-        <td>NOW</td>
+        <td style="background:#93c47d">CUM</td>
+        <td style="background:#93c47d">NOW</td>
       <%end%>
       <% for i in 1..14 do %>
-        <td>CUM</td>
-        <td>NOW</td>
+        <td style="background:#fef2cb">CUM</td>
+        <td style="background:#fef2cb">NOW</td>
       <%end%>
-      <td>FOOD</td>
-      <td>NON-FOOD</td>
+      <td style="background:#f7caac">FOOD</td>
+      <td style="background:#f7caac">NON-FOOD</td>
       <%@essFaciTitles.each do |faci|%>
-        <td><%=faci%></td>
+        <td style="background:#9fc5e8"><%=faci%></td>
       <%end%>
     </tr>
     <tr style="background: #7f7f7f">
