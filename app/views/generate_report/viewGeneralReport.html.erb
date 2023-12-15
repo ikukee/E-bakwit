@@ -88,10 +88,46 @@
     </tr>
     <tr style="background: #c5e0b3">
       <td>GRAND TOTAL</td>
-      <td >COUNT</td>
-      <td>FAMILIES</td>
-      <td>PERSONS</td>
-      <td>4Ps FAMILIES</td>
+      <td><%= EvacCenter.all.length%></td>
+      <td><%= @affectedEvac %></td>
+      <td><%= @totalfamily%></td>
+      <td><%= @totalPersons%></td>
+      <td><%= @totalfamily4ps%></td>
+      <td><%= @CumFamilies%></td>
+      <td><%= @NowFamilies%></td>
+      <td><%= @CumPerson%></td>
+      <td><%= @NowPerson%></td>
+      <td><%= @infantM%></td>
+      <td><%= @infantM_now%></td>
+      <td><%= @infantF_now%></td>
+      <td><%= @toddlerM%></td>
+      <td><%= @toddlerM_now%></td>
+      <td><%= @toddlerF%></td>
+      <td><%= @toddlerF_now%></td>
+      <td><%= @preschoolersM%></td>
+      <td><%= @preschoolersM_now%></td>
+      <td><%= @preschoolersF%></td>
+      <td><%= @preschoolersF_now%></td>
+      <td><%= @schoolageM%></td>
+      <td><%= @schoolageM_now%></td>
+      <td><%= @schoolageF%></td>
+      <td><%= @schoolageF_now%></td>
+
+      <td><%= @teenageM%></td>
+      <td><%= @teenageM_now%></td>
+      <td><%= @teenageF%></td>
+      <td><%= @teenageF_now%></td>
+      <td><%= @adultM%></td>
+      <td><%= @adultM_now%></td>
+      <td><%= @adultF%></td>
+      <td><%= @adultF_now%></td>
+      <td><%= @seniorM%></td>
+      <td><%= @seniorM_now%></td>
+      <td><%= @seniorM%></td>
+      <td><%= @seniorM_now%></td>
+      <%@essFaciTitles.each do |faci|%>
+        <td>&nbsp;</td>
+      <%end%>
     </tr>
   </thead>
   <tbody>
