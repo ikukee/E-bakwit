@@ -267,7 +267,6 @@
             <td>
               <%=gen_getReliefCost(center.id, @disaster.id,false)%>
             </td>
-            <% getQ = gen_getQuantity(center.id, @disaster) %>
             <% gen_getQuantity(center.id, @disaster).each do |x| %>
               <td>
                 <%=x%>
