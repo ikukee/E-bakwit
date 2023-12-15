@@ -272,8 +272,8 @@
                 <%=x%>
               </td>
             <%end%>
-            <% if gen_getQuantity(center.id, @disaster).length < @essFaciTitles.length%>
-              <% for i in 1..@essFaciTitles-gen_getQuantity(center.id, @disaster).length do %>
+            <% if gen_getQuantity(center.id, @disaster).length < @essFaciTitles.length %>
+              <% for i in 1..@essFaciTitles.length-gen_getQuantity(center.id, @disaster).length do %>
                 <td>
                   &nbsp;
                 </td>
