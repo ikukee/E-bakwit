@@ -45,7 +45,7 @@
       <td colspan="<%= 38+@essFaciTitles.length%>"></td>
     </tr>
     <tr align ="center" style="background: #c5e0b3">
-      <td rowspan="3" colspan="2" style="background: #9fc5e8">Barangay</td>
+      <td rowspan="3" style="background: #9fc5e8">Barangay</td>
       <td colspan="5" rowspan="2" >Number of Affected</td>
       <td colspan="4" style="background:#93c47d">Number of Displaced Inside ECs</td>
       <td colspan="4" style="background:#fef2cb">INFANT 1y/o(0-11mos)</td>
@@ -89,7 +89,7 @@
       <%end%>
     </tr>
     <tr style="background: #7f7f7f">
-      <td colspan="2" >GRAND TOTAL</td>
+      <td>GRAND TOTAL</td>
       <td><%= EvacCenter.all.length%></td>
       <td><%= @affectedEvac %></td>
       <td><%= @totalfamily%></td>
@@ -137,7 +137,7 @@
   <tbody>
     <% @barangays.each do |brgy|%>
       <tr style="background:#a5a5a5">
-        <td colspan="2" >
+        <td>
           <%= brgy %>
         </td>
         <% for i in 1..39 + @essFaciTitles.length do %>
@@ -149,8 +149,7 @@
       <% @evac_centers.each do |center| %>
         <% if  brgy == center.barangay %>
           <tr>
-            <td colspan="2" >
-              &nbsp;
+            <td>
             </td>
             <td >
               <%= center.name %>
