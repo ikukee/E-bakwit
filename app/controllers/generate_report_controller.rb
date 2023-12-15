@@ -405,13 +405,14 @@ class GenerateReportController < ApplicationController
             sheet.add_row [""].concat(whitespacer(5)).concat(["FAMILIES","","PERSONS"]).concat(whitespacer(1), malefemale(7),whitespacer(1), ["TOTAL COST OF ASSISTANCE", ""]).concat(whitespacer(1),["EVACUATION CENTER FACILITIES"]).concat(whitespacer(essFaciTitles.length-2)),style:defaultColorHead
             sheet.add_row ["", "EVACUATION CENTER", "COUNT","FAMILIES","PERSONS","4Ps FAMILIES"].concat(cumnow(8), ["","FOOD", "NON-FOOD"],essFaciTitles),style:defaultColorHead
             sheet.add_row ["GRAND TOTAL", EvacCenter.all.length,@affectedEvac,
-            @totalfamily, @totalPersons, @totalfamily4ps, @CumFamilies, @NowFamilies, @CumPerson, @NowPerson, @infantM,@infantM_now, @infantF, @infantF_now,
+            @totalfamily, @totalPersons, @totalfamily4ps, @CumFamilies, @NowFamilies, @CumPerson, @NowPerson, 
+            @infantM,@infantM_now, @infantF, @infantF_now,
             @toddlerM,@toddlerM_now, @toddlerF,@toddlerF_now,
             @preschoolersM,@preschoolersM_now,@preschoolersF,@preschoolersF_now,
             @schoolageM,@schoolageM_now,@schoolageF,@schoolageF_now,
             @teenageM,@teenageM_now,@teenageF,@teenageF_now,
             @adultM,@adultM_now,@adultF,@adultF_now,
-            @seniorM,@seniorM_now,@seniorM,@seniorM_now].concat(whitespacer(1), [@tfprice,@tnfprice]).concat(whitespacer(essFaciTitles.length)), style: grandTotalHeader
+            @seniorM,@seniorM_now,@seniorF,@seniorF_now].concat(whitespacer(1), [@tfprice,@tnfprice]).concat(whitespacer(essFaciTitles.length)), style: grandTotalHeader
             sheet.sheet_view.pane do |pane|
                 pane.top_left_cell = "B8:C8"
                 pane.state = :frozen_split
