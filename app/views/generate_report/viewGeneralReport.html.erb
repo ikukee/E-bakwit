@@ -99,6 +99,7 @@
       <td><%= @NowPerson%></td>
       <td><%= @infantM%></td>
       <td><%= @infantM_now%></td>
+      <td><%= @infantF%></td>
       <td><%= @infantF_now%></td>
       <td><%= @toddlerM%></td>
       <td><%= @toddlerM_now%></td>
@@ -132,11 +133,11 @@
   </thead>
   <tbody>
     <% @barangays.each do |brgy|%>
-      <tr>
+      <tr style="background:#a5a5a5">
         <td>
           <%= brgy %>
         </td>
-        <% for i in 1..39 do %>
+        <% for i in 1..39 + @essFaciTitles.length do %>
         <td>
           &nbsp;
         </td>
