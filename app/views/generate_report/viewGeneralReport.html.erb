@@ -136,8 +136,11 @@
         <td>
           <%= brgy %>
         </td>
+        <% for i in 1..34 do %>
         <td>
+          &nbsp;
         </td>
+        <%end%>
       </tr>
       <% @evac_centers.each do |center| %>
         <% if  brgy == center.barangay %>
