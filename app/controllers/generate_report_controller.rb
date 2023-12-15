@@ -468,7 +468,7 @@ class GenerateReportController < ApplicationController
                             helpers.ggetSeniors(center.id, @disaster.id, "Male",true),
                             helpers.getSeniors(center.id, @disaster.id, "Female"),
                             helpers.ggetSeniors(center.id, @disaster.id, "Female",true),
-                    ].concat(whitespacer(1),[getReliefCost(center.id, @disaster.id,true),getReliefCost(center.id, @disaster.id,false), ""], getQuantity(center.id, @disaster))
+                    ].concat(whitespacer(1),[helpers.gen_getReliefCost(center.id, @disaster.id,true),helpers.gen_getReliefCost(center.id, @disaster.id,false), ""], helpers.gen_getQuantity(center.id, @disaster))
                     end
                 end
             end
@@ -548,15 +548,6 @@ class GenerateReportController < ApplicationController
         else
             return ""
         end
-    end
-    def getQuantity(x, y)
-        xyValues = []
-        EvacYearlyProfile.all.where(evac_id: x).where(year: y.year).each do |yp|
-            AssignedYearlyEss.all.where(evac_profile_id: yp.id).each do |ye|
-                xyValues.push(ye.quantity)
-            end
-        end
-        return xyValues
     end
     def countServedFamily(evac_center, disaster, key )
 
@@ -643,23 +634,6 @@ class GenerateReportController < ApplicationController
         end
         return titles
     end
-    def getReliefCost(center,disaster,k)
-        priceValF = 0
-        priceValN = 0
-        GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", disaster , center).each do |rg|
-            if ReliefGood.find(rg.rg_id).is_food == true
-                priceValF +=rg.price
-            elsif ReliefGood.find(rg.rg_id).is_food == false
-                priceValN +=rg.price
-            end
-        end
-
-        if k
-            return priceValF
-        else
-            return priceValN
-        end
-
-    end
+    
     
 end

@@ -6,7 +6,33 @@ module GenerateReportHelper
             return 0
         end 
     end
+    def gen_getQuantity(x, y)
+        xyValues = []
+        EvacYearlyProfile.all.where(evac_id: x).where(year: y.year).each do |yp|
+            AssignedYearlyEss.all.where(evac_profile_id: yp.id).each do |ye|
+                xyValues.push(ye.quantity)
+            end
+        end
+        return xyValues
+    end
+    def gen_getReliefCost(center,disaster,k)
+        priceValF = 0
+        priceValN = 0
+        GenRgAlloc.all.where("disaster_id = ? AND evac_id = ?", disaster , center).each do |rg|
+            if ReliefGood.find(rg.rg_id).is_food == true
+                priceValF +=rg.price
+            elsif ReliefGood.find(rg.rg_id).is_food == false
+                priceValN +=rg.price
+            end
+        end
 
+        if k
+            return priceValF
+        else
+            return priceValN
+        end
+
+    end
     def gcountGenderEvacuated(evac_center,disaster, sexVal, k)
         evacuatedIndiv = 0
         evacuees = Evacuee.all.where(disaster_id: disaster.id).where(evac_id: evac_center)
