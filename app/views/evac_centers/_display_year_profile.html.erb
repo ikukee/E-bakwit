@@ -1,12 +1,8 @@
-<div class="p-0 pt-4 text-light" >
+<div class="p-0 pt-4" >
   <div class="col-md-12 p-4 ">
     <div class="row">
       <div class="col-6">
         <div class="row" name="action-btn">
-          <div class="col-md-7">
-          </div>
-          <div class="col-md-5">
-          </div>
         </div>
       </div>
       <div class="col-6">
@@ -45,7 +41,6 @@
           </div>
         </div>
       </div>
-      <div class="col"></div>
     </div>
     <div class="row mb-5">
       <div class="row" name='title-tag'>
@@ -241,7 +236,7 @@
     </div>
   </div>
   <div class="border border-2 rounded px-0">
-    <div class="row m-0 default-background3 p-2">
+    <div class="row m-0 p-2">
       <%= form_with url: "/view_disaster_evacuation", method: :post do |form| %>
         <%= form.hidden_field :evac_center, :value=> evac_center.id%>
         <%= form.collection_select :disaster_id , Disaster.all.order(date_of_occurence: :desc).where(year: evac_yearly_profile.year), :id, :name,{:selected => Disaster.all.order(date_of_occurence: :desc).where(year: evac_yearly_profile.year).first},{class:"btn fs-1 oswald-fw dropdown-toggle fw-bold", id:"disaster-name-dv", oninput: "this.form.requestSubmit()"}%>
@@ -250,5 +245,4 @@
     <div id = "display_disaster_evacuation">
     </div>
   </div>
-</div>
 </div>
