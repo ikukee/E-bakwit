@@ -242,7 +242,7 @@
             </div>
           </div>
         </div>
-        <div class="nav nav-tabs">
+        <div class="nav nav-tabs" style="outline: 2px dashed silver">
           <li class="nav-items">
             <%= form_with url: "/view_disaster_evacuation", method: :post do |form| %>
               <%= form.hidden_field :evac_center, :value=> evac_center.id%>
@@ -251,9 +251,7 @@
           </li>
         </div>
         <div class="card-deck">
-          <div class="card shadow p-4">
-            <div id = "display_disaster_evacuation">
-            </div>
+          <div id = "display_disaster_evacuation">
           </div>
         </div>
       </div>
