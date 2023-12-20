@@ -1,5 +1,5 @@
 class MainController < ApplicationController
-    before_action :is_logged_in, except: %i[login logout register login_proceed register_proceed index send_request_proceed index reqCreate]
+    before_action :is_logged_in, except: %i[change_pass_proceed change_password forgot_password search_account send_change_password_request login logout register login_proceed register_proceed index send_request_proceed index reqCreate error]
     def index
         @evac_centers = EvacCenter.all
     end
@@ -15,6 +15,7 @@ class MainController < ApplicationController
     def logout
         session[:user_id] = nil
         session[:user_type] = nil
+        session[:time_out_date] = nil
         redirect_to "/login"
     end
 
@@ -32,6 +33,8 @@ class MainController < ApplicationController
                     if user.password_digest == params[:password]
                         session[:user_id] = user.id
                         session[:user_type] = user.user_type
+                        session[:time_out_date] = Date.today + 1
+                       
                         format.html{redirect_to "/new_user/#{user.id}"}
                     else
                         format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>INCORRECT PASSWORD!</li></ul>")}
@@ -40,6 +43,7 @@ class MainController < ApplicationController
                     if user.authenticate(params[:password])
                         session[:user_id] = user.id
                         session[:user_type] = user.user_type
+                        session[:time_out_date] = Date.today + 1
                         if user.user_type == "ADMIN"
                             format.html{redirect_to "/evac_centers"}
                         else
@@ -151,5 +155,62 @@ class MainController < ApplicationController
 
 
     end
+
+    def forgot_password
+
+    end
+
+    def send_change_password_request
+        user = User.find(params[:user_id])
+        password_session = PasswordSession.new
+        password_session.user_id = params[:user_id]
+        password_session.exp_date = Time.current.advance(hours: 1)
+        password_session.save
+        AccountMailer.with(user: user, password_session: password_session).change_password.deliver_now
+        respond_to do |format|
+            format.turbo_stream{render turbo_stream: turbo_stream.update("email_confirmation","An email has been sent to your email address.")}
+        end
+    end
+
+    def search_account
+        users = User.all.where(email: params[:email])
+        respond_to do |format|
+            if users.length > 0
+                user = users.last
+                format.turbo_stream{render turbo_stream: turbo_stream.update("account_result",partial:"account_result",locals:{user:user})}
+            else
+                user = users.last
+                format.turbo_stream{render turbo_stream: turbo_stream.update("request_error","No account found under email: <strong>#{params[:email]}</strong>")}
+            end
+          
+        end
+       
+    end
+
+    def change_password
+        @user = User.find(params[:id])
+        @password_session = PasswordSession.find(params[:session_id])
+        if Time.current > @password_session.exp_date
+            redirect_to "/error"
+        end
+    end
+
+    def change_pass_proceed
+        @user = User.find(params[:user_id])
+        @password_session = PasswordSession.find(params[:session_id])
+        respond_to do |format|
+            if params[:password_digest] != nil && params[:confirm_password] !=nil
+                if params[:password_digest] ==  params[:confirm_password]
+                    @user.update_attribute(:password_digest, BCrypt::Password.create(params[:password_digest]))
+                    @password_session.update_attribute(:exp_date, Time.current)
+                    format.html{redirect_to "/login"}
+                else
+                    format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea","Passwords did not match!")}
+                end
+            else
+                format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea","Password cannot be blank!")}
+            end
+        end
+    end 
 
 end

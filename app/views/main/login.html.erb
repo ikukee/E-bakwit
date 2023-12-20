@@ -1,7 +1,5 @@
-
-
 <div id = "login-container" class="container-fluid m-0 p-0 vh-75">
-<div class ="row m-0" >
+  <div class ="row m-0" >
     <div class="col-md-auto ps-5">
       <h1 class="oswald" style="border-bottom: 5px solid white; color:white;">NAGA</h1>
       <div class="col" >
@@ -12,47 +10,43 @@
       <h1 class="oswald" style="color:#2e9cdb; border-bottom:5px solid #2e9cdb;">LOGIN</h1>
       <h2><a href="/requestcreate" class="btn btn-light w-100" >Be A Volunteer!</a></h2>
     </div>
-    <div class="col ml-4 p-5" >    
+    <div class="col ml-4 p-5" >
       <div class="container w-75 p-3"  >
         <%= form_with url:"/login/proceed", method: :post do |f| %>
-            <span>&nbsp;</span>
-            <div class="form-group">    
-              <div class="input-group mb-3">          
-                <label class='input-group-text transpar'><i class="fa-solid fa-user fa-lg" style="color: #000;"></i></label>
-                <%= f.email_field :email, class:"form-control transpar p-2 form-underline", placeholder: "Email"%>
-              </div>
-              
+          <span>&nbsp;</span>
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <label class='input-group-text transpar'><i class="fa-solid fa-user fa-lg" style="color: #000;"></i></label>
+              <%= f.email_field :email, class:"form-control transpar p-2 form-underline", placeholder: "Email"%>
             </div>
-            
+          </div>
+          <span>&nbsp;</span>
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-text transpar">
+                <i class="fa-solid fa-key fa-lg" style="color: #000000;"></i>
+              </div>
+              <%= f.password_field :password, class:"form-control transpar p-2 form-underline", placeholder: "Password"%>
+            </div>
+            <div id= "login_errorArea"></div>
+            <a href = "/forgot_password">Forgot password?</a>
             <span>&nbsp;</span>
             <div class="form-group">
-              <div class="input-group mb-3">
-                <div class="input-group-text transpar">
-                  <i class="fa-solid fa-key fa-lg" style="color: #000000;"></i>
+              <div class="row">
+                <div class="col">
                 </div>
-                <%= f.password_field :password, class:"form-control transpar p-2 form-underline", placeholder: "Password"%>
-              </div>
-              <div id= "login_errorArea"></div>
-              <span>&nbsp;</span>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col">
-                    
-                  </div>
-                  <div class="col">
-                    <%= f.submit "LOGIN", style:"font-size: 1.5em;", class:"btn btn-light w-100 oswald fw"%>
-                  </div>
-                  <div class="col">
-                    
-                  </div>
+                <div class="col">
+                  <%= f.submit "LOGIN", style:"font-size: 1.5em;", class:"btn btn-light w-100 oswald fw"%>
                 </div>
-              
+                <div class="col">
+                </div>
               </div>
             </div>
-            <span>&nbsp;</span>
-          <% end %>
+          </div>
+          <span>&nbsp;</span>
+        <% end %>
       </div>
-</div>
-<div class="position-absolute m-0 w-100 bottom-0 p-0">
-  <%= render 'layouts/footer'%>
-</div>
+    </div>
+    <div class="position-absolute m-0 w-100 bottom-0 p-0">
+      <%= render 'layouts/footer'%>
+    </div>

@@ -1,0 +1,2 @@
+class PasswordSession < ApplicationRecord
+end

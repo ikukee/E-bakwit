@@ -28,6 +28,12 @@ Rails.application.routes.draw do
   get "/camp_manager/new",to:"main#new_camp_manager"
   get "/camp_managers",to:"volunteer#camp_managers"
   get "/admins",to:"volunteer#admins"
+  get "/forgot_password",to:"main#forgot_password"
+  get "/change_password/:id/:session_id",to:"main#change_password"
+
+  post "/search_account",to:"main#search_account"
+  post "/send_change_password_request", to:"main#send_change_password_request"
+  post "/change_password/request",to:"main#change_pass_proceed"
 
   # base tables
   post "/disasters/search",to:"disasters#search"
@@ -81,6 +87,7 @@ Rails.application.routes.draw do
   #RELIEF GOOD ALLOCATION
   get "/relief_good/requests",to:"relief_allocation#relief_request"
   get "/relief_good/accepted_requests",to:"relief_allocation#accepted_request"
+  get "/relief_good/rejected_requests",to:"relief_allocation#rejected_request"
   get "/dispatch/request/:id",to: "relief_allocation#allocation"
   get "/relief_good/dispatched_requests",to:"relief_allocation#dispatched_request"
   get "/relief_allocation/:evac_id/:disaster_id", to: "relief_allocation#your_request"
@@ -93,6 +100,8 @@ Rails.application.routes.draw do
   post "/send/relief/:evac_id/:disaster_id",to:"relief_allocation#send_request"
   post "/view/request/:id",to:"relief_allocation#view_request"
   post "/approve/request/:id",to:"relief_allocation#approve_request"
+  post "/reject/request/:id",to:"relief_allocation#reject_request"
+  post "/revert/request/:id",to:"relief_allocation#revert_request"
   post "/allocate_rg",to:"relief_allocation#allocate_rg"
   post "/edit_rg/:rg_id/:request_id",to:"relief_allocation#edit_rg"
   post "/dispatch/request/:id",to: "relief_allocation#dispatch_request"

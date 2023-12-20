@@ -39,6 +39,18 @@ class ReliefAllocationController < ApplicationController
         @requests = ReliefRequest.offset(@page * @requests_count_per_page).limit(@requests_count_per_page).where("status = 'RECEIVED' OR status = 'DISPATCHED' ").order(date_of_request: :desc)
     end
 
+    def rejected_request
+        add_breadcrumb('Rejected Requests')
+        @requests = ReliefRequest.all.where("status = 'REJECTED'").order(:date_of_request)
+        @page = params.fetch(:page, 0).to_i
+        if  @page < 0
+            @page = 0
+        end
+        @requests_count = @requests.length
+        @requests_count_per_page = 5
+        @requests = ReliefRequest.offset(@page * @requests_count_per_page).limit(@requests_count_per_page).where("status = 'REJECTED'").order(date_of_request: :desc)
+    end
+
     def send_request
         relief_request =ReliefRequest.new
         relief_request.volunteer_id = params[:volunteer_id]
@@ -58,6 +70,18 @@ class ReliefAllocationController < ApplicationController
         relief_request= ReliefRequest.find(params[:id])
         relief_request.update_attribute(:status, "ACCEPTED")
         redirect_to "/dispatch/request/#{relief_request.id}"
+    end
+
+    def reject_request
+        relief_request= ReliefRequest.find(params[:id])
+        relief_request.update_attribute(:status, "REJECTED")
+        redirect_to "/relief_good/rejected_requests"
+    end
+
+    def revert_request
+        relief_request= ReliefRequest.find(params[:id])
+        relief_request.update_attribute(:status, "PENDING")
+        redirect_to "/relief_good/requests"
     end
 
     def view_request
