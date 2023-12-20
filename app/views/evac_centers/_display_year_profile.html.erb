@@ -1,5 +1,5 @@
 <div class="p-0 pt-4" >
-  <div class="col-md-10 m-2 text-xs-center  mt-5">
+  <div class="col-md-12 m-5 text-xs-center  mt-5">
     <div class="card" >
       <div class="card-body" >
         <div class="card-deck">
@@ -51,11 +51,11 @@
                 <div class="row" name='title-tag'>
                   <p class="oswald fw-bold position-relative m-0" style="font-size: 5.5em"><%= evac_center.name %>
                     <% if session[:user_type] == "ADMIN"%>
-                      <a href="/evac_centers/<%=evac_center.id%>/edit" class="text-light position-absolute" style="font-size: 0.4em;"><i class="fa-solid fa-pen-to-square"></i></a></p>
+                      <a href="/evac_centers/<%=evac_center.id%>/edit" class="text-dark position-absolute" style="font-size: 0.4em;"><i class="fa-solid fa-pen-to-square"></i></a></p>
                   <% else %>
                     <% if User.find(session[:user_id]).currently_assigned != nil%>
                       <% if User.find(session[:user_id]).currently_assigned == evac_center.id && User.find(session[:user_id]).user_type != "VOLUNTEER" %>
-                        <a href="/evac_centers/<%=evac_center.id%>/edit" class="text-light position-absolute" style="font-size: 0.4em;"><i class="fa-solid fa-pen-to-square"></i></a></p>
+                        <a href="/evac_centers/<%=evac_center.id%>/edit" class="text-dark position-absolute" style="font-size: 0.4em;"><i class="fa-solid fa-pen-to-square"></i></a></p>
                     <% end %>
                   <% end %>
                 <% end %>
