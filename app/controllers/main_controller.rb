@@ -173,7 +173,7 @@ class MainController < ApplicationController
     end
 
     def search_account
-        users = User.all.where(email: params[:email]).where(status: "ACTIVE")
+        users = User.all.where(email: params[:email])
         respond_to do |format|
             if users.length > 0
                 user = users.last
