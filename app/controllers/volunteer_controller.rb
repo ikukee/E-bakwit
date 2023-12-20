@@ -142,8 +142,11 @@ class VolunteerController < ApplicationController
                                 format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>Password Cannot be blank</li></ul>")}
                             end
                             user.password_digest = params[:password_digest]
-                            user.update_attribute(:password_digest, BCrypt::Password.create(params[:password_digest]) )
-                            format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:green;'>Password Successfully Changed</li></ul>")}
+                            if user.valid?
+                                user.update_attribute(:password_digest, BCrypt::Password.create(params[:password_digest]) )
+                                format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:green;'>Password Successfully Changed</li></ul>")}
+                            end
+                           
                         else
                             format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea", "<ul><li id = 'errMsg' style = 'color:red;'>Password did not match!</li></ul>")}
                         end

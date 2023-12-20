@@ -173,7 +173,7 @@ class MainController < ApplicationController
     end
 
     def search_account
-        users = User.all.where(email: params[:email])
+        users = User.all.where(email: params[:email]).where(status: "ACTIVE")
         respond_to do |format|
             if users.length > 0
                 user = users.last
@@ -201,9 +201,20 @@ class MainController < ApplicationController
         respond_to do |format|
             if params[:password_digest] != nil && params[:confirm_password] !=nil
                 if params[:password_digest] ==  params[:confirm_password]
-                    @user.update_attribute(:password_digest, BCrypt::Password.create(params[:password_digest]))
-                    @password_session.update_attribute(:exp_date, Time.current)
-                    format.html{redirect_to "/login"}
+                    @user.password_digest = params[:password_digest]
+                    if @user.valid?
+                        puts @user.password_digest
+                        @user.update_attribute(:password_digest, BCrypt::Password.create(params[:password_digest]))
+                        @password_session.update_attribute(:exp_date, Time.current)
+                        format.html{redirect_to "/login"}
+                    else
+                        error_messages = ""
+                        @user.errors[:password_digest].each do |err|
+                          error_messages = error_messages +  err +"\t\t"
+                        end
+                        format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea",error_messages)}
+                     
+                    end
                 else
                     format.turbo_stream{render turbo_stream: turbo_stream.update("login_errorArea","Passwords did not match!")}
                 end
