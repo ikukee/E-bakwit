@@ -203,8 +203,10 @@ class MainController < ApplicationController
                 if params[:password_digest] ==  params[:confirm_password]
                     @user.password_digest = params[:password_digest]
                     if @user.valid?
-                        puts @user.password_digest
-                        @user.update_attribute(:password_digest, BCrypt::Password.create(params[:password_digest]))
+                        puts @password_digest
+                        @user.password_digest = BCrypt::Password.create(@user.password_digest)
+                        puts @password_digest
+                        @user.save
                         @password_session.update_attribute(:exp_date, Time.current)
                         format.html{redirect_to "/login"}
                     else
