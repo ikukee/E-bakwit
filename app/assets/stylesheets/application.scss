@@ -279,7 +279,11 @@ body {
     border-right: 0.2em dashed #586F7C;
     color: #000;
 }
-
+#display_disaster_evacuation{
+    background: #FFFFFF;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
 #req-table {
     max-height: 40em;
     overflow-y: auto;
