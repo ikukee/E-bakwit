@@ -79,7 +79,7 @@
             </div>
             <div class="col">
               <p class="h2 oswald fw d-inline"><%= countFacilities(evac_yearly_profile)%></p>
-              <% if session[:user_type] == "CAMP MANAGER"%>
+              <% if session[:user_type] == "CAMP MANAGER" && User.find(session[:user_id]).currently_assigned == evac_center.id%>
                 <a href="/evac_facilities_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
               <% else %>
                 <% if User.find(session[:user_id]).currently_assigned != nil%>
@@ -96,7 +96,7 @@
             </div>
             <div class="col">
               <p class="h2 oswald fw d-inline"><%= countItems(evac_yearly_profile)%></p>
-              <% if session[:user_type] == "CAMP MANAGER"%>
+              <% if session[:user_type] == "CAMP MANAGER" && User.find(session[:user_id]).currently_assigned == evac_center.id%>
                 <a href="/evac_essentials_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
               <% else %>
                 <% if User.find(session[:user_id]).currently_assigned != nil%>
