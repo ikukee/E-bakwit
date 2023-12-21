@@ -1,24 +1,16 @@
-# README
+# NAGA E-BAKWIT
+LINK: https://e-bakwit.onrender.com/
+Github repository for fulfilling the requirements of IT Capstone Project 2.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Naga E-bakwit is a web-based system that aims to serve as a tool that would lessen the CSWDO’s workload by automating data processes such as demographic segregation and relief allocation. Through the implemented system, CSWDO and their volunteers are expected to consume less time and effort in accomplishing a DROMIC report, but most importantly, it would enable them to efficiently monitor the status of the evacuation centers in relation to the sheltered families that are temporarily in their care.
 
-Things you may want to cover:
+The main purpose of this project is mainly to provide an efficient and convenient evacuee logging and relief distribution assistance web-based system for the local government of Naga’s City Social Welfare and Development Office to assist them in disaster evacuation endeavors.
 
-* Ruby version
+# PROJECT MEMBERS
+PAUL VINCENT LLESOL
+JAMES MATHEW JUNTADO
+ROMEO PANIS II
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# DEPENENCIES
+[* POSTGRESQL](https://www.postgresql.org/)https://www.postgresql.org/
+POSTGRESQL is used as the website's database
