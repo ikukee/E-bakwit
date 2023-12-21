@@ -2,8 +2,9 @@
   <%= link_to "Facilities", "/evac_facilities_form/#{@evac_center.id}/#{@evac_yearly_profile.id}", id: "faci-tab",  style: "z-index: 1",class: "is-active poppins py-3 px-4 position-absolute rounded-top" %>
   <%= link_to "Essentials", "/evac_essentials_form/#{@evac_center.id}/#{@evac_yearly_profile.id}", id: "esse-tab" , class: "poppins p-3 btn btn-secondary position-absolute" %>
   <h4 class="oswald fw-bold"><%= @evac_center.name %></h4>
+  
   <% if @evac_center.status != "ARCHIVED" && session[:user_type] == "CAMP MANAGER"%>
-    <h4 class="oswald">Add Facilities</h4>
+  <h4 class="oswald">Add Facilities</h4>
     <div id = "form_area">
       <%= render partial: "evac_facilities_form", locals:{evac_center: @evac_center, evac_yearly_profile: @evac_yearly_profile, assigned_yearly_ess: AssignedYearlyEss.new}%>
     </div>
@@ -30,7 +31,7 @@
                   <td><%= ae.quantity %></td>
                   <td><%= ae.status %></td>
                   <td style = "width:30%;">
-                    <% if @evac_center.status != "ARCHIVED" && session[:user_type] == "CAMP MANAGER"%>
+                     <% if @evac_center.status != "ARCHIVED" && session[:user_type] == "CAMP MANAGER"%>
                       <%= render partial: "/layouts/delete_button",locals:{link: "/assigned_essential/#{ae.id}"}%>
                     <% end %>
                   </td>
@@ -66,10 +67,3 @@
     </div>
   </div>
 </fieldset>
-<style>
-  body{
-    background: rgb(89,147,188);
-    background: linear-gradient(0deg, rgba(89,147,188,1) 1%, rgba(21,38,74,1) 100%);
-    background-attachment: fixed;
-  }
-</style>
