@@ -248,13 +248,15 @@
     </div>
   </div>
 </div>
-<div class="nav nav-tabs mt-2">
-  <li class="nav-items">
-    <%= form_with url: "/view_disaster_evacuation", method: :post do |form| %>
-      <%= form.hidden_field :evac_center, :value=> evac_center.id%>
-      <%= form.collection_select :disaster_id , Disaster.all.order(date_of_occurence: :desc).where(year: evac_yearly_profile.year), :id, :name,{:prompt => "SELECT DISASTER"},{class:"nav-link active fs-1 oswald-fw fw-bold", id:"disaster-name-dv", oninput: "this.form.requestSubmit()"}%>
-    <% end %>
-  </li>
-</div>
-<div id = "display_disaster_evacuation">
+<div class="col">
+  <div class="nav nav-tabs mt-2">
+    <li class="nav-items">
+      <%= form_with url: "/view_disaster_evacuation", method: :post do |form| %>
+        <%= form.hidden_field :evac_center, :value=> evac_center.id%>
+        <%= form.collection_select :disaster_id , Disaster.all.order(date_of_occurence: :desc).where(year: evac_yearly_profile.year), :id, :name,{:prompt => "SELECT DISASTER"},{class:"nav-link active fs-1 oswald-fw fw-bold", id:"disaster-name-dv", oninput: "this.form.requestSubmit()"}%>
+      <% end %>
+    </li>
+  </div>
+  <div id = "display_disaster_evacuation">
+  </div>
 </div>
