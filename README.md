@@ -7,9 +7,9 @@ Naga E-bakwit is a web-based system that aims to serve as a tool that would less
 The main purpose of this project is mainly to provide an efficient and convenient evacuee logging and relief distribution assistance web-based system for the local government of Naga’s City Social Welfare and Development Office to assist them in disaster evacuation endeavors.
 
 # PROJECT MEMBERS
-PAUL VINCENT LLESOL
-JAMES MATHEW JUNTADO
-ROMEO PANIS II
+Markup : * PAUL VINCENT LLESOL
+* JAMES MATHEW JUNTADO
+* ROMEO PANIS II
 
 # DEPENENCIES
 [* POSTGRESQL](https://www.postgresql.org/)https://www.postgresql.org/
