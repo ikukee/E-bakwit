@@ -124,12 +124,12 @@
                     <label class="oswald fw">Camp Manager Name: </label>
                     <div class="row">
                       <%= form_with url:"/add_campmanager", method: :post do |form|%>
-                        <div class="col-md-auto">
+                        <div class="col-md-7">
                           <%= form.hidden_field :evac_profile_id, :value => evac_yearly_profile.id %>
                           <%= form.collection_select :user_id , User.all.where(status: "ACTIVE").where(user_type: "CAMP MANAGER").where(assigned: false).order(:lname), :id, :full_name,{:prompt => "Select Camp Manager"},{class:"form-control",style:"float:right;"} %>
                           <p id = "camp_errmsg" style = "color:red;"></p>
                         </div>
-                        <div class = "col-md-4">
+                        <div class = "col-md-5">
                           <%= form.button nil, class:"form-control text-light btn btn-dark bg-dgray oswald fw-bold" do %>
                             Add Camp Manager <i class="fa-solid fa-plus"></i>
                           <% end %>
