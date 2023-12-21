@@ -74,17 +74,17 @@
       <div class="row m-0 p-0 justify-content-end">
         <div class="col-6 ">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
               <p class="h2 oswald fw h-100" align="right"><i class="fa-solid fa-shower"></i> FACILITIES: </p>
             </div>
             <div class="col">
-              <p class="h2 oswald fw"><%= countFacilities(evac_yearly_profile)%></p>
+              <p class="h2 oswald fw d-inline"><%= countFacilities(evac_yearly_profile)%></p>
               <% if session[:user_type] == "CAMP MANAGER"%>
-                <a href="/evac_facilities_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
+                <a href="/evac_facilities_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-warning oswald fw-bold d-inline" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
               <% else %>
                 <% if User.find(session[:user_id]).currently_assigned != nil%>
                   <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
-                    <a href="/evac_facilities_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> VIEW</a>
+                    <a href="/evac_facilities_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-warning oswald fw-bold d-inline" ><i class="fa-solid fa-pen-to-square"></i> VIEW</a>
                   <% end %>
                 <% end %>
               <% end %>
@@ -95,13 +95,13 @@
               <p class="h2 oswald fw" align="right"><i class="fa-solid fa-box-archive"></i> ESSENTIAL ITEMS: </p>
             </div>
             <div class="col">
-              <p class="h2 oswald fw"><%= countItems(evac_yearly_profile)%></p>
+              <p class="h2 oswald fw d-inline"><%= countItems(evac_yearly_profile)%></p>
               <% if session[:user_type] == "CAMP MANAGER"%>
-                <a href="/evac_essentials_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
+                <a href="/evac_essentials_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-warning oswald fw-bold d-inline" ><i class="fa-solid fa-pen-to-square"></i> UPDATE</a>
               <% else %>
                 <% if User.find(session[:user_id]).currently_assigned != nil%>
                   <% if User.find(session[:user_id]).currently_assigned == evac_center.id %>
-                    <a href="/evac_essentials_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-warning oswald fw-bold" ><i class="fa-solid fa-pen-to-square"></i> VIEW</a>
+                    <a href="/evac_essentials_form/<%= evac_center.id%>/<%= evac_yearly_profile.id%>" class= "btn btn-warning oswald fw-bold d-inline" ><i class="fa-solid fa-pen-to-square"></i> VIEW</a>
                   <% end %>
                 <% end %>
               <% end %>
