@@ -23,7 +23,7 @@
             <div class = "col-md-4">
               <% if evac_center.status != "ARCHIVED" %>
                 <% if session[:user_type] == "CAMP MANAGER" %>
-                  <button  class="btn btn-primary form-control" data-bs-toggle= "modal" data-bs-target="#add_profile" type="button">Add profile <i class="fa fa-plus" aria-hidden="true"></i></button>
+                  <button  class="btn btn btn-dark bg-dgray oswald fw-bold form-control" data-bs-toggle= "modal" data-bs-target="#add_profile" type="button">Add profile <i class="fa fa-plus" aria-hidden="true"></i></button>
                   <div id="add_profile" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-md">
                       <div class="modal-content">
@@ -74,7 +74,7 @@
       <div class="row m-0 p-0 justify-content-end">
         <div class="col-6 ">
           <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-4">
               <p class="h2 oswald fw h-100" align="right"><i class="fa-solid fa-shower"></i> FACILITIES: </p>
             </div>
             <div class="col">
@@ -91,7 +91,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-4">
               <p class="h2 oswald fw" align="right"><i class="fa-solid fa-box-archive"></i> ESSENTIAL ITEMS: </p>
             </div>
             <div class="col">
