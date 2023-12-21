@@ -12,5 +12,5 @@ The main purpose of this project is mainly to provide an efficient and convenien
 * ROMEO PANIS II
 
 # DEPENENCIES
-[* POSTGRESQL](https://www.postgresql.org/)https://www.postgresql.org/
+[* POSTGRESQL](https://www.postgresql.org/)
 POSTGRESQL is used as the website's database
