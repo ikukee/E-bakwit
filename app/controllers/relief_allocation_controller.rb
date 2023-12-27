@@ -351,13 +351,16 @@ class ReliefAllocationController < ApplicationController
                     gen_id = "gen_id"+x.to_s
                     gen_rg_alloc = GenRgAlloc.find(params[gen_id])
                     quantity = "quantity"+x.to_s
-                    if params[quantity].to_f > gen_rg_alloc.quantity || gen_rg_alloc.quantity == 0
-                        format.turbo_stream{render turbo_stream: turbo_stream.update("err_msg","Insufficient Amount of relief good in storage.")}
-                        break
-                    end
-                    if params[quantity].to_f < 1
-                        format.turbo_stream{render turbo_stream: turbo_stream.update("err_msg","Quantity to be distributed must not be 0. If you don't want to include it please uncheck the checkbox instead.")}
-                        break
+                    include = "include"+x.to_s
+                    if params[include].to_i ==1 
+                      if params[quantity].to_f > gen_rg_alloc.quantity || gen_rg_alloc.quantity == 0
+                          format.turbo_stream{render turbo_stream: turbo_stream.update("err_msg","Insufficient Amount of relief good in storage.")}
+                          break
+                      end
+                      if params[quantity].to_f < 1
+                          format.turbo_stream{render turbo_stream: turbo_stream.update("err_msg","Quantity to be distributed must not be 0. If you don't want to include it please uncheck the checkbox instead.")}
+                          break
+                      end
                     end
                     x= x + 1
                 end
