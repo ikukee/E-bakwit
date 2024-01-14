@@ -1,0 +1,395 @@
+@import "bootstrap";
+@import "font-awesome";
+@import url("logging.css");
+
+*{
+    outline: 0px dashed red;
+}
+
+body {
+    background:  #b8dbd9;
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+/* Custom Colors*/
+
+.default-background1{
+    background-image: linear-gradient(#b8dbd9, #f0f0f0 );
+}
+
+.default-background2{
+    background-image: linear-gradient(to right,#b8dbd9, #f0f0f0 );
+}
+
+.default-background3{
+    background-image: linear-gradient(to right, #f0f0f0, #b8dbd9 );
+}
+
+.default-background4{
+    background-image: linear-gradient(#f0f0f0, #b8dbd9 );
+}
+
+.bg-dgray{
+    background: #20292e;
+    border-color: #20292e;
+}
+
+.bg-navy{
+    background: rgb(19, 31, 65);
+    border-color: rgb(19, 31, 65);
+}
+
+.bg-dinfo{
+    background: #006666;
+    border-color: #006666;
+}
+
+.text-navy{
+    color: rgb(19, 31, 65);
+}
+
+/* Google Fonts */
+
+.poppins {
+    font-family: 'Poppins', sans-serif;
+}
+.oswald{
+    font-family: 'Oswald', sans-serif;
+}
+.montserrat{
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Navbar */
+
+#ebak-nav {
+    box-shadow: 1px 1px 0.2em #000000;
+}
+
+.navbar {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+.navbar-nav{
+    padding-right: 0em;
+}
+
+.navbar a.navbar-brand, .navbar .nav-link {
+    color: #FFFFFF;
+}
+
+.navbar .nav-item.active .nav-link {
+    color: #FFFFFF;
+}
+
+#adminTab .vbtn{
+    background: #305683;
+    border: none;
+    font-size: 1em;
+}
+
+#adminTab .cbtn{
+    background: #4894c0;
+    border: none;
+    font-size: 0.8em;
+}
+
+#adminTab .vbtn:hover{
+    background: #3b689e;
+    border: none;
+}
+
+#adminTab .cbtn:hover{
+    background: #305683;
+    border: none;
+}
+
+#login-button{
+    font-size: 2em;
+    position: absolute;
+    right: 0;
+    top: -0.15em;
+}
+
+#login-button:hover{
+    transition-duration: 2s;
+    text-shadow: 0px 0px 10px #ffffff;
+}
+
+/*Breadcrumb*/
+.a-crumb{
+    text-shadow: 1px 1px 1px #000;
+}
+
+.breadcrumb .inactive{
+    color: #4894c0;
+    text-decoration: none;
+}
+
+.breadcrumb .inactive:hover{
+    text-shadow: 1px 1px 0.1em #868686;
+    transition-duration: 0.2s;
+}
+
+/*Landing Dashboard Page*/
+
+#landing{
+    background: #000;
+    color: white;
+    background-image: linear-gradient(#000,#000,#b8dbd9);
+}
+
+#landing h1{
+    font-size: 12em;
+    letter-spacing: -0.03em;
+}
+
+#landing p{
+    font-size: 2em;
+    color: rgba(255,255,255,0.7)
+}
+
+#recent{
+    border: 0.2em solid #000000;
+}
+
+#recent:hover{
+    background: rgba(0,0,0,0.5);
+    transition-duration: 0.1s;
+    box-shadow: 1px 1px 5px #fff;
+}
+
+.count-card{
+    border: 0.15em dashed #555;
+    background-image: linear-gradient(#f0f0f0, #b8dbd9);
+    color:#000;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.count-card h1{
+    align-self: center;
+    font-weight: bold;
+    text-shadow: 1px 1px 0.01em#000000;
+    font-size: 11em;
+}
+
+#pop-title{
+    top: 1em;
+}
+
+#pop-title button{
+    background-color: #b8dbd9;
+    color: #000000;
+}
+
+/*Evac Centers View Page*/
+
+
+#detailed-view{
+    font-size: 1.2em;
+}
+
+#evac-card{
+    background-image: linear-gradient(#f0f0f0, #b8dbd9);
+    
+    //box-shadow: 1px 1px 0.5em #586F7C;
+}
+
+#evac-card .card-header{
+    background: rgba(0,0,0,0.1);
+}
+
+#evac-card .btn{
+    width: 8em;
+}
+
+#view-evac{
+    background-color: #586F7C;
+    box-shadow: 1px 1px 2px #586F7C;
+}
+
+#add-evac-center {
+    top: 5.5em;
+    right: 3em;
+}
+
+#evac-form{
+    top: 3em;
+    border: 0.2em dashed #586F7C;
+    background-image: linear-gradient(#f0f0f0, #b8dbd9);
+}
+
+#view-del .link:hover{
+    transition-duration: 0.2s;
+    opacity: 90%;
+}
+
+.form-control{
+    box-shadow: 1px 1px 0.2em #20292e;
+    
+}
+
+// login
+#login-container{
+    background: #000;
+    color: white;
+    background-image: linear-gradient(#000,#000,#000,#4e5c5b,#b8dbd9);
+}
+
+#login-container h1{
+    font-size: 10em;
+    letter-spacing: -0.04em;
+    color:white;
+}
+
+#login-container p{
+    font-size: 1.5em;
+    color:white;
+}
+
+#login-container span{
+    font-size: 1em;
+    color:white;
+}
+
+.fssmall {
+    font-size: 0.7em;
+    text-align: center;
+}
+
+#faci-tab {
+    top: -3.7em;
+    left: -0.2em;
+}
+
+#esse-tab {
+    top: -3.7em;
+    left: 7.3em;
+}
+
+.is-active{
+    background: #f0f0f0;
+    text-decoration: none;
+    border-top: 0.2em dashed #586F7C;
+    border-left: 0.2em dashed #586F7C;
+    border-right: 0.2em dashed #586F7C;
+    color: #000;
+}
+#display_disaster_evacuation{
+    background: #FFFFFF;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+#req-table {
+    max-height: 40em;
+    overflow-y: auto;
+}
+
+#volunteer-id{
+    height: 20em;
+    max-width: 29em;
+}
+
+#volunteer-selfie{
+    max-height: 20em;
+    max-width: 29em;
+}
+
+#view-request {
+    background-image: linear-gradient(#f0f0f0, #b8dbd9);
+    height: 95%;
+}
+
+#view-request #approve{
+    width: 7em;
+}
+
+#back-button{
+    color: #20292e;
+}
+
+#back-button:hover {
+    color: #20292e;
+    text-shadow: 1px 1px 0.1em #fff;
+}
+
+// disaster
+
+#disaster-card {
+    background-image: linear-gradient(#f0f0f0, #b8dbd9);
+    box-shadow: 1px 1px 0.5em #586F7C;
+
+}
+
+#disaster-card .card-header{
+    background: #20292e;
+    color: #f0f0f0;
+    box-shadow: 0 0.3em 0.4em -0.2em #555;
+}
+
+#disaster-desc {
+    color: #4f6977;
+    border: 0.1em dashed #9bb0bb;
+}
+
+#add-disaster-button {
+    right: 3em;
+    top: 4em;
+}
+
+#disaster-show{
+    border: 0.2em solid #20292e;
+}
+
+#disaster-details{
+    border: 0.15em dashed #20292e;
+    background-image: linear-gradient(#f0f0f0, #b8dbd9);
+}
+
+
+// ** testy
+#hover-req{
+    font-size: .8em; outline: 2px solid white; color:white
+}
+#hover-req:hover{
+    color:black;
+    background-color: white;
+}
+
+.transpar{
+    box-shadow: none;
+    background-color: #b8dbd9;
+    border:none;
+    
+}
+.form-control{
+    font-size: 20px;
+}
+
+.inn-shadow{
+
+    box-shadow: inset 0 0 10px black;
+}
+.form-underline::placeholder{
+    color:white;
+
+}
+.form-underline{
+    background: none;
+    border-bottom: 2px solid #b8dbd9;
+    border-radius: 0;
+    
+}
+.form-underline{
+    color:white;
+}
+.form-underline:focus{
+    background: none;
+    color:white;
+    border-bottom: 2px solid #b8dbd9;
+}

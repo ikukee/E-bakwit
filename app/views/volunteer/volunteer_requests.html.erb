@@ -1,0 +1,72 @@
+<div id="evac-form" class="row position-relative my-auto mx-5 p-3 rounded">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href = "/admins" class="text-decoration-none poppins fw"><button class = "nav-link text-dark">Administrators</button></a>
+    </li>
+    <li class="nav-item">
+      <a href = "/volunteers" class="text-decoration-none poppins"><button class = "nav-link text-dark">Volunteers</button></a>
+    </li>
+    <li class="nav-item">
+      <a href = "/camp_managers" class="text-decoration-none poppins"><button class = "nav-link text-dark">Camp Managers</button></a>
+    </li>
+    <li class="nav-item">
+      <a href = "/requests" class="text-decoration-none poppins fw-bold"><button class = "nav-link active">Volunteer Requests</button></a>
+    </li>
+  </ul>
+  <div id="req-table " class="col-md-6">
+    <h1 class="oswald fw-bold p-3">Volunteer Requests</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="col-md-1">Date Requested</th>
+          <th class="col-md-3">Name</th>
+          <th class="col-md-3">Account Type</th>
+          <th class="col-md-1">Status</th>
+          <th class="col-md-1">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @requests.each do |request| %>
+          <tr>
+            <td class="col-md-1"><%= request.request_date%></td>
+            <td class="col-md-3"><%= request.lname %>, <%= request.fname%></td>
+            <td class="col-md-3"><%= request.user_type%></td>
+            <% if request.status == "PENDING" %>
+              <td  style = "color:yellow;"><strong><%= request.status%></strong></td>
+            <% elsif  request.status == "APPROVED" %>
+              <td  style = "color:green;"><strong><%= request.status%></strong></td>
+            <% elsif request.status == "REJECTED" %>
+              <td style = "color:red;"><strong><%= request.status%></strong></td>
+            <% end %>
+            <td class="col-md-1">
+              <%= form_with url: "/requests/#{request.id}", method: :post do |form| %>
+                <%= form.button nil, class: "btn btn-secondary btn-sm px-3" do %>
+                  View <i class="fa-solid fa fa-eye"></i>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if @requests_count > 10 %>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-left">
+          <li class="page-item ">
+            <% if @page  > 0 %>
+              <%= link_to "Previous Page", "/requests?page=#{@page-1}", class:"page-link"%>
+            <% end %>
+          </li>
+          <li class="page-item">
+            <%= link_to "Next Page","/requests?page=#{@page + 1}", class:"page-link"%>
+          </li>
+        </ul>
+      </nav>
+    <% end %>
+  </div>
+  <div class="col-md-6 default-background2">
+    <h1 class="oswald fw-bold p-3">Display Area</h1>
+    <div id = "view_request" class = "my-auto border-1 poppins">
+    </div>
+  </div>
+</div>

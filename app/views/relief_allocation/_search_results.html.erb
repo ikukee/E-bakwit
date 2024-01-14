@@ -1,0 +1,41 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Date in</th>
+      <th>Family Name</th>
+      <th>Disaster</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% evacuees.each do |evacuee|%>
+      <tr>
+        <td><%=evacuee.date_in.year%>-<%=evacuee.date_in.month%>-<%=evacuee.date_in.day%></td>
+        <td><%=evacuee.family_name%></td>
+        <td><%= Disaster.find(evacuee.disaster_id).name%></td>
+        <td><%=evacuee.relief_good_status%></td>
+        <% if evacuee.relief_good_status == nil%>
+          <% if EvacCenter.find(evacuee.evac_id).status != "ARCHIVED" && session[:user_type] == "VOLUNTEER"%>
+            <td>
+              <a href = "/view/evacuee/members/<%=evacuee.id%>/new" class= "btn btn-info bg-dinfo text-light oswald form-control">View <i class="fa-solid fa-eye"></i></a>
+            </td>
+          <% end %>
+        <% else %>
+          <td>
+            <div class = "row">
+              <div class = "col-md-6">
+                <a href = "/view/evacuee/members/<%=evacuee.id%>/allotted" class= "btn btn-info bg-dinfo text-light form-control">View <i class="fa-solid fa-eye"></i></a>
+              </div>
+              <% if EvacCenter.find(evacuee.evac_id).status != "ARCHIVED" && session[:user_type] == "VOLUNTEER"%>
+                <div class = "col-md-6">
+                  <a href = "/view/evacuee/members/<%=evacuee.id%>/new" class= "btn btn-primary bg-navy form-control">New Distribution <i class="fa-solid fa-plus"></i></a>
+                </div>
+              <% end %>
+            </div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

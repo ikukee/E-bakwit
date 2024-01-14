@@ -1,0 +1,42 @@
+<h5>Food</h5>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Relief Good</th>
+      <th>Quantity</th>
+      <th>Unit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% allocated_rgs.each do |gen|%>
+      <% if ReliefGood.find(GenRgAlloc.find(gen.gen_id).rg_id).is_food == true%>
+        <tr>
+          <td><%= ReliefGood.find(GenRgAlloc.find(gen.gen_id).rg_id).name%> </td>
+          <td style = "width:30%;"><%=gen.quantity%></td>
+          <td><%= ReliefGood.find(GenRgAlloc.find(gen.gen_id).rg_id).unit%> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<h5>Non-Food</h5>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Relief Good</th>
+      <th>Quantity</th>
+      <th>Unit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% allocated_rgs.each do |gen|%>
+      <% if ReliefGood.find(GenRgAlloc.find(gen.gen_id).rg_id).is_food == false%>
+        <tr>
+          <td><%= ReliefGood.find(GenRgAlloc.find(gen.gen_id).rg_id).name%> </td>
+          <td style = "width:30%;"><%=gen.quantity%></td>
+          <td><%= ReliefGood.find(GenRgAlloc.find(gen.gen_id).rg_id).unit%> </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

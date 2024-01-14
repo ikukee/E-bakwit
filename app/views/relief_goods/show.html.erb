@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @relief_good %>
+
+<div>
+  <%= link_to "Edit this relief good", edit_relief_good_path(@relief_good) %> |
+  <%= link_to "Back to relief goods", relief_goods_path %>
+
+  <%= button_to "Destroy this relief good", @relief_good, method: :delete %>
+</div>

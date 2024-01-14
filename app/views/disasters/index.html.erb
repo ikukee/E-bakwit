@@ -1,0 +1,44 @@
+<div class="row m-0 mt-5">
+  <div class="col-md-11 m-5 text-xs-center  mt-5">
+    <div class="card" >
+      <div class="card-body" >
+        <div class="card-deck">
+          <div class="card shadow p-4">
+            <div class = "row">
+              <div class = "col-md-8">
+                <h1 class="oswald fw">DISASTERS</h1>
+              </div>
+              <div class = "col-md-4">
+                <a href = "/disasters/new" ><button style = "margin-top:5px;" class = "btn btn-primary bg-navy oswald fw-bold form-control"><i class="fa-solid fa-plus"></i> Record new Disaster</button></a>
+              </div>
+            </div>
+            <%= form_with url: "/disasters/search", method: :post do |form| %>
+              <label for = "search_criteria"><strong>Search Criteria:</strong></label>
+              <div class="input-group mb-3">
+                <%= form.select :search_type, options_for_select(["NAME","TYPE","YEAR"]),{},{class:"form-control"}%>
+                <%= form.search_field :search_value , class: "form-control", placeholder: "Search a data here", oninput: "this.form.requestSubmit()" %>
+              </div>
+            <% end %>
+            <div id = "disasters">
+              <%= render partial: "search_results",locals:{disasters:@disasters}%>
+            </div>
+            <% if @disasters_count > 5 %>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-left">
+                  <li class="page-item ">
+                    <% if @page  > 0 %>
+                      <%= link_to "Previous Page", "/disasters?page=#{@page-1}", class:"page-link"%>
+                    <% end %>
+                  </li>
+                  <li class="page-item">
+                    <%= link_to "Next Page","/disasters?page=#{@page + 1}", class:"page-link"%>
+                  </li>
+                </ul>
+              </nav>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

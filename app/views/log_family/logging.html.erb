@@ -1,0 +1,49 @@
+<style>
+  body{
+    background: rgb(89,147,188);
+    background: linear-gradient(0deg, rgba(89,147,188,1) 1%, rgba(21,38,74,1) 100%);
+    background-attachment: fixed;
+  }
+</style>
+<div class="container-fluid">
+  <div class="col-md-11 m-5 text-xs-center  mt-5">
+    <div class="card" >
+      <div class="card-body" >
+        <div class="card-deck">
+          <div class="card shadow p-4">
+            <p id="notice"> </p>
+            <div class="p-3" >
+              <p class="h1 oswald fw-bold ps-0">
+                <%= @evac_center.name.titleize %>
+              </p>
+              <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid white;" align="center">EVACUEE LOGGING</h2>
+              <%= form_with url: "/log/search", method: :post do |form|%>
+                <div class = "row">
+                  <div class = "col-md-6">
+                    <div class="mb-3">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <div class="input-prepend w-25">
+                            <p align="center" class="h2 oswald fw">Family Name: </p>
+                          </div>
+                          <%= form.hidden_field :evac_center, :value => @evac_center.id%>
+                          <%= form.hidden_field :disaster_id, :value => @disaster.id%>
+                          <%= form.collection_select :id , FamilyMember.all.order(:full_name), :id, :full_name,{:prompt => "Select Member"},{class:"form-control",oninput: "this.form.requestSubmit()"} %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class = "col-md-6" style = "width:30%;">
+                    <a href = "/families/new"><button class = "btn btn-primary form-control"> ADD NEW FAMILY <i class="fa-solid fa-plus"></i></button></a>
+                  </div>
+                </div>
+              <%end%>
+              <div id="member-list">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

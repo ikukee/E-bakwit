@@ -1,0 +1,129 @@
+<nav id="ebak-nav" class="poppins row navbar navbar-expand-lg m-0">
+  <div class="container px-lg-5 ">
+    <%= link_to root_path, class: "navbar-brand oswald fs-3 fw-bold", id: "nav-home-title" do %>
+      <i class="fa-solid fa-person-shelter mx-2"></i>NAGA <span class="fs-3 navbar-brand oswald" style="color:#2e9cdb;">E-BAKWIT</span>
+    <% end %>
+    <% if session[:user_id] != nil %>
+      <a class="navbar-brand col-md-auto" href = "#" style = "float:right;" >Hi <%= User.find(session[:user_id]).fname %>!</a>
+    <% end %>
+    <!-- Example single danger button -->
+    <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
+      <div class="btn-group">
+        <button href="/evac_centers" class="btn btn-outline-info" data-bs-toggle= "modal" data-bs-target="#adminTab" type="button">Admin Tab <% if notifIcon(1) %><i class="fa-solid fa-circle-exclamation fa-lg" style="color: #ffdd00;"></i><%end%></button>
+        <button type="button" class="btn btn-outline-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="visually-hidden">Toggle Dropdown</span>
+        </button>
+        <div id="adminTab" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-dark">View Lists</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="row my-2">
+                <%= link_to root_path, class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-house"></i> Home
+                <% end %>
+                <%= link_to "/evac_centers", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-person-shelter"></i> Evacuation Centers
+                <% end %>
+              </div>
+              <div class="row my-2">
+                <%= link_to "/disasters", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-hurricane"></i> Disasters
+                <% end %>
+                <%= link_to "/evacuation_essentials", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-person-booth"></i> Essentials and Facilities
+                <% end %>
+              </div>
+              <div class="row my-2">
+                <%= link_to "/relief_goods", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-wheat-awn"></i> Relief Goods
+                <% end %>
+                <%= link_to "/families", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-people-roof"></i> Families
+                <% end %>
+              </div>
+              <div class="row my-2">
+                <%= link_to "/volunteers", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-user-pen"></i> Volunteers
+                <% end %>
+                <%= link_to "/relief_good/requests", class: "vbtn btn btn-primary col-sm-12 col-md-5 m-auto py-3" do %>
+                  <i class="fa-solid fa-scroll"></i> Relief Goods Request <% if notifIcon(1) %><i class="fa-solid fa-circle-exclamation fa-lg" style="color: #ffdd00;"></i><%end%></i>
+                <% end %>
+              </div>
+              <div class="modal-header">
+                <h5 class="modal-title text-dark">Controls</h5>
+              </div>
+              <div class="rowcols-auto px-4 fw-light m-auto mb-4">
+                <%= link_to "/evac_centers/new", class: "cbtn btn btn-primary col-auto m-2 p-2" do %>
+                  <i class="fa-solid fa-plus"></i> Add Evacuation Center
+                <% end %>
+                <%= link_to "/evacuation_essentials/new", class: "cbtn btn btn-primary col-auto m-2 p-2" do %>
+                  <i class="fa-solid fa-plus"></i> Add Essentials And Facilities
+                <% end %>
+                <%= link_to "/disasters/new", class: "cbtn btn btn-primary col-auto m-2 p-2" do %>
+                  <i class="fa-solid fa-plus"></i> Add Disaster
+                <% end %>
+                <%= link_to "/families/new", class: "cbtn btn btn-primary col-auto m-2 p-2" do %>
+                  <i class="fa-solid fa-plus"></i> Add Family
+                <% end %>
+                <%= link_to "/relief_goods/new", class: "cbtn btn btn-primary col-auto m-2 p-2" do %>
+                  <i class="fa-solid fa-plus"></i> Add Relief Goods
+                <% end %>
+                <%= link_to "/camp_manager/new", class: "cbtn btn btn-primary col-auto m-2 p-2" do %>
+                  <i class="fa-solid fa-plus"></i> Add Camp Manager
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul class="dropdown-menu poppins">
+          <p class="text-center">Lists</p>
+          <li><%= link_to "Evacuation Centers", "/evac_centers", class: "dropdown-item" %></li>
+          <li><%= link_to "Essentials and Facilities", "/evacuation_essentials", class: "dropdown-item" %></li>
+          <li><%= link_to "Disasters", "/disasters", class: "dropdown-item" %></li>
+          <li><%= link_to "Households", "/families", class: "dropdown-item" %></li>
+          <li><%= link_to "Relief Goods", "/relief_goods", class: "dropdown-item" %></li>
+          <li><%= link_to "View Relief Good Requests", "/relief_good/requests", class: "dropdown-item" %></li>
+          <li><%= link_to "Volunteers", "/volunteers", class: "dropdown-item" %></li>
+          <li><hr class="dropdown-divider"></li>
+          <p class="text-center">Controls</p>
+          <li><%= link_to "Add Evacuation Centers", "/evac_centers/new", class: "dropdown-item" %></li>
+          <li><%= link_to "Add Essentials and Facilities", "/evacuation_essentials/new", class: "dropdown-item" %></li>
+          <li><%= link_to "Add Disasters", "/disasters/new", class: "dropdown-item" %></li>
+          <li><%= link_to "Add Family", "/families/new", class: "dropdown-item" %></li>
+          <li><%= link_to "Add Relief Good", "/relief_goods/new", class: "dropdown-item" %></li>
+          <li><%= link_to "Register Camp Manager", "/camp_manager/new", class: "dropdown-item" %></li>
+        </ul>
+      </div>
+    <% end %>
+    <button style = "background-color:white;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <% if session[:user_type] =="ADMIN"%>
+          <li class="nav-item "><a class="nav-link" aria-current="page" href="/evac_centers"><i class="fa-solid fa-house"></i> Home</a></li>
+        <% elsif session[:user_id] !=nil %>
+          <% if User.find(session[:user_id]).currently_assigned != nil && session[:user_id] != nil%>
+            <li class="nav-item "><a class="nav-link" aria-current="page" href="/evac_centers/<%= User.find(session[:user_id]).currently_assigned%>"><i class="fa-solid fa-house"></i> Home</a></li>
+          <% else %>
+            <li class="nav-item "><a class="nav-link" aria-current="page" href="/dashboard"><i class="fa-solid fa-house"></i> Home</a></li>
+          <% end %>
+        <% else %>
+          <li class="nav-item "><a class="nav-link" aria-current="page" href="/dashboard"><i class="fa-solid fa-house"></i> Home</a></li>
+        <% end %>
+        <% if session[:user_type] != nil %>
+          <li class="nav-item"><a class="nav-link" href="/account"><i class="fa-solid fa-user"></i> Your Account</a></li>
+        <%end%>
+        <li class="nav-item"><a class="nav-link" href="/dashboard#about-section"><i class="fa-solid fa-book-open"></i> About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/dashboard#contact-section"><i class="fa-solid fa-phone"></i></i> Contact</a></li>
+      <% if session[:user_id] == nil%>
+        <li class="nav-item"><a class="nav-link" href="/login"><i class="fa-regular fa-address-card"></i> Login</a></li>
+      <% end %>
+      <% if session[:user_id] != nil %>
+        <li class="nav-item "><a class="nav-link" aria-current="page" href="/logout" style = "color:red;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+</nav>

@@ -1,0 +1,74 @@
+<div id="evac-card" class="card h-100 oswald rounded-0">
+  <div class="card-header">
+    <h3 class="m-3 oswald fw-bold text-center"><%= evac_center.name %></i></h3>
+</div>
+<div class="card-body">
+  <div class="row border-3">
+    <div class="col-6 p-0">
+      <h5 class="text-end">Barangay</h6>
+    </div>
+    <div class="col-6">
+      <h5 class="fw-bold"><%= evac_center.barangay%></h5>
+    </div>
+  </div>
+  <div class="row p-0 my-2">
+    <div class="col-6 p-0">
+      <h5 class="text-end">Capacity: </h5>
+    </div>
+    <div class="col-6 p-0">
+      <h5>&nbsp; <%= evac_center.capacity %></h5>
+    </div>
+  </div>
+  <!-- IF EVACUATION CENTER IS ACTIVE -->
+  <%if Disaster.all.length > 0%>
+  <% if countIndivCurrentlyEvacuatedCard(evac_center.id) > 0%>
+    <div class="row p-3 m-0 mt-1 bg-light border rounded border-secondary border-dashed border-2">
+      <div class="col text-end border-end border-2 border-secondary">
+        <h5>INDIVIDUALS: <%= countIndivCurrentlyEvacuatedCard(evac_center.id) %> <i class="fa-solid fa-person"></i></h5>
+      </div>
+      <div class="col">
+        <h5>FAMILIES: <%= countFamCurrentlyEvacuatedCard(evac_center.id) %> <i class="fa-solid fa-people-group"></i></h5>
+      </div>
+    </div>
+  <% else %>
+    <!-- IF EVACUATION CENTER IS INACTIVE -->
+    <div class="row m-0 text-center pt-3">
+      <h4>INACTIVE EVACUATION CENTER</h4>
+    </div>
+  <% end %>
+  <%else%>
+    <div class="row m-0 text-center pt-3">
+      <h4>NO ACTIVE DISASTER</h4>
+    </div>
+  <%end%>
+</div>
+<% evac_yearly_profile = EvacYearlyProfile.all.where(evac_id: evac_center.id)%>
+<div id="view-del" class="row text-center m-0">
+  <% if session[:user_type] != nil %>
+    <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
+      <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #233b43", class: "col-8 link text-decoration-none text-light py-2 m-0" do %>
+        View <i class="fa-solid fa-eye"></i>
+      <% end %>
+      <% if evac_center.status == "ARCHIVED" %>
+        <%= link_to "/evac_centers/#{evac_center.id}/unarchive", style: "background: #3e6a79", class:"col-4 link text-decoration-none text-light py-2 ", data: { turbo_method: :post } do %>
+          Unarchive <i class="fa-solid fa-box-archive"></i>
+        <% end %>
+      <% else %>
+        <%= link_to "/evac_centers/#{evac_center.id}/archive", style: "background: #3e6a79", class:"col-4 link text-decoration-none text-light py-2 ", data: { turbo_method: :post } do %>
+          Archive <i class="fa-solid fa-box-archive"></i>
+        <% end %>
+      <% end %>
+    <% else %>
+      <% if (session[:user_type] == "VOLUNTEER" || session[:user_type] == "CAMP MANAGER") && User.find(session[:user_id]).currently_assigned == evac_center.id %>
+        <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #2e9cdb", class: "col link text-decoration-none text-dark py-2 m-0" do %>
+          View <i class="fa-solid fa-eye"></i>
+        <% end %>
+      <% else %>
+        <%= link_to "/evac_centers/#{evac_center.id}", style: "background: #233b43", class: "col link text-decoration-none text-light py-2 m-0" do %>
+          View <i class="fa-solid fa-eye"></i>
+        <% end %>
+      <%end%>
+    <%end%>
+  <%end%>
+</div>
+</div>

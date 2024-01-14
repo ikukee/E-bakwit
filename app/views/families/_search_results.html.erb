@@ -1,0 +1,45 @@
+<table class="table table-striped table-hover border rounded">
+  <thead>
+    <tr>
+      <th class="col">FAMILY NAME</th>
+      <th class="col">NO# Members</th>
+      <th class="col">BARANGAY</th>
+      <th class="col">4PS</th>
+      <th class="col">CURRENTLY EVACUATED</th>
+      <th class="col-md-2">Actions</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <% families.each do |family| %>
+      <tr>
+        <td><b><%= family.name %></b></td>
+        <td><%= FamilyMember.all.where(family_id: family.id).count %></td>
+        <td><%=family.barangay%></td>
+        <% if family.is_4ps == true %>
+          <td>YES</td>
+        <% else %>
+          <td>NO</td>
+        <% end %>
+        <% if family.is_evacuated == true %>
+          <td>YES</td>
+        <% else %>
+          <td>NO</td>
+        <% end %>
+        <td class="p-1 ps-3 oswald">
+          <div class = "row">
+            <div class = "col-auto p-0 pe-2">
+              <%= link_to "/families/#{family.id}", class: "btn btn-dark bg-dgray form-control" do %>
+                <i class="fa-solid fa-eye"></i> View
+              <% end %>
+            </div>
+            <div class = "col-auto p-0">
+              <%= link_to "/families/#{family.id}/edit", class: "btn btn-outline-dark form-control" do %>
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              <% end %>
+            </div>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

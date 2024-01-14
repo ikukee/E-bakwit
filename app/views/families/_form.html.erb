@@ -1,0 +1,100 @@
+<%= form_with(model: family,local: true) do |form| %>
+  <% invalid_name = family.errors.include?(:name) %>
+  <% invalid_zone = family.errors.include?(:zone) %>
+  <% invalid_houseNum = family.errors.include?(:houseNum) %>
+  <% invalid_streetName = family.errors.include?(:streetName) %>
+  <% invalid_barangay = family.errors.include?(:barangay) %>
+  <% invalid_is_4ps = family.errors.include?(:is_4ps) %>
+  <div class="card shadow p-4">
+    <h2 class="oswald fw-bold"  >FAMILY INFORMATION</h2>
+    <div class = "row">
+      <div class = "col-md-4">
+        <div class="form-group">
+          <%= form.label :name, class: "h5 oswald fw text-uppercase" do %>
+            Family Name: 
+          <% end %>
+          <%= form.text_field :name, class:"form-control #{'is-invalid' if invalid_name}", placeholder: "Family Name"%>
+          <% if invalid_name %>
+            <div class="invalid-feedback d-block">
+              <% family.errors[:name].each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class = "col-md-4">
+        <div class="form-group">
+          <%= form.label :zone, class: "h5 oswald fw text-uppercase" do %>
+            Zone: 
+          <% end %>
+          <%= form.number_field :zone, class:"form-control #{'is-invalid' if invalid_zone}", placeholder: "Zone"%>
+          <% if invalid_zone %>
+            <div class="invalid-feedback d-block">
+              <% family.errors[:zone].each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class = "col-md-4">
+        <div class="form-group">
+          <%= form.label :houseNum, class: "h5 oswald fw text-uppercase" do %>
+            House Number: 
+          <% end %>
+          <%= form.number_field :houseNum, class:"form-control #{'is-invalid' if invalid_houseNum}", placeholder: "House Number"%>
+          <% if invalid_houseNum %>
+            <div class="invalid-feedback d-block">
+              <% family.errors[:houseNum].each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class = "row mb-4">
+      <div class ="col-md-4">
+        <div class="form-group">
+          <%= form.label :streetName, class: "h5 oswald fw text-uppercase" do %>
+            Street Name: 
+          <% end %>
+          <%= form.text_field :streetName, class:"form-control #{'is-invalid' if invalid_streetName}", placeholder: "Street Name"%>
+          <% if invalid_streetName %>
+            <div class="invalid-feedback d-block">
+              <% family.errors[:streetName].each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class ="col-md-4">
+        <div class="form-group">
+          <%= form.label :barangay, class: "h5 oswald fw text-uppercase" do %>
+            Barangay: 
+          <% end %>
+          <%= form.text_field :barangay, class:"form-control #{'is-invalid' if invalid_barangay}", placeholder: "Barangay"%>
+          <% if invalid_barangay %>
+            <div class="invalid-feedback d-block">
+              <% family.errors[:barangay].each do |error_message| %>
+                <%= error_message %>.
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class = "col-md-4">
+        <br>
+        <div class="input-group mb-3">
+          <label class="form-check-label w-100 " for="is_4ps">
+            Are you a 4Ps beneficiary?
+          </label>
+          <%= form.check_box :is_4ps %>
+        </div>
+      </div>
+    </div>
+    <%= form.submit "SUBMIT", class:"btn btn-primary bg-navy poppins fw-bold text-light rounded-bottom p-2 px-4 text-decoration-none text-center float-end me-3 mb-2"%>
+  </div>
+<% end %>

@@ -1,0 +1,45 @@
+<div style = "margin: 15px 15px 15px 15px">
+  <p><strong>Requested By: </strong><%= User.find(request.volunteer_id).full_name%></p>
+  <p><strong>Date of Request: </strong><%= request.date_of_request%></p>
+  <p><strong>Date of Dispatch: </strong><%= request.date_of_dispatch%></p>
+  <p><strong>Evacuation Center: </strong><%= EvacCenter.find(request.evac_id).name %></p>
+  <p><strong>Disaster: </strong><%= Disaster.find(request.disaster_id).name%></p>
+  <p><strong>Status: </strong><%= request.status%></p>
+  <p><strong>Message: </strong> </p>
+  <textarea disabled class ="form-control"><%=request.message%></textarea>
+  <br>
+  <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
+    <%if request.status == "PENDING"%>
+      <div class ="row">
+        <div class = "col-md-6">
+          <%= form_with url: "/approve/request/#{request.id}", method: :post do |form|%>
+            <%= form.submit "Approve Request", class:"btn btn-success form-control"%>
+          <% end %>
+        </div>
+        <div class = "col-md-6">
+          <%= form_with url: "/reject/request/#{request.id}", method: :post do |form|%>
+            <%= form.submit "Reject Request", class:"btn btn-danger form-control"%>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <% if request.status == "ACCEPTED" %>
+      <div  style = "margin: 0 auto; width:50%;">
+        <a href ="/dispatch/request/<%=request.id%>" class= "btn btn-success form-control">Dispatch Relief Goods</a>
+      </div>
+    <% end %>
+  <% end %>
+  <% if request.status == "DISPATCHED" || request.status == "RECEIVED" %>
+    <div  >
+      <a href ="/dispatch/request/<%=request.id%>" class= "btn btn-success form-control">View Allocated Relief Goods</a>
+    </div>
+  <% end %>
+
+  <%if request.status == "REJECTED"%>
+    <div  style = "margin: 0 auto; width:50%;">
+      <%= form_with url: "/revert/request/#{request.id}", method: :post do |form|%>
+        <%= form.submit "Revert Request Status", class:"btn btn-secondary form-control"%>
+      <% end %>
+    </div>
+  <% end %>
+</div>

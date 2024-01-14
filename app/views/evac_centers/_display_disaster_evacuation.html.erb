@@ -1,0 +1,283 @@
+<div class = "row text-dark p-2 m-0">
+  <div class="col-md-6 col-sm-12">
+    <div class="row mt-5">
+      <div class="col-md-auto">
+        <h1 class="oswald fw" >EVACUEES OVERVIEW</h1>
+      </div>
+      <div class="col">
+        <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER" %>
+          <% if evac_center.status != "ARCHIVED"%>
+            <div class="col">
+              <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-primary bg-navy oswald fw-bold w-100 m-1" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user fa-xl"></i></a>
+            </div>
+          <% end %>
+        <% else %>
+          <% if User.find(session[:user_id]).currently_assigned != nil %>
+            <% if User.find(session[:user_id]).currently_assigned == evac_center.id && session[:user_type] == "VOLUNTEER" %>
+              <% if evac_center.status != "ARCHIVED"%>
+                <div class="col">
+                  <a  href="<%=evac_center.id%>/log/<%=disaster.id%>" class="btn btn-primary bg-navy oswald fw-bold w-100 m-1" style="font-size: 22px">LOG EVACUEES <i class="fa-solid fa-clipboard-user"></i></a>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% if User.find(session[:user_id]).currently_assigned != nil || session[:user_type] == "ADMIN"  || session[:user_type] == "SUPERUSER"%>
+          <% if User.find(session[:user_id]).currently_assigned == evac_center.id || session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER" %>
+            <a href="<%=evac_center.id%>/<%=disaster.id%>/evacuated" class="btn btn-primary bg-navy w-100 oswald fw-bold m-1" style="font-size: 22px">VIEW EVACUEES <i class="fa-solid fa-users-viewfinder fa-xl"></i></a>
+          <% end %>
+        <% end %>
+        <% if session[:user_type] != "VOLUNTEER" %>
+          <div class="col">
+            <button type="button" style="font-size: 22px" class="btn btn-dark bg-dgray w-100 dropdown-toggle oswald fw-bold m-1 dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              DROMIC REPORT
+            </button>
+            <ul class="dropdown-menu oswald fw p-1 text-center" style="font-size:2em">
+              <p class="">Lists</p>
+              <li class="m-1"><a href="<%=evac_center.id%>/<%=disaster.id%>/generate.xlsx", class= "dropdown-item p-1 mt-1">DOWNLOAD as .xlsx<i class="fa-solid fa-table d-inline"></i></a></li>
+              <li class="m-1"><a href="<%=evac_center.id%>/<%=disaster.id%>/view_report", class= "dropdown-item p-1 mt-1">View Report <i class="fa-solid fa-eye"></i></a></li>
+            </ul>
+          </div>
+        <%end%>
+      </div>
+    </div>
+    <div class="row mt-3 p-4 default-background3  rounded position-relative">
+      <p class="oswald position-absolute start-0 top-0 text-secondary text-center">EVACUEE COUNT</p>
+      <div class="col p-0 mt-3">
+        <div class="row">
+          <div class="col-6">
+            <h6 class="oswald m-0">OVERALL EVACUATED</h6>
+            <h1 class="fw-bold oswald m-0 mb-3 p-0 border-bottom border-dark border-2  ps-4"><%= countGenFamily(evac_center.id,disaster,false) %> FAMILIES</h1>
+            <div class="row m-0">
+              <div class="col-md-5 ">
+                <p class="h4 oswald fw" align="right">MALE: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw"><%= countGenderEvacuated(evac_center.id,disaster, "Male") %> <i class="fa-solid fa-person"></i></p>
+              </div>
+            </div>
+            <div class="row m-0">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">FEMALES: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw"><%= countGenderEvacuated(evac_center.id,disaster, "Female") %> <i class="fa-solid fa-person-dress"></i></p>
+              </div>
+            </div>
+            <div class="row m-0">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">TOTAL: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw"><%= countIndivEvacuated(evac_center.id,disaster)%> <i class="fa-solid fa-people-group"></i></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 bg-white border border-2 border-dark rounded m-0 px-2">
+            <h6 class="oswald m-0">CURRENTLY EVACUATED</h6>
+            <h1 class="fw-bold oswald m-0 mb-3 p-0  ps-4 border-bottom border-dark border-2"><%= countGenFamily(evac_center.id,disaster,true) %> FAMILIES</h1>
+            <div class="row m-0">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">MALE: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw"><%= countGenderCurrentlyEvacuated(evac_center.id,disaster, "Male") %></p>
+              </div>
+            </div>
+            <div class="row m-0">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">FEMALES: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw"><%= countGenderCurrentlyEvacuated(evac_center.id,disaster, "Female") %> <i class="fa-solid fa-person-dress"></i></p>
+              </div>
+            </div>
+            <div class="row m-0">
+              <div class="col-md-5">
+                <p class="h4 oswald fw" align="right">TOTAL: </p>
+              </div>
+              <div class="col">
+                <p class="h2 oswald fw"><%= countIndivCurrentlyEvacuated(evac_center.id,disaster)%> <i class="fa-solid fa-people-group"></i></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-12 mt-5">
+    <% capacityPercentage = getCapacityPercentage(countIndivEvacuated(evac_center.id,disaster),evac_center.capacity.to_i)%>
+    <h4>Capacity: </h4>
+    <div class="w3-border" style = "text-align:center;border:1px solid #ccc; border-radius:5px; overflow:hidden;">
+      <div class="w3-grey" style="background-color:#4CAF50; color:black; text-align:center; line-height: 30px; height:24px;width:<%=capacityPercentage%>%"><strong><%= capacityPercentage %>%</strong></div>
+    </div>
+    <div class="row m-0 mt-4" id="age_distribution"></div>
+    <div class="row m-0 oswald">
+      <table class="table table-light">
+        <thead class="table-secondary">
+          <th>Age Range</th>
+          <th>No. of MALEs</th>
+          <th>No. of FEMALEs</th>
+          <th>Total</th>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Infant</th>
+            <td style="color:#005ec9;"><%= getInfants(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getInfants(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getInfants(evac_center.id, disaster.id,"Male") + getInfants(evac_center.id, disaster.id,"Female") %></td>
+          </tr>
+          <tr>
+            <th>Toddlers</th>
+            <td style="color:#005ec9;"><%= getToddlers(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getToddlers(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getToddlers(evac_center.id, disaster.id,"Male") + getToddlers(evac_center.id, disaster.id,"Female") %></td>
+          </tr>
+          <tr>
+            <th>Preschoolers</th>
+            <td style="color:#005ec9;"><%= getPreschoolers(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getPreschoolers(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getPreschoolers(evac_center.id, disaster.id,"Male") + getPreschoolers(evac_center.id, disaster.id,"Female")%></td>
+          </tr>
+          <tr>
+            <th>Schoolage</th>
+            <td style="color:#005ec9;"><%= getSchoolagers(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getSchoolagers(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getSchoolagers(evac_center.id, disaster.id,"Male") + getSchoolagers(evac_center.id, disaster.id,"Female")%></td>
+          </tr>
+          <tr>
+            <th>Teenage</th>
+            <td style="color:#005ec9;"><%= getTeenagers(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getTeenagers(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getTeenagers(evac_center.id, disaster.id,"Male") + getTeenagers(evac_center.id, disaster.id,"Female")%></td>
+          </tr>
+          <tr>
+            <th>Adult</th>
+            <td style="color:#005ec9;"><%= getAdults(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getAdults(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getAdults(evac_center.id, disaster.id,"Male") + getAdults(evac_center.id, disaster.id,"Female")%></td>
+          </tr>
+          <tr>
+            <th>Senior Citizens</th>
+            <td style="color:#005ec9;"><%= getSeniors(evac_center.id, disaster.id,"Male")%></td>
+            <td style="color:#cf4696;"><%= getSeniors(evac_center.id, disaster.id,"Female")%></td>
+            <td><%= getSeniors(evac_center.id, disaster.id,"Male") + getSeniors(evac_center.id, disaster.id,"Female")%></td>
+          </tr>
+          <tr class="table-secondary fw-bold">
+            <th>TOTAL</th>
+            <td style="color:#005ec9;"><%=countGenderEvacuated(evac_center.id,disaster, "Male")%></td>
+            <td style="color:#cf4696;"><%=countGenderEvacuated(evac_center.id,disaster, "Female")%></td>
+            <td><%=countGenderEvacuated(evac_center.id,disaster, "Male") + countGenderEvacuated(evac_center.id,disaster, "Female")%></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p>&nbsp;</p>
+  <div class="row mt-5">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-auto">
+          <h1 class="oswald fw" >RELIEF GOODS OVERVIEW</h1>
+        </div>
+        <% if session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
+          <% if ReliefRequest.where(disaster_id: disaster.id).where(evac_id: evac_center.id).length > 0 %>
+            <div class="col">
+              <a href = "/relief_allocation/<%=evac_center.id%>/<%= disaster.id%>" class = "btn btn-info bg-dinfo text-light w-100 oswald fw-bold m-1">Configure Relief Good Allocation<i class="fa-solid fa-gear"></i></a>
+            </div>
+          <% else%>
+            <% if evac_center.status != "ARCHIVED"%>
+              <div class="col">
+                <button  style = "font-size:22px;"class="btn btn-info bg-dinfo text-light w-100 oswald fw-bold m-1" data-bs-toggle= "modal" data-bs-target="#display_relief_request" type="button">Initiate Relief Request &nbsp; <i class="fa-solid fa-utensils fa-xl"></i></button>
+                <div id="display_relief_request" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title text-dark">Sending Relief Good Request</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <%= form_with url:"/send/relief/#{evac_center.id}/#{disaster.id}", method: :post do |form|%>
+                        <p style = "color:black;margin-left: 15px;"><strong>Date of Request:</strong> <%= Date.today %></p>
+                        <%= form.hidden_field :volunteer_id, :value  => session[:user_id] %>
+                        <%= form.text_area :message, class:"form-control", :placeholder => "Input message here..."%>
+                        <%= form.submit "Send Request", class:"btn btn-primary form-control"%>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% else %>
+          <% if User.find(session[:user_id]).currently_assigned != nil%>
+            <% if User.find(session[:user_id]).currently_assigned == evac_center.id && session[:user_type] == "CAMP MANAGER" %>
+              <% if ReliefRequest.where(disaster_id: disaster.id).where(evac_id: evac_center.id).length > 0 %>
+                <div class="col">
+                  <a href = "/relief_allocation/<%=evac_center.id%>/<%= disaster.id%>" class = "btn btn-info bg-dinfo text-light w-100 oswald fw-bold m-1">Configure Relief Good Allocation<i class="fa-solid fa-gear"></i></a>
+                </div>
+              <% else%>
+                <% if evac_center.status != "ARCHIVED"%>
+                  <div class="col">
+                    <button  style = "font-size:22px;"class="btn btn-info bg-dinfo text-light w-100 oswald fw-bold m-1" data-bs-toggle= "modal" data-bs-target="#display_relief_request" type="button">Initiate Relief Request &nbsp; <i class="fa-solid fa-utensils fa-xl"></i></button>
+                    <div id="display_relief_request" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title text-dark">Sending Relief Good Request</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <%= form_with url:"/send/relief/#{evac_center.id}/#{disaster.id}", method: :post do |form|%>
+                            <p style = "color:black;margin-left: 15px;"><strong>Date of Request:</strong> <%= Date.today %></p>
+                            <%= form.hidden_field :volunteer_id, :value  => session[:user_id] %>
+                            <%= form.text_area :message, class:"form-control", :placeholder => "Input message here..."%>
+                            <%= form.submit "Send Request", class:"btn btn-primary form-control"%>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+      <p>&nbsp;</p>
+      <div class="row">
+        <div class="col">
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col">
+              <p class="h2 oswald fw" align="center">FOOD: </p>
+            </div>
+            <div class="col">
+              <p class="h2 oswald fw" align="center"><%=getRg(evac_center.id,disaster.id,true)%> <i class="fa-solid fa-bowl-food"></i></p>
+            </div>
+          </div>
+          <div class="row" style="border-top: 2px solid white;">
+            <div class="col">
+              <p class="h2 oswald fw" align="center"> NON-FOOD: </p>
+            </div>
+            <div class="col">
+              <p class="h2 oswald fw" align="center"><%=getRg(evac_center.id,disaster.id,false)%> <i class="fa-solid fa-shirt"></i></p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+        </div>
+      </div>
+      <p>&nbsp;</p>
+      <% if User.find(session[:user_id]).currently_assigned == evac_center.id || session[:user_type] == "ADMIN" || session[:user_type] == "SUPERUSER"%>
+        <a href="/evac_centers/non_distributed_rg/<%=evac_center.id%>/<%= disaster.id%>" class="btn btn-secondary bg-dgray w-100 oswald fw-bold">VIEW DISTRIBUTED RELIEF GOODS</a>
+      <%end%>
+    </div>
+    <div class = "col-md-6">
+      <%= column_chart GenRgAlloc.where(disaster_id: disaster.id).where(evac_id: evac_center.id).group(:quantity).group(:name).count, class:"form-control" %>
+      <h3>Date In</h3>
+      <%= line_chart Evacuee.where(disaster_id: disaster.id).where(evac_id: evac_center.id).group_by_day(:date_in).count, class:"form-control" %>
+      <h3>Date Out</h3>
+      <%= line_chart Evacuee.where(disaster_id: disaster.id).where(evac_id: evac_center.id).group_by_day(:date_out).count, class:"form-control" %>
+    </div>
+  </div>
+</div>

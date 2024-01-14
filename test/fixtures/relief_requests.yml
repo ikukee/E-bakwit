@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  volunteer_id: 1
+  evac_id: 1
+  disaster_id: 1
+  status: MyString
+  message: MyString
+  date_of_request: 2023-11-20
+  date_of_dispatch: 2023-11-20
+
+two:
+  volunteer_id: 1
+  evac_id: 1
+  disaster_id: 1
+  status: MyString
+  message: MyString
+  date_of_request: 2023-11-20
+  date_of_dispatch: 2023-11-20

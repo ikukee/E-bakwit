@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @disaster %>
+
+<div>
+  <%= link_to "Edit this disaster", edit_disaster_path(@disaster) %> |
+  <%= link_to "Back to disasters", disasters_path %>
+
+  <%= button_to "Destroy this disaster", @disaster, method: :delete %>
+</div>

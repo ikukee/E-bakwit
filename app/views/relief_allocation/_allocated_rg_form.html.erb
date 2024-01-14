@@ -1,0 +1,86 @@
+<div class="card-deck">
+  <div class="card shadow">
+    <% counter = 0%>
+    <%= form_with url:"/distribute/relief_goods/#{evacuee.id}", method: :post do |form|%>
+      <div style = "margin: 25px 25px 25px 25px">
+        <h4><strong>Allotted Relief Goods</strong></h4>
+        <h5>Food</h5>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Include?</th>
+              <th>Relief Good</th>
+              <th>Remaining in Storage</th>
+              <th>Quantity to be distributed</th>
+              <th>Unit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% gen_rg_allocs.each do |gen|%>
+              <% if ReliefGood.find(gen.rg_id).is_food == true%>
+                <% if checkIfRgValid(gen,members) %>
+                  <tr>
+                    <td>
+                      <input type = "hidden" name = "include<%=counter%>" id = "include<%=counter%>" value = "0" autocomplete= "off">
+                      <input type = "checkbox" name = "include<%=counter%>" id = "include<%=counter%>" value = "1" checked>
+                    </td>
+                    <input type ="hidden" name="gen_id<%=counter%>" id = "gen_id<%=counter%>" value = <%=gen.id%>>
+                    <td><%= ReliefGood.find(gen.rg_id).name%> </td>
+                    <td><%= gen.quantity%> </td>
+                    <td style = "width:30%;">
+                      <input type = "number" class= "form-control" name= "quantity<%=counter%>" id = "quantity<%= counter%>" value =<%=getQuantity(gen,members)%> min= "0" max = <%= gen.quantity%>>
+                    </td>
+                    <td><%= ReliefGood.find(gen.rg_id).unit%> </td>
+                    <% counter = counter+1%>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+        <h5>Non-Food</h5>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Include?</th>
+              <th>Relief Good</th>
+              <th>Remaining in Storage</th>
+              <th>Quantity to be distributed</th>
+              <th>Unit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% gen_rg_allocs.each do |gen|%>
+              <% if ReliefGood.find(gen.rg_id).is_food == false%>
+                <% if checkIfRgValid(gen,members) %>
+                  <tr>
+                    <td>
+                      <input type = "hidden" name = "include<%=counter%>" id = "include<%=counter%>" value = "0" autocomplete= "off">
+                      <input type = "checkbox" name = "include<%=counter%>" id = "include<%=counter%>" value = "1" checked>
+                    </td>
+                    <input type ="hidden" name="gen_id<%=counter%>" id = "gen_id<%=counter%>" value = <%=gen.id%>>
+                    <td><%= ReliefGood.find(gen.rg_id).name%> </td>
+                    <td><%= gen.quantity%> </td>
+                    <td style = "width:30%;">
+                      <input type = "number" class= "form-control" name= "quantity<%=counter%>" id = "quantity<%= counter%>" value =<%=getQuantity(gen,members)%> min= "0" max = <%= gen.quantity%>>
+                    </td>
+                    <td><%= ReliefGood.find(gen.rg_id).unit%> </td>
+                    <% counter = counter+1%>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <%= form.hidden_field :counter, :value => counter%>
+      <div style = "margin: 0 auto; width:40%;">
+        <%= form.button nil, class:"btn btn-success form-control" do %>
+          DISTRIBUTE <i class="fa-solid fa-handshake-angle"></i>
+        <% end %>
+        <p id = "err_msg" style = "color:red; text-align:center; font-weight:bold;"></p>
+      </div>
+      <br>
+    <% end %>
+  </div>
+</div>

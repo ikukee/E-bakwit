@@ -1,0 +1,51 @@
+<div id="evac-form" class="row position-relative my-auto mx-5 p-3 rounded">
+  <div class = "row">
+    <div class = "col-md-8">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href = "/evac_centers/non_distributed_rg/<%=@evac_id%>/<%=@disaster_id%>" class="text-decoration-none poppins fw-bold"><button class = "nav-link active">No Relief Goods</button></a>
+        </li>
+        <li class="nav-item">
+          <a href = "/evac_centers/distributed_rg/<%=@evac_id%>/<%= @disaster_id%>" class="text-decoration-none poppins fw-bold"><button class = "nav-link text-dark">Received Relief Goods</button></a>
+        </li>
+      </ul>
+    </div>
+    <div class = "col-md-4">
+      <%= form_with url:"/search/evacuees", method: :post do |form|%>
+        <%= form.hidden_field :evac_id, :value => @evac_id%>
+        <%= form.hidden_field :disaster_id, :value => @disaster_id%>
+        <%= form.hidden_field :search_type, :value => nil%>
+        <%= form.search_field :search_value, class:"form-control", placeholder: "Search Last Name Here",  oninput: "this.form.requestSubmit()"%>
+      <% end %>
+    </div>
+  </div>
+  <div style="overflow-x:hidden;" class="text-xs-center" >
+    <div class="card" >
+      <div class="card-body" >
+        <div class="card-deck">
+          <div class="card shadow">
+            <div style = "margin: 25px 25px 25px 25px">
+              <div id = "search_results">
+                <%= render partial: "search_results",locals:{evacuees:@evacuees, gen_rg_allocs: @gen_rg_allocs}%>
+              </div>
+              <% if @evacuees_count > 5 %>
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-left">
+                    <li class="page-item ">
+                      <% if @page  > 0 %>
+                        <%= link_to "Previous Page", "/evac_centers/non_distributed_rg/#{@evac_id}/#{@disaster_id}?page=#{@page-1}", class:"page-link"%>
+                      <% end %>
+                    </li>
+                    <li class="page-item">
+                      <%= link_to "Next Page","/evac_centers/non_distributed_rg/#{@evac_id}/#{@disaster_id}?page=#{@page + 1}", class:"page-link"%>
+                    </li>
+                  </ul>
+                </nav>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

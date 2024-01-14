@@ -1,0 +1,56 @@
+<%= form_with(model: disaster, local: true) do |form| %>
+  <% invalid_name = disaster.errors.include?(:name) %>
+  <% invalid_type = disaster.errors.include?(:disaster_type) %>
+  <% invalid_year= disaster.errors.include?(:year) %>
+  <div class="card shadow p-4 m-1">
+    <h2 class="my-3 oswald fw-bold" >DISASTER INFORMATION</h2>
+    <div class="form-group">
+      <%= form.label :name, class: "h5 oswald fw text-uppercase" do %>
+        Disaster Name: 
+      <% end %>
+      <%= form.text_field :name, class:"form-control #{'is-invalid' if invalid_name}", placeholder: "Disaster Name"%>
+      <% if invalid_name %>
+        <div class="invalid-feedback d-block">
+          <% disaster.errors[:name].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <br>
+    <div class="form-group">
+      <%= form.label :type, class: "h5 oswald fw text-uppercase" do %>
+        Disaster Type: 
+      <% end %>
+      <% if disaster.disaster_type == nil %>
+        <%= form.select :disaster_type, options_for_select(["Man-made", "Natural"]), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_type}"} %>
+      <% else %>
+        <%= form.select :disaster_type, options_for_select(["Man-made", "Natural"],:selected => disaster.disaster_type.to_s ), {:prompt => "Select Type"}, {class: "form-control #{'is-invalid' if invalid_type}"} %>
+      <%  end %>
+      <% if invalid_type %>
+        <div class="invalid-feedback d-block">
+          <% disaster.errors[:disaster_type].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <br>
+    <div class="form-group">
+      <%= form.label :date_of_occurence, class: "h5 oswald fw text-uppercase" do %>
+        Date of Occurence: 
+      <% end %>
+      <%= form.date_field :date_of_occurence, class:"form-control #{'is-invalid' if invalid_year}", placeholder: "Date of Occurence", max: Date.today()%>
+      <% if invalid_year %>
+        <div class="invalid-feedback d-block">
+          <% disaster.errors[:date_of_occurence].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="row justify-content-end mx-1 mt-3">
+      <%= form.submit "Submit", class:"col-auto btn btn-primary bg-navy oswald fw-bold mt-3 px-3 text-decoration-none"%>
+    </div>
+  </div>
+<% end %>

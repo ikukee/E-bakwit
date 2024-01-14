@@ -1,0 +1,55 @@
+<%= form_with(model: evac_center,local: true, class:"row g-3")  do |form|%>
+  <% invalid_name = evac_center.errors.include?(:name) %>
+  <% invalid_barangay = evac_center.errors.include?(:barangay) %>
+  <% invalid_capacity = evac_center.errors.include?(:capacity) %>
+  <div class="col-md-6">
+    <%= form.label :name, class: "form-label poppins" %>
+    <div class="form-group">
+      <%= form.text_field :name, class:"form-control #{'is-invalid' if invalid_name}", placeholder: "Name"%>
+      <% if invalid_name %>
+        <div class="invalid-feedback d-block">
+          <% evac_center.errors[:name].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <%= form.label :barangay, class: "form-label poppins" %>
+    <div class="form-group">
+      <%= form.select :barangay, options_for_select(["Abella","Bagumbayan Norte","Bagumbayan Sur","Balatas","Calauag","Cararayan","Carolina","Concepcion Grande","Concepcion Pequeña","Dayangdang","Del Rosario","Dinaga","Igualdad","Lerma","Liboton","Mabolo","Pacol","Panicuason","Penafrancia","Sabang","San Felipe","San Francisco","San Isidro","Sta. Cruz","Tabuco","Tinago","Triangulo"]), {:prompt => "Select Barangay"}, class: "form-control #{'is-invalid' if invalid_barangay}" %>
+      <% if invalid_barangay %>
+        <div class="invalid-feedback d-block">
+          <% evac_center.errors[:barangay].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <!-- <%= form.label :camp_manager, class: "form-label poppins capitalize" %> -->
+    <%= form.label :capacity, class: "form-label poppins" %>
+    <div class="form-group">
+      <%= form.number_field :capacity, class:"form-control #{'is-invalid' if invalid_capacity}", placeholder: "Capacity"%>
+      <% if invalid_capacity %>
+        <div class="invalid-feedback d-block">
+          <% evac_center.errors[:capacity].each do |error_message| %>
+            <%= error_message %>.
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <!-- <%= form.label :camp_manager, class: "form-label poppins capitalize" %> -->
+    <p class="form-label poppins capitalize">Is Inside? (Check if Yes, leave blank if No)</p>
+    <%= form.check_box :isInside, checked: "checked" %>
+  </div>
+  <div class="col-12">
+    <div class="d-flex justify-content-end">
+      <%= form.submit "Submit", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

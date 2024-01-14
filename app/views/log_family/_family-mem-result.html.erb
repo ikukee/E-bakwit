@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <% if !checkIfAllEvacuated(families) %>
+    <%= form_with url: "/log/all/#{families.first.family_id}", method: :post do |form|%>
+      <%= form.hidden_field :evac_id, :value => evac_center.id %>
+      <%= form.hidden_field :disaster_id, :value => disaster.id %>
+      <%= form.submit "Evacuate All", class:"form-control btn btn-success"%>
+    <% end %>
+  <% end %>
+  <br>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Evacuated?</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% families.each do |member| %>
+        <tr>
+          <td><%= member.fname%></td>
+          <td><%= member.lname%></td>
+          <%if member.evacuee_id == nil || member.evacuee_id <= 0 %>
+            <td>NO</td>
+            <td><%= form_with url: "/log/#{member.id}/#{evac_center.id}/#{disaster.id}", method: :post do |form|%>
+                <%= form.submit "Evacuate", class:"form-control btn btn-primary w-100"%>
+              <% end %></td>
+          <%else%>
+            <% tmp =EvacCenter.find(Evacuee.find(member.evacuee_id).evac_id) %>
+            <td><strong><a href = "/evac_centers/<%= tmp.id%>/<%= disaster.id%>/evacuated"><%= tmp.name%></a></strong></td>
+            <td><button class = "form-control btn btn-success w-100" disabled>Evacuated</button></td>
+          <%end%>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

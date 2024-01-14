@@ -1,0 +1,33 @@
+<table class="table table-striped table-hover border rounded">
+  <thead>
+    <tr>
+      <th class="col">Name</th>
+      <th class="col">Unit of MEASUREMENT</th>
+      <th class="col">Cost per Unit(PHP)</th>
+      <th class="col">Product is for</th>
+      <th class="col">Category</th>
+      <th class="col">Type</th>
+      <th class="col-md-2">Actions</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <% relief_goods.each do |rg|%>
+      <tr >
+        <td><b><%= rg.name %></b></td>
+        <td><%= rg.unit %></td>
+        <td><%= rg.price %></td>
+        <td><%= rg.eligibility %></td>
+        <td><%= rg.category %></td>
+        <% if rg.is_food == true%>
+          <td>Food</td>
+        <% else %>
+          <td>Non-Food</td>
+        <% end %>
+        <td class="position-relative" >
+          <%= link_to "/relief_goods/#{rg.id}/edit", class: "btn btn-dark form-control" do %>
+            <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>&nbsp;Edit
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>

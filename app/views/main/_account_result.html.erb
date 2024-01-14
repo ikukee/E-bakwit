@@ -1,0 +1,18 @@
+<h3>Account found: </h3>
+<%= form_with url: "/send_change_password_request", method: :post do |form|%>
+<%= form.hidden_field :user_id , :value=> user.id%>
+  <div class="form-group">
+    <label><strong>Full name:</strong></label>
+    <%= form.text_field :name, class:"form-control",:value => user.full_name, :disabled=> true %>
+  </div>
+  <div class="form-group">
+    <label><strong>Email Address:</strong></label>
+    <%= form.email_field :email, class:"form-control",:value => user.email, :disabled=> true %>
+  </div>
+  <p id= "email_confirmation" style = "color:green;"></p>
+  <span>&nbsp;</span>
+  <%= form.submit "Change my password", class:"btn btn-success float-right w-100 font-weight-bold" %>
+</div>
+<span>&nbsp;</span>
+</div>
+<% end %>

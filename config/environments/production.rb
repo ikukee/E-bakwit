@@ -1,6 +1,22 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+
+  config.action_mailer.delivery_method = :smtp
+  host = ENV["EMAIL"]
+
+  config.action_mailer.default_url_options = {host: host}
+  config.action_mailer.smtp_settings = {
+    address:"smtp.gmail.com",
+    port: 587,
+    user_name: ENV["EMAIL"],
+    password: ENV["EMAIL_PASSWORD"],
+    authentication: "plain"
+
+  }
+
+
+  config.require_master_key = true
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -81,6 +97,7 @@ Rails.application.configure do
   # Use a different logger for distributed setups.
   # require "syslog/logger"
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)

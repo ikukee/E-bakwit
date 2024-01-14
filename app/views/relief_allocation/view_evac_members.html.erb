@@ -1,0 +1,55 @@
+<div id="evac-form" class="row position-relative my-auto mx-5 p-3 rounded">
+  <div style="overflow-x:hidden;" class="text-xs-center" >
+    <div class="card" >
+      <div class="card-body" >
+        <div class="card-deck">
+          <div class="card shadow">
+            <div style = "margin: 25px 25px 25px 25px">
+              <h4><strong>Members</strong></h4>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @members.each do |member|%>
+                    <% mem = FamilyMember.find(member.member_id) %>
+                    <tr>
+                      <td><%= mem.fname%></td>
+                      <td><%= mem.lname%></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div id = "show_area">
+          <% if @method == "new"%>
+            <%= render partial:"allocated_rg_form",locals:{evacuee: @evacuee, gen_rg_allocs: @gen_rg_allocs, members: @members}%>
+          <% elsif @method == "allotted"%>
+            <div class="card-deck">
+              <div class="card shadow">
+                <div style = "margin: 25px 25px 25px 25px">
+                  <h4><strong>Allotted Relief Goods</strong></h4>
+                  <%= form_with url: "/view/allocated_rgs", method: :post do |form|%>
+                    <%= form.hidden_field :evacuee_id, :value=> @evacuee.id%>
+                    <div style = "width:30%;">
+                      <%= form.collection_select :batch , ReliefGoodToEvacuee.find_by_sql("SELECT DISTINCT(batch) from relief_good_to_evacuees where evacuee_id = #{@evacuee.id}"), :batch, :batch,{:prompt => "Select Batch"},{class:"form-control",oninput: "this.form.requestSubmit()"} %>
+                    </div>
+                  <% end %>
+                  <br>
+                  <div id ="display_batch">
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

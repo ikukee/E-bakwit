@@ -1,0 +1,149 @@
+<div class="row p-2">
+  <div class="col"></div>
+  <div class="col-md-8" >
+    <div class="row m-0">
+      <p class="h1 oswald fw-bold ps-0" style="border-bottom: 2px solid black;">
+        Evacuation center name
+      </p>
+    </div>
+    <div class="row p-1">
+      <%= form_with(model: @evac_profile, local: true, class: "row g-3") do |form| %>
+        <div class="col p-3 m-1" id="logging-style-form">
+          <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >FAMILY LOGGING</h2>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-prepend w-25">
+                <p align="center" class="h5 oswald fw">Family Name: </p>
+              </div>
+              <input type="text" class="form-control" placeholder="Dela Cruz">
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-prepend w-25">
+                <p align="center"  class="h5 oswald fw">Address:</p>
+              </div>
+              <input type="text" class="form-control" placeholder="Chicken St. ">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class=col-md-3>
+            </div>
+            <div class="col">
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="is_4ps">
+                <label class="form-check-label w-100 " for="is_4ps">
+                  Are you a 4Ps beneficiary?
+                </label>
+              </div>
+            </div>
+          </div>
+          <br>
+          <button class="btn btn-secondary text-light rounded-bottom p-2 w-100 text-decoration-none text-center">DONE</button>
+        </div>
+        <div class="col p-3 m-1" style="background: white; box-shadow: 1px 1px .5em #586F7C">
+          <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;">MEMBER LOGGING</h2>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-prepend w-25">
+                <p align="center" class="h5 oswald fw">Name: </p>
+              </div>
+              <input type="text" class="form-control" placeholder="Juan Dela Cruz">
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-prepend w-25">
+                <p align="center"  class="h5 oswald fw">Age:</p>
+              </div>
+              <input type="text" class="form-control" placeholder="Chicken St. ">
+            </div>
+            <div class="col-md-6">
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-prepend w-25 text-center">
+                <%= form.label :Sex, class: "h5 oswald fw"    %>
+              </div>
+              <%= form.select :Sex, options_for_select(["Male", "Female"]), {}, class: "form-control" %>
+            </div>
+          </div>
+          <br>
+          <button class="btn btn-success text-light rounded-bottom p-2 w-100 text-decoration-none text-center">DONE</button>
+        </div>
+      </div>
+    <%end%>
+  </div>
+  <div class="col"></div>
+</div>
+<div class="row p-2">
+  <div class="col"></div>
+  <div class="col-md-8" >
+    <div class="row p-1">
+      <%= form_with(model: @evac_profile, local: true, class: "row g-3") do |form| %>
+        <div class="col p-3 m-1" id="logging-style-form">
+          <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >FAMILY MEMBERS</h2>
+          <table class="table table-striped table-hover border rounded">
+            <thead>
+              <tr>
+                <th class="col">Name</th>
+                <th class="col">Age</th>
+                <th class="col">Sex</th>
+                <th class="col">Demographics</th>
+                <th class="col-md-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              <tr >
+                <td><b>PANIS, Romeo II M. </b></td>
+                <td>22</td>
+                <td>Male</td>
+                <td>Adult</td>
+                <td class="position-relative">
+                  <div class="row">
+                    <div class="col">
+                      <%= link_to "/log", class: "btn btn-dark btn-sm" do %>
+                        <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>&nbsp;Edit
+                      <% end %>
+                    </div>
+                    <div class="col">
+                      <%= link_to "/log", class: "btn btn-danger btn-sm" do %>
+                        <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>&nbsp;Delete
+                      <% end %>
+                    </div>
+                  </div>
+                </tr>
+                <tr >
+                  <td>Sandy </td>
+                  <td>17</td>
+                  <td>Female</td>
+                  <td>Teenager</td>
+                  <td class="position-relative">
+                    <div class="row">
+                      <div class="col">
+                        <%= link_to "/log", class: "btn btn-dark btn-sm" do %>
+                          <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>&nbsp;Edit
+                        <% end %>
+                      </div>
+                      <div class="col">
+                        <%= link_to "/log", class: "btn btn-danger btn-sm" do %>
+                          <i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>&nbsp;Delete
+                        <% end %>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <%end%>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>

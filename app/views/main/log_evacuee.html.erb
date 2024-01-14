@@ -1,0 +1,62 @@
+<div class="row p-2">
+  <div class="col"></div>
+  <div class="col-md-8" >
+    <div class="row m-0">
+      <p class="h1 oswald fw-bold ps-0" style="border-bottom: 2px solid black;">
+        Evacuation center name
+      </p>
+    </div>
+    <div class="row p-1">
+    
+        <div class="col p-3 m-1" id="logging-style-form">
+          <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;" >FAMILY LOGGING</h2>
+          <%= form_with url: "/log/search", method: :post do |form|%>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-prepend w-25">
+                <p align="center" class="h5 oswald fw">Family Name: </p>
+              </div>
+              <%= form.search_field :id , class: "form-control", placeholder: "Search an Evacuation Center", oninput: "this.form.requestSubmit()" %>
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-prepend w-25">
+                <p align="center"  class="h5 oswald fw">Address:</p>
+              </div>
+              <%= form.text_field :address, class: "form-control"%>
+             
+            </div>
+          </div>
+          <%end%>
+          <br>
+          <div class="row">
+            <div class=col-md-3>
+            </div>
+            <div class="col">
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" style="border-color: black" value="" id="is_4ps">
+                <label class="form-check-label w-100 " for="is_4ps">
+                  Are you a 4Ps beneficiary?
+                </label>
+              </div>
+            </div>
+          </div>
+          <br>
+          <button class="btn btn-secondary text-light rounded-bottom p-2 w-100 text-decoration-none text-center">DONE</button>
+        </div>
+        <div class="col p-3 m-1" style="background: white; box-shadow: 1px 1px .5em #586F7C">
+          <h2 class="m-3 oswald fw-bold" style="border-bottom: 2px solid black;">MEMBER LOGGING</h2>
+          <div id="member-list">
+            
+          </div>
+          <button class="btn btn-success text-light rounded-bottom p-2 w-100 text-decoration-none text-center">DONE</button>
+        </div>
+      </div>
+    
+  </div>
+  <div class="col"></div>
+</div>
+
+</div>

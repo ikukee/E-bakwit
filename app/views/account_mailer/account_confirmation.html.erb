@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Hi <%=@user.fname%>!</h3>
+    <p>Congratulations your Volunteer Request Application has been approved!</p>
+    <p>
+      To open your account access the link provided below and input the temporary password provided<br>
+      --------------------------
+    </p>
+    <p>Link: <a href  = "e-bakwit.onrender.com">E-Bakwit</a></p>
+    <p>Temporary Password: <%= @user.password_digest %></p>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<div class="row oswald row justify-content-center mb-3">
+  Date Requested: <%= request.request_date%>
+</div>
+<div class="oswald row justify-content-center">
+  <div class="col-md-auto pe-0">
+    <h2 class="fw-bold m-0"><%= request.lname%>,</h2>
+    <p class="m-0 text-center mb-3">LAST NAME</p>
+  </div>
+  <div class="col-md-auto">
+    <h2 class="fw-bold m-0"><%= request.fname%></h2>
+    <p class="m-0 text-center mb-3">FIRST NAME</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 text-end">
+    Birthdate:
+  </div>
+  <div class="col-md-6 fw-bold">
+    <%= request.bdate%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 text-end">
+    Address:
+  </div>
+  <div class="col-md-6 fw-bold">
+    <%= request.address%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 text-end">
+    Email:
+  </div>
+  <div class="col-md-6 fw-bold">
+    <%= request.email%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 text-end">
+    Contact number:
+  </div>
+  <div class="col-md-6 fw-bold">
+    <%= request.cnum%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 text-end">
+    Account Type:
+  </div>
+  <div class="col-md-6 fw-bold">
+    <%= request.user_type%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 text-end">
+    Status:
+  </div>
+  <div class="col-md-6 fw-bold">
+    <%= request.status%>
+  </div>
+</div>
+<h4 class="fw-bold mx-5 mt-4 pt-2 border-top border-secondary oswald" style = "text-align:center;">Supporting Documents</h4>
+<div class="row mb-3 justify-content-center">
+  <% if request.images.attached? %>
+    <% counter = 1 %>
+    <% request.images.each do |img| %>
+      <div class="col-md-auto">
+        <a href = "/download/<%= request.id%>/<%= img.id %>/<%= counter %>"> Attachment <%= counter%></a>
+        <% counter = counter +1%>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+<% if request.status == "PENDING" %>
+  <div class="row oswald">
+    <div class="row justify-content-end">
+      <div class="col-md-auto pe-0">
+        <%= form_with url:"/approve_request/#{request.id}", method: :post do |form| %>
+          <%= form.button nil, class: "btn btn-success mb-1" do %>
+            <i class="fa-solid fa-user-check"></i> Approve
+          <% end %>
+        <% end %>
+      </div>
+      <div class="col-md-auto">
+        <button href="/evac_centers" class="btn btn-danger mb-1" data-bs-toggle= "modal" data-bs-target="#reject" type="button"><i class="fa-solid fa-xmark"></i> Reject</button>
+        <div id="reject" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title text-dark">Reason for Rejection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div>
+                <h4>Hi <%=request.fname%>!</h4>
+                <%= form_with url:"/reject_request/#{request.id}", method: :post do |form| %>
+                  <%= form.text_area :message, class:"form-control", placeholder: "TYPE REASON FOR REJECTION HERE..."%>
+                  <br>
+                  <p>Yours sincerely,</p>
+                  <p>CSWDO NAGA</p>
+                  <br>
+                  <div style = "margin:0 auto; width:40%;">
+                    <%= form.button nil, class: "btn btn-warning mb-1 form-control" do %>
+                      Submit
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>

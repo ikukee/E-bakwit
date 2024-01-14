@@ -1,0 +1,33 @@
+<div id="evac-form" class="row position-relative my-auto mx-5 p-3 rounded">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href = "/relief_allocation/<%=@evac_id%>/<%= @disaster_id%>" class="text-decoration-none poppins fw-bold"><button class = "nav-link text-dark">Your Requests</button></a>
+    </li>
+    <li class="nav-item">
+      <a href = "/relief_allocation/storage/<%=@evac_id%>/<%= @disaster_id%>" class="text-decoration-none poppins fw-bold"><button class = "nav-link active">Storage</button></a>
+    </li>
+    <li class="nav-item">
+      <a href = "/relief_allocation/configuration/<%= @evac_id%>/<%= @disaster_id%>" class="text-decoration-none poppins fw-bold"><button class = "nav-link text-dark">Configuration</button></a>
+    </li>
+  </ul>
+  <div id="food-table " class="col-md-12">
+    <div class = "row">
+      <div class = "col-md-4">
+        <h1 class="oswald fw-bold p-3">Relief Good Storage</h1>
+      </div>
+      <div class = "col-md-4">
+        <%= form_with url: "/sort_by", method: :post do |form| %>
+          <%= form.hidden_field :evac_id, :value=> @evac_id%>
+          <%= form.hidden_field :disaster_id, :value=> @disaster_id%>
+          <label><strong>Search Type: </strong></label>
+          <%= form.select :search_type, options_for_select(["NAME","TYPE"]),{:prompt => "Select Search Type"},{class:"form-control", oninput: "this.form.requestSubmit()"}%>
+        <% end %>
+      </div>
+      <div class = "col-md-4" id = "type_output">
+      </div>
+    </div>
+    <div id = "storage">
+      <%= render partial: "food_storage", locals:{relief_goods: @relief_goods, search_type: nil}%>
+    </div>
+  </div>
+</div>

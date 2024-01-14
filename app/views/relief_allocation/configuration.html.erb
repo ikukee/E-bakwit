@@ -1,0 +1,38 @@
+<div id="evac-form" class="row position-relative my-auto mx-5 p-3 rounded">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href = "/relief_allocation/<%=@evac_id%>/<%= @disaster_id%>" class="text-decoration-none poppins fw-bold"><button class = "nav-link text-dark">Your Requests</button></a>
+    </li>
+    <li class="nav-item">
+      <a href = "/relief_allocation/storage/<%=@evac_id%>/<%= @disaster_id%>" class="text-decoration-none poppins fw-bold"><button class = "nav-link text-dark">Storage</button></a>
+    </li>
+    <li class="nav-item">
+      <a href = "/relief_allocation/configuration/<%= @evac_id%>/<%= @disaster_id%>" class="text-decoration-none poppins fw-bold"><button class = "nav-link active">Configuration</button></a>
+    </li>
+  </ul>
+  <div style="overflow-x:hidden;" class="text-xs-center" >
+    <div class="card" >
+      <div class="card-body" >
+        <div class="card-deck">
+          <div class="card shadow">
+            <div style = "margin: 25px 25px 25px 25px">
+              <div class = "row">
+                <div class = "col-md-4">
+                  <%= form_with url: "/show/configurations", method: :post do |form|%>
+                    <%= form.hidden_field :evac_id, :value=> @evac_id%>
+                    <%= form.hidden_field :disaster_id, :value=> @disaster_id%>
+                    <label><strong>Show configurations for : </strong></label>
+                    <%= form.select :search_type, options_for_select(["FOOD","NON-FOOD"]),{:prompt => "Select Type"},{class:"form-control", oninput: "this.form.requestSubmit()"}%>
+                  <% end %>
+                </div>
+              </div>
+              <div id="display_area">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div id="evac-form" class="row position-relative my-auto mx-5 p-3 rounded">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href = "/relief_good/requests" class="text-decoration-none poppins fw-bold"><button class = "nav-link text-dark">Pending Requests <% if notifIcon(1) %><i class="fa-solid fa-circle-exclamation fa-lg" style="color: #ffdd00;"></i><%end%></button></a>
+    </li>
+    <li class="nav-item">
+      <a href = "/relief_good/accepted_requests" class="text-decoration-none poppins fw-bold"><button class = "nav-link text-dark">Accepted Requests</button></a>
+    </li>
+    <li class="nav-item">
+      <a href = "/relief_good/dispatched_requests" class="text-decoration-none poppins fw-bold"><button class = "nav-link  active">Dispatched Requests</button></a>
+    </li>
+     <li class="nav-item">
+      <a href = "/relief_good/rejected_requests" class="text-decoration-none poppins fw-bold"><button class = "nav-link  text-dark">Rejected Requests</button></a>
+    </li>
+  </ul>
+  <div id="req-table " class="col-md-6">
+    <h1 class="oswald fw-bold p-3">List of Dispatched Requests</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="col-md-1">Date Requested</th>
+          <th class="col-md-3">Evacuation Center</th>
+          <th class="col-md-1">Disaster</th>
+          <th class="col-md-1">Status</th>
+          <th class="col-md-1">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @requests.each do |request| %>
+          <tr>
+            <td class="col-md-1"><%= request.date_of_request%></td>
+            <td class="col-md-3"><a href = "/evac_centers/<%= request.evac_id%>"><%= EvacCenter.find(request.evac_id).name %></a></td>
+            <td><%= Disaster.find(request.disaster_id).name %></td>
+            <td><%= request.status%></td>
+            <td class="col-md-1">
+              <%= form_with url:"/view/request/#{request.id}", method: :post do |form|%>
+                <%= form.button nil, class:"btn btn-primary bg-navy oswald fw-bold text-light" do %>
+                  View <i class="fa-solid fa-eye"></i>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% if @requests_count > 5 %>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-left">
+          <li class="page-item ">
+            <% if @page  > 0 %>
+              <%= link_to "Previous Page", "/relief_good/dispatched_requests?page=#{@page-1}", class:"page-link"%>
+            <% end %>
+          </li>
+          <li class="page-item">
+            <%= link_to "Next Page","/relief_good/dispatched_requests?page=#{@page + 1}", class:"page-link"%>
+          </li>
+        </ul>
+      </nav>
+    <% end %>
+  </div>
+  <div class="col-md-6 default-background2">
+    <h1 class="oswald fw-bold p-3">Display Area</h1>
+    <div id = "view_request" class = "my-auto border-1 poppins p-3">
+    </div>
+  </div>
+</div>

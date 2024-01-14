@@ -1,0 +1,95 @@
+<div class = "row">
+  <div class = "col-md-12" style="border-bottom: 2px solid black;">
+    <div class = "row">
+      <div class = "col-md-9">
+        <h2 class="m-3 oswald"  ><strong><%=Disaster.find(relief_request.disaster_id).name%></strong> | Allocated Relief Goods for <%=EvacCenter.find(relief_request.evac_id).name%></h2>
+      </div>
+      <% if session[:user_type] == "CAMP MANAGER" %>
+        <% if relief_request.status == "DISPATCHED" %>
+          <div class = "col-md-3">
+            <%= form_with url:"/mark_received/request/#{relief_request.id}", method: :post do |form|%>
+              <%= form.button nil, class:"btn btn-success form-control" do %>
+                Mark as Received <i class="fa-solid fa-check"></i>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class ="row">
+    <h3 class="m-3 oswald fw-bold" >Food</h3>
+    <table class="table table-striped table-hover border rounded">
+      <thead>
+        <tr>
+          <th class="col">Product Name</th>
+          <th class="col">Unit</th>
+          <th class="col">Quantity</th>
+          <th class="col-md-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <% dispatched_rg.each do |rg| %>
+          <% if ReliefGood.find(rg.rg_id).is_food == true %>
+            <tr>
+              <td><%=rg.name%></td>
+              <td><%= ReliefGood.find(rg.rg_id).unit%></td>
+              <td><%= rg.quantity%> </td>
+              <td>
+                <% if relief_request.status != "DISPATCHED" && relief_request.status != "RECEIVED"%>
+                  <%= form_with url: "/edit_rg/#{rg.id}/#{relief_request.id}", method: :post do |form|%>
+                    <%= form.button nil, class:"btn btn-secondary form-control" do %>
+                      Edit <i class="fa-regular fa-pen-to-square"></i>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class ="row">
+    <h3 class="m-3 oswald fw-bold" >Non-Food</h3>
+    <table class="table table-striped table-hover border rounded">
+      <thead>
+        <tr>
+          <th class="col">Product Name</th>
+          <th class="col">Unit</th>
+          <th class="col">Quantity</th>
+          <th class="col-md-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <% dispatched_rg.each do |rg| %>
+          <% if ReliefGood.find(rg.rg_id).is_food == false %>
+            <tr>
+              <td><%=rg.name%></td>
+              <td><%= ReliefGood.find(rg.rg_id).unit%></td>
+              <td><%= rg.quantity%> </td>
+              <td>
+                <% if relief_request.status != "DISPATCHED" && relief_request.status != "RECEIVED" %>
+                  <%= form_with url: "/edit_rg/#{rg.id}/#{relief_request.id}", method: :post do |form|%>
+                    <%= form.button nil, class:"btn btn-secondary form-control" do %>
+                      Edit <i class="fa-regular fa-pen-to-square"></i>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <% if relief_request.status != "DISPATCHED" && relief_request.status != "RECEIVED"%>
+    <div style = "margin: 0 auto; width: 30%;">
+      <%= form_with url:"/dispatch/request/#{relief_request.id}", method: :post do |form| %>
+        <%= form.button nil, class:"btn btn-success form-control" do %>
+          DISPATCH <i class="fa-solid fa-truck"></i>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
